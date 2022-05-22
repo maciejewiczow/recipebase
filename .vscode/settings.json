@@ -1,0 +1,7 @@
+{
+    "eslint.workingDirectories": [
+        "recipe-scrapper",
+        "Recipebase-mobile-app"
+    ],
+    "jest.jestCommandLine": "npx jest ",
+}

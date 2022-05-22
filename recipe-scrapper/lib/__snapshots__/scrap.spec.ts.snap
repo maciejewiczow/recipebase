@@ -1,0 +1,649 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`scrap parses the recipe data from itemprop markers 1`] = `
+Object {
+  "coverImageSrc": "https://cdn.aniagotuje.com/pictures/articles/2020/02/2260616-v-1500x1500.jpg",
+  "description": "Zobacz jak zrobić idealny gulasz wieprzowy. To przepis bez pieczarek, ale jeśli je lubisz, to śmiało możesz dodać również pieczarki. Mój przepis na gulasz wieprzowy zrobisz z łopatki lub też szynki i karkówki.",
+  "ingredients": Array [
+    Object {
+      "name": "łopatki wieprzowej",
+      "quantity": 1,
+      "unit": "kg",
+    },
+    Object {
+      "name": "średnie czerwone papryki - 500 g",
+      "quantity": 2,
+      "unit": "szt",
+    },
+    Object {
+      "name": "duże marchewki - 300 g",
+      "quantity": 2,
+      "unit": "szt",
+    },
+    Object {
+      "name": "średnie cebule - 300 g",
+      "quantity": 3,
+      "unit": "szt",
+    },
+    Object {
+      "name": "duże ząbki czosnku",
+      "quantity": 4,
+      "unit": "szt",
+    },
+    Object {
+      "name": "smalcu wieprzowego lub gęsiego",
+      "quantity": 70,
+      "unit": "g",
+    },
+    Object {
+      "name": "bulionu warzywnego lub mięsnego - 500 ml",
+      "quantity": 2,
+      "unit": "szklanki",
+    },
+    Object {
+      "name": "koncentratu pomidorowego",
+      "quantity": 3,
+      "unit": "łyżki",
+    },
+    Object {
+      "name": "przyprawy: 2 łyżki słodkiej papryki, po pół łyżeczki soli i pieprzu, szczypta chili",
+    },
+  ],
+  "name": "Gulasz wieprzowy",
+  "steps": Array [
+    "Zapraszam Cię po mój najlepszy przepis na gulasz wieprzowy. To jeden z ciekawszych pomysłów na pyszny obiad z mięsem i dużą ilością warzyw. Zobacz&nbsp; koniecznie jak przygotować pyszny i aromatyczny gulasz.&nbsp; 
+- prosto, szybko i smacznie- dużo porad oraz zdjecia krok po kroku- gulasz możesz zrobić na łopatce, szynce lub karkówce  Czas przygotowania: 1 godzina 30 minut
+Liczba porcji: 1900 g gulaszu",
+    "Kaloryczność kcal: 145 w 100 g gulaszu
+Dieta: bezglutenowa  
+Składniki:",
+    "1 kg łopatki wieprzowej
+2 średnie czerwone papryki - 500 g
+2 duże marchewki - 300 g
+3 średnie cebule - 300 g
+4 duże ząbki czosnku
+70 g smalcu wieprzowego lub gęsiego
+2 szklanki bulionu warzywnego lub mięsnego - 500 ml
+3 łyżki koncentratu pomidorowego
+przyprawy: 2 łyżki słodkiej papryki, po pół łyżeczki soli i pieprzu, szczypta chili
+ 
+Gulasz 
+Szklanka ma u mnie pojemność 250 ml.&nbsp;Warzywa ważone były przed ewentualnym obraniem/przygotowaniem. 
+Kalorie policzone zostały na podstawie użytych przeze mnie składników. Jest to więc orientacyjna ilość kalorii liczona na podstawie produktów, których użyłam w danym przepisie. Z podanej ilości składników otrzymasz niecałe dwa kilogramy pysznego i gęstego gulaszu wieprzowego.&nbsp; 
+Przed szykowaniem przepisu zachęcam też do przeczytania najpierw całego wpisu. W treści podaję bowiem dużo ciekawych porad dotyczących składników oraz ich zamienników. Być może zapragniesz coś zmienić lub też dodać.",
+    "Przepis na gulasz wieprzowy 
+Zacznijmy od mięsa wieprzowego. Potrzebujesz około jednego kilograma mięsa (Może być trochę mniej. Wystarczy nawet 800 gramów). Najpyszniejszy gulasz wychodzi mi zawsze na łopatce wieprzowej, ale możesz też użyć samej szynki lub też wymieszać szynkę z karkówką w proporcjach pół na pół.&nbsp;Mięso pokrój na nieduże kawałki na jeden kęs. Postaraj się, by kawałki mięsa były mniej więcej tej samej wielkości, czyli do 2 x 2 cm. Do miski z kawałkami mięsa wsyp też przyprawy: 2 łyżki słodkiej papryki, po pół łyżeczki soli i pieprzu oraz symboliczna szczypta chili. Cztery duże ząbki czosnku obierz i przepuść przez praskę. Jeśli nie masz świeżego czosnku, to dodaj jedną łyżkę suszonego. Dokładnie wymieszaj mięso z przyprawami i czosnkiem.",
+    "Nagrzej dużą i głęboką patelnię i roztop na niej 20 gramów dobrej jakości smalcu wieprzowego lub gęsiego (pozostałe 50 gramów zostawiamy do usmażenia warzyw). Na patelnię wyłóż kawałki mięsa. Podsmażaj je na trochę wyższej niż średnia moc palnika przez 25 minut (taka samo długo podsmażasz zarówno szynkę, jak i łopatkę, czy mięso karkowe). Co jakiś czas zamieszaj mięso. Cały czas podsmażaj je też bez przykrywki.&nbsp;",
+    "W trakcie smażenia mięsa przygotuj warzywa. Potrzebujesz dwie duże lub trzy średnie cebule, dwie większe marchewki oraz dwie średniej wielkości czerwone papryki. Cebule możesz zamienić na dużego pora. Jeśli chodzi i papryki, to możesz też zamienić jedną czerwoną paprykę na paprykę żółtą lub pomarańczową.&nbsp;",
+    "Nagrzej średniej wielkości patelnię i roztop na niej pozostałe 50 gramów smalcu. Dodaj obraną i pokrojoną na małe kawałki cebulę. Ja pokroiłam ją w piórka, które przekroiłam jeszcze na pół. Podsmażaj ją tak przez pięć minut a następnie dodaj też obrane i pokrojone w półplasterki marchewki.",
+    "Całość wymieszaj i podsmażaj na trochę niższej niż średnia moc palnika przez kolejne 15 minut. Patelni nie przykrywaj przykrywką. Co parę minut zamieszaj warzywa przy pomocy drewnianej łyżki.&nbsp;",
+    "Po tym czasie dodaj jeszcze oczyszczone z gniazda nasiennego i pokrojone na mniejsze kawałki papryki. Warzywa zamieszaj i smaż ostatnie 10 minut.&nbsp;",
+    "Wszystkie warzywa z patelni przełóż na głęboką patelnię z podsmażonym już mięsem. Wlej też dwie szklanki (500 ml) domowego bulionu warzywnego lub mięsnego. Wymieszaj dokładnie gulasz wieprzowy i gotuj przez 20 minut na małej mocy palnika (bez przykrywki).&nbsp;",
+    "Na koniec dodaj do gulaszu koncentrat pomidorowy. Ja dodałam trzy łyżki koncentratu, ale możesz dodać go trochę mniej lub więcej. Gulasz z dodatkiem koncentratu zrobi się bardziej gęsty i zawiesisty. Jeśli zamiast koncentratu dodasz np. przecier z pomidorów lub też obrane i posiekane świeże pomidory, to sos w gulaszu będzie trochę rzadszy.&nbsp;",
+    "Możesz zawsze lekko zagęścić gulasz przez dodanie do niego skrobi ziemniaczanej. Wówczas płaską łyżkę skrobi/mąki ziemniaczanej wymieszaj dokładnie z kilkoma łyżkami wody lub bulionu i wlej do lekko mrugającego gulaszu. Od razu zamieszaj gulasz. Gulasz wyłącz po około jednej minucie od dodania wody ze skrobią. Sos w gulaszu powinien zgęstnieć i zrobić się bardziej szklisty.&nbsp;",
+    "Zanim jednak wyłączysz gulasz, sprawdź jego smak. Być może wolisz bardziej słony gulasz i dodasz do niego trochę soli. Jeśli gulasz wieprzowy ma być ostrzejszy, to dodaj do niego więcej pieprzu lub chili.&nbsp;",
+    "Gulasz wieprzowy bardzo dobrze smakuje podany z kromką ulubionego pieczywa i ogórkiem kiszonym. Do gulaszy pasują również kasze: gryczana, pęczak, kuskus. Gulasz wieprzowy smakuje świetnie z tłuczonymi ziemniakami, kopytkami i kluskami śląskimi oraz surówką z białej lub czerwonej kapusty.&nbsp;",
+    "Z czym najchętniej jadasz gulasz wieprzowy?",
+    "Jeżeli lubisz 
+gulasz to polecam Ci też doskonały przepis na 
+gulasz z łopatki oraz najlepszy 
+strogonow.",
+    "Smacznego.&nbsp;
+ 
+&nbsp;",
+  ],
+}
+`;
+
+exports[`scrap parses the recipe data from json.ld metadata 1`] = `
+Object {
+  "coverImageSrc": "https://ammniam.pl/wp-content/uploads/2013/02/soczewicowa1-1.jpg",
+  "description": "Zupa z soczewicą i warzywami to zdrowe, odżywcze i pyszne danie dla calej rodziny. Idealna na obiad lub kolację. Palce lizać !",
+  "ingredients": Array [
+    Object {
+      "name": "czerwonej soczewicy",
+      "quantity": 0.667,
+      "unit": "szkl.",
+    },
+    Object {
+      "name": "pokrojone w kostkę ziemniaki",
+      "quantity": Object {
+        "from": 2,
+        "to": 3,
+      },
+      "unit": "szt",
+    },
+    Object {
+      "name": "pokrojone w kostkę marchewki",
+      "quantity": Object {
+        "from": 1,
+        "to": 2,
+      },
+      "unit": "szt",
+    },
+    Object {
+      "name": "małego selera",
+      "quantity": 0.5,
+      "unit": "szt",
+    },
+    Object {
+      "name": "cebula",
+      "quantity": 1,
+      "unit": "szt",
+    },
+    Object {
+      "name": "ząbki czosnku",
+      "quantity": 2,
+      "unit": "szt",
+    },
+    Object {
+      "name": "wody",
+      "quantity": 1.5,
+      "unit": "l",
+    },
+    Object {
+      "name": "przecieru pomidorowego",
+      "quantity": 250,
+      "unit": "ml",
+    },
+    Object {
+      "name": "ziela angielskie",
+      "quantity": 3,
+      "unit": "szt",
+    },
+    Object {
+      "name": "liście laurowe",
+      "quantity": 2,
+      "unit": "szt",
+    },
+    Object {
+      "name": "majeranku",
+      "quantity": 1,
+      "unit": "łyżeczka",
+    },
+    Object {
+      "name": "słodkiej papryki",
+      "quantity": 1,
+      "unit": "łyżeczka",
+    },
+    Object {
+      "name": "oregano",
+      "quantity": 1,
+      "unit": "łyżeczka",
+    },
+    Object {
+      "name": "curry",
+      "quantity": 0.5,
+      "unit": "łyżeczki",
+    },
+    Object {
+      "name": "sól",
+    },
+  ],
+  "name": "Zupa z soczewicą i warzywami",
+  "steps": Array [
+    "W garnku zeszklić na oliwie drobno posiekaną cebulę i czosnek.",
+    "Następnie wlać 1,5 wrzątku, dodać ziele angielskie, liście laurowe, seler, marchewkę, a po chwili również ziemniaki i soczewicę. Całość zagotować.",
+    "Pod koniec gotowania, gdy soczewica i warzywa będą prawie miękkie wlać przecier pomidorowy i ponownie zagotować.",
+    "Doprawić do smaku solą, majerankiem, oregano, curry i sodką mieloną papryką.",
+  ],
+}
+`;
+
+exports[`scrap parses the recipe from raw html 1`] = `
+Object {
+  "coverImageSrc": "https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/zupa_z_soczewica_pomidorami_00.jpg",
+  "description": "Zupa z soczewicy ze świeżymi pomidorami. Pyszna zupa z czerwonej soczewicy ze świeżymi pomidorami, doprawiona przyprawą curry i czosnkiem.",
+  "ingredients": Array [
+    Object {
+      "name": "porcje",
+      "quantity": 2,
+      "unit": "szt",
+    },
+    Object {
+      "name": "czerwonej soczewicy",
+      "quantity": 50,
+      "unit": "g",
+    },
+    Object {
+      "name": "świeżych pomidorów lub 1 puszka krojonych",
+      "quantity": 500,
+      "unit": "g",
+    },
+    Object {
+      "name": "bulionu drobiowego lub warzywnego",
+      "quantity": 500,
+      "unit": "ml",
+    },
+    Object {
+      "name": "cebuli",
+      "quantity": 0.5,
+      "unit": "szt",
+    },
+    Object {
+      "name": "ząbki czosnku",
+      "quantity": 2,
+      "unit": "szt",
+    },
+    Object {
+      "name": "oliwy extra vergine",
+      "quantity": 2,
+      "unit": "łyżki",
+    },
+    Object {
+      "name": "przyprawy: sól, pieprz, 1 łyżeczka kurkumy, 1 łyżeczka przyprawy curry w proszku, 1/2 łyżeczki ostrej papryki",
+    },
+    Object {
+      "name": "śmietanki 30%, z kartonika, słodkiej",
+      "quantity": 0.25,
+      "unit": "szklanki",
+    },
+    Object {
+      "name": "posiekanej zieleniny np. bazylii lub kolendry lub natki pietruszki",
+      "quantity": 2,
+      "unit": "łyżki",
+    },
+  ],
+  "name": "Zupa z soczewicą i pomidorami",
+  "steps": Array [
+    "W garnku na oliwie zeszklić pokrojoną w kosteczkę cebulę. Dodać przeciśnięty przez praskę czosnek i mieszając smażyć jeszcze przez minutę. Dodać suchą soczewicę, przyprawy i wymieszać.",
+    "Wlać bulion i zagotować. Przykryć i gotować do miękkości soczewicy przez ok. 15 - 20 minut.",
+    "Dodać obrane i pokrojone w kostkę pomidory (wraz z sokiem i nasionami) lub krojone pomidory z puszki i gotować przez ok. 15 minut pod uchyloną pokrywą, od czasu do czasu zamieszać.",
+    "W międzyczasie w razie potrzeby doprawić solą i pieprzem. Odstawić z ognia i wymieszać ze śmietanką oraz posiekaną zieleniną.",
+  ],
+}
+`;
+
+exports[`scrap works with examples from benawad blog 1`] = `
+Object {
+  "coverImageSrc": "https://www.islandsmile.org/wp-content/uploads/2015/10/Spicy-mutton-curry-cooked-in-coconut-milk-and-spices-pxl680-3330.jpg",
+  "description": "Cooked with your everyday Sri Lankan spices, this Mutton curry has a thick gravy bringing about extra depth and color, the Mutton is cooked until its tender and flavored perfectly. It's best enjoyed while hot, served on special occasions and family festivities.",
+  "ingredients": Array [
+    Object {
+      "name": "Mutton (washed thoroughly, cleaned and cut with the fat removed)",
+      "quantity": 700,
+      "unit": "kg",
+    },
+    Object {
+      "name": "Oil to cook",
+    },
+    Object {
+      "name": "large onions sliced",
+      "quantity": Object {
+        "from": 2,
+        "to": 3,
+      },
+      "unit": "szt",
+    },
+    Object {
+      "name": "large Tomato chopped(because I’m using the paste)",
+      "quantity": 1,
+      "unit": "szt",
+    },
+    Object {
+      "name": "Green chillies",
+      "quantity": Object {
+        "from": 2,
+        "to": 3,
+      },
+      "unit": "szt",
+    },
+    Object {
+      "name": "of Garlic and Ginger Paste",
+      "quantity": 2,
+      "unit": "tablespoons",
+    },
+    Object {
+      "name": "Curry leaves",
+      "quantity": Object {
+        "from": 5,
+        "to": 6,
+      },
+      "unit": "szt",
+    },
+    Object {
+      "name": "Cardamom pods, slightly bruised",
+      "quantity": Object {
+        "from": 4,
+        "to": 5,
+      },
+      "unit": "szt",
+    },
+    Object {
+      "name": "A long piece of Pandan leaf(trust me on this)",
+    },
+    Object {
+      "name": "Cinnamon stick-1-2 inch piece (careful, can overwhelm all other flavors)",
+    },
+    Object {
+      "name": "of Tomato paste(optional)",
+      "quantity": Object {
+        "from": 1,
+        "to": 2,
+      },
+      "unit": "tablespoons",
+    },
+    Object {
+      "name": "Turmeric Powder",
+      "quantity": 1,
+      "unit": "teaspoon",
+    },
+    Object {
+      "name": "Chilli Powder( if you can handle it)",
+      "quantity": Object {
+        "from": 1,
+        "to": 2,
+      },
+      "unit": "teaspoon",
+    },
+    Object {
+      "name": "of Coriander",
+      "quantity": Object {
+        "from": 1,
+        "to": 2,
+      },
+      "unit": "tablespoons",
+    },
+    Object {
+      "name": "of Pepper",
+      "quantity": 0.5,
+      "unit": "teaspoon",
+    },
+    Object {
+      "name": "of water",
+      "quantity": 2,
+      "unit": "cups",
+    },
+    Object {
+      "name": "Coconut milk",
+      "quantity": 1,
+      "unit": "cup",
+    },
+    Object {
+      "name": "Salt to taste",
+    },
+  ],
+  "name": "Mutton curry",
+  "steps": Array [
+    "In a slightly large pan, pour in the oil, add Onions, Garlic/Ginger paste, Curry leaves, Cardamom pods, Pandan leaf and Cinnamon stick.",
+    "Cook on medium heat until the distinct aroma of these spices hits you, then add the chopped green chillies,the spices in the order of Turmeric, Coriander, Chilli, Pepper, and Tomato paste, cook for a few minutes until you are left with a dark mixture( keep the heat to a minimum) this would take 5-10 minutes.",
+    "Include the Mutton into the pan and incorporate it with the mixture. Leave it to cook for a few minutes, mixing occasionally, 10-15 minutes.",
+    "Pour in the water and let it simmer until the water is reduced. Don&rsquo;t cook on high heat to hurry the cooking process as it just evaporates the water, leaving the meat still half-cooked.",
+    "Once the water evaporates, pour the Coconut milk and add the Salt, the reason I add the Salt at this point is that when you add Salt, at the beginning with the spices, the meat becomes very hard without taking in any of the flavors, hence I add it halfway through the cooking process.",
+    "Closing the lid, cook for at least another 45 minutes to an hour until the meat is tender.",
+    "If you find you need a bit of gravy-like me, just add 1/2 a cup of water, by this point, there&rsquo;s already a thick gravy that can absorb the water but still keep its thick consistency.",
+    "Check Salt to taste.",
+  ],
+}
+`;
+
+exports[`scrap works with examples from benawad blog 2`] = `
+Object {
+  "coverImageSrc": "https://ashishbhatia3.files.wordpress.com/2015/01/img_5775.jpg?w=1200",
+  "description": "Inspired by the “Dhabas” of India, a very rustic,simple and wholesome Lamb curry recipe.",
+  "ingredients": Array [
+    Object {
+      "name": "Cooking time – 20 mins",
+    },
+    Object {
+      "name": "gms leg of lamb diced (on the bone)",
+      "quantity": 750,
+      "unit": "szt",
+    },
+    Object {
+      "name": "medium size onions",
+      "quantity": 3,
+      "unit": "szt",
+    },
+    Object {
+      "name": "medium size tomatoes",
+      "quantity": 2,
+      "unit": "szt",
+    },
+    Object {
+      "name": "ginger and garlic paste (2 parts of garlic and 1 part of ginger)",
+      "quantity": 2,
+      "unit": "tbsp",
+    },
+    Object {
+      "name": "fresh green chillies",
+      "quantity": 5,
+      "unit": "szt",
+    },
+    Object {
+      "name": "bunch coriander",
+      "quantity": 0.5,
+      "unit": "szt",
+    },
+    Object {
+      "name": "turmeric",
+      "quantity": 1,
+      "unit": "tsp",
+    },
+    Object {
+      "name": "red chilli powder mild",
+      "quantity": 2,
+      "unit": "tsp",
+    },
+    Object {
+      "name": "coriander powder",
+      "quantity": 1,
+      "unit": "tsp",
+    },
+    Object {
+      "name": "cumin powder",
+      "quantity": 2,
+      "unit": "tsp",
+    },
+    Object {
+      "name": "Garam masala",
+      "quantity": 1,
+      "unit": "tsp",
+    },
+    Object {
+      "name": "kasoori methi (dried fenugreek)",
+      "quantity": 0.5,
+      "unit": "tsp",
+    },
+    Object {
+      "name": "pods green cardamom",
+      "quantity": 3,
+      "unit": "szt",
+    },
+    Object {
+      "name": "pod black cardamom",
+      "quantity": 1,
+      "unit": "szt",
+    },
+    Object {
+      "name": "bay leaves",
+      "quantity": 3,
+      "unit": "szt",
+    },
+    Object {
+      "name": "stick cinnamon",
+      "quantity": 1,
+      "unit": "szt",
+    },
+    Object {
+      "name": "mustard oil or vegetable oil",
+      "quantity": 6,
+      "unit": "tbsp",
+    },
+    Object {
+      "name": "desi ghee",
+      "quantity": 1,
+      "unit": "tbsp",
+    },
+    Object {
+      "name": "In a cooking pot heat mustard oil. Once heated add all the whole spices. Cook the spices for about a minute till all the flavour is released in the oil. Now add the sliced onions and cook until slightly golden in colour",
+    },
+    Object {
+      "name": "Add the powdered spice except for Garam masala and kasoori methi. Cook for further 5 mins until the spices and incorporated evenly. Add 2 cups of hot water. Cover the pot with a lid and cook on low heat for 20 mins",
+    },
+    Object {
+      "name": "Remove the lid after 20 mins and add the chopped tomatoes and cook on high heat for 5-7 mins. Lower the heat add another cup of hot water and simmer for further 20 mins or until the meat is tender. I always add potatoes to my curry so if you prefer you can add two potatoes cut in quarters at this stage",
+    },
+    Object {
+      "name": "Remove the lid and mix well. Add Garam masala, kasoori methi, finely chopped coriander, lemon juice and desi ghee. Increase the heat and cook for 2-3 mins. Once done transfer into a serving bowl and garnish with ginger Julienne and chopped coriander . Serve with hot chapatis or steam rice and onion salad",
+    },
+    Object {
+      "name": "",
+      "quantity": 51.569,
+      "unit": "szt",
+    },
+  ],
+  "name": "Dhabe Ka Gosht (Highway Lamb Curry)",
+  "steps": Array [
+    "This site uses cookies. By continuing, you agree to their use. Learn more, including how to control cookies.",
+    "Inspired by the “Dhabas” of India, this dish features not only on their menu but is now cooked around the globe. A simple rustic curry is slow cooked over charcoal heat traditionally. I was keen to share this recipe. It’s simple to cook and full of flavour.",
+    "Juice of half a lemon.",
+    "1. Wash the lamb in cold water and drain the water. Finely slice onions. Finely chop tomatoes and slit green chillies.",
+    "3. Add the lamb and sauté for further 10 mins. Add the salt. Now add ginger and garlic paste. Cook for further 10 mins.",
+    "You have to cook this dish to believe how simple and easy it is to make a curry. I have attached a brief video about the recipe below. Do leave your feedback.",
+    "Happy cooking.",
+    "RelatedAwadhi Gosht (Lamb) Biryani<img src=\\"https://ashishbhatia3.files.wordpress.com/2013/09/img_0369.jpg?w=350&amp;h=200&amp;crop=1\\" width=\\"350\\" height=\\"200\\" alt=\\"IMG_0369\\" loading=\\"lazy\\">June 17, 2014In \\"cuisine\\"Raan e Sikandari (Slow roasted leg of lamb served with a masaledaar gravy)<img src=\\"https://ashishbhatia3.files.wordpress.com/2014/01/img_2579.jpg?w=350&amp;h=200&amp;crop=1\\" width=\\"350\\" height=\\"200\\" alt=\\"IMG_2579\\" loading=\\"lazy\\">April 17, 2014In \\"cuisine\\"Murgh Dakshini (Chicken Curry from the Southern Coast of India)<img src=\\"https://ashishbhatia3.files.wordpress.com/2014/06/img_3953.jpg?w=350&amp;h=200&amp;crop=1\\" width=\\"350\\" height=\\"200\\" alt=\\"IMG_3953\\" loading=\\"lazy\\">June 3, 2014In \\"cuisine\\"",
+  ],
+}
+`;
+
+exports[`scrap works with examples from benawad blog 3`] = `
+Object {
+  "coverImageSrc": "https://i2.wp.com/whatcharlottebaked.com/wp-content/uploads/2019/01/P1150613.jpg?fit=676%2C900&ssl=1",
+  "description": "My absolute favourite cake, this Milk Bar style Black Forest Naked Cake is packed full of cherries, whipped cream, and chocolate ganache. Easy & yummy too!",
+  "ingredients": Array [
+    Object {
+      "name": "unsalted butter (room temperature)",
+      "quantity": 115,
+      "unit": "g",
+    },
+    Object {
+      "name": "caster sugar (US granulated sugar)",
+      "quantity": 300,
+      "unit": "g",
+    },
+    Object {
+      "name": "large eggs",
+      "quantity": 3,
+      "unit": "szt",
+    },
+    Object {
+      "name": "buttermilk",
+      "quantity": 120,
+      "unit": "ml",
+    },
+    Object {
+      "name": "sunflower or canola oil",
+      "quantity": 60,
+      "unit": "ml",
+    },
+    Object {
+      "name": "chocolate fudge sauce",
+      "quantity": 3,
+      "unit": "tablespoons",
+    },
+    Object {
+      "name": "vanilla extract",
+      "quantity": 1,
+      "unit": "teaspoon",
+    },
+    Object {
+      "name": "instant coffee granules",
+      "quantity": 1,
+      "unit": "teaspoon",
+    },
+    Object {
+      "name": "plain or all-purpose flour",
+      "quantity": 130,
+      "unit": "g",
+    },
+    Object {
+      "name": "cornflour or cornstarch",
+      "quantity": 15,
+      "unit": "g",
+    },
+    Object {
+      "name": "cocoa powder",
+      "quantity": 70,
+      "unit": "g",
+    },
+    Object {
+      "name": "½ teaspoons baking powder",
+      "quantity": 1,
+      "unit": "szt",
+    },
+    Object {
+      "name": "salt",
+      "quantity": 1,
+      "unit": "teaspoon",
+    },
+    Object {
+      "name": "fresh or frozen cherries (pitted)",
+      "quantity": 450,
+      "unit": "g",
+    },
+    Object {
+      "name": "caster sugar (US granulated sugar)",
+      "quantity": 50,
+      "unit": "g",
+    },
+    Object {
+      "name": "cornflour or cornstarch",
+      "quantity": 2,
+      "unit": "tablespoons",
+    },
+    Object {
+      "name": "dark or semi-sweet chocolate chips",
+      "quantity": 80,
+      "unit": "g",
+    },
+    Object {
+      "name": "double or heavy cream",
+      "quantity": 60,
+      "unit": "ml",
+    },
+    Object {
+      "name": "kirsch (cherry liqueur) (optional - see method)",
+      "quantity": 2,
+      "unit": "tablespoons",
+    },
+    Object {
+      "name": "cherry juice",
+      "quantity": 4,
+      "unit": "tablespoons",
+    },
+    Object {
+      "name": "double or heavy cream",
+      "quantity": 480,
+      "unit": "ml",
+    },
+    Object {
+      "name": "icing sugar or confectioner's sugar",
+      "quantity": 5,
+      "unit": "tablespoons",
+    },
+    Object {
+      "name": "fresh cherries for decoration (optional)",
+      "quantity": 12,
+      "unit": "szt",
+    },
+    Object {
+      "name": "Six inch cake ring",
+    },
+    Object {
+      "name": "inches baking acetate",
+      "quantity": 20,
+      "unit": "szt",
+    },
+  ],
+  "name": "Black Forest Naked Cake",
+  "steps": Array [
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+  ],
+}
+`;
