@@ -1,1 +1,5 @@
-export const database = 'test'
+import Database from './Database';
+
+export {
+    Database,
+};

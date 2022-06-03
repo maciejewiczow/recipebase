@@ -29,7 +29,9 @@
     "allowJs": false,
     "skipLibCheck": false,
     "forceConsistentCasingInFileNames": false,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": [
     "./src"
