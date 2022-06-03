@@ -3,22 +3,38 @@ import { ButtonVariant } from './ButtonVariant';
 
 interface ButtonPartsStyleProps {
     variant: ButtonVariant;
+    disabled: boolean;
 }
 
-const getButtonBg = (variant: ButtonVariant) => {
+const getButtonBg = (variant: ButtonVariant, disabled: boolean) => {
+    if (disabled)
+        return '#F0F0F0';
+
     switch (variant) {
         case ButtonVariant.primary:
             return '#E88A36';
 
         case ButtonVariant.secondary:
-            return '#F8F8F8';
+            return '#8E8E8E';
 
         default:
             return 'transparent';
     }
 };
 
-const getButtonBorderColor = (variant: ButtonVariant) => {
+const getButtonBorderColor = (variant: ButtonVariant, disabled: boolean) => {
+    if (disabled) {
+        switch (variant) {
+            case ButtonVariant.primary:
+            case ButtonVariant.secondary:
+                return '#F0F0F0';
+
+            case ButtonVariant.primaryOutline:
+            case ButtonVariant.secondaryOutline:
+                return '#747474';
+        }
+    }
+
     switch (variant) {
         case ButtonVariant.primary:
         case ButtonVariant.primaryOutline:
@@ -28,13 +44,13 @@ const getButtonBorderColor = (variant: ButtonVariant) => {
             return 'white';
 
         case ButtonVariant.secondary:
-            return '#F8F8F8';
+            return '#8E8E8E';
     }
 };
 
 export const Base = styled.View<ButtonPartsStyleProps>`
-    background-color: ${({ variant }) => getButtonBg(variant)};
-    border-color:  ${({ variant }) => getButtonBorderColor(variant)};
+    background-color: ${({ variant, disabled }) => getButtonBg(variant, disabled)};
+    border-color:  ${({ variant, disabled }) => getButtonBorderColor(variant, disabled)};
 
     border-width: 2px;
     border-radius: 8px;
@@ -44,7 +60,7 @@ export const Base = styled.View<ButtonPartsStyleProps>`
     align-items: center;
 `;
 
-export const ButtonContent = styled.Text<ButtonPartsStyleProps>`
+export const ButtonText = styled.Text<ButtonPartsStyleProps>`
     font-size: 18px;
-    color: ${({ variant }) => (variant === ButtonVariant.secondary ? '#848484' : 'white')};
+    color: ${({ disabled }) => (disabled ? '#848484' : 'white')};
 `;
