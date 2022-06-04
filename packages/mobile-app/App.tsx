@@ -6,6 +6,8 @@ import { rootNavigationRef, Stack } from './src/RootNavigation';
 import { darkTheme, lightTheme } from './src/theme';
 import * as views from './src/views';
 
+import 'reflect-metadata';
+
 const App = () => {
     const isDarkMode = useColorScheme() === 'dark';
 
@@ -15,9 +17,14 @@ const App = () => {
             <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
                 <NavigationContainer ref={rootNavigationRef}>
                     <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
-                        <Stack.Screen name="Splash" component={views.SplashView} />
-                        <Stack.Screen name="Home" component={views.HomeView} />
-                        <Stack.Screen name="SelectDatabase" component={views.SelectDatabaseView} options={{ animation: 'none' }}/>
+                        <Stack.Group >
+                            <Stack.Screen name="Splash" component={views.SplashView} />
+                            <Stack.Screen name="HomeTabNavigator" component={views.HomeNavigationView} />
+                            <Stack.Screen name="SelectDatabase" component={views.SelectDatabaseView} options={{ animation: 'none' }}/>
+                        </Stack.Group>
+                        <Stack.Group screenOptions={{ presentation: 'modal', animation: 'slide_from_bottom' }}>
+                            <Stack.Screen name="SelectMethodModal" component={views.SelectionMethodModalView} />
+                        </Stack.Group>
                     </Stack.Navigator>
                 </NavigationContainer>
             </ThemeProvider>
