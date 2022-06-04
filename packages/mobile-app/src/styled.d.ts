@@ -5,6 +5,7 @@ declare module 'styled-components' {
         palette: {
             text: string;
             background: string;
+            primaryAccent: string;
         };
     }
 }

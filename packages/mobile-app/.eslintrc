@@ -180,6 +180,7 @@
         "no-confusing-arrow": "warn",
         "prefer-arrow-callback": "warn",
         "react-hooks/rules-of-hooks": "warn",
-        "react-hooks/exhaustive-deps": "warn"
+        "react-hooks/exhaustive-deps": "warn",
+        "import/no-extraneous-dependencies": "off"
     }
 }

@@ -1,3 +1,4 @@
-export { HomeView } from './HomeView/HomeView';
+export { HomeNavigationView } from './HomeView/HomeNavigationView';
 export { SplashView } from './SplashView/SplashView';
 export { SelectDatabaseView } from './SelectDatabaseView/SelectDatabaseView';
+export { SelectionMethodModalView } from './SelectionMethodModalView/SelectionMethodModalView';
