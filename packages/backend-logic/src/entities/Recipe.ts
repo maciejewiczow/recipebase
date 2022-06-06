@@ -5,6 +5,7 @@ import {
     JoinTable,
     ManyToMany,
     OneToMany,
+    Index,
 } from 'typeorm/browser';
 import IngredientSection from './IngredientSection';
 import RecipeSection from './RecipeSection';
@@ -15,22 +16,27 @@ export default class Recipe {
     @PrimaryGeneratedColumn()
         id!: number;
 
+    @Index({ fulltext: true })
     @Column({ type: 'varchar', length: 2000 })
         name!: string;
 
+    @Index({ fulltext: true })
     @Column('text')
         description!: string;
 
-    @Column('blob')
-        coverImage!: Buffer;
+    @Column({
+        type: 'varchar',
+        length: 1e3,
+    })
+        coverImage!: string;
 
     @ManyToMany(() => Tag, t => t.recipes)
     @JoinTable()
-        tags!: Tag[];
+        tags?: Tag[];
 
     @OneToMany(() => RecipeSection, rs => rs.recipe)
-        sections!: RecipeSection[];
+        sections?: RecipeSection[];
 
     @OneToMany(() => IngredientSection, is => is.recipe)
-        ingredientSections!: IngredientSection[];
+        ingredientSections?: IngredientSection[];
 }

@@ -11,5 +11,5 @@ export default class Tag {
         name!: string;
 
     @ManyToMany(() => Recipe, r => r.tags)
-        recipes!: Recipe[];
+        recipes?: Recipe[];
 }

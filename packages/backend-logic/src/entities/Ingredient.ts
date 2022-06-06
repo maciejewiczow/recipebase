@@ -10,5 +10,5 @@ export default class Ingredient {
         name!: string;
 
     @OneToMany(() => RecipeIngredient, ri => ri.ingredient)
-        recipeIngredients!: RecipeIngredient[];
+        recipeIngredients?: RecipeIngredient[];
 }

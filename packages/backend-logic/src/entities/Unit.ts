@@ -13,5 +13,5 @@ export default class Unit {
         plurals!: string[];
 
     @OneToMany(() => RecipeIngredient, ri => ri.unit)
-        recipeIngredients!: RecipeIngredient[];
+        recipeIngredients?: RecipeIngredient[];
 }

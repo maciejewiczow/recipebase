@@ -10,5 +10,5 @@ export default class RecipeStep {
         content!: string;
 
     @ManyToOne(() => RecipeSection, rs => rs.recipeSteps)
-        recipeSection!: RecipeSection;
+        recipeSection?: RecipeSection;
 }

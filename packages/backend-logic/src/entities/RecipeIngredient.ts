@@ -15,11 +15,11 @@ export default class RecipeIngredient {
         quantityTo!: number;
 
     @ManyToOne(() => IngredientSection, is => is.recipeIngredients)
-        ingredientSection!: IngredientSection;
+        ingredientSection?: IngredientSection;
 
     @ManyToOne(() => Ingredient, ingr => ingr.recipeIngredients)
-        ingredient!: Ingredient;
+        ingredient?: Ingredient;
 
     @ManyToOne(() => Unit, u => u.recipeIngredients)
-        unit!: Unit;
+        unit?: Unit;
 }
