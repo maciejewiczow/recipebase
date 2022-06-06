@@ -4,14 +4,14 @@ import { RootStackParams } from 'recipebase/src/RootNavigation';
 import { TileWrapper, TitleText, Wrapper } from './SelectionMethodModalView.styles';
 import { FilesystemSelectionMethodButton } from './FilesystemSelectionMethodButton';
 import { GDriveSelectionMethodButton } from './GDriveSelectionMethodButton';
-import initalize from 'recipebase/src/store/Initalize';
+import init from 'recipebase/src/store/Initalize';
 
 export const SelectionMethodModalView: React.FC<NativeStackScreenProps<RootStackParams, 'SelectMethodModal'>> = ({ route, navigation }) => {
     const { selectWhat } = route.params;
 
     const onFileSelected = async (dbFilePath: string) => {
         navigation.goBack();
-        await initalize.initalizeDbAndUpdateSavedFilePath(dbFilePath);
+        await init.initalizeDbAndUpdateSavedFilePath(dbFilePath);
     };
 
     return (

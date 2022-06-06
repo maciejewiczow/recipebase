@@ -1,22 +1,75 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import FIcon from 'react-native-vector-icons/Fontisto';
+import { SearchBar as OriginalSearchBar } from 'recipebase/src/components/SearchBar';
 import { createViewIcon } from '../createViewIcon';
+import { TagList as OriginalTagList } from 'recipebase/src/components/TagList';
+import { RecipeListItem as OriginalRecipeListItem } from './RecipeListItem';
+
+export const allMargin = css`
+    margin-left: 16px;
+    margin-right: 16px;
+`;
 
 export const Wrapper = styled.ScrollView`
     flex: 1;
     background: white;
-    padding: 24px;
 `;
 
 export const Title = styled.Text`
     font-size: 38px;
     font-weight: 700;
     color: ${({ theme }) => theme.palette.primaryAccent};
+    ${allMargin}
+    margin-top: 24px;
 `;
 
 export const Subtitle = styled.Text`
     color: #9E9E9E;
     font-size: 20px;
+    ${allMargin}
+`;
+
+export const SearchBar = styled(OriginalSearchBar)`
+    margin-top: 20px;
+    ${allMargin}
 `;
 
 export const HomeIcon = createViewIcon(FIcon, 'home')``;
+
+export const EmptyListTitle = styled.Text`
+    color: #9E9E9E;
+    font-size: 30px;
+    margin-bottom: 24px;
+    text-align: center;
+    ${allMargin}
+`;
+
+export const EmptyListSubtitle = styled.Text`
+    color: #CCCCCC;
+    font-size: 22px;
+    text-align: center;
+    ${allMargin}
+`;
+
+export const NoResultsWrapper = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    ${allMargin}
+`;
+
+export const EmptyListWrapper = styled.TouchableOpacity`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    ${allMargin}
+`;
+
+export const TagList = styled(OriginalTagList)`
+    margin-top: 12px;
+    margin-bottom: 24px;
+`;
+
+export const RecipeListItem = styled(OriginalRecipeListItem)`
+    ${allMargin}
+`;

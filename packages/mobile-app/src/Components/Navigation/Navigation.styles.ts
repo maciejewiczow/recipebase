@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Wrapper = styled.View`
-    height: 80px;
+    height: 70px;
     flex-flow: row nowrap;
     background: white;
 `;

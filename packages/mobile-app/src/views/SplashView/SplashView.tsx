@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import initalize from 'recipebase/src/store/Initalize';
+import init from 'recipebase/src/store/Initalize';
 import { Background, AppTitle, Gradient, Loader } from './SplashView.styles';
 
 export const SplashView: React.FC = () => {
     useEffect(() => {
-        initalize.initalize();
+        init.initalize();
     }, []);
 
     return (

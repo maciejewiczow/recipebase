@@ -21,6 +21,7 @@ const App = () => {
                             <Stack.Screen name="Splash" component={views.SplashView} />
                             <Stack.Screen name="HomeTabNavigator" component={views.HomeNavigationView} />
                             <Stack.Screen name="SelectDatabase" component={views.SelectDatabaseView} options={{ animation: 'none' }}/>
+                            <Stack.Screen name="GDriveFilePicker" component={views.GDriveFilePickerView} />
                         </Stack.Group>
                         <Stack.Group screenOptions={{ presentation: 'modal', animation: 'slide_from_bottom' }}>
                             <Stack.Screen name="SelectMethodModal" component={views.SelectionMethodModalView} />
