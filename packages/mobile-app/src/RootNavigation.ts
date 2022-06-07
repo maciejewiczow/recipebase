@@ -1,6 +1,7 @@
 import { createNavigationContainerRef, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GDriveFilePickerViewProps } from './views/GDriveFilePickerView/ViewProps';
+import { RecipeViewProps } from './views/RecipeView/ViewProps';
 import { SelecMethodModalViewRouteProps } from './views/SelectionMethodModalView/ViewProps';
 
 export type RootStackParams = {
@@ -9,6 +10,7 @@ export type RootStackParams = {
     SelectDatabase: undefined;
     SelectMethodModal: SelecMethodModalViewRouteProps;
     GDriveFilePicker: GDriveFilePickerViewProps;
+    Recipe: RecipeViewProps;
 };
 
 export const Stack = createNativeStackNavigator<RootStackParams>();

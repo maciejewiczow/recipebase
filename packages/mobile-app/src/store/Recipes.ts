@@ -8,6 +8,7 @@ export class Recipes {
     recipes: Recipe[] = [];
     filteredRecipes: Recipe[] = [];
     currentRecipe?: Recipe;
+    isFetchingCurrentRecipe = false;
 
     constructor(private database: Database) {
         makeAutoObservable(this);
@@ -31,18 +32,20 @@ export class Recipes {
             }) || [];
 
         this.filterRecipes(selectedTags);
-
         this.isFetchingRecipes = false;
     }
 
     // eslint-disable-next-line require-yield
     *filterRecipes(selectedTags: TagWithSelectedState[]) {
         this.filteredRecipes = this.recipes.filter(rc => selectedTags
-            ?.every(stag => rc.tags?.find(tag => stag.tag.id === tag.id))
+            ?.every(stag => rc.tags
+                ?.find(tag => stag.tag.id === tag.id)
+            )
         );
     }
 
     *fetchRecipeById(id: Recipe['id']) {
+        this.isFetchingCurrentRecipe = true;
         this.currentRecipe = yield this.database.recipeRepository?.findOne({
             where: { id },
             relations: [
@@ -53,6 +56,8 @@ export class Recipes {
                 'sections.recipeSteps',
                 'tags',
             ],
+            cache: true,
         });
+        this.isFetchingCurrentRecipe = false;
     }
 }
