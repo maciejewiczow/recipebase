@@ -13,6 +13,7 @@ import {
 } from './RecipeListItem.styles';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from 'recipebase/src/RootNavigation';
+import { SmallTagList } from './SmallTagList';
 
 interface RecipeListItemProps {
     recipe: Recipe;
@@ -26,18 +27,7 @@ export const RecipeListItem: React.FC<RecipeListItemProps> = observer(({ recipe,
         <RecipeItemWrapper style={style} onPress={() => navigation.navigate('Recipe', { recipeId: recipe.id })}>
             <CoverImage source={{ uri: `data:image/jpeg;base64,${recipe.coverImage}` }} />
             <Name>{recipe.name}</Name>
-            <TagList
-                data={recipe.tags}
-                renderItem={({ item }) => (
-                    <TagListItem
-                        isSelected={!!init.tags?.selectedTags.find(t => t.tag.id === item.id)}
-                    >
-                        {item.name}
-                    </TagListItem>
-                )}
-                ItemSeparatorComponent={() => <ListSeparator>•</ListSeparator>}
-                horizontal
-            />
+            <SmallTagList recipe={recipe} />
         </RecipeItemWrapper>
     );
 });
