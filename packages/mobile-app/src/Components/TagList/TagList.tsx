@@ -8,9 +8,10 @@ import { TagView } from './TagView';
 
 export interface SearchBarProps {
     style?: StyleProp<ViewStyle>;
+    horizontalMargin?: number;
 }
 
-export const TagList: React.FC<SearchBarProps> = observer(({ style }) => {
+export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMargin = 16 }) => {
     useEffect(() => {
         init.tags?.fetchTags();
     }, []);
@@ -26,9 +27,10 @@ export const TagList: React.FC<SearchBarProps> = observer(({ style }) => {
                             count={item.tag.recipeCount}
                             name={item.tag.name || ''}
                             isSelected={item.isSelected}
+                            onSelect={() => init.tags?.toggleTagSelectedById(item.tag.id)}
                             isFirstChild={index === 0}
                             isLastChild={index === (init.tags?.tags.length ?? 1) - 1}
-                            onSelect={() => init.tags?.toggleTagSelectedById(item.tag.id)}
+                            horizontalMargin={horizontalMargin}
                         />
                     )}
                 </Observer>

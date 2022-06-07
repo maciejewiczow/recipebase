@@ -68,7 +68,7 @@ export const EmptyListWrapper = styled.TouchableOpacity`
     ${allMargin}
 `;
 
-export const TagList = styled(OriginalTagList)`
+export const TagList = styled(OriginalTagList).attrs({ horizontalMargin: 16 })`
     margin-top: 15px;
     margin-bottom: 24px;
 `;
