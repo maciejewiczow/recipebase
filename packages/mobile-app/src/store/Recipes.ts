@@ -1,49 +1,58 @@
 import { makeAutoObservable } from 'mobx';
 import { ILike } from 'typeorm/browser';
-import { Database, Recipe, Tag } from 'backend-logic';
-import { Brackets } from 'typeorm';
+import { Database, Recipe } from 'backend-logic';
+import { TagWithSelectedState } from './Tags';
 
 export class Recipes {
     isFetchingRecipes = false;
     recipes: Recipe[] = [];
+    filteredRecipes: Recipe[] = [];
+    currentRecipe?: Recipe;
 
     constructor(private database: Database) {
         makeAutoObservable(this);
     }
 
-    *fetchRecipes(searchText: string, selectedTags: Tag[]) {
+    *fetchRecipes(searchText: string, selectedTags: TagWithSelectedState[]) {
         this.isFetchingRecipes = true;
         const escapedText = searchText.trim().replace('%', '\\%').replace('_', '\\_');
 
-        if (escapedText.length === 0 && selectedTags.length === 0) {
-            this.recipes = yield this.database.recipeRepository?.find({ relations: ['tags'] });
-            this.isFetchingRecipes = false;
-            return;
-        }
+        const terms = escapedText.match(/(?:[^\s"]+|"[^"]*")+/g);
 
         this.recipes = yield this.database.recipeRepository
-            ?.createQueryBuilder('recipe')
-            .select('recipe')
-            .leftJoinAndSelect('recipe.tags', 'tag')
-            // .where('recipe.tags IN (:...selectedTags)', { selectedTags })
-            .where(
-                new Brackets(qb => qb
-                    .where('recipe.name LIKE :searchText', { searchText: `%${escapedText}%` })
-                    .orWhere('recipe.description LIKE :searchText', { searchText: `%${escapedText}%` })
-                )
-            )
-            .getMany();
-        // ?.find({
-        //     where: [
-        //         { name: ILike(`%${escapedText}%`) },
-        //         { description: ILike(`%${escapedText}%`) },
-        //     ],
-        //     relations: ['tags'],
-        // });
+            ?.find({
+                where: escapedText.length > 0 ? (
+                    terms?.flatMap(term => ([
+                        { name: ILike(`%${term}%`) },
+                        { description: ILike(`%${term}%`) },
+                    ]))
+                ) : undefined,
+                relations: ['tags'],
+            }) || [];
+
+        this.filterRecipes(selectedTags);
+
         this.isFetchingRecipes = false;
     }
 
-    fetchRecipeById(id: Recipe['id']) {
-        return this.database.recipeRepository?.findOneBy({ id });
+    // eslint-disable-next-line require-yield
+    *filterRecipes(selectedTags: TagWithSelectedState[]) {
+        this.filteredRecipes = this.recipes.filter(rc => selectedTags
+            ?.every(stag => rc.tags?.find(tag => stag.tag.id === tag.id))
+        );
+    }
+
+    *fetchRecipeById(id: Recipe['id']) {
+        this.currentRecipe = yield this.database.recipeRepository?.findOne({
+            where: { id },
+            relations: [
+                'ingredientSections',
+                'ingredientSections.recipeIngredients',
+                'ingredientSections.recipeIngredients.unit',
+                'sections',
+                'sections.recipeSteps',
+                'tags',
+            ],
+        });
     }
 }

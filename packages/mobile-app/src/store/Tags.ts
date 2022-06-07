@@ -1,8 +1,13 @@
 import { Database, Tag } from 'backend-logic';
 import { makeAutoObservable } from 'mobx';
+import { byNumberDesc } from '../utils/arrayUtils';
+
+export interface TagWithCount extends Tag {
+    recipeCount: number;
+}
 
 export interface TagWithSelectedState {
-    tag: Tag;
+    tag: TagWithCount;
     isSelected: boolean;
 }
 
@@ -14,12 +19,15 @@ export class Tags {
     }
 
     *fetchTags() {
-        const res: Tag[] = yield this.database.tagRepository
+        const res: TagWithCount[] = yield this.database.tagRepository
             ?.createQueryBuilder('tag')
-            .innerJoinAndSelect('tag.recipes', 'recipes')
+            .loadRelationCountAndMap('tag.recipeCount', 'tag.recipes', 'recipeCount')
             .getMany();
 
-        this.tags = res.map(tag => ({ tag, isSelected: false }));
+        this.tags = res
+            .filter(tag => tag.recipeCount > 0)
+            .sort(byNumberDesc(tag => tag.recipeCount))
+            .map(tag => ({ tag, isSelected: false }));
     }
 
     toggleTagSelectedById(id: number) {

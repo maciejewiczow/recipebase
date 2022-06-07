@@ -23,8 +23,8 @@ export const TagList = styled.FlatList`
     margin-top: 5px;
 ` as unknown as typeof FlatList;
 
-export const TagListItem = styled.Text`
-    color: #00000080;
+export const TagListItem = styled.Text<{ isSelected?: boolean }>`
+    color: ${({ isSelected, theme }) => (isSelected ? theme.palette.primaryAccent : '#00000080')};
 `;
 
 export const ListSeparator = styled.Text`

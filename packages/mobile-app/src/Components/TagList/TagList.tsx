@@ -23,7 +23,7 @@ export const TagList: React.FC<SearchBarProps> = observer(({ style }) => {
                 <Observer>
                     {() => (
                         <TagView
-                            count={item.tag.recipes?.length}
+                            count={item.tag.recipeCount}
                             name={item.tag.name || ''}
                             isSelected={item.isSelected}
                             isFirstChild={index === 0}

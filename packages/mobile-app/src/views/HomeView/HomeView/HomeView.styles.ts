@@ -10,8 +10,11 @@ export const allMargin = css`
     margin-right: 16px;
 `;
 
-export const Wrapper = styled.ScrollView`
-    flex: 1;
+export const Wrapper = styled.ScrollView.attrs({
+    contentContainerStyle: {
+        flexGrow: 1,
+    },
+})`
     background: white;
 `;
 
@@ -66,7 +69,7 @@ export const EmptyListWrapper = styled.TouchableOpacity`
 `;
 
 export const TagList = styled(OriginalTagList)`
-    margin-top: 12px;
+    margin-top: 15px;
     margin-bottom: 24px;
 `;
 

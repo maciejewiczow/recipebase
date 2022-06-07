@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import init from 'recipebase/src/store/Initalize';
 import { EmptyListView } from './EmptyListView';
 import {
@@ -17,12 +17,13 @@ export const HomeView: React.FC = observer(() => {
     const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
-        init.recipes?.fetchRecipes(
-            searchText,
-            init.tags?.selectedTags.map(t => t.tag) || []
-        );
+        init.recipes?.fetchRecipes(searchText, init.tags?.selectedTags || []);
+    }, [searchText]);
+
+    useEffect(() => {
+        init.recipes?.filterRecipes(init.tags?.selectedTags || []);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchText, init.tags?.selectedTags]);
+    }, [init.tags?.selectedTags]);
 
     return (
         <Wrapper>
@@ -38,10 +39,10 @@ export const HomeView: React.FC = observer(() => {
                 <ActivityIndicator size={60} color="#999" />
             ) : (
 
-                ((init.recipes?.recipes.length ?? 0) > 0) ? (
-                    init.recipes?.recipes.map(item => <RecipeListItem key={item.id} recipe={item} />)
+                ((init.recipes?.filteredRecipes.length ?? 0) > 0) ? (
+                    init.recipes?.filteredRecipes.map(item => <RecipeListItem key={item.id} recipe={item} />)
                 ) : (
-                    searchText.trim().length === 0 ? (
+                    searchText.trim().length === 0 && (init.tags?.selectedTags.length ?? -1) > 0 ? (
                         <EmptyListView />
                     ) : (
                         <NoSearchResultsListView />
