@@ -1,7 +1,7 @@
 import React from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { IconWrapper, Wrapper, Text } from './Navigation.styles';
-import { ViewIconProps } from 'recipebase/src/views/HomeView/createViewIcon';
+import { ViewIconProps } from 'recipebase/src/views/HomeNavigationView/createViewIcon';
 
 export const Navigation: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => (
     <Wrapper>

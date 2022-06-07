@@ -5,7 +5,7 @@ import { ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import { RootStackParams } from 'recipebase/src/RootNavigation';
 import init from 'recipebase/src/store/Initalize';
-import { SmallTagList } from 'recipebase/src/views/HomeView/HomeView/SmallTagList';
+import { SmallTagList } from 'recipebase/src/views/HomeNavigationView/HomeView/SmallTagList';
 import {
     ViewWrapper,
     Text,
