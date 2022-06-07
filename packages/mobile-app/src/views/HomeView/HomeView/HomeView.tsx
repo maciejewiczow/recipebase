@@ -42,7 +42,7 @@ export const HomeView: React.FC = observer(() => {
                 ((init.recipes?.filteredRecipes.length ?? 0) > 0) ? (
                     init.recipes?.filteredRecipes.map(item => <RecipeListItem key={item.id} recipe={item} />)
                 ) : (
-                    searchText.trim().length === 0 && (init.tags?.selectedTags.length ?? -1) > 0 ? (
+                    searchText.trim().length === 0 && (init.tags?.selectedTags.length ?? 0) === 0 ? (
                         <EmptyListView />
                     ) : (
                         <NoSearchResultsListView />
