@@ -8,7 +8,7 @@ export const RecipeItemWrapper = styled.TouchableOpacity`
 export const CoverImage = styled.Image`
     width: 100%;
     height: 200px;
-    border-radius: 20px;
+    border-radius: ${({ theme }) => theme.border.radiusBig};
     margin-bottom: 10px;
 `;
 

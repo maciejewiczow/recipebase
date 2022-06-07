@@ -53,7 +53,7 @@ export const Base = styled.View<ButtonPartsStyleProps>`
     border-color:  ${({ variant, disabled }) => getButtonBorderColor(variant, disabled)};
 
     border-width: 2px;
-    border-radius: 8px;
+    border-radius: ${({ theme }) => theme.border.radiusSmall};
 
     padding: 18px 32px;
 

@@ -7,5 +7,11 @@ declare module 'styled-components' {
             background: string;
             primaryAccent: string;
         };
+        border: {
+            radiusGigantic: string;
+            radiusBig: string;
+            radius: string;
+            radiusSmall: string;
+        };
     }
 }

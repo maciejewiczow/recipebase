@@ -20,7 +20,7 @@ export const TileWrapper = styled.View`
 `;
 
 export const Tile = styled.View`
-    border-radius: 7px;
+    border-radius: ${({ theme }) => theme.border.radiusSmall};
     border: 1px solid #eee;
     width: 130px;
     background: white;

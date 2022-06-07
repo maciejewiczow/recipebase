@@ -11,7 +11,7 @@ export const SearchIcon = styled(Icon).attrs({
 
 export const InputWrapper = styled.View`
     background: #F3F3F3;
-    border-radius: 14px;
+    border-radius: ${({ theme }) => theme.border.radiusBig};
     padding: 0 10px;
     flex-flow: row nowrap;
     height: 60px;
