@@ -12,7 +12,7 @@ export default class RecipeIngredient {
         quantityFrom!: number;
 
     @Column({ type:'double' })
-        quantityTo!: number;
+        quantityTo?: number;
 
     @ManyToOne(() => IngredientSection, is => is.recipeIngredients)
         ingredientSection?: IngredientSection;
