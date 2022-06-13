@@ -30,6 +30,13 @@ export default class Recipe {
     })
         coverImage!: string;
 
+    @Column({
+        type:'varchar',
+        length: 500,
+        nullable: true,
+    })
+        sourceUrl?: string;
+
     @ManyToMany(() => Tag, t => t.recipes)
     @JoinTable()
         tags?: Tag[];
