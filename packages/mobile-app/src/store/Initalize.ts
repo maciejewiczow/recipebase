@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { Config } from 'react-native-config';
-import { Database, Recipe } from 'backend-logic';
+import { Database } from 'backend-logic';
 import RootNavigation from '../RootNavigation';
 import { Recipes } from './Recipes';
 import { Tags } from './Tags';

@@ -46,18 +46,27 @@ export class Recipes {
 
     *fetchRecipeById(id: Recipe['id']) {
         this.isFetchingCurrentRecipe = true;
-        this.currentRecipe = yield this.database.recipeRepository?.findOne({
+        const rcp: Recipe = yield this.database.recipeRepository?.findOne({
             where: { id },
+            select: ['id', 'description', 'ingredientSections', 'name', 'tags', 'sections'],
             relations: [
                 'ingredientSections',
                 'ingredientSections.recipeIngredients',
                 'ingredientSections.recipeIngredients.unit',
+                'ingredientSections.recipeIngredients.ingredient',
                 'sections',
                 'sections.recipeSteps',
                 'tags',
             ],
             cache: true,
         });
+        const rcpCover: Partial<Recipe> = yield this.database.recipeRepository?.findOne({
+            where: { id },
+            select: [ 'coverImage' ],
+        });
+
+        rcp.coverImage = rcpCover.coverImage || '';
+        this.currentRecipe = rcp;
         this.isFetchingCurrentRecipe = false;
     }
 }
