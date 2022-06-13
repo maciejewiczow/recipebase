@@ -12,7 +12,7 @@ export interface ButtonProps {
 }
 
 export const Button: React.FC<ButtonProps> = ({ children, style, onPress, variant = ButtonVariant.primary, disabled = false }) => (
-    <TouchableNativeFeedback onPress={disabled ? () => {} : onPress}>
+    <TouchableNativeFeedback disabled={disabled} onPress={disabled ? () => {} : onPress}>
         <Base variant={variant} style={style} disabled={disabled}>
             <ButtonText variant={variant} disabled={disabled}>{children}</ButtonText>
         </Base>
