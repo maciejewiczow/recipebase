@@ -2,15 +2,7 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { Recipe } from 'backend-logic';
-import init from 'recipebase/src/store/Initalize';
-import {
-    CoverImage,
-    ListSeparator,
-    Name,
-    RecipeItemWrapper,
-    TagList,
-    TagListItem,
-} from './RecipeListItem.styles';
+import { CoverImage, Name, RecipeItemWrapper } from './RecipeListItem.styles';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from 'recipebase/src/RootNavigation';
 import { SmallTagList } from './SmallTagList';

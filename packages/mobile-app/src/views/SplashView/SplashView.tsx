@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
-import init from 'recipebase/src/store/Initalize';
+import { useRootStore } from 'recipebase/src/RootStoreContext';
 import { Background, AppTitle, Gradient, Loader } from './SplashView.styles';
 
 export const SplashView: React.FC = () => {
+    const root = useRootStore();
+
     useEffect(() => {
-        init.initalize();
-    }, []);
+        root.initalize();
+    }, [root]);
 
     return (
         // Wrong typings

@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import init from 'recipebase/src/store/Initalize';
+import { useRootStore } from 'recipebase/src/RootStoreContext';
 import { capitalize } from 'recipebase/src/utils/capitalize';
 import { round } from 'recipebase/src/utils/round';
 import {
@@ -16,16 +16,18 @@ export interface IngredientListProps {
 }
 
 export const IngredientList: React.FC<IngredientListProps> = observer(({ multiplier }) => {
-    if (!init.recipes?.currentRecipe)
+    const root = useRootStore();
+
+    if (!root.recipes?.currentRecipe)
         return null;
 
-    if ((init.recipes?.currentRecipe?.ingredientSections?.length ?? 0) === 0)
+    if ((root.recipes?.currentRecipe?.ingredientSections?.length ?? 0) === 0)
         return <Ingredients><Text>No ingredients to show</Text></Ingredients>;
 
     return (
         <Ingredients>{
-            init.recipes.currentRecipe.ingredientSections?.flatMap((section, si) => ([
-                (init.recipes?.currentRecipe?.ingredientSections?.length ?? 0) > 1 && section.name && (
+            root.recipes.currentRecipe.ingredientSections?.flatMap((section, si) => ([
+                (root.recipes?.currentRecipe?.ingredientSections?.length ?? 0) > 1 && section.name && (
                     <SectionTitle isFirstChild={si === 0} key={section.id}>{section.name}</SectionTitle>
                 ),
                 ...(section.recipeIngredients?.map(rcpIngr => (

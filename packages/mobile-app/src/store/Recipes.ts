@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx';
+import { computed, makeAutoObservable } from 'mobx';
 import { ILike } from 'typeorm/browser';
 import { Database, Recipe } from 'backend-logic';
 import { TagWithSelectedState } from './Tags';
@@ -6,7 +6,6 @@ import { TagWithSelectedState } from './Tags';
 export class Recipes {
     isFetchingRecipes = false;
     recipes: Recipe[] = [];
-    filteredRecipes: Recipe[] = [];
     currentRecipe?: Recipe;
     isFetchingCurrentRecipe = false;
 
@@ -35,14 +34,14 @@ export class Recipes {
         this.isFetchingRecipes = false;
     }
 
-    // eslint-disable-next-line require-yield
-    *filterRecipes(selectedTags: TagWithSelectedState[]) {
-        this.filteredRecipes = this.recipes.filter(rc => selectedTags
+    @computed
+    filterRecipes = (selectedTags: TagWithSelectedState[]) => (
+        this.recipes.filter(rc => selectedTags
             ?.every(stag => rc.tags
                 ?.find(tag => stag.tag.id === tag.id)
             )
-        );
-    }
+        )
+    );
 
     *fetchRecipeById(id: Recipe['id']) {
         this.isFetchingCurrentRecipe = true;

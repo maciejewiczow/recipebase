@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { ActivityIndicator } from 'react-native';
-import init from 'recipebase/src/store/Initalize';
 import { EmptyListView } from './EmptyListView';
 import {
     Wrapper,
@@ -12,18 +11,16 @@ import {
     RecipeListItem,
 } from './HomeView.styles';
 import { NoSearchResultsListView } from './NoSearchResultsListView';
+import { useRootStore } from 'recipebase/src/RootStoreContext';
 
 export const HomeView: React.FC = observer(() => {
+    const root = useRootStore();
     const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
-        init.recipes?.fetchRecipes(searchText, init.tags?.selectedTags || []);
-    }, [searchText]);
-
-    useEffect(() => {
-        init.recipes?.filterRecipes(init.tags?.selectedTags || []);
+        root.recipes.fetchRecipes(searchText, root.tags.selectedTags);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [init.tags?.selectedTags]);
+    }, [searchText]);
 
     return (
         <Wrapper>
@@ -35,14 +32,14 @@ export const HomeView: React.FC = observer(() => {
                 placeholder="Search by name, tag..."
             />
             <TagList />
-            {init.recipes?.isFetchingRecipes ? (
+            {root.recipes?.isFetchingRecipes ? (
                 <ActivityIndicator size={60} color="#999" />
             ) : (
 
-                ((init.recipes?.filteredRecipes.length ?? 0) > 0) ? (
-                    init.recipes?.filteredRecipes.map(item => <RecipeListItem key={item.id} recipe={item} />)
+                ((root.recipes.filterRecipes(root.tags.selectedTags).length ?? 0) > 0) ? (
+                    root.recipes.filterRecipes(root.tags.selectedTags).map(item => <RecipeListItem key={item.id} recipe={item} />)
                 ) : (
-                    searchText.trim().length === 0 && (init.tags?.selectedTags.length ?? 0) === 0 ? (
+                    searchText.trim().length === 0 && (root.tags?.selectedTags.length ?? 0) === 0 ? (
                         <EmptyListView />
                     ) : (
                         <NoSearchResultsListView />

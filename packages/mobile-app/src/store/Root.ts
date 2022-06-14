@@ -1,4 +1,3 @@
-import { makeAutoObservable } from 'mobx';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { Config } from 'react-native-config';
@@ -13,16 +12,16 @@ GoogleSignin.configure({
     offlineAccess: true,
 });
 
-export class Initalize {
+export class Root {
     private static dbPathStorageKey = 'dbPath';
     private database?: Database;
 
-    recipes?: Recipes;
-    tags?: Tags;
+    recipes!: Recipes;
+    tags!: Tags;
 
     async initalize() {
         // await AsyncStorage.removeItem(Initalize.dbPathStorageKey);
-        const dbFilePath = await AsyncStorage.getItem(Initalize.dbPathStorageKey);
+        const dbFilePath = await AsyncStorage.getItem(Root.dbPathStorageKey);
 
         if (!dbFilePath)
             RootNavigation.replace('SelectDatabase');
@@ -31,7 +30,7 @@ export class Initalize {
     }
 
     async initalizeDbAndUpdateSavedFilePath(dbFilePath: string) {
-        await AsyncStorage.setItem(Initalize.dbPathStorageKey, dbFilePath);
+        await AsyncStorage.setItem(Root.dbPathStorageKey, dbFilePath);
         await this.initalizeAndGoHome(dbFilePath);
     }
 
@@ -57,6 +56,3 @@ export class Initalize {
         await this.database.initalize();
     }
 }
-
-const init = new Initalize();
-export default init;

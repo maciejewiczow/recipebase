@@ -1,7 +1,7 @@
 import { Observer, observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { FlatList, ListRenderItemInfo, StyleProp, ViewStyle } from 'react-native';
-import init from 'recipebase/src/store/Initalize';
+import { useRootStore } from 'recipebase/src/RootStoreContext';
 import { TagWithSelectedState } from 'recipebase/src/store/Tags';
 import { List, TagBody } from './TagList.styles';
 import { TagView } from './TagView';
@@ -12,14 +12,16 @@ export interface SearchBarProps {
 }
 
 export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMargin = 16 }) => {
+    const root = useRootStore();
+
     useEffect(() => {
-        init.tags?.fetchTags();
-    }, []);
+        root.tags.fetchTags();
+    }, [root]);
 
     return (
         <List
             style={style}
-            data={init.tags?.partitionedTags}
+            data={root.tags.partitionedTags}
             renderItem={({ item, index }) => (
                 <Observer>
                     {() => (
@@ -27,9 +29,9 @@ export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMa
                             count={item.tag.recipeCount}
                             name={item.tag.name || ''}
                             isSelected={item.isSelected}
-                            onSelect={() => init.tags?.toggleTagSelectedById(item.tag.id)}
+                            onSelect={() => root.tags?.toggleTagSelectedById(item.tag.id)}
                             isFirstChild={index === 0}
-                            isLastChild={index === (init.tags?.tags.length ?? 1) - 1}
+                            isLastChild={index === (root.tags?.tags.length ?? 1) - 1}
                             horizontalMargin={horizontalMargin}
                         />
                     )}
