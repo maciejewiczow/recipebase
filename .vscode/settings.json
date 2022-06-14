@@ -5,4 +5,7 @@
         "packages/backend-logic"
     ],
     "jest.jestCommandLine": "npx jest ",
+    "files.exclude": {
+        "**/node_modules": true
+    },
 }

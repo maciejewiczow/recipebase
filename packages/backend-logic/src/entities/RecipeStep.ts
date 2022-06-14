@@ -4,11 +4,11 @@ import RecipeSection from './RecipeSection';
 @Entity('RecipeStep')
 export default class RecipeStep {
     @PrimaryGeneratedColumn()
-        id!: number;
+    id!: number;
 
     @Column('text')
-        content!: string;
+    content!: string;
 
     @ManyToOne(() => RecipeSection, rs => rs.recipeSteps)
-        recipeSection?: RecipeSection;
+    recipeSection?: RecipeSection;
 }

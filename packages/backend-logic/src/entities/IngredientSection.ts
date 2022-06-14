@@ -11,14 +11,14 @@ import RecipeIngredient from './RecipeIngredient';
 @Entity('IngredientSection')
 export default class IngredientSection {
     @PrimaryGeneratedColumn()
-        id!: number;
+    id!: number;
 
     @Column({ type: 'varchar', length: 1000 })
-        name!: string;
+    name!: string;
 
     @ManyToOne(() => Recipe, r => r.ingredientSections)
-        recipe?: Recipe;
+    recipe?: Recipe;
 
     @OneToMany(() => RecipeIngredient, ri => ri.ingredientSection)
-        recipeIngredients?: RecipeIngredient[];
+    recipeIngredients?: RecipeIngredient[];
 }

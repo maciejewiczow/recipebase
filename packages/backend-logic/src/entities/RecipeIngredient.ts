@@ -6,20 +6,20 @@ import Unit from './Unit';
 @Entity('RecipeIngredient')
 export default class RecipeIngredient {
     @PrimaryGeneratedColumn()
-        id!: number;
+    id!: number;
 
     @Column({ type:'double' })
-        quantityFrom!: number;
+    quantityFrom!: number;
 
     @Column({ type:'double' })
-        quantityTo?: number;
+    quantityTo?: number;
 
     @ManyToOne(() => IngredientSection, is => is.recipeIngredients)
-        ingredientSection?: IngredientSection;
+    ingredientSection?: IngredientSection;
 
     @ManyToOne(() => Ingredient, ingr => ingr.recipeIngredients)
-        ingredient?: Ingredient;
+    ingredient?: Ingredient;
 
     @ManyToOne(() => Unit, u => u.recipeIngredients)
-        unit?: Unit;
+    unit?: Unit;
 }

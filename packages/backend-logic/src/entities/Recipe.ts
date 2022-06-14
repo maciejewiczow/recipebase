@@ -14,36 +14,36 @@ import Tag from './Tag';
 @Entity('Recipe')
 export default class Recipe {
     @PrimaryGeneratedColumn()
-        id!: number;
+    id!: number;
 
     @Index({ fulltext: true })
     @Column({ type: 'varchar', length: 2000 })
-        name!: string;
+    name!: string;
 
     @Index({ fulltext: true })
     @Column('text')
-        description!: string;
+    description!: string;
 
     @Column({
         type: 'varchar',
         length: 1e3,
     })
-        coverImage!: string;
+    coverImage!: string;
 
     @Column({
         type:'varchar',
         length: 500,
         nullable: true,
     })
-        sourceUrl?: string;
+    sourceUrl?: string;
 
     @ManyToMany(() => Tag, t => t.recipes)
     @JoinTable()
-        tags?: Tag[];
+    tags?: Tag[];
 
     @OneToMany(() => RecipeSection, rs => rs.recipe)
-        sections?: RecipeSection[];
+    sections?: RecipeSection[];
 
     @OneToMany(() => IngredientSection, is => is.recipe)
-        ingredientSections?: IngredientSection[];
+    ingredientSections?: IngredientSection[];
 }

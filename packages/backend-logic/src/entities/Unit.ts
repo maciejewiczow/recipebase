@@ -4,14 +4,14 @@ import RecipeIngredient from './RecipeIngredient';
 @Entity('Unit')
 export default class Unit {
     @PrimaryGeneratedColumn()
-        id!: number;
+    id!: number;
 
     @Column({ type: 'varchar' })
-        name!: string;
+    name!: string;
 
     @Column('simple-array')
-        plurals!: string[];
+    plurals!: string[];
 
     @OneToMany(() => RecipeIngredient, ri => ri.unit)
-        recipeIngredients?: RecipeIngredient[];
+    recipeIngredients?: RecipeIngredient[];
 }
