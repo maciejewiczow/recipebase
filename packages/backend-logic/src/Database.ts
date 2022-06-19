@@ -1,4 +1,4 @@
-import { DataSource, Repository } from 'typeorm/browser';
+import { DataSource, Repository } from 'typeorm';
 import sqlite from 'react-native-sqlite-storage';
 import Ingredient from './entities/Ingredient';
 import IngredientSection from './entities/IngredientSection';

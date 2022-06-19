@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm/browser';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import Ingredient from './Ingredient';
 import IngredientSection from './IngredientSection';
 import Unit from './Unit';

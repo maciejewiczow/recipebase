@@ -6,7 +6,7 @@ import {
     ManyToMany,
     OneToMany,
     Index,
-} from 'typeorm/browser';
+} from 'typeorm';
 import IngredientSection from './IngredientSection';
 import RecipeSection from './RecipeSection';
 import Tag from './Tag';

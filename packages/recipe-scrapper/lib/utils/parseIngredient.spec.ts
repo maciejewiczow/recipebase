@@ -1,4 +1,4 @@
-import { Ingredient } from 'recipe';
+import { Ingredient } from 'recipe-scrapper/lib/recipe';
 import { parseIngredient } from './parseIngredient';
 
 describe('parseIngredient', () => {

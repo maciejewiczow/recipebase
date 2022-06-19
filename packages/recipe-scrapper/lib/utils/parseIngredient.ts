@@ -1,5 +1,5 @@
 import numericQuantity from 'numeric-quantity';
-import { Ingredient, Range } from 'recipe';
+import { Ingredient, Range } from 'recipe-scrapper/lib/recipe';
 import { names as unitNames } from './unitNames.json';
 
 const parseQuantity = (quantity?: string): string | number | Range | undefined => {

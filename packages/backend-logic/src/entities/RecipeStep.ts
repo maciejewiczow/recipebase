@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm/browser';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import RecipeSection from './RecipeSection';
 
 @Entity('RecipeStep')

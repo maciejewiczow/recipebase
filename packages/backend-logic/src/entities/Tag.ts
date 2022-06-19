@@ -1,5 +1,5 @@
 import { ManyToMany } from 'typeorm';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm/browser';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import Recipe from './Recipe';
 
 @Entity('Tag')

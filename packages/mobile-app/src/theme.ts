@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import cloneDeep from 'lodash.clonedeep';
 import { DefaultTheme } from 'styled-components/native';
-import { DeepPartial } from 'typeorm/browser';
+import { DeepPartial } from 'typeorm';
 
 const common: DeepPartial<DefaultTheme> = {
     palette: {

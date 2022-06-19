@@ -4,7 +4,7 @@ import {
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
-} from 'typeorm/browser';
+} from 'typeorm';
 import Recipe from './Recipe';
 import RecipeStep from './RecipeStep';
 

@@ -4,7 +4,7 @@ import {
     PrimaryGeneratedColumn,
     ManyToOne,
     OneToMany,
-} from 'typeorm/browser';
+} from 'typeorm';
 import Recipe from './Recipe';
 import RecipeIngredient from './RecipeIngredient';
 
@@ -13,8 +13,8 @@ export default class IngredientSection {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({ type: 'varchar', length: 1000 })
-    name!: string;
+    @Column({ type: 'varchar', length: 1000, nullable: true })
+    name!: string | null;
 
     @ManyToOne(() => Recipe, r => r.ingredientSections)
     recipe?: Recipe;
