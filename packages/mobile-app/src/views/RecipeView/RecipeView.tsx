@@ -157,7 +157,7 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
                     <StepsList
                         currentStep={currentStep ?? -1}
                         currentSection={currentSection}
-                        onChildrenLaout={(e, key) => {
+                        onChildrenLayout={(e, key) => {
                             stepsCoords[key] = e.nativeEvent.layout.y;
                             setStepsCoords(stepsCoords);
                         }}

@@ -8,7 +8,7 @@ import { SectionTitle, RecipeStepRow, RecipeStepText, Text } from './RecipeView.
 export interface StepsListProps {
     currentStep: number;
     currentSection: number;
-    onChildrenLaout?: (e: LayoutChangeEvent, childKey: string) => any;
+    onChildrenLayout?: (e: LayoutChangeEvent, childKey: string) => any;
 }
 
 export const getKey = (item: number, section: number) => `${section}_${item}`;
@@ -29,7 +29,7 @@ const getProgression = (currentSection: number, currentStep: number, i: number, 
     return RecipeProgression.current;
 };
 
-export const StepsList: React.FC<StepsListProps> = observer(({ currentStep, currentSection, onChildrenLaout }) => {
+export const StepsList: React.FC<StepsListProps> = observer(({ currentStep, currentSection, onChildrenLayout }) => {
     const root = useRootStore();
 
     if (!root.recipes?.currentRecipe)
@@ -45,7 +45,7 @@ export const StepsList: React.FC<StepsListProps> = observer(({ currentStep, curr
                     <SectionTitle isFirstChild={si === 0} key={section.id}>{section.name}</SectionTitle>
                 ),
                 ...(section.recipeSteps?.map((step, i) => (
-                    <RecipeStepRow onLayout={e => onChildrenLaout?.(e, getKey(i, si))} key={getKey(step.id, section.id)}>
+                    <RecipeStepRow onLayout={e => onChildrenLayout?.(e, getKey(i, si))} key={getKey(step.id, section.id)}>
                         <RecipeStepLineDecorator
                             progression={getProgression(currentSection, currentStep, i, si)}
                             isLast={i === (section.recipeSteps?.length ?? 1) - 1}
