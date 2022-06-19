@@ -20,10 +20,10 @@ const getProgression = (currentSection: number, currentStep: number, i: number, 
     if (currentSection > si)
         return RecipeProgression.past;
 
-    if ((currentStep ?? -1) < i)
+    if (currentStep < i)
         return RecipeProgression.future;
 
-    if ((currentStep ?? -1) > i)
+    if (currentStep > i)
         return RecipeProgression.past;
 
     return RecipeProgression.current;
