@@ -44,10 +44,10 @@ export class Tags {
     }
 
     get notSelectedTags() {
-        return this.tags.filter(t => !t.isSelected);
+        return this.tags.filter(tag => !tag.isSelected);
     }
 
     get partitionedTags() {
-        return [...this.selectedTags || [], ...this.notSelectedTags];
+        return [...this.selectedTags, ...this.notSelectedTags];
     }
 }

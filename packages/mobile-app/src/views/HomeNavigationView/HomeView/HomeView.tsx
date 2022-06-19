@@ -18,7 +18,7 @@ export const HomeView: React.FC = observer(() => {
     const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
-        root.recipes.fetchRecipes(searchText, root.tags.selectedTags);
+        root.recipes.fetchRecipes(searchText);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchText]);
 
@@ -36,8 +36,8 @@ export const HomeView: React.FC = observer(() => {
                 <ActivityIndicator size={60} color="#999" />
             ) : (
 
-                ((root.recipes.filterRecipes(root.tags.selectedTags).length ?? 0) > 0) ? (
-                    root.recipes.filterRecipes(root.tags.selectedTags).map(item => <RecipeListItem key={item.id} recipe={item} />)
+                ((root.recipes.filterRecipesByTags(root.tags.selectedTags).length ?? 0) > 0) ? (
+                    root.recipes.filterRecipesByTags(root.tags.selectedTags).map(item => <RecipeListItem key={item.id} recipe={item} />)
                 ) : (
                     searchText.trim().length === 0 && (root.tags?.selectedTags.length ?? 0) === 0 ? (
                         <EmptyListView />

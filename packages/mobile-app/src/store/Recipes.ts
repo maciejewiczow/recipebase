@@ -1,5 +1,5 @@
 import { computed, makeAutoObservable } from 'mobx';
-import { ILike } from 'typeorm/browser';
+import { ILike } from 'typeorm';
 import { Database, Recipe } from 'backend-logic';
 import { TagWithSelectedState } from './Tags';
 
@@ -13,9 +13,12 @@ export class Recipes {
         makeAutoObservable(this);
     }
 
-    *fetchRecipes(searchText: string, selectedTags: TagWithSelectedState[]) {
+    *fetchRecipes(searchText: string) {
         this.isFetchingRecipes = true;
-        const escapedText = searchText.trim().replace('%', '\\%').replace('_', '\\_');
+        const escapedText = searchText
+            .trim()
+            .replace(/%/g, '\\%')
+            .replace(/_/g, '\\_');
 
         const terms = escapedText.match(/(?:[^\s"]+|"[^"]*")+/g);
 
@@ -30,12 +33,11 @@ export class Recipes {
                 relations: ['tags'],
             }) || [];
 
-        this.filterRecipes(selectedTags);
         this.isFetchingRecipes = false;
     }
 
     @computed
-    filterRecipes = (selectedTags: TagWithSelectedState[]) => (
+    filterRecipesByTags = (selectedTags: TagWithSelectedState[]) => (
         this.recipes.filter(rc => selectedTags
             ?.every(stag => rc.tags
                 ?.find(tag => stag.tag.id === tag.id)
