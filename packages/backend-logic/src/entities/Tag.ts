@@ -1,5 +1,4 @@
-import { ManyToMany } from 'typeorm';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ManyToMany, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import Recipe from './Recipe';
 
 @Entity('Tag')

@@ -12,6 +12,6 @@ export default class Unit {
     @Column('simple-array')
     plurals!: string[];
 
-    @OneToMany(() => RecipeIngredient, ri => ri.unit)
+    @OneToMany(() => RecipeIngredient, ri => ri.unit, { cascade: true })
     recipeIngredients?: RecipeIngredient[];
 }

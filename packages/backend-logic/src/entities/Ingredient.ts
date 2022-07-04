@@ -9,6 +9,6 @@ export default class Ingredient {
     @Column({ type: 'varchar', length: 1000 })
     name!: string;
 
-    @OneToMany(() => RecipeIngredient, ri => ri.ingredient)
+    @OneToMany(() => RecipeIngredient, ri => ri.ingredient, { cascade: true })
     recipeIngredients?: RecipeIngredient[];
 }

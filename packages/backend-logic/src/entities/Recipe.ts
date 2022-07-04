@@ -41,9 +41,9 @@ export default class Recipe {
     @JoinTable()
     tags?: Tag[];
 
-    @OneToMany(() => RecipeSection, rs => rs.recipe)
+    @OneToMany(() => RecipeSection, rs => rs.recipe, { cascade: true })
     sections?: RecipeSection[];
 
-    @OneToMany(() => IngredientSection, is => is.recipe)
+    @OneToMany(() => IngredientSection, is => is.recipe, { cascade: true })
     ingredientSections?: IngredientSection[];
 }

@@ -11,7 +11,7 @@ export default class RecipeIngredient {
     @Column({ type:'double' })
     quantityFrom!: number;
 
-    @Column({ type:'double' })
+    @Column({ type:'double', nullable: true })
     quantityTo?: number;
 
     @ManyToOne(() => IngredientSection, is => is.recipeIngredients)

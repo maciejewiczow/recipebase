@@ -19,6 +19,6 @@ export default class RecipeSection {
     @ManyToOne(() => Recipe, r => r.sections)
     recipe?: Recipe;
 
-    @OneToMany(() => RecipeStep, rs => rs.recipeSection)
+    @OneToMany(() => RecipeStep, rs => rs.recipeSection, { cascade: true })
     recipeSteps?: RecipeStep[];
 }
