@@ -1,6 +1,6 @@
 import { Database, Tag } from 'backend-logic';
 import { makeAutoObservable } from 'mobx';
-import { byNumberDesc } from '../utils/arrayUtils';
+import { byNumberDesc } from 'backend-logic/src/utils/arrayUtils';
 
 export interface TagWithCount extends Tag {
     recipeCount: number;

@@ -20,7 +20,9 @@ export class Recipes {
             .replace(/%/g, '\\%')
             .replace(/_/g, '\\_');
 
-        const terms = escapedText.match(/(?:[^\s"]+|"[^"]*")+/g);
+        let terms = escapedText.match(/(?:[^\s"]+|"[^"]*")+/g);
+
+        terms = terms?.map(term => (term.startsWith('"') && term.endsWith('"') ? term.slice(1, -1) : term)) || [];
 
         this.recipes = yield this.database.recipeRepository
             ?.find({
@@ -39,8 +41,8 @@ export class Recipes {
     @computed
     filterRecipesByTags = (selectedTags: TagWithSelectedState[]) => (
         this.recipes.filter(rc => selectedTags
-            ?.every(stag => rc.tags
-                ?.find(tag => stag.tag.id === tag.id)
+            ?.every(selectedTag => rc.tags
+                ?.find(tag => selectedTag.tag.id === tag.id)
             )
         )
     );

@@ -2,7 +2,7 @@ import { Observer, observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { FlatList, ListRenderItemInfo, StyleProp, ViewStyle } from 'react-native';
 import { useRootStore } from 'recipebase/src/RootStoreContext';
-import { TagWithSelectedState } from 'recipebase/src/store/Tags';
+import { TagWithSelectedState } from 'backend-logic/src/store/Tags';
 import { List, TagBody } from './TagList.styles';
 import { TagView } from './TagView';
 

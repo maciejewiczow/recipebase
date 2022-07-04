@@ -1,10 +1,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import sqlite from 'react-native-sqlite-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { Config } from 'react-native-config';
 import { Database } from 'backend-logic';
-import RootNavigation from '../RootNavigation';
-import { Recipes } from './Recipes';
-import { Tags } from './Tags';
+import RootNavigation from './RootNavigation';
+import { Recipes } from 'backend-logic/src/store/Recipes';
+import { Tags } from 'backend-logic/src/store/Tags';
 
 GoogleSignin.configure({
     scopes: [/* 'https://www.googleapis.com/auth/drive' */],
@@ -52,7 +53,7 @@ export class Root {
     private async initalizeDatabase(dbPath: string) {
         console.log('Initalizing database in ', dbPath);
 
-        this.database = new Database(dbPath);
+        this.database = new Database(dbPath, sqlite);
         await this.database.initalize();
     }
 }

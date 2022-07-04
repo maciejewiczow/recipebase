@@ -1,5 +1,4 @@
 import { DataSource, Repository } from 'typeorm';
-import sqlite from 'react-native-sqlite-storage';
 import Ingredient from './entities/Ingredient';
 import IngredientSection from './entities/IngredientSection';
 import Recipe from './entities/Recipe';
@@ -22,7 +21,7 @@ export default class Database {
     tagRepository?: Repository<Tag>;
     unitRepository?: Repository<Unit>;
 
-    constructor(dbFilePath: string) {
+    constructor(dbFilePath: string, storageDriver?: any) {
         this.dataSource = new DataSource({
             type: 'react-native',
             database: 'recipebase',
@@ -30,7 +29,7 @@ export default class Database {
             extra: {
                 name: dbFilePath,
             },
-            driver: sqlite,
+            driver: storageDriver,
             logging: ['error', 'query', 'schema'],
             synchronize: true,
             entities: [
