@@ -6,7 +6,7 @@ interface ButtonPartsStyleProps {
     disabled: boolean;
 }
 
-const getButtonBg = (variant: ButtonVariant, disabled: boolean) => {
+const getButtonBg = ({ variant, disabled }: ButtonPartsStyleProps) => {
     if (disabled)
         return '#F0F0F0';
 
@@ -15,14 +15,14 @@ const getButtonBg = (variant: ButtonVariant, disabled: boolean) => {
             return '#E88A36';
 
         case ButtonVariant.secondary:
-            return '#8E8E8E';
+            return '#F8F8F8';
 
         default:
             return 'transparent';
     }
 };
 
-const getButtonBorderColor = (variant: ButtonVariant, disabled: boolean) => {
+const getButtonBorderColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
     if (disabled) {
         switch (variant) {
             case ButtonVariant.primary:
@@ -44,13 +44,23 @@ const getButtonBorderColor = (variant: ButtonVariant, disabled: boolean) => {
             return 'white';
 
         case ButtonVariant.secondary:
-            return '#8E8E8E';
+            return '#E5E5E5';
     }
 };
 
+const getButtonTextColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
+    if (disabled)
+        return '#848484';
+
+    if (variant === ButtonVariant.secondary)
+        return '#616161';
+
+    return 'white';
+};
+
 export const Base = styled.View<ButtonPartsStyleProps>`
-    background-color: ${({ variant, disabled }) => getButtonBg(variant, disabled)};
-    border-color:  ${({ variant, disabled }) => getButtonBorderColor(variant, disabled)};
+    background-color: ${props => getButtonBg(props)};
+    border-color:  ${props => getButtonBorderColor(props)};
 
     border-width: 2px;
     border-radius: ${({ theme }) => theme.border.radiusSmall};
@@ -62,5 +72,5 @@ export const Base = styled.View<ButtonPartsStyleProps>`
 
 export const ButtonText = styled.Text<ButtonPartsStyleProps>`
     font-size: 18px;
-    color: ${({ disabled }) => (disabled ? '#848484' : 'white')};
+    color: ${props => getButtonTextColor(props)};
 `;
