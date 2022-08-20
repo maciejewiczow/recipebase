@@ -6,7 +6,7 @@ export default class Tag {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar', unique: true })
     name!: string;
 
     @ManyToMany(() => Recipe, r => r.tags)

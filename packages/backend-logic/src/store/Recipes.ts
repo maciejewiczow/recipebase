@@ -6,6 +6,7 @@ import { TagWithSelectedState } from './Tags';
 export class Recipes {
     isFetchingRecipes = false;
     recipes: Recipe[] = [];
+
     currentRecipe?: Recipe;
     isFetchingCurrentRecipe = false;
 

@@ -29,7 +29,7 @@ export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMa
                             count={item.tag.recipeCount}
                             name={item.tag.name || ''}
                             isSelected={item.isSelected}
-                            onSelect={() => root.tags?.toggleTagSelectedById(item.tag.id)}
+                            onPress={() => root.tags?.toggleTagSelectedById(item.tag.id)}
                             isFirstChild={index === 0}
                             isLastChild={index === (root.tags?.tags.length ?? 1) - 1}
                             horizontalMargin={horizontalMargin}

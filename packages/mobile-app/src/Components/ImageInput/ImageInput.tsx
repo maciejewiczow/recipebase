@@ -1,5 +1,11 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, TouchableNativeFeedback } from 'react-native';
+import {
+    PermissionsAndroid,
+    Platform,
+    StyleProp,
+    TouchableNativeFeedback,
+    ViewStyle,
+} from 'react-native';
 import RNBlobFetch from 'rn-blob-fetch';
 import { pickSingle } from 'react-native-document-picker';
 import { Button, ButtonVariant } from '../Button';
@@ -17,6 +23,7 @@ interface ImageInputProps {
     value?: string;
     onChange?: (val: string) => any;
     placeholder?: string;
+    style?: StyleProp<ViewStyle>;
 }
 
 export const ImageInput: React.FC<ImageInputProps> = ({
@@ -24,6 +31,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
     placeholder = 'Pick an image',
     value,
     onChange,
+    style,
 }) => {
     const triggerFilePicker = async () => {
         try {
@@ -56,7 +64,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
     };
 
     return (
-        <Wrapper>
+        <Wrapper style={style}>
             <Label>{label}</Label>
             {!value ? (
                 <TouchableNativeFeedback onPress={triggerFilePicker}>

@@ -1,14 +1,18 @@
 import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { RecipeCount, TagBody, TagName } from './TagList.styles';
 
 export interface TagViewProps {
     name: string;
     count?: number;
     isSelected?: boolean;
-    onSelect?: () => any;
+    onPress?: () => any;
     isFirstChild?: boolean;
     isLastChild?: boolean;
-    horizontalMargin: number;
+    notPressable?: boolean;
+    noMinWidth?: boolean;
+    horizontalMargin?: number;
+    style?: StyleProp<ViewStyle>;
 }
 
 export const TagView: React.FC<TagViewProps> = ({
@@ -16,16 +20,22 @@ export const TagView: React.FC<TagViewProps> = ({
     isSelected,
     name,
     count,
-    onSelect,
+    onPress,
     isLastChild,
-    horizontalMargin,
+    notPressable,
+    noMinWidth,
+    horizontalMargin = 15,
+    style,
 }) => (
     <TagBody
         isSelected={isSelected}
         isFirstChild={!!isFirstChild}
         isLastChild={!!isLastChild}
-        onPress={onSelect}
+        onPress={onPress}
         horizontalMargin={horizontalMargin}
+        disabled={notPressable}
+        noMinWidth={noMinWidth}
+        style={style}
     >
         <TagName isSelected={isSelected}>{name}</TagName>
         {count !== undefined && <RecipeCount isSelected={isSelected}>{count}</RecipeCount>}

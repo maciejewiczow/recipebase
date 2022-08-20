@@ -10,14 +10,19 @@ interface OrderProps {
     isLastChild: boolean;
 }
 
-export const TagBody = styled.TouchableOpacity<IsSelectedProps & OrderProps & { horizontalMargin: number }>`
+interface MinWidthProps {
+    noMinWidth?: boolean;
+}
+
+type TagBodyProps = IsSelectedProps & OrderProps & { horizontalMargin: number } & MinWidthProps;
+
+export const TagBody = styled.TouchableOpacity<TagBodyProps>`
     padding: 10px 14px;
     height: 40px;
     margin-right: 8px;
     background: ${({ isSelected }) => (isSelected ? '#F2994A7D' : '#F3F3F3')};
     flex-flow: row nowrap;
     justify-content: space-between;
-    min-width: 85px;
     border-radius: ${({ theme }) => theme.border.radiusBig};
 
     ${({ isFirstChild, horizontalMargin }) => isFirstChild && css`
@@ -26,6 +31,10 @@ export const TagBody = styled.TouchableOpacity<IsSelectedProps & OrderProps & { 
 
     ${({ isLastChild, horizontalMargin }) => isLastChild && css`
         margin-right: ${horizontalMargin}px;
+    `}
+
+    ${({ noMinWidth }) => !noMinWidth && css`
+        min-width: 85px;
     `}
 `;
 

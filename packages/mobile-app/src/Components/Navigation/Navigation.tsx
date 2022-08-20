@@ -52,7 +52,7 @@ export const Navigation: React.FC<BottomTabBarProps> = ({ state, descriptors, na
                 >
                     <Icon focused={isFocused} />
                     <Text focused={isFocused}>
-                        {label}
+                        {label as string}
                     </Text>
                 </IconWrapper>
             );
