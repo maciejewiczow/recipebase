@@ -45,6 +45,7 @@ export class Tags {
             name,
             id: Math.random(),
             recipeCount: 1,
+            deletedAt: null,
         };
 
         if (!this.draftTags.find(t => t.name.toLowerCase() === name.toLowerCase()))
