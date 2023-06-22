@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
-import { RootStackParams } from 'recipebase/src/RootNavigation';
+import { RootStackParams, rootNavigationRef } from 'recipebase/src/RootNavigation';
 import { Button, ButtonVariant } from 'recipebase/src/components/Button';
 import { TagCreator } from 'recipebase/src/components/TagCreator';
 import { useRootStore } from 'recipebase/src/RootStoreContext';
-import { RecipeIngredient, RecipeStep } from 'recipebase/packages/backend-logic';
+import { Recipe, RecipeIngredient, RecipeStep } from 'recipebase/packages/backend-logic';
 import { HomeTabNavigationParams } from '../HomeNavigationView';
 import { TouchableNativeFeedback } from 'react-native';
 import {
@@ -33,6 +33,7 @@ import {
     SaveButton,
 } from './CreateView.styles';
 import { Label } from 'recipebase/src/components/Input/Input.styles';
+import { StackActions, TabActions } from '@react-navigation/native';
 
 interface RecipeIngredientViewProps {
     ingredient: RecipeIngredient;
@@ -136,12 +137,13 @@ export const CreateView: React.FC<BottomTabScreenProps<HomeTabNavigationParams &
 
     const saveRecipe = async () => {
         try {
-            const savedRecipe = await recipes.saveDraftRecipe();
+            const savedRecipe = (await recipes.saveDraftRecipe()) as unknown as Recipe;
 
             if (!savedRecipe)
                 throw new Error('There was an error while saving the recipe');
 
-            navigation.navigate('Recipe', { recipeId: savedRecipe.id });
+            navigation.dispatch(TabActions.jumpTo('Home'));
+            navigation.dispatch(StackActions.replace('Recipe', { recipeId: savedRecipe.id }));
         } catch (e) {
             if (e instanceof Error) {
                 console.log(e.message);
@@ -163,7 +165,7 @@ export const CreateView: React.FC<BottomTabScreenProps<HomeTabNavigationParams &
                     </LineWrapper>
                 </>
             )}
-            <Input label="Name" value={recipes.draftRecipe.name} onChange={recipes.setdraftRecipeName} />
+            <Input label="Name" value={recipes.draftRecipe.name} onChange={recipes.setDraftRecipeName} />
             <Input
                 label="Description"
                 numberOfLines={4}
@@ -174,9 +176,9 @@ export const CreateView: React.FC<BottomTabScreenProps<HomeTabNavigationParams &
             <ImageInput
                 label="Cover image"
                 value={recipes.draftRecipe.coverImage}
-                onChange={recipes.setdraftRecipeCoverImage}
+                onChange={recipes.setDraftRecipeCoverImage}
             />
-            <Input label="Source" value={recipes.draftRecipe.sourceUrl} onChange={recipes.setdraftRecipeSource} />
+            <Input label="Source" value={recipes.draftRecipe.sourceUrl} onChange={recipes.setDraftRecipeSource} />
             <TagCreator />
             <ElevationWrapper>
                 {recipes.draftRecipe.ingredientSections?.length === 1 ? (

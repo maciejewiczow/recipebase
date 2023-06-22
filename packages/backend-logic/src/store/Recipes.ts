@@ -1,4 +1,4 @@
-import { computed, makeAutoObservable } from 'mobx';
+import { action, computed, makeAutoObservable } from 'mobx';
 import { ILike } from 'typeorm';
 import {
     Database,
@@ -85,23 +85,23 @@ export class Recipes {
         this.isFetchingCurrentRecipe = false;
     }
 
-    setdraftRecipeName = (name: string) => {
+    @action setDraftRecipeName = (name: string) => {
         this.draftRecipe.name = name;
     };
 
-    setDraftRecipeDescription = (desc: string) => {
+    @action setDraftRecipeDescription = (desc: string) => {
         this.draftRecipe.description = desc;
     };
 
-    setdraftRecipeSource = (url: string) => {
+    @action setDraftRecipeSource = (url: string) => {
         this.draftRecipe.sourceUrl = url;
     };
 
-    setdraftRecipeCoverImage = (image: string) => {
+    @action setDraftRecipeCoverImage = (image: string) => {
         this.draftRecipe.coverImage = image;
     };
 
-    addNewDraftRecipeIngredient = (sectionId?: number) => {
+    @action addNewDraftRecipeIngredient = (sectionId?: number) => {
         const section = this.draftRecipe.ingredientSections?.find(is => is.id === sectionId);
 
         const newRi = RecipeIngredient.createWithTemporaryId();
@@ -114,17 +114,17 @@ export class Recipes {
         section?.recipeIngredients?.push(newRi);
     };
 
-    addNewDraftRecipeIngredientSection = () => {
+    @action addNewDraftRecipeIngredientSection = () => {
         const newSection = IngredientSection.createWithTemporaryId();
         newSection.recipeIngredients = [RecipeIngredient.createWithTemporaryId()];
         this.draftRecipe.ingredientSections?.push(newSection);
     };
 
-    removeDraftRecipeIngredientSection = (sectionId: number) => {
+    @action removeDraftRecipeIngredientSection = (sectionId: number) => {
         this.draftRecipe.ingredientSections = this.draftRecipe.ingredientSections?.filter(section => section.id !== sectionId);
     };
 
-    setDraftRecipeIngredientName = (sectionId: number, ingredientId: number, name: string) => {
+    @action setDraftRecipeIngredientName = (sectionId: number, ingredientId: number, name: string) => {
         const section = this.draftRecipe.ingredientSections?.find(is => is.id === sectionId);
 
         if (!section)
@@ -139,7 +139,7 @@ export class Recipes {
         recipeIngredient.ingredient!.name = name;
     };
 
-    setDraftRecipeIngredientQuantity = (sectionId: number, ingredientId: number, quantity: string) => {
+    @action setDraftRecipeIngredientQuantity = (sectionId: number, ingredientId: number, quantity: string) => {
         if (sectionId in this.draftRecipeQuantityStrings) {
             this.draftRecipeQuantityStrings[sectionId][ingredientId] = quantity;
         } else {
@@ -149,7 +149,7 @@ export class Recipes {
         }
     };
 
-    setDraftRecipeIngredientSectionName = (sectionId: number, name: string) => {
+    @action setDraftRecipeIngredientSectionName = (sectionId: number, name: string) => {
         const section = this.draftRecipe.ingredientSections?.find(is => is.id === sectionId);
 
         if (!section)
@@ -158,13 +158,13 @@ export class Recipes {
         section.name = name;
     };
 
-    addNewDraftRecipeStep = (sectionId: number) => {
+    @action addNewDraftRecipeStep = (sectionId: number) => {
         const section = this.draftRecipe.sections?.find(s => s.id === sectionId);
 
         section?.recipeSteps?.push(RecipeStep.createWithTemporaryId());
     };
 
-    setDraftRecipeStepContent = (sectionId: number, stepId: number, content: string) => {
+    @action setDraftRecipeStepContent = (sectionId: number, stepId: number, content: string) => {
         const section = this.draftRecipe.sections?.find(s => s.id === sectionId);
 
         if (!section)
@@ -178,7 +178,7 @@ export class Recipes {
         step.content = content;
     };
 
-    setDraftRecipeSectionName = (sectionId: number, name: string) => {
+    @action setDraftRecipeSectionName = (sectionId: number, name: string) => {
         const section = this.draftRecipe.sections?.find(s => s.id === sectionId);
 
         if (!section)
@@ -187,18 +187,18 @@ export class Recipes {
         section.name = name;
     };
 
-    removeDraftRecipeSection = (sectionId: number) => {
+    @action removeDraftRecipeSection = (sectionId: number) => {
         this.draftRecipe.sections = this.draftRecipe.sections?.filter(section => section.id !== sectionId);
     };
 
-    addNewDraftRecipeSection = () => {
+    @action addNewDraftRecipeSection = () => {
         const newSection = RecipeSection.createWithTemporaryId();
         newSection.recipeSteps = [RecipeStep.createWithTemporaryId()];
 
         this.draftRecipe.sections?.push(newSection);
     };
 
-    makeCurrentRecipeEditable = () => {
+    @action makeCurrentRecipeEditable = () => {
         if (!this.currentRecipe)
             return;
 
@@ -250,7 +250,7 @@ export class Recipes {
         }
     };
 
-    deleteCurrentRecipe = () => {
+    @action deleteCurrentRecipe = () => {
         if (!this.currentRecipe)
             return;
 
