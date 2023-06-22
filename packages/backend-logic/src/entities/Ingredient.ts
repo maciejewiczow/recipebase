@@ -1,14 +1,34 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { makeAutoObservable } from 'mobx';
+import {
+    Column,
+    DeleteDateColumn,
+    Entity,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 import RecipeIngredient from './RecipeIngredient';
 
 @Entity('Ingredient')
 export default class Ingredient {
     @PrimaryGeneratedColumn()
-    id!: number;
+        id!: number;
 
     @Column({ type: 'varchar', length: 1000 })
-    name!: string;
+        name!: string;
 
     @OneToMany(() => RecipeIngredient, ri => ri.ingredient, { cascade: true })
-    recipeIngredients?: RecipeIngredient[];
+        recipeIngredients?: RecipeIngredient[];
+
+    @DeleteDateColumn({ nullable: true })
+        deletedAt!: Date | null;
+
+    constructor() {
+        makeAutoObservable(this);
+    }
+
+    static createWithTemporaryId() {
+        const newIngr = new Ingredient();
+        newIngr.id = Math.random();
+        return newIngr;
+    }
 }

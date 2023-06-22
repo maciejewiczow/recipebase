@@ -9,6 +9,7 @@
   "author": "Mafciejewicz",
   "license": "MIT",
   "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
     "mobx": "~6.6.0",
     "typeorm": "^0.3.6"
   },

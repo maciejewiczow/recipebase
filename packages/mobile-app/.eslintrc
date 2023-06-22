@@ -147,7 +147,7 @@
         ],
         "max-classes-per-file": "off",
         "no-plusplus": "off",
-        "react/jsx-fragments": ["warn", "element"],
+        "react/jsx-fragments": ["warn", "syntax"],
         "comma-dangle": "off",
         "@typescript-eslint/lines-between-class-members": ["warn", "always", { "exceptAfterSingleLine": true }],
         "@typescript-eslint/comma-dangle": ["warn", "always-multiline"],

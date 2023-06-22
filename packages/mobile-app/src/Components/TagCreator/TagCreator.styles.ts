@@ -34,20 +34,23 @@ export const TagNameInput = styled.TextInput`
 `;
 
 export const InputWithDropdownWrapper = styled.View`
-    background: white;
+    background-color: white;
     margin-right: 8px;
 `;
 
 export const DropdownWrapper = styled.View`
-    background: white;
+    background-color: white;
     border: 1px solid #eee;
     position: absolute;
     left: 0;
     right: 0;
     top: 40px;
+    z-index: 1;
+    elevation: 1;
 `;
 
 export const DropdownRow = styled.TouchableOpacity`
+    background-color: white;
     padding: 6px 8px;
     flex-flow: row nowrap;
     justify-content: space-between;

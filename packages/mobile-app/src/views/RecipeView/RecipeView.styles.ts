@@ -30,7 +30,7 @@ export const BackIconWrapper = styled.TouchableOpacity`
 
 export const BackIcon = styled(Icon).attrs({
     name: 'chevron-thin-left',
-    color: 'white',
+    color: '#616161',
     size: 20,
 })``;
 
@@ -40,11 +40,15 @@ export const MenuIcon = styled(Icon).attrs({
     size: 20,
 })``;
 
-export const MenuIconWrapper = styled.TouchableOpacity`
+export const MenuWrapper = styled.View`
     padding: 24px;
     position: absolute;
     top: 0;
     right: 0;
+`;
+
+export const MenuItemWrapper = styled.View`
+    padding: 12px 18px;
 `;
 
 export const Text = styled.Text`

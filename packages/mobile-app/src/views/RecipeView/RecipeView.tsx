@@ -1,7 +1,8 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import { ActivityIndicator, Alert, ScrollView, View } from 'react-native';
+import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import { useRootStore } from 'recipebase/src/RootStoreContext';
 import { RootStackParams } from 'recipebase/src/RootNavigation';
 import { SmallTagList } from 'recipebase/src/views/HomeNavigationView/HomeView/SmallTagList';
@@ -23,8 +24,10 @@ import {
     Description,
     BackIcon,
     BackIconWrapper,
-    MenuIconWrapper,
+    MenuWrapper,
     MenuIcon,
+    Text,
+    MenuItemWrapper,
 } from './RecipeView.styles';
 
 interface MultiplierDropdownItem {
@@ -46,7 +49,7 @@ const initialDropdownItems: MultiplierDropdownItem[] = [
 const additionalScrollOffset = 100;
 
 export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recipe'>> = observer(({ route, navigation }) => {
-    const root = useRootStore();
+    const { recipes, tags } = useRootStore();
     const [currentSection, setCurrentSection] = useState<number>(0);
     const [currentStep, setCurrentStep] = useState<number | null>(null);
     const [ingredientMultiplier, setIngredientMultiplier] = useState(1);
@@ -57,7 +60,7 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
     const scrollContainerRef = useRef<ScrollView>(null);
 
     useEffect(() => {
-        root.recipes?.fetchRecipeById(route.params.recipeId);
+        recipes.fetchRecipeById(route.params.recipeId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [route.params.recipeId]);
 
@@ -65,10 +68,10 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
         setCurrentStep(step => {
             let next = (step === null ? 0 : step + 1);
 
-            if (next === (root.recipes?.currentRecipe?.sections?.[currentSection]?.recipeSteps?.length)) {
+            if (next === (recipes.currentRecipe?.sections?.[currentSection]?.recipeSteps?.length)) {
                 next = 0;
                 setCurrentSection(section => {
-                    if ((section + 1) === root.recipes?.currentRecipe?.sections?.length)
+                    if ((section + 1) === recipes.currentRecipe?.sections?.length)
                         return section;
 
                     return section + 1;
@@ -87,7 +90,7 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
     const prevStep = () => {
         setCurrentStep(step => {
             if (step === 0) {
-                const prevSectionLength = root.recipes?.currentRecipe?.sections?.[currentSection - 1]?.recipeSteps?.length ?? 0;
+                const prevSectionLength = recipes.currentRecipe?.sections?.[currentSection - 1]?.recipeSteps?.length ?? 0;
                 const next = prevSectionLength - 1;
                 setCurrentSection(section => section - 1);
                 return next;
@@ -102,17 +105,43 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
     };
 
     const isLastStep = () => {
-        const sectionCount = root.recipes?.currentRecipe?.sections?.length ?? 0;
+        const sectionCount = recipes.currentRecipe?.sections?.length ?? 0;
 
         if (currentSection + 1 < sectionCount)
             return false;
 
-        const lastSection = root.recipes?.currentRecipe?.sections?.[sectionCount - 1];
+        const lastSection = recipes.currentRecipe?.sections?.[sectionCount - 1];
 
         return (lastSection?.recipeSteps?.length ?? 0) - 1 === currentStep;
     };
 
-    if (!root.recipes?.currentRecipe || root.recipes.isFetchingCurrentRecipe) {
+    const editCurrentRecipe = () => {
+        recipes.makeCurrentRecipeEditable();
+        tags.copyRecipeTagsToDraftTags(recipes.currentRecipe);
+        navigation.navigate('HomeTabNavigator', { screen: 'Create', params: { isEdit: true } });
+    };
+
+    const deleteCurrentRecipe = () => {
+        Alert.alert(
+            'Are you sure?',
+            'The deleted recipes list can be found in the settings',
+            [
+                {
+                    text: 'Ok',
+                    onPress: () => {
+                        recipes.deleteCurrentRecipe();
+                        navigation.navigate('HomeTabNavigator', { screen: 'Home' });
+                    },
+                },
+                {
+                    text: 'Cancel',
+                },
+            ],
+            { cancelable: true }
+        );
+    };
+
+    if (!recipes.currentRecipe || recipes.isFetchingCurrentRecipe) {
         return (
             <ScrollWrapper>
                 <ActivityIndicator color="#777" size={60} />
@@ -123,19 +152,35 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
     return (
         <Wrapper>
             <ScrollWrapper ref={scrollContainerRef as any}>
-                <Background source={{ uri: `data:image/jpeg;base64,${root.recipes.currentRecipe.coverImage}` }}>
+                <Background source={{ uri: `data:image/jpeg;base64,${recipes.currentRecipe.coverImage}` }}>
                     <BackIconWrapper onPress={() => navigation.goBack()}>
                         <BackIcon />
                     </BackIconWrapper>
-                    <MenuIconWrapper onPress={() => {}}>
-                        <MenuIcon />
-                    </MenuIconWrapper>
+                    <MenuWrapper>
+                        <Menu>
+                            <MenuTrigger>
+                                <MenuIcon />
+                            </MenuTrigger>
+                            <MenuOptions>
+                                <MenuOption onSelect={editCurrentRecipe}>
+                                    <MenuItemWrapper>
+                                        <Text>Edit</Text>
+                                    </MenuItemWrapper>
+                                </MenuOption>
+                                <MenuOption onSelect={deleteCurrentRecipe}>
+                                    <MenuItemWrapper>
+                                        <Text>Delete</Text>
+                                    </MenuItemWrapper>
+                                </MenuOption>
+                            </MenuOptions>
+                        </Menu>
+                    </MenuWrapper>
                 </Background>
                 <Content>
                     <View onLayout={e => setTopContentHeight(e.nativeEvent.layout.height)}>
-                        <RecipeName>{root.recipes.currentRecipe.name}</RecipeName>
-                        <SmallTagList recipe={root.recipes.currentRecipe} noHighlightSelected />
-                        <Description>{root.recipes.currentRecipe.description}</Description>
+                        <RecipeName>{recipes.currentRecipe.name}</RecipeName>
+                        <SmallTagList recipe={recipes.currentRecipe} noHighlightSelected />
+                        <Description>{recipes.currentRecipe.description}</Description>
                         <IngredientsHeader>
                             <SubHeaderText>Ingredients</SubHeaderText>
                             <IngredientMultiplierPicker
@@ -164,7 +209,7 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
                     />
                 </Content>
             </ScrollWrapper>
-            {root.recipes.currentRecipe.sections?.find(s => (s.recipeSteps?.length ?? 0) > 0) && (
+            {recipes.currentRecipe.sections?.find(s => (s.recipeSteps?.length ?? 0) > 0) && (
                 <BottomBar>
                     {currentStep !== null && (
                         <LeftButton

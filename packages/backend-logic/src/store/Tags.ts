@@ -1,4 +1,4 @@
-import { Database, Tag } from 'backend-logic';
+import { Database, Recipe, Tag } from 'backend-logic';
 import { computed, makeAutoObservable } from 'mobx';
 import { byNumberDesc } from 'backend-logic/src/utils/arrayUtils';
 
@@ -60,6 +60,13 @@ export class Tags {
 
     removeDraftTagById(id: number) {
         this.draftTags = this.draftTags.filter(t => t.id !== id);
+    }
+
+    copyRecipeTagsToDraftTags(recipe: Recipe | undefined) {
+        if (!recipe)
+            return;
+
+        this.draftTags = recipe.tags?.map(tag => ({ ...tag, recipeCount: 1 })) ?? [];
     }
 
     @computed

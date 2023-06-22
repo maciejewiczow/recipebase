@@ -1,12 +1,18 @@
-import { createNavigationContainerRef, StackActions } from '@react-navigation/native';
+import { createNavigationContainerRef, ParamListBase, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GDriveFilePickerViewProps } from './views/GDriveFilePickerView/ViewProps';
+import { HomeTabNavigationParams } from './views/HomeNavigationView/HomeNavigationView';
 import { RecipeViewProps } from './views/RecipeView/ViewProps';
 import { SelecMethodModalViewRouteProps } from './views/SelectionMethodModalView/ViewProps';
 
+export interface ISubNavigator<T extends ParamListBase, K extends keyof T> {
+    screen: K;
+    params?: T[K];
+}
+
 export type RootStackParams = {
     Splash: undefined;
-    HomeTabNavigator: undefined;
+    HomeTabNavigator: ISubNavigator<HomeTabNavigationParams, keyof HomeTabNavigationParams>;
     SelectDatabase: undefined;
     SelectMethodModal: SelecMethodModalViewRouteProps;
     GDriveFilePicker: GDriveFilePickerViewProps;

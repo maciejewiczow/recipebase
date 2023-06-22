@@ -65,7 +65,7 @@ export const Base = styled.View<ButtonPartsStyleProps>`
     border-width: 2px;
     border-radius: ${({ theme }) => theme.border.radiusSmall};
 
-    padding: 18px 32px;
+    padding: 12px 32px;
 
     align-items: center;
 `;
