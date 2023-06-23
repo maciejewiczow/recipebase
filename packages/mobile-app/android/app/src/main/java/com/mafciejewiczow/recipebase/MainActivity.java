@@ -1,4 +1,4 @@
-package com.recipebase;
+package com.mafciejewiczow.recipebase;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

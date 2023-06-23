@@ -1,4 +1,4 @@
-package com.recipebase.newarchitecture;
+package com.mafciejewiczow.recipebase.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.recipebase.BuildConfig;
-import com.recipebase.newarchitecture.components.MainComponentsRegistry;
-import com.recipebase.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.mafciejewiczow.recipebase.BuildConfig;
+import com.mafciejewiczow.recipebase.newarchitecture.components.MainComponentsRegistry;
+import com.mafciejewiczow.recipebase.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 
