@@ -2,10 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import sqlite from 'react-native-sqlite-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { Config } from 'react-native-config';
-import { Database } from 'backend-logic';
+import { Database, Recipes, Tags } from 'backend-logic';
 import RootNavigation from './RootNavigation';
-import { Recipes } from 'backend-logic/src/store/Recipes';
-import { Tags } from 'backend-logic/src/store/Tags';
 
 GoogleSignin.configure({
     scopes: [/* 'https://www.googleapis.com/auth/drive' */],

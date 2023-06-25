@@ -2,11 +2,9 @@ import React from 'react';
 import { PermissionsAndroid, Platform, ToastAndroid, TouchableOpacity } from 'react-native';
 import { DocumentPickerOptions, pickDirectory, pickSingle } from 'react-native-document-picker';
 import { SupportedPlatforms } from 'react-native-document-picker/lib/typescript/fileTypes';
-// eslint-disable-next-line import/no-named-as-default
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import { FileSelectionButtonProps, SelecMethodModalViewRouteProps } from './ViewProps';
 import { FilesystemIcon, Tile, TileText } from './SelectionMethodModalView.styles';
-import RNBlobFetch from 'rn-blob-fetch';
 
 export const FilesystemSelectionMethodButton: React.FC<SelecMethodModalViewRouteProps & FileSelectionButtonProps> = ({ selectWhat, onFileSelected }) => {
     const pickFromFileSystem = async () => {
@@ -60,7 +58,7 @@ export const FilesystemSelectionMethodButton: React.FC<SelecMethodModalViewRoute
 
                 console.log(file);
 
-                const statResult = await RNBlobFetch.fs.stat(file.uri);
+                const statResult = await ReactNativeBlobUtil.fs.stat(file.uri);
 
                 console.log(statResult);
 
