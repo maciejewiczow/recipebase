@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.recipebase"
+    namespace "com.mafciejewiczow.recipebase"
     defaultConfig {
-        applicationId "com.recipebase"
+        applicationId "com.mafciejewiczow.recipebase"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

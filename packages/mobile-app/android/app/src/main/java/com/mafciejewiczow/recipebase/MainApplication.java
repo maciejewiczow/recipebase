@@ -1,4 +1,4 @@
-package com.recipebase;
+package com.mafciejewiczow.recipebase;
 
 import android.app.Application;
 import com.facebook.react.PackageList;
