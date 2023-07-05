@@ -4,7 +4,7 @@ import { GoogleSignin, statusCodes, NativeModuleError, User } from '@react-nativ
 import { Tile, GDriveIcon, TileText } from './SelectionMethodModalView.styles';
 import { FileSelectionButtonProps, SelecMethodModalViewRouteProps } from './ViewProps';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParams } from 'recipebase/src/RootNavigation';
+import { RootStackParams } from '~/RootNavigation';
 
 export const GDriveSelectionMethodButton: React.FC<SelecMethodModalViewRouteProps & FileSelectionButtonProps> = ({ selectWhat, onFileSelected }) => {
     const navigation = useNavigation<NavigationProp<RootStackParams>>();

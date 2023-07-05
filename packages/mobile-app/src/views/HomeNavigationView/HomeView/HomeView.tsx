@@ -11,7 +11,7 @@ import {
     RecipeListItem,
 } from './HomeView.styles';
 import { NoSearchResultsListView } from './NoSearchResultsListView';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
+import { useRootStore } from '~/RootStoreContext';
 
 export const HomeView: React.FC = observer(() => {
     const root = useRootStore();
@@ -19,7 +19,7 @@ export const HomeView: React.FC = observer(() => {
 
     useEffect(() => {
         root.recipes.fetchRecipes(searchText);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchText]);
 
     return (

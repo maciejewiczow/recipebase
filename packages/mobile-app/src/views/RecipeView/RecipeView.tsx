@@ -3,9 +3,9 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, View } from 'react-native';
 import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
-import { RootStackParams } from 'recipebase/src/RootNavigation';
-import { SmallTagList } from 'recipebase/src/views/HomeNavigationView/HomeView/SmallTagList';
+import { useRootStore } from '~/RootStoreContext';
+import { RootStackParams } from '~/RootNavigation';
+import { SmallTagList } from '~/views/HomeNavigationView/HomeView/SmallTagList';
 import { IngredientList } from './IngredientList';
 import { getKey, StepsList } from './StepsList';
 import {
@@ -61,7 +61,7 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
 
     useEffect(() => {
         recipes.fetchRecipeById(route.params.recipeId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [route.params.recipeId]);
 
     const nextStep = () => {

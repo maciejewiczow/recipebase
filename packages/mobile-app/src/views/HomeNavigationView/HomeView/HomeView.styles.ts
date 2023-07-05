@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components/native';
 import FIcon from 'react-native-vector-icons/Fontisto';
-import { SearchBar as OriginalSearchBar } from 'recipebase/src/components/SearchBar';
+import { SearchBar as OriginalSearchBar } from '~/components/SearchBar';
 import { createViewIcon } from '../createViewIcon';
-import { TagList as OriginalTagList } from 'recipebase/src/components/TagList';
+import { TagList as OriginalTagList } from '~/components/TagList';
 import { RecipeListItem as OriginalRecipeListItem } from './RecipeListItem';
 
 export const allMargin = css`

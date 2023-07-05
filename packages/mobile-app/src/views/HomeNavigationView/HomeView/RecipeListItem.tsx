@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import { Recipe } from 'backend-logic';
 import { CoverImage, Name, RecipeItemWrapper } from './RecipeListItem.styles';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParams } from 'recipebase/src/RootNavigation';
+import { RootStackParams } from '~/RootNavigation';
 import { SmallTagList } from './SmallTagList';
 
 interface RecipeListItemProps {

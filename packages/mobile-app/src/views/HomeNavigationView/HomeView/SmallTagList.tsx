@@ -3,7 +3,7 @@ import { Recipe } from 'backend-logic';
 import { StyleProp, ViewStyle } from 'react-native';
 import { ListSeparator, TagList, TagListItem } from './RecipeListItem.styles';
 import { Observer, observer } from 'mobx-react-lite';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
+import { useRootStore } from '~/RootStoreContext';
 
 interface ItemTagListProps {
     recipe: Recipe;

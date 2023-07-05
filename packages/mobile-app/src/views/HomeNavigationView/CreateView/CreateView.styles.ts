@@ -3,9 +3,9 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { createViewIcon } from '../createViewIcon';
-import { Input as OriginalInput } from 'recipebase/src/components/Input';
-import { ImageInput as OriginalImageInput } from 'recipebase/src/components/ImageInput';
-import { Button, ButtonVariant } from 'recipebase/src/components/Button';
+import { Input as OriginalInput } from '~/components/Input';
+import { ImageInput as OriginalImageInput } from '~/components/ImageInput';
+import { Button, ButtonVariant } from '~/components/Button';
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
 
 export const CreateIcon = createViewIcon(IonIcon, 'add-circle')``;

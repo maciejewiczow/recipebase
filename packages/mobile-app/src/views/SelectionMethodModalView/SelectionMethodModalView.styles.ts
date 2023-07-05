@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import { styled } from 'styled-components/native';
 import OcticonsIcon from 'react-native-vector-icons/Octicons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 

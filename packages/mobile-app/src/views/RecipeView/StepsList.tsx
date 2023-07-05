@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
+import { useRootStore } from '~/RootStoreContext';
 import { RecipeProgression, RecipeStepLineDecorator } from './RecipeStepLineDecorator';
 import { SectionTitle, RecipeStepRow, RecipeStepText, Text } from './RecipeView.styles';
 

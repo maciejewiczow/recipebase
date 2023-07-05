@@ -1,10 +1,10 @@
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParams } from 'recipebase/src/RootNavigation';
+import { RootStackParams } from '~/RootNavigation';
 import { TileWrapper, TitleText, Wrapper } from './SelectionMethodModalView.styles';
 import { FilesystemSelectionMethodButton } from './FilesystemSelectionMethodButton';
 import { GDriveSelectionMethodButton } from './GDriveSelectionMethodButton';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
+import { useRootStore } from '~/RootStoreContext';
 
 export const SelectionMethodModalView: React.FC<NativeStackScreenProps<RootStackParams, 'SelectMethodModal'>> = ({ route, navigation }) => {
     const root = useRootStore();

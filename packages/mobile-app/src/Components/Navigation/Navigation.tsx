@@ -1,18 +1,18 @@
 import React from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { IconWrapper, Wrapper, Text } from './Navigation.styles';
-import { ViewIconProps } from 'recipebase/src/views/HomeNavigationView/createViewIcon';
+import { ViewIconProps } from '~/views/HomeNavigationView/createViewIcon';
 
 export const Navigation: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => (
     <Wrapper>
         {state.routes.map((route, index) => {
             const { options } = descriptors[route.key];
             const label =
-                    options.tabBarLabel !== undefined
-                        ? options.tabBarLabel
-                        : options.title !== undefined
-                            ? options.title
-                            : route.name;
+                options.tabBarLabel !== undefined
+                    ? options.tabBarLabel
+                    : options.title !== undefined
+                        ? options.title
+                        : route.name;
 
             const Icon = options.tabBarIcon as React.FC<ViewIconProps>;
             const isFocused = state.index === index;

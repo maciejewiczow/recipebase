@@ -5,7 +5,7 @@ import { HomeIcon, HomeView } from './HomeView';
 import { CreateView, CreateIcon } from './CreateView';
 import { SearchByIngredientIcon, SearchByIngredientView } from './SearchByIngredientView';
 import { SettingsView, SettingsIcon } from './SettingsView';
-import { Navigation } from 'recipebase/src/components/Navigation';
+import { Navigation } from '~/components/Navigation';
 import { CreateViewRouteProps } from './CreateView/ViewProps';
 
 export type HomeTabNavigationParams = {

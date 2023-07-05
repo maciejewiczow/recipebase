@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
-import { capitalize } from 'recipebase/src/utils/capitalize';
-import { round } from 'recipebase/src/utils/round';
+import { useRootStore } from '~/RootStoreContext';
+import { capitalize } from '~/utils/capitalize';
+import { round } from '~/utils/round';
 import {
     IngredientRow,
     Ingredients,

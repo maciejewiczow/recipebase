@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { GDrive, ListQueryBuilder, FilesResponse } from '@robinbobin/react-native-google-drive-api-wrapper';
-import { Button, ButtonVariant } from 'recipebase/src/components/Button';
-import { RootStackParams } from 'recipebase/src/RootNavigation';
+import { Button, ButtonVariant } from '~/components/Button';
+import { RootStackParams } from '~/RootNavigation';
 import {
     Bottom,
     Files,

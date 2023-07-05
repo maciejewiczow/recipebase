@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
-import { RootStackParams, rootNavigationRef } from 'recipebase/src/RootNavigation';
-import { Button, ButtonVariant } from 'recipebase/src/components/Button';
-import { TagCreator } from 'recipebase/src/components/TagCreator';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
-import { Recipe, RecipeIngredient, RecipeStep } from 'recipebase/packages/backend-logic';
+import { RootStackParams } from '~/RootNavigation';
+import { Button, ButtonVariant } from '~/components/Button';
+import { TagCreator } from '~/components/TagCreator';
+import { useRootStore } from '~/RootStoreContext';
+import { Recipe, RecipeIngredient, RecipeStep } from 'backend-logic';
 import { HomeTabNavigationParams } from '../HomeNavigationView';
 import { TouchableNativeFeedback } from 'react-native';
 import {
@@ -32,7 +32,7 @@ import {
     RecipeSectionWrapper,
     SaveButton,
 } from './CreateView.styles';
-import { Label } from 'recipebase/src/components/Input/Input.styles';
+import { Label } from '~/components/Input/Input.styles';
 import { StackActions, TabActions } from '@react-navigation/native';
 
 interface RecipeIngredientViewProps {
@@ -159,9 +159,9 @@ export const CreateView: React.FC<BottomTabScreenProps<HomeTabNavigationParams &
                 <>
                     <Button variant={ButtonVariant.primary}>Import from a website</Button>
                     <LineWrapper>
-                        <HorizontalLine/>
+                        <HorizontalLine />
                         <OrText>or</OrText>
-                        <HorizontalLine/>
+                        <HorizontalLine />
                     </LineWrapper>
                 </>
             )}
@@ -215,7 +215,7 @@ export const CreateView: React.FC<BottomTabScreenProps<HomeTabNavigationParams &
                                         onChange={setIngredientSectionName(ingredientSection.id)}
                                     />
                                     <TouchableNativeFeedback>
-                                        <DeleteSectionIcon onPress={removeRecipeIngredientSection(ingredientSection.id)}/>
+                                        <DeleteSectionIcon onPress={removeRecipeIngredientSection(ingredientSection.id)} />
                                     </TouchableNativeFeedback>
                                 </SectionNameInputRow>
                                 <Label>Ingredients</Label>
@@ -270,7 +270,7 @@ export const CreateView: React.FC<BottomTabScreenProps<HomeTabNavigationParams &
                                 <TouchableNativeFeedback
                                     onPress={removeRecipeSection(section.id)}
                                 >
-                                    <DeleteSectionIcon/>
+                                    <DeleteSectionIcon />
                                 </TouchableNativeFeedback>
                             </SectionNameInputRow>
                             {section.recipeSteps?.map((step, index) => (

@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components/native';
 import { ImageBackground } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Entypo';
-import { Button, ButtonVariant } from 'recipebase/src/components/Button';
+import { Button, ButtonVariant } from '~/components/Button';
 
 export const ScrollWrapper = styled.ScrollView.attrs({
     contentContainerStyle: {

@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import bgSource from 'recipebase/assets/splash-bg.jpg';
+import bgSource from '~/../assets/splash-bg.jpg';
 import LinearGradient from 'react-native-linear-gradient';
 
 export const Background = styled.ImageBackground.attrs({ source: bgSource })`

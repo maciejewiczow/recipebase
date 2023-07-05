@@ -5,6 +5,7 @@ import { SupportedPlatforms } from 'react-native-document-picker/lib/typescript/
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import { FileSelectionButtonProps, SelecMethodModalViewRouteProps } from './ViewProps';
 import { FilesystemIcon, Tile, TileText } from './SelectionMethodModalView.styles';
+import RNBlobFetch from 'rn-blob-fetch';
 
 export const FilesystemSelectionMethodButton: React.FC<SelecMethodModalViewRouteProps & FileSelectionButtonProps> = ({ selectWhat, onFileSelected }) => {
     const pickFromFileSystem = async () => {
@@ -58,7 +59,7 @@ export const FilesystemSelectionMethodButton: React.FC<SelecMethodModalViewRoute
 
                 console.log(file);
 
-                const statResult = await ReactNativeBlobUtil.fs.stat(file.uri);
+                const statResult = await RNBlobFetch.fs.stat(file.uri);
 
                 console.log(statResult);
 

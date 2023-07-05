@@ -1,7 +1,7 @@
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ButtonVariant, Button } from 'recipebase/src/components/Button';
-import { RootStackParams } from 'recipebase/src/RootNavigation';
+import { ButtonVariant, Button } from '~/components/Button';
+import { RootStackParams } from '~/RootNavigation';
 import { Background, AppTitle, Gradient } from '../SplashView/SplashView.styles';
 import { TopButton } from './SelectDatabaseView.styles';
 

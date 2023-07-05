@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
+import { useRootStore } from '~/RootStoreContext';
 import {
     Wrapper,
     TagView,

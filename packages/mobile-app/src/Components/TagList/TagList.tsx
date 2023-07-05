@@ -1,9 +1,9 @@
 import { Observer, observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
-import { FlatList, ListRenderItemInfo, StyleProp, ViewStyle } from 'react-native';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
+import { StyleProp, ViewStyle } from 'react-native';
+import { useRootStore } from '~/RootStoreContext';
 import { TagWithSelectedState } from 'backend-logic/src/store/Tags';
-import { List, TagBody } from './TagList.styles';
+import { List } from './TagList.styles';
 import { TagView } from './TagView';
 
 export interface SearchBarProps {

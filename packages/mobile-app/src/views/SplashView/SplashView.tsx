@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useRootStore } from 'recipebase/src/RootStoreContext';
+import { useRootStore } from '~/RootStoreContext';
 import { Background, AppTitle, Gradient, Loader } from './SplashView.styles';
 
 export const SplashView: React.FC = () => {
@@ -10,9 +10,6 @@ export const SplashView: React.FC = () => {
     }, [root]);
 
     return (
-        // Wrong typings
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         <Background>
             <Gradient>
                 <AppTitle>Recipebase</AppTitle>
