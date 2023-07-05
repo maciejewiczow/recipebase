@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Recipebase.app"
-               BlueprintName = "Recipebase"
-               ReferencedContainer = "container:Recipebase.xcodeproj">
+               BuildableName = "recipebase.app"
+               BlueprintName = "recipebase"
+               ReferencedContainer = "container:recipebase.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "RecipebaseTests.xctest"
-               BlueprintName = "RecipebaseTests"
-               ReferencedContainer = "container:Recipebase.xcodeproj">
+               BuildableName = "recipebaseTests.xctest"
+               BlueprintName = "recipebaseTests"
+               ReferencedContainer = "container:recipebase.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Recipebase.app"
-            BlueprintName = "Recipebase"
-            ReferencedContainer = "container:Recipebase.xcodeproj">
+            BuildableName = "recipebase.app"
+            BlueprintName = "recipebase"
+            ReferencedContainer = "container:recipebase.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Recipebase.app"
-            BlueprintName = "Recipebase"
-            ReferencedContainer = "container:Recipebase.xcodeproj">
+            BuildableName = "recipebase.app"
+            BlueprintName = "recipebase"
+            ReferencedContainer = "container:recipebase.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

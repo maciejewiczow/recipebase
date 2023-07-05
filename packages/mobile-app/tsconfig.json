@@ -9,5 +9,12 @@
         "jsx": "react-native",
         "noEmit": true,
         "moduleResolution": "node",
+        "esModuleInterop": true,
+        "baseUrl": "./src",
+        "paths": {
+            "~/*": [
+                "*"
+            ]
+        },
     }
 }

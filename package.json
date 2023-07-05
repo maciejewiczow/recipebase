@@ -21,7 +21,8 @@
             "**/reflect-metadata",
             "**/lodash.**",
             "**/buffer",
-            "**/styled-components/**"
+            "**/styled-components/**",
+            "**/lodash"
         ]
     },
     "scripts": {

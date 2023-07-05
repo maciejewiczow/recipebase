@@ -14,11 +14,16 @@
     },
     "settings": {
         "import/resolver": {
-          "node": {
-            "extensions": [".js", ".jsx", ".ts", ".tsx"]
-          }
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            }
         }
-      },
+    },
     "plugins": [
         "@typescript-eslint",
         "only-warn",
@@ -36,6 +41,7 @@
         "airbnb-typescript"
     ],
     "rules": {
+        "import/no-named-as-default": "off",
         "no-promise-executor-return": "warn",
         "@typescript-eslint/member-delimiter-style": "warn",
         "prefer-const": "off",
@@ -52,23 +58,56 @@
         "import/prefer-default-export": "off",
         "import/extensions": "off",
         "no-console": "off",
-        "max-len": ["warn", 180],
+        "max-len": [
+            "warn",
+            180
+        ],
         "no-use-before-define": "off",
         "react/jsx-indent-props": "off",
-        "nonblock-statement-body-position": ["warn", "below"],
-        "no-param-reassign": ["warn", { "props": false }],
-        "@typescript-eslint/no-use-before-define": ["warn", {
-            "enums": false,
-            "typedefs": false,
-            "ignoreTypeReferences": false,
-            "functions": false
-        }],
-        "object-curly-newline": ["warn", {
-            "ObjectExpression": { "multiline": true, "consistent": true },
-            "ObjectPattern": { "multiline": true, "consistent": true }
-        }],
-        "object-property-newline": ["warn", { "allowMultiplePropertiesPerLine": true }],
-        "no-restricted-syntax": ["warn", "ForInStatement", "LabeledStatement", "WithStatement"],
+        "nonblock-statement-body-position": [
+            "warn",
+            "below"
+        ],
+        "no-param-reassign": [
+            "warn",
+            {
+                "props": false
+            }
+        ],
+        "@typescript-eslint/no-use-before-define": [
+            "warn",
+            {
+                "enums": false,
+                "typedefs": false,
+                "ignoreTypeReferences": false,
+                "functions": false
+            }
+        ],
+        "object-curly-newline": [
+            "warn",
+            {
+                "ObjectExpression": {
+                    "multiline": true,
+                    "consistent": true
+                },
+                "ObjectPattern": {
+                    "multiline": true,
+                    "consistent": true
+                }
+            }
+        ],
+        "object-property-newline": [
+            "warn",
+            {
+                "allowMultiplePropertiesPerLine": true
+            }
+        ],
+        "no-restricted-syntax": [
+            "warn",
+            "ForInStatement",
+            "LabeledStatement",
+            "WithStatement"
+        ],
         "react/jsx-one-expression-per-line": "off",
         "import-newlines/enforce": [
             "warn",
@@ -129,7 +168,13 @@
         "no-extend-native": "warn",
         "no-implied-eval": "warn",
         "no-multi-spaces": "warn",
-        "keyword-spacing": ["warn", {"before": true, "after": true}],
+        "keyword-spacing": [
+            "warn",
+            {
+                "before": true,
+                "after": true
+            }
+        ],
         "no-unmodified-loop-condition": "warn",
         "no-useless-concat": "warn",
         "no-useless-return": "warn",
@@ -147,12 +192,26 @@
         ],
         "max-classes-per-file": "off",
         "no-plusplus": "off",
-        "react/jsx-fragments": ["warn", "syntax"],
+        "react/jsx-fragments": [
+            "warn",
+            "syntax"
+        ],
         "comma-dangle": "off",
-        "@typescript-eslint/lines-between-class-members": ["warn", "always", { "exceptAfterSingleLine": true }],
-        "@typescript-eslint/comma-dangle": ["warn", "always-multiline"],
+        "@typescript-eslint/lines-between-class-members": [
+            "warn",
+            "always",
+            {
+                "exceptAfterSingleLine": true
+            }
+        ],
+        "@typescript-eslint/comma-dangle": [
+            "warn",
+            "always-multiline"
+        ],
         "no-shadow": "off",
-        "@typescript-eslint/no-shadow": ["warn"],
+        "@typescript-eslint/no-shadow": [
+            "warn"
+        ],
         "array-bracket-newline": [
             "warn",
             {
