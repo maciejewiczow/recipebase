@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import cloneDeep from 'lodash.clonedeep';
+import { cloneDeep } from 'lodash';
 import { DefaultTheme } from 'styled-components/native';
-import { DeepPartial } from 'typeorm';
 
-const common: DeepPartial<DefaultTheme> = {
+const common: DefaultTheme = {
     palette: {
         primaryAccent: '#D86B0B',
+        background: '',
+        text: '',
     },
     border: {
         radiusGigantic: '30px',
@@ -17,11 +17,11 @@ const common: DeepPartial<DefaultTheme> = {
 
 export const lightTheme = cloneDeep(common) as DefaultTheme;
 
-lightTheme!.palette!.background = '#fff';
-lightTheme!.palette!.text = '#333';
+lightTheme.palette.background = '#fff';
+lightTheme.palette.text = '#333';
 
 export const darkTheme = cloneDeep(common) as DefaultTheme;
 
-darkTheme!.palette!.background = '#000';
-darkTheme!.palette!.text = '#fff';
+darkTheme.palette.background = '#000';
+darkTheme.palette.text = '#fff';
 
