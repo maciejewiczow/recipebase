@@ -3,6 +3,7 @@ import { ImageBackground } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Entypo';
 import { Button } from '~/components/Button';
+import { createStyledIcon } from '~/utils/createStyledIcon';
 
 export const ScrollWrapper = styled.ScrollView.attrs({
     contentContainerStyle: {
@@ -28,17 +29,17 @@ export const BackIconWrapper = styled.TouchableOpacity`
     left: 0;
 `;
 
-export const BackIcon = styled(Icon).attrs({
+export const BackIcon = createStyledIcon(Icon, {
     name: 'chevron-thin-left',
     color: '#616161',
     size: 20,
-})``;
+});
 
-export const MenuIcon = styled(Icon).attrs({
+export const MenuIcon = createStyledIcon(Icon, {
     name: 'dots-three-horizontal',
     color: 'white',
     size: 20,
-})``;
+});
 
 export const MenuWrapper = styled.View`
     padding: 24px;

@@ -1,12 +1,13 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { createViewIcon } from '../createViewIcon';
 import { Input as OriginalInput } from '~/components/Input';
 import { ImageInput as OriginalImageInput } from '~/components/ImageInput';
-import { Button, ButtonVariant } from '~/components/Button';
+import { Button } from '~/components/Button';
 import { NestableScrollContainer } from 'react-native-draggable-flatlist';
+import { createStyledIcon } from '~/utils/createStyledIcon';
 
 export const CreateIcon = createViewIcon(IonIcon, 'add-circle')``;
 
@@ -91,7 +92,7 @@ export const IngredientQuantityInput = styled(OriginalInput)`
 `;
 
 export const AddSectionButton = styled(Button).attrs({
-    variant: ButtonVariant.secondary,
+    variant: 'secondary',
 })`
     margin-top: 4px;
 `;
@@ -110,16 +111,16 @@ export const SectionNameInput = styled(OriginalInput)`
     max-width: 77.5%;
 `;
 
-export const DeleteSectionIcon = styled(FaIcon).attrs({
+export const DeleteSectionIcon = createStyledIcon(FaIcon, {
     name: 'trash',
     color: 'black',
     size: 30,
-})`
+}, css`
     width: 70px;
     text-align: center;
     text-align-vertical: center;
     margin-top: 20px;
-`;
+`);
 
 export const RecipeSectionWrapper = styled.View`
     margin-bottom: 8px;
@@ -129,14 +130,14 @@ export const RecipeStepWrapper = styled.View`
     flex-flow: row nowrap;
 `;
 
-export const DragIcon = styled(MaterialIcon).attrs({
+export const DragIcon = createStyledIcon(MaterialIcon, {
     name: 'drag-handle',
     color: 'black',
     size: 30,
-})`
+}, css`
     text-align: center;
     text-align-vertical: center;
-`;
+`);
 
 export const RecipeStepInput = styled(Input)`
     flex-grow: 1;

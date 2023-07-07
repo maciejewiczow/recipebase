@@ -1,6 +1,7 @@
-import { styled } from 'styled-components/native';
+import { css, styled } from 'styled-components/native';
 import OcticonsIcon from 'react-native-vector-icons/Octicons';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
+import { createStyledIcon } from '~/utils/createStyledIcon';
 
 export const Wrapper = styled.View`
     padding: 24px 32px;
@@ -30,21 +31,21 @@ export const Tile = styled.View`
     padding: 16px;
 `;
 
-export const FilesystemIcon = styled(OcticonsIcon).attrs({
+export const FilesystemIcon = createStyledIcon(OcticonsIcon, {
     name: 'file-directory',
     color: '#777',
     size: 56,
-})`
+}, css`
     margin-bottom: 8px;
-`;
+`);
 
-export const GDriveIcon = styled(EntypoIcon).attrs({
+export const GDriveIcon = createStyledIcon(EntypoIcon, {
     name: 'google-drive',
     color: '#777',
     size: 56,
-})`
+}, css`
     margin-bottom: 8px;
-`;
+`);
 
 export const TileText = styled.Text`
     color: #555;

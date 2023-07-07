@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { createStyledIcon } from '~/utils/createStyledIcon';
 
 export const Wrapper = styled.View`
     flex: 1;
@@ -26,11 +27,14 @@ export const Placeholder = styled.Text`
     color: #777;
 `;
 
-export const PlusIcon = styled(Icon).attrs({
-    name: 'plus',
-    size: 25,
-    color: '#555',
-})``;
+export const PlusIcon = createStyledIcon(
+    Icon,
+    {
+        name: 'plus',
+        size: 25,
+        color: '#555',
+    }
+);
 
 export const PickedImage = styled.Image`
     border-radius: ${({ theme }) => theme.border.radius};

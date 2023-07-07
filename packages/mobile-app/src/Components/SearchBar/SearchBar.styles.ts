@@ -1,13 +1,18 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
+import { createStyledIcon } from '~/utils/createStyledIcon';
 
-export const SearchIcon = styled(Icon).attrs({
-    name: 'search',
-    size: 35,
-    color: '#CBCACA',
-})`
-    margin: 0 10px;
-`;
+export const SearchIcon = createStyledIcon(
+    Icon,
+    {
+        name: 'search',
+        size: 35,
+        color: '#CBCACA',
+    },
+    css`
+        margin: 0 10px;
+    `
+);
 
 export const InputWrapper = styled.View`
     background: #F3F3F3;
