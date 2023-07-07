@@ -77,7 +77,7 @@ export class Recipes {
         });
         const rcpCover: Partial<Recipe> = yield this.database.recipeRepository?.findOne({
             where: { id },
-            select: [ 'coverImage' ],
+            select: ['coverImage'],
         });
 
         rcp.coverImage = rcpCover.coverImage ?? '';
@@ -242,7 +242,7 @@ export class Recipes {
             section.recipeIngredients.push(RecipeIngredient.createWithTemporaryId());
         }
 
-        for (const section of this.draftRecipe.sections){
+        for (const section of this.draftRecipe.sections) {
             if (!section.recipeSteps)
                 section.recipeSteps = [];
 
