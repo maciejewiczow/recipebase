@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components/native';
 import { ImageBackground } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Entypo';
-import { Button, ButtonVariant } from '~/components/Button';
+import { Button } from '~/components/Button';
 
 export const ScrollWrapper = styled.ScrollView.attrs({
     contentContainerStyle: {
@@ -101,7 +101,7 @@ const ButtonStyles = css`
 `;
 
 export const LeftButton = styled(Button).attrs({
-    variant: ButtonVariant.secondary,
+    variant: 'secondary',
 })`
     flex: 1;
     margin-right: 12px;
@@ -109,7 +109,7 @@ export const LeftButton = styled(Button).attrs({
 `;
 
 export const RightButton = styled(Button).attrs({
-    variant: ButtonVariant.primary,
+    variant: 'primary',
 })`
     flex: 3;
     ${ButtonStyles}

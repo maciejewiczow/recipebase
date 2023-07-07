@@ -1,7 +1,4 @@
 import styled from 'styled-components/native';
-// error in typings
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export const Wrapper = styled.View`

@@ -22,7 +22,7 @@
         "noImplicitThis": true,
         "alwaysStrict": true,
         "allowJs": false,
-        "skipLibCheck": false,
+        "skipLibCheck": true,
         "forceConsistentCasingInFileNames": false,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true

@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export const Background = styled.ImageBackground.attrs({ source: bgSource })`
     flex: 1;
-`;
+` as React.FC<React.PropsWithChildren>;
 
 export const Gradient = styled(LinearGradient).attrs({
     colors: ['#00000000', '#000000ee'],
@@ -17,7 +17,7 @@ export const Gradient = styled(LinearGradient).attrs({
     right: 0;
     height: 50%;
     padding: 0 40px;
-`;
+` as React.FC<React.PropsWithChildren>;
 
 export const AppTitle = styled.Text`
     color: white;

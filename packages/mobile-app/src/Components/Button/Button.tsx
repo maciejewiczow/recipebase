@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleProp, TouchableNativeFeedback, ViewStyle } from 'react-native';
 import { Base, ButtonText } from './Button.styles';
-import { ButtonVariant } from './ButtonVariant';
+
+export type ButtonVariant = 'primary' | 'secondary' | 'primary-outline' | 'secondary-outline';
 
 export interface ButtonProps {
     children?: React.ReactNode;
@@ -11,8 +12,14 @@ export interface ButtonProps {
     onPress?: () => any;
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, style, onPress, variant = ButtonVariant.primary, disabled = false }) => (
-    <TouchableNativeFeedback disabled={disabled} onPress={disabled ? () => {} : onPress}>
+export const Button: React.FC<ButtonProps> = ({
+    children,
+    style,
+    onPress,
+    variant = 'primary',
+    disabled = false,
+}) => (
+    <TouchableNativeFeedback disabled={disabled} onPress={disabled ? () => { } : onPress}>
         <Base variant={variant} style={style} disabled={disabled}>
             <ButtonText variant={variant} disabled={disabled}>{children}</ButtonText>
         </Base>

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import RNBlobFetch from 'rn-blob-fetch';
 import { pickSingle } from 'react-native-document-picker';
-import { Button, ButtonVariant } from '../Button';
+import { Button } from '../Button';
 import {
     Wrapper,
     Label,
@@ -74,10 +74,10 @@ export const ImageInput: React.FC<ImageInputProps> = ({
                     </Input>
                 </TouchableNativeFeedback>
             ) : (
-                <React.Fragment>
+                <>
                     <PickedImage resizeMode='cover' source={{ uri: `data:image/jpeg;base64,${value}` }} />
-                    <Button onPress={triggerFilePicker} variant={ButtonVariant.secondary}>Replace</Button>
-                </React.Fragment>
+                    <Button onPress={triggerFilePicker} variant="secondary">Replace</Button>
+                </>
             )}
         </Wrapper>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { observer } from 'mobx-react-lite';
 import { RootStackParams } from '~/RootNavigation';
-import { Button, ButtonVariant } from '~/components/Button';
+import { Button } from '~/components/Button';
 import { TagCreator } from '~/components/TagCreator';
 import { useRootStore } from '~/RootStoreContext';
 import { Recipe, RecipeIngredient, RecipeStep } from 'backend-logic';
@@ -157,7 +157,7 @@ export const CreateView: React.FC<BottomTabScreenProps<HomeTabNavigationParams &
             <HeroText>{isEdit ? 'Edit recipe' : 'Add recipe'}</HeroText>
             {!isEdit && (
                 <>
-                    <Button variant={ButtonVariant.primary}>Import from a website</Button>
+                    <Button variant="primary">Import from a website</Button>
                     <LineWrapper>
                         <HorizontalLine />
                         <OrText>or</OrText>

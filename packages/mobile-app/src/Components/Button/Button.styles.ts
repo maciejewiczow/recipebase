@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { ButtonVariant } from './ButtonVariant';
+import { ButtonVariant } from './Button';
 
 interface ButtonPartsStyleProps {
     variant: ButtonVariant;
@@ -11,10 +11,10 @@ const getButtonBg = ({ variant, disabled }: ButtonPartsStyleProps) => {
         return '#F0F0F0';
 
     switch (variant) {
-        case ButtonVariant.primary:
+        case 'primary':
             return '#E88A36';
 
-        case ButtonVariant.secondary:
+        case 'secondary':
             return '#F8F8F8';
 
         default:
@@ -25,25 +25,25 @@ const getButtonBg = ({ variant, disabled }: ButtonPartsStyleProps) => {
 const getButtonBorderColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
     if (disabled) {
         switch (variant) {
-            case ButtonVariant.primary:
-            case ButtonVariant.secondary:
+            case 'primary':
+            case 'secondary':
                 return '#F0F0F0';
 
-            case ButtonVariant.primaryOutline:
-            case ButtonVariant.secondaryOutline:
+            case 'primary-outline':
+            case 'secondary-outline':
                 return '#747474';
         }
     }
 
     switch (variant) {
-        case ButtonVariant.primary:
-        case ButtonVariant.primaryOutline:
+        case 'primary':
+        case 'primary-outline':
             return '#E88A36';
 
-        case ButtonVariant.secondaryOutline:
+        case 'secondary-outline':
             return 'white';
 
-        case ButtonVariant.secondary:
+        case 'secondary':
             return '#E5E5E5';
     }
 };
@@ -52,7 +52,7 @@ const getButtonTextColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
     if (disabled)
         return '#848484';
 
-    if (variant === ButtonVariant.secondary)
+    if (variant === 'secondary')
         return '#616161';
 
     return 'white';
