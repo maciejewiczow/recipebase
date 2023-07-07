@@ -4,6 +4,7 @@ import { SearchBar as OriginalSearchBar } from '~/components/SearchBar';
 import { createViewIcon } from '../createViewIcon';
 import { TagList as OriginalTagList } from '~/components/TagList';
 import { RecipeListItem as OriginalRecipeListItem } from './RecipeListItem';
+import { RecipeIcon as OriginalRecipeIcon } from '~/components/Svg/RecipeIcon';
 
 export const allMargin = css`
     margin-left: 16px;
@@ -39,11 +40,19 @@ export const SearchBar = styled(OriginalSearchBar)`
 
 export const HomeIcon = createViewIcon(FIcon, 'home')``;
 
+export const RecipeIcon = styled(OriginalRecipeIcon).attrs({
+    fill: '#444',
+})`
+    margin-top: -100px;
+    max-height: 260px;
+`;
+
 export const EmptyListTitle = styled.Text`
     color: #9E9E9E;
     font-size: 30px;
     margin-bottom: 24px;
     text-align: center;
+    margin-top: -50px;
     ${allMargin}
 `;
 
@@ -56,8 +65,6 @@ export const EmptyListSubtitle = styled.Text`
 
 export const NoResultsWrapper = styled.View`
     flex: 1;
-    align-items: center;
-    justify-content: center;
     ${allMargin}
 `;
 
