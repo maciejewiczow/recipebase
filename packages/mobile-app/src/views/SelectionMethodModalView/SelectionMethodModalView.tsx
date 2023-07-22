@@ -6,7 +6,12 @@ import { FilesystemSelectionMethodButton } from './FilesystemSelectionMethodButt
 import { GDriveSelectionMethodButton } from './GDriveSelectionMethodButton';
 import { useRootStore } from '~/RootStoreContext';
 
-export const SelectionMethodModalView: React.FC<NativeStackScreenProps<RootStackParams, 'SelectMethodModal'>> = ({ route, navigation }) => {
+export const SelectionMethodModalView: React.FC<
+    NativeStackScreenProps<
+        RootStackParams,
+        'SelectMethodModal'
+    >
+> = ({ route, navigation }) => {
     const root = useRootStore();
 
     const { selectWhat } = route.params;

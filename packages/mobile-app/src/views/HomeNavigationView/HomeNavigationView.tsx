@@ -5,8 +5,7 @@ import { HomeIcon, HomeView } from './HomeView';
 import { CreateView, CreateIcon } from './CreateView';
 import { SearchByIngredientIcon, SearchByIngredientView } from './SearchByIngredientView';
 import { SettingsView, SettingsIcon } from './SettingsView';
-import { Navigation } from '~/components/Navigation';
-import { CreateViewRouteProps } from './CreateView/ViewProps';
+import { BottomTabBar } from '~/components/BottomTabBar';
 
 export type HomeTabNavigationParams = {
     Home: undefined;

@@ -1,18 +1,15 @@
 import React from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { IconWrapper, Wrapper, Text } from './Navigation.styles';
+import { IconWrapper, Wrapper, Text } from './BottomTabBar.styles';
 import { ViewIconProps } from '~/views/HomeNavigationView/createViewIcon';
 
-export const Navigation: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => (
+export const BottomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => (
     <Wrapper>
         {state.routes.map((route, index) => {
             const { options } = descriptors[route.key];
-            const label =
-                options.tabBarLabel !== undefined
-                    ? options.tabBarLabel
-                    : options.title !== undefined
-                        ? options.title
-                        : route.name;
+            const label = options.tabBarLabel ??
+                options.title ??
+                route.name;
 
             const Icon = options.tabBarIcon as React.FC<ViewIconProps>;
             const isFocused = state.index === index;
@@ -25,10 +22,7 @@ export const Navigation: React.FC<BottomTabBarProps> = ({ state, descriptors, na
                 });
 
                 if (!isFocused && !event.defaultPrevented) {
-                    // The `merge: true` option makes sure that the params inside the tab screen are preserved
-                    // copied from the docs
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
+                    // @ts-expect-error The `merge: true` option makes sure that the params inside the tab screen are preserved, but is not typed properly
                     navigation.navigate({ name: route.name, merge: true });
                 }
             };
