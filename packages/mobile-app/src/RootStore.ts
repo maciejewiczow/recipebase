@@ -4,6 +4,9 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { Config } from 'react-native-config';
 import { Database, Recipes, Tags } from 'backend-logic';
 import RootNavigation from './RootNavigation';
+import { createMobxDebugger } from 'mobx-flipper';
+import { spy } from 'mobx';
+import { debugMobxActions } from 'mobx-action-flipper';
 
 GoogleSignin.configure({
     scopes: [/* 'https://www.googleapis.com/auth/drive' */],
@@ -46,11 +49,16 @@ export class Root {
 
         this.recipes = new Recipes(this.database);
         this.tags = new Tags(this.database);
+
+        // FIXME: uncomment after the plugin supports circular structures
+        // if (Config.DEBUG) {
+        //     spy(createMobxDebugger(this.recipes));
+        //     spy(createMobxDebugger(this.tags));
+        //     debugMobxActions({ recipes: this.recipes, tags: this.tags });
+        // }
     }
 
     private async initalizeDatabase(dbPath: string) {
-        console.log('Initalizing database in ', dbPath);
-
         this.database = new Database(dbPath, sqlite);
         await this.database.initalize();
     }
