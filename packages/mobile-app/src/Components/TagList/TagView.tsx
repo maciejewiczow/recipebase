@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import { RecipeCount, TagBody, TagName } from './TagList.styles';
 
 export interface TagViewProps {
@@ -13,6 +13,7 @@ export interface TagViewProps {
     noMinWidth?: boolean;
     horizontalMargin?: number;
     style?: StyleProp<ViewStyle>;
+    tagNameStyle?: StyleProp<TextStyle>;
 }
 
 export const TagView: React.FC<TagViewProps> = ({
@@ -26,6 +27,7 @@ export const TagView: React.FC<TagViewProps> = ({
     noMinWidth,
     horizontalMargin = 15,
     style,
+    tagNameStyle,
 }) => (
     <TagBody
         isSelected={isSelected}
@@ -37,7 +39,7 @@ export const TagView: React.FC<TagViewProps> = ({
         noMinWidth={noMinWidth}
         style={style}
     >
-        <TagName isSelected={isSelected}>{name}</TagName>
+        <TagName style={tagNameStyle} isSelected={isSelected}>{name}</TagName>
         {count !== undefined && <RecipeCount isSelected={isSelected}>{count}</RecipeCount>}
     </TagBody>
 );

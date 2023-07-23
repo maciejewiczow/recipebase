@@ -1,4 +1,4 @@
-import { createNavigationContainerRef, ParamListBase, StackActions } from '@react-navigation/native';
+import { createNavigationContainerRef, NavigationProp, ParamListBase, StackActions } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { GDriveFilePickerViewProps } from './views/GDriveFilePickerView/ViewProps';
 import { HomeTabNavigationParams } from './views/HomeNavigationView/HomeNavigationView';
@@ -17,7 +17,10 @@ export type RootStackParams = {
     SelectMethodModal: SelecMethodModalViewRouteProps;
     GDriveFilePicker: GDriveFilePickerViewProps;
     Recipe: RecipeViewProps;
+    CreateRecipe: undefined;
 };
+
+export type RootNavigationProp = NavigationProp<RootStackParams>;
 
 export const Stack = createNativeStackNavigator<RootStackParams>();
 
@@ -26,8 +29,7 @@ export const rootNavigationRef = createNavigationContainerRef<RootStackParams>()
 export default class RootNavigation {
     static navigate: typeof rootNavigationRef.navigate = (...args) => {
         if (rootNavigationRef.isReady())
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+            // @ts-expect-error typescript is paranoid
             rootNavigationRef.navigate(...args);
     };
 

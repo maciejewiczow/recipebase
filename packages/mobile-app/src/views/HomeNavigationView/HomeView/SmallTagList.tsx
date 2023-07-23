@@ -29,6 +29,7 @@ export const SmallTagList: React.FC<ItemTagListProps> = observer(({ recipe, noHi
                 </Observer>
             )}
             ItemSeparatorComponent={() => <ListSeparator>•</ListSeparator>}
-            horizontal />
+            horizontal
+        />
     );
 });

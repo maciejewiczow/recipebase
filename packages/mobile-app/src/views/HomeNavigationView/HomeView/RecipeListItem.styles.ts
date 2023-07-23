@@ -19,7 +19,7 @@ export const Name = styled.Text`
 
 export const TagList = styled.FlatList`
     flex-grow: 0;
-    height: 30px;
+    height: ${({ data }) => ((data?.length ?? 0) > 0 ? '30px' : '0')};
     margin-top: 5px;
 ` as unknown as typeof FlatList;
 

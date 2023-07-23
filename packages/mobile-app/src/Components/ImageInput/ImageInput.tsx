@@ -24,6 +24,7 @@ interface ImageInputProps {
     onChange?: (val: string) => any;
     placeholder?: string;
     style?: StyleProp<ViewStyle>;
+    inputStyle?: StyleProp<ViewStyle>;
 }
 
 export const ImageInput: React.FC<ImageInputProps> = ({
@@ -32,6 +33,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
     value,
     onChange,
     style,
+    inputStyle,
 }) => {
     const triggerFilePicker = async () => {
         try {
@@ -68,15 +70,23 @@ export const ImageInput: React.FC<ImageInputProps> = ({
             <Label>{label}</Label>
             {!value ? (
                 <TouchableNativeFeedback onPress={triggerFilePicker}>
-                    <Input>
+                    <Input style={inputStyle}>
                         <Placeholder>{placeholder}</Placeholder>
                         <PlusIcon />
                     </Input>
                 </TouchableNativeFeedback>
             ) : (
                 <>
-                    <PickedImage resizeMode='cover' source={{ uri: `data:image/jpeg;base64,${value}` }} />
-                    <Button onPress={triggerFilePicker} variant="secondary">Replace</Button>
+                    <PickedImage resizeMode="cover" source={{ uri: `data:image/jpeg;base64,${value}` }} />
+                    <Button
+                        onPress={triggerFilePicker}
+                        style={{
+                            minHeight: 60,
+                        }}
+                        variant="secondary"
+                    >
+                        Replace
+                    </Button>
                 </>
             )}
         </Wrapper>

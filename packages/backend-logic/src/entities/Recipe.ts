@@ -18,34 +18,34 @@ import Tag from './Tag';
 @Entity('Recipe')
 export default class Recipe {
     @PrimaryGeneratedColumn()
-        id!: number;
+    id!: number;
 
     @Index({ fulltext: true })
     @Column({ type: 'varchar', length: 2000 })
-        name!: string;
+    name!: string;
 
     @Index({ fulltext: true })
     @Column('text')
-        description!: string;
+    description!: string;
 
     @Column({ type: 'varchar', length: 1e3 })
-        coverImage!: string;
+    coverImage!: string;
 
-    @Column({ type:'varchar', length: 500, nullable: true,})
-        sourceUrl?: string;
+    @Column({ type: 'varchar', length: 500, nullable: true })
+    sourceUrl?: string;
 
     @ManyToMany(() => Tag, t => t.recipes)
     @JoinTable()
-        tags?: Tag[];
+    tags?: Tag[];
 
     @OneToMany(() => RecipeSection, rs => rs.recipe, { cascade: true })
-        sections?: RecipeSection[];
+    sections?: RecipeSection[];
 
     @OneToMany(() => IngredientSection, is => is.recipe, { cascade: true })
-        ingredientSections?: IngredientSection[];
+    ingredientSections?: IngredientSection[];
 
     @DeleteDateColumn({ nullable: true })
-        deletedAt!: Date | null;
+    deletedAt!: Date | null;
 
     constructor() {
         makeAutoObservable(this);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, TextInputProps, ViewStyle } from 'react-native';
+import { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 import { Label, TextInput, Wrapper } from './Input.styles';
 
 export interface InputProps {
@@ -12,6 +12,7 @@ export interface InputProps {
     numberOfLines?: number;
     onBlur?: TextInputProps['onBlur'];
     onEndEditing?: TextInputProps['onEndEditing'];
+    inputStyle?: StyleProp<TextStyle>;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -24,10 +25,12 @@ export const Input: React.FC<InputProps> = ({
     placeholder,
     onBlur,
     onEndEditing,
+    inputStyle,
 }) => (
     <Wrapper style={style}>
         {label && <Label>{label}</Label>}
         <TextInput
+            style={inputStyle}
             value={value}
             onBlur={onBlur}
             onEndEditing={onEndEditing}

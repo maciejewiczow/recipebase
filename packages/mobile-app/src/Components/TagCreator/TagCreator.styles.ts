@@ -1,5 +1,4 @@
-import DropDownPicker from 'react-native-dropdown-picker';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { TagView as OriginalTagView } from '../TagList/TagView';
 
 export const Wrapper = styled.View`
@@ -20,21 +19,28 @@ export const Text = styled.Text`
     color: #555;
 `;
 
-export const TagView = styled(OriginalTagView)`
+export const TagView = styled(OriginalTagView).attrs({
+    tagNameStyle: {
+        color: '#333',
+    },
+})`
+    ${({ isSelected }) => !isSelected && css`
+        background: white;
+    `}
     margin-bottom: 8px;
+    color: #333;
 `;
 
 export const TagNameInput = styled.TextInput`
     padding: 10px 14px;
     height: 40px;
     min-width: 100px;
-    background: #F3F3F3;
-    color: #9D9D9D;
+    background: white;
+    color: #333;
     border-radius: ${({ theme }) => theme.border.radius};
 `;
 
 export const InputWithDropdownWrapper = styled.View`
-    background-color: white;
     margin-right: 8px;
 `;
 

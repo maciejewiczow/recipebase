@@ -10,7 +10,7 @@ import {
 } from 'backend-logic';
 import { TagWithSelectedState } from './Tags';
 import { validateRecipe, removeEmptyIngredientsAndSteps, parseQuantityStringsToIngredientQuantities, removeTemporaryIdsFromRecipe } from './recipeUtils';
-
+import { cloneDeep } from 'lodash';
 
 export class Recipes {
     isFetchingRecipes = false;
@@ -260,13 +260,18 @@ export class Recipes {
     };
 
     *saveDraftRecipe() {
-        const recipeToSave = this.draftRecipe;
+        const recipeToSave = cloneDeep(this.draftRecipe);
+
         validateRecipe(recipeToSave);
         removeEmptyIngredientsAndSteps(recipeToSave);
         parseQuantityStringsToIngredientQuantities(recipeToSave, this.draftRecipeQuantityStrings);
         removeTemporaryIdsFromRecipe(recipeToSave);
-        const savedRecipe: Recipe | undefined = yield this.database.recipeRepository?.save(recipeToSave);
+
+        const savedRecipe: Recipe = yield this.database.recipeRepository?.save(recipeToSave);
+
         this.draftRecipe = Recipe.createEmpty();
+        this.recipes.push(savedRecipe);
+
         return savedRecipe;
     }
 }

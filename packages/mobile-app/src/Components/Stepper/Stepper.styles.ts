@@ -32,7 +32,4 @@ export const ScreenWrapper = styled.View`
 export const IconNext = createStyledIcon(Icon, {
     name: 'angle-right',
     size: 22,
-}, css`
-    position: absolute;
-    top: 10px
-`);
+});

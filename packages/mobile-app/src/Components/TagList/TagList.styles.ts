@@ -48,6 +48,6 @@ export const RecipeCount = styled.Text<IsSelectedProps>`
 `;
 
 export const List = styled.FlatList`
-    height: 40px;
+    height: ${({ data }) => ((data?.length ?? 0) > 0 ? '40px' : '0')};
     flex-grow: 0;
 ` as unknown as typeof FlatList;
