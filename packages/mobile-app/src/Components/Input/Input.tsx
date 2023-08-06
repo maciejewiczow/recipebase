@@ -1,43 +1,36 @@
-import React from 'react';
-import { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import React, { forwardRef } from 'react';
+import {
+    TextInput as TextInputComponent,
+    StyleProp,
+    TextInputProps,
+    TextStyle,
+    ViewStyle,
+} from 'react-native';
 import { Label, TextInput, Wrapper } from './Input.styles';
 
-export interface InputProps {
+export interface InputProps extends Pick<TextInputProps, 'onBlur' | 'onFocus' | 'onEndEditing' | 'placeholder' | 'multiline' | 'numberOfLines' | 'value' | 'autoCapitalize'> {
     label?: string;
-    placeholder?: string;
     style?: StyleProp<ViewStyle>;
-    value?: string;
     onChange?: (val: string) => any;
-    multiline?: boolean;
-    numberOfLines?: number;
-    onBlur?: TextInputProps['onBlur'];
-    onEndEditing?: TextInputProps['onEndEditing'];
     inputStyle?: StyleProp<TextStyle>;
 }
 
-export const Input: React.FC<InputProps> = ({
-    multiline,
+export const Input = forwardRef<TextInputComponent, InputProps>(({
     numberOfLines = 1,
-    value,
     onChange,
     style,
     label,
-    placeholder,
-    onBlur,
-    onEndEditing,
     inputStyle,
-}) => (
+    ...rest
+}, ref) => (
     <Wrapper style={style}>
         {label && <Label>{label}</Label>}
         <TextInput
+            ref={ref}
             style={inputStyle}
-            value={value}
-            onBlur={onBlur}
-            onEndEditing={onEndEditing}
             onChangeText={onChange}
-            placeholder={placeholder}
-            multiline={multiline}
             numberOfLines={numberOfLines}
+            {...rest}
         />
     </Wrapper>
-);
+));

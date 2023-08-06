@@ -11,6 +11,7 @@
         "typecheck": "tsc"
     },
     "dependencies": {
+        "@gorhom/bottom-sheet": "^4.4.7",
         "@react-native-async-storage/async-storage": "^1.18.2",
         "@react-native-google-signin/google-signin": "^10.0.1",
         "@react-navigation/bottom-tabs": "^6.5.8",

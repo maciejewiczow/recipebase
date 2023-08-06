@@ -1,18 +1,22 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 export const Wrapper = styled.View`
+`;
+
+export const inputStyles = css`
+    border-radius: ${({ theme }) => theme.border.radius};
+    border: 1px solid #ACACAC;
+    background: white;
+    padding: 14px 20px;
+    font-size: 18px;
+    color: #000;
 `;
 
 export const TextInput = styled.TextInput.attrs({
     placeholderTextColor: '#bbb',
     textAlignVertical: 'top',
 })`
-    width: 100%;
-    border-radius: ${({ theme }) => theme.border.radius};
-    border: 1px solid #ACACAC;
-    padding: 14px 20px;
-    font-size: 18px;
-    color: #000;
+    ${inputStyles}
 `;
 
 export const Label = styled.Text`

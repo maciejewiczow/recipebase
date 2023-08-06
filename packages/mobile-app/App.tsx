@@ -9,6 +9,7 @@ import { rootStore, RootStoreContext } from './src/RootStoreContext';
 import { RootNavigationComponent } from '~/RootNavigation';
 import FlipperAsyncStorage from 'rn-flipper-async-storage-advanced';
 import Config from 'react-native-config';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 const App = () => {
     const isDarkMode = useColorScheme() === 'dark';
@@ -18,13 +19,16 @@ const App = () => {
             <SafeAreaView style={{ flex: 1 }}>
                 {Config.DEBUG && <FlipperAsyncStorage />}
                 <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-                <MenuProvider>
-                    <RootStoreContext.Provider value={rootStore}>
-                        <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-                            <RootNavigationComponent />
-                        </ThemeProvider>
-                    </RootStoreContext.Provider>
-                </MenuProvider>
+                {/* TODO: dark theme */}
+                <ThemeProvider theme={/* isDarkMode ? darkTheme : */ lightTheme}>
+                    <BottomSheetModalProvider>
+                        <MenuProvider>
+                            <RootStoreContext.Provider value={rootStore}>
+                                <RootNavigationComponent />
+                            </RootStoreContext.Provider>
+                        </MenuProvider>
+                    </BottomSheetModalProvider>
+                </ThemeProvider>
             </SafeAreaView>
         </GestureHandlerRootView>
     );
