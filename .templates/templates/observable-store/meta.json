@@ -1,0 +1,6 @@
+{
+  "name": "Observable store",
+  "fileTemplateName": "{{name}}.ts",
+  "onlyAsPartOfGroup": false,
+  "disabled": false
+}
