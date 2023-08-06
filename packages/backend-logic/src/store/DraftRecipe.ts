@@ -104,6 +104,15 @@ export class DraftRecipe {
         section.recipeIngredients?.push(ri);
     };
 
+    @action removeRecipeIngredient = (sectionId: number, recipeIngredientId: number) => {
+        const section = this.recipe.ingredientSections?.find(s => s.id === sectionId);
+
+        if (!section)
+            return;
+
+        section.recipeIngredients = section.recipeIngredients?.filter(ri => ri.id !== recipeIngredientId);
+    };
+
     @action setIngredientSectionsFromArray = (items: (IngredientSection | RecipeIngredient)[]) => {
         if (!items.some(item => item instanceof IngredientSection) && this.recipe.ingredientSections?.[0].recipeIngredients) {
             this.recipe.ingredientSections[0].recipeIngredients = items

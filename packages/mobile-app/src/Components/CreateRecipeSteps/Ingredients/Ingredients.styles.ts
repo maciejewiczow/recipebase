@@ -109,4 +109,10 @@ export const IngredientSectionWrapper = styled.View`
     margin-bottom: 30px;
 `;
 
+export const MenuItemWrapper = styled.View`
+    padding: 8px 8px;
+`;
 
+export const MenuItemText = styled.Text`
+    color: #444;
+`;
