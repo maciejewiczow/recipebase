@@ -1,20 +1,20 @@
 import React from 'react';
 import { ImageInput } from './NameAndPhoto.styles';
 import { useRootStore } from '~/RootStoreContext';
-import { Input, SectionHeader, StepWrapper } from '../common.styles';
+import { Input, StepHeader, StepWrapper } from '../common.styles';
 import { observer } from 'mobx-react-lite';
 
 export const NameAndPhoto: React.FC = observer(() => {
-    const { recipes } = useRootStore();
+    const { draftRecipe } = useRootStore();
 
     return (
         <StepWrapper>
-            <SectionHeader>Name and photo</SectionHeader>
-            <Input label="Name" value={recipes.draftRecipe.name} onChange={recipes.setDraftRecipeName} />
+            <StepHeader>Name and photo</StepHeader>
+            <Input label="Name" value={draftRecipe.recipe.name} onChange={draftRecipe.setName} />
             <ImageInput
                 label="Cover image"
-                value={recipes.draftRecipe.coverImage}
-                onChange={recipes.setDraftRecipeCoverImage}
+                value={draftRecipe.recipe.coverImage}
+                onChange={draftRecipe.setCoverImage}
             />
         </StepWrapper>
     );

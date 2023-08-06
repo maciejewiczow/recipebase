@@ -1,17 +1,16 @@
 {
     "compilerOptions": {
-        /* Basic Options */
         "lib": [
             "dom",
             "dom.iterable",
             "esnext"
-        ], /* Specify library files to be included in the compilation. */
-        "noEmit": true, /* Do not emit outputs. */
+        ],
+        "noEmit": true,
         "isolatedModules": true,
-        "strict": true, /* Enable all strict type-checking options. */
-        "allowSyntheticDefaultImports": true, /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
-        "esModuleInterop": true, /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-        "resolveJsonModule": true, /* Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. */
+        "strict": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
         "baseUrl": ".",
         "sourceMap": true,
         "removeComments": false,
@@ -24,6 +23,7 @@
         "allowJs": false,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": false,
+        "downlevelIteration": true,
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
     },

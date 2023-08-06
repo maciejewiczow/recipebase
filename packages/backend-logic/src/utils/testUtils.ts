@@ -12,15 +12,6 @@ import {
 } from 'backend-logic';
 import { DataSource } from 'typeorm';
 
-export const runPromiseGenerator = async <R>(generator: Generator<any, R, any>) => {
-    let val = generator.next();
-
-    while (!val.done)
-        val = generator.next(await val.value);
-
-    return val.value;
-};
-
 export const initalizeTestDatabase = async (): Promise<Database> => {
     const dataSource = new DataSource({
         type: 'sqlite',
@@ -73,17 +64,17 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
     ];
 
     const units: Partial<Unit>[] = [
-        { name: 'unit 1', plurals: [] },
-        { name: 'unit 2', plurals: [] },
-        { name: 'unit 3', plurals: [] },
-        { name: 'unit 4', plurals: [] },
-        { name: 'unit 5', plurals: [] },
-        { name: 'unit 6', plurals: [] },
-        { name: 'unit 7', plurals: [] },
-        { name: 'unit 8', plurals: [] },
-        { name: 'unit 9', plurals: [] },
-        { name: 'unit 10', plurals: [] },
-        { name: 'unit 11', plurals: [] },
+        { name: 'unit 1' },
+        { name: 'unit 2' },
+        { name: 'unit 3' },
+        { name: 'unit 4' },
+        { name: 'unit 5' },
+        { name: 'unit 6' },
+        { name: 'unit 7' },
+        { name: 'unit 8' },
+        { name: 'unit 9' },
+        { name: 'unit 10' },
+        { name: 'unit 11' },
     ];
 
     const ingredients: Partial<Ingredient>[] = [
@@ -105,9 +96,9 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
     const recipes: Recipe[] = [
         {
             id: 1,
-            coverImage : '',
-            description : 'Lorem ipsum test test test',
-            name : 'Test recipe 1',
+            coverImage: '',
+            description: 'Lorem ipsum test test test',
+            name: 'Test recipe 1',
             tags: [
                 // @ts-ignore
                 tags[0],
@@ -205,9 +196,9 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
         },
         {
             id: 2,
-            coverImage : '',
-            description : 'Bardzo przekonujący opis 2',
-            name : 'Test recipe 2',
+            coverImage: '',
+            description: 'Bardzo przekonujący opis 2',
+            name: 'Test recipe 2',
             tags: [
                 // @ts-ignore
                 tags[2],
@@ -271,9 +262,9 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
         },
         {
             id: 3,
-            coverImage : '',
-            description : 'Dobre ciacho',
-            name : 'Test recipe 3',
+            coverImage: '',
+            description: 'Dobre ciacho',
+            name: 'Test recipe 3',
             tags: [
                 // @ts-ignore
                 tags[2],
@@ -369,9 +360,9 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
         },
         {
             id: 4,
-            coverImage : '',
-            description : 'Dobre ciacho 2',
-            name : 'Test recipe 4',
+            coverImage: '',
+            description: 'Dobre ciacho 2',
+            name: 'Test recipe 4',
             // @ts-ignore
             tags: [tags[8]],
             ingredientSections: [

@@ -6734,7 +6734,7 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nanoid@^3.1.23, nanoid@^3.3.6:
+nanoid@^3.1.23, nanoid@^3.3.1, nanoid@^3.3.6:
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.6.tgz#443380c856d6e9f9824267d960b4236ad583ea4c"
   integrity sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==
@@ -6882,6 +6882,11 @@ numeric-quantity@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/numeric-quantity/-/numeric-quantity-1.0.4.tgz#13c571742925b36eb9c8a19ee26aa56c0ee9f37c"
   integrity sha512-FT7tD29l3vf35bXykhVgW7foq1SxSpm0k34RQort6l6ilFEKAXYrJcnFHBIg59MTs2s9yZXr29hKq23xjGw6pw==
+
+numeric-quantity@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/numeric-quantity/-/numeric-quantity-2.0.0.tgz#a28123b81c5db71ef273de18cc114e08f753223b"
+  integrity sha512-LTglawHdO/SLbAYU49nlDdDKyqPpyCYD210cqqApQ9YEEHHs0n3AqRbAmakFmo3ssZYk4CKwdsNHGdcIkZ6Opw==
 
 ob1@0.76.7:
   version "0.76.7"
@@ -8367,6 +8372,11 @@ through2@^2.0.1:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
+tiny-invariant@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.3.1.tgz#8560808c916ef02ecfd55e66090df23a4b7aa642"
+  integrity sha512-AD5ih2NlSssTCwsMznbvwMZpJ1cbhkGd2uueNxzv2jDlEeZdU04JQfRnggJQ8DrcVBGjAsCKwFBbDlVNtEMlzw==
+
 tmpl@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
@@ -8376,6 +8386,11 @@ to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
   integrity sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==
+
+to-flow-generator-function@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/to-flow-generator-function/-/to-flow-generator-function-1.0.0.tgz#722e8ac8c657ffd664161235d68e76c9b8d7f7e0"
+  integrity sha512-QhIAphl4fateKC0mjzc/vEDKXs1Ev7Jtv8Seph2vEVaTGedvHJyx3uZlwHDG+qEKYGPSPDjhQJ6zOUlAWzonYQ==
 
 to-regex-range@^5.0.1:
   version "5.0.1"

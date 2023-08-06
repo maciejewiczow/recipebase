@@ -1,34 +1,77 @@
-import { RecipeIngredient } from 'backend-logic';
+import { IngredientSection, RecipeIngredient } from 'backend-logic';
+import {
+    DragHandleIcon,
+    DragHandleWrapper,
+    EditIcon,
+    EditIconWrapper,
+    IngredientNameWrapper,
+    ListItemWrapper,
+    QuantityWrapper,
+    RecipeIngredientWrapper,
+    Text,
+} from './Ingredients.styles';
+import { ItemType } from './Ingredients';
+import { RenderItem, ScaleDecorator, ShadowDecorator } from 'react-native-draggable-flatlist';
+import { AddIngredientButton } from './AddIngredientButton';
+import { SectionHeader } from './SectionHeader';
 import { observer } from 'mobx-react-lite';
-import { IngredientNameInput, IngredientQuantityInput, RecipeIngredientWrapper } from './Ingredients.styles';
+import { useRootStore } from '~/RootStoreContext';
 
-interface RecipeIngredientViewProps {
-    ingredient: RecipeIngredient;
-    isLast: boolean;
-    quantity: string;
-    addRecipeIngredient: () => any;
-    setIngredientName: (name: string) => any;
-    setIngredientQuantity: (quantity: string) => any;
-}
-
-export const RecipeIngredientView: React.FC<RecipeIngredientViewProps> = observer(({
-    ingredient,
-    isLast,
-    addRecipeIngredient,
-    setIngredientName,
-    setIngredientQuantity,
-    quantity,
+const IngredientView: React.FC<{ ingredient: RecipeIngredient; drag: () => void }> = ({
+    ingredient: { ingredient, unit, quantityFrom, quantityTo },
+    drag,
 }) => (
     <RecipeIngredientWrapper>
-        <IngredientNameInput
-            placeholder='Ingredient name'
-            onEndEditing={isLast ? addRecipeIngredient : undefined}
-            value={ingredient.ingredient?.name ?? ''}
-            onChange={setIngredientName} />
-        <IngredientQuantityInput
-            onEndEditing={isLast ? addRecipeIngredient : undefined}
-            value={quantity}
-            onChange={setIngredientQuantity}
-        />
+        <DragHandleWrapper onPressIn={drag}>
+            <DragHandleIcon />
+        </DragHandleWrapper>
+        <QuantityWrapper>
+            <Text>
+                {quantityFrom}{quantityTo ? '-' : ''}{quantityTo} {unit?.name}
+            </Text>
+        </QuantityWrapper>
+        <IngredientNameWrapper>
+            <Text>{ingredient?.name}</Text>
+        </IngredientNameWrapper>
+        <EditIconWrapper>
+            <EditIcon />
+        </EditIconWrapper>
     </RecipeIngredientWrapper>
-));
+);
+
+const SectionSeparatorView: React.FC<{ section: IngredientSection }> = observer(({ section }) => {
+    const { draftRecipe } = useRootStore();
+
+    const prevSectionIndex = (draftRecipe.recipe.ingredientSections?.findIndex(s => s.id === section.id) ?? 0) - 1;
+
+    return (
+        <>
+            {prevSectionIndex >= 0 && draftRecipe.recipe.ingredientSections && (
+                <AddIngredientButton targetSectionId={draftRecipe.recipe.ingredientSections[prevSectionIndex].id} />
+            )}
+            <SectionHeader section={section} />
+        </>
+    );
+});
+
+export const renderItem: RenderItem<ItemType> = ({
+    drag,
+    item,
+}) => (
+    <ShadowDecorator>
+        <ScaleDecorator>
+            <ListItemWrapper>
+                {item instanceof RecipeIngredient ? (
+                    <IngredientView
+                        ingredient={item}
+                        drag={drag}
+                    />
+                ) : (
+                    <SectionSeparatorView
+                        section={item}
+                    />
+                )}
+            </ListItemWrapper>
+        </ScaleDecorator>
+    </ShadowDecorator>
+);

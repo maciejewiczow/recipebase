@@ -16,18 +16,18 @@ export interface IngredientListProps {
 }
 
 export const IngredientList: React.FC<IngredientListProps> = observer(({ multiplier }) => {
-    const root = useRootStore();
+    const { currentRecipe } = useRootStore();
 
-    if (!root.recipes?.currentRecipe)
+    if (!currentRecipe.recipe)
         return null;
 
-    if ((root.recipes?.currentRecipe?.ingredientSections?.length ?? 0) === 0)
+    if ((currentRecipe.recipe.ingredientSections?.length ?? 0) === 0)
         return <Ingredients><Text>No ingredients to show</Text></Ingredients>;
 
     return (
         <Ingredients>{
-            root.recipes.currentRecipe.ingredientSections?.flatMap((section, si) => ([
-                (root.recipes?.currentRecipe?.ingredientSections?.length ?? 0) > 1 && section.name && (
+            currentRecipe.recipe.ingredientSections?.flatMap((section, si) => ([
+                (currentRecipe.recipe?.ingredientSections?.length ?? 0) > 1 && section.name && (
                     <SectionTitle isFirstChild={si === 0} key={section.id}>{section.name}</SectionTitle>
                 ),
                 ...(section.recipeIngredients?.map(rcpIngr => (

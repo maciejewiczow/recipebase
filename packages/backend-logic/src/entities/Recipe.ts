@@ -8,11 +8,10 @@ import {
     OneToMany,
     Index,
     DeleteDateColumn,
+    JoinColumn,
 } from 'typeorm';
 import IngredientSection from './IngredientSection';
-import RecipeIngredient from './RecipeIngredient';
 import RecipeSection from './RecipeSection';
-import RecipeStep from './RecipeStep';
 import Tag from './Tag';
 
 @Entity('Recipe')
@@ -32,16 +31,18 @@ export default class Recipe {
     coverImage!: string;
 
     @Column({ type: 'varchar', length: 500, nullable: true })
-    sourceUrl?: string;
+    source?: string;
 
-    @ManyToMany(() => Tag, t => t.recipes)
+    @ManyToMany(() => Tag, t => t.recipes, { cascade: true })
     @JoinTable()
     tags?: Tag[];
 
     @OneToMany(() => RecipeSection, rs => rs.recipe, { cascade: true })
+    @JoinColumn()
     sections?: RecipeSection[];
 
     @OneToMany(() => IngredientSection, is => is.recipe, { cascade: true })
+    @JoinColumn()
     ingredientSections?: IngredientSection[];
 
     @DeleteDateColumn({ nullable: true })
@@ -54,17 +55,13 @@ export default class Recipe {
     static createEmpty() {
         const recipe = new Recipe();
 
-        const ri = RecipeIngredient.createWithTemporaryId();
-
         const is = IngredientSection.createWithTemporaryId();
-        is.recipeIngredients = [ri];
+        is.recipeIngredients = [];
 
         recipe.ingredientSections = [is];
 
-        const step = RecipeStep.createWithTemporaryId();
-
         const section = RecipeSection.createWithTemporaryId();
-        section.recipeSteps = [step];
+        section.recipeSteps = [];
 
         recipe.sections = [section];
 

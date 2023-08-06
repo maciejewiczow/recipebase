@@ -1,25 +1,25 @@
 import React from 'react';
 import { useRootStore } from '~/RootStoreContext';
-import { Input, SectionHeader, StepWrapper } from '../common.styles';
+import { Input, StepHeader, StepWrapper } from '../common.styles';
 import { observer } from 'mobx-react-lite';
 
 export const Details: React.FC = observer(() => {
-    const { recipes } = useRootStore();
+    const { draftRecipe } = useRootStore();
 
     return (
         <StepWrapper>
-            <SectionHeader>Details</SectionHeader>
+            <StepHeader>Details</StepHeader>
             <Input
                 label="Description"
                 numberOfLines={4}
-                value={recipes.draftRecipe.description}
-                onChange={recipes.setDraftRecipeDescription}
+                value={draftRecipe.recipe.description}
+                onChange={draftRecipe.setDescription}
                 multiline
             />
             <Input
                 label="Source"
-                value={recipes.draftRecipe.sourceUrl}
-                onChange={recipes.setDraftRecipeSource}
+                value={draftRecipe.recipe.source}
+                onChange={draftRecipe.setSource}
             />
         </StepWrapper>
     );

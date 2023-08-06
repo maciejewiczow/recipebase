@@ -1,4 +1,4 @@
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
 import Ingredient from './entities/Ingredient';
 import IngredientSection from './entities/IngredientSection';
 import Recipe from './entities/Recipe';
@@ -43,6 +43,25 @@ export default class Database {
                 Unit,
             ],
         });
+
+        this.dataSource.logger.logQueryError = (error, query, params, _) => {
+            console.error('query failed: ', query, ' -- PARAMETERS: ', params);
+            console.error('Query error: ', typeof error === 'object' ? JSON.stringify(error, null, 4) : error);
+        };
+
+        const originalLogQuery = this.dataSource.logger.logQuery.bind(this.dataSource.logger);
+        this.dataSource.logger.logQuery = (query, parameters, qr) => {
+            originalLogQuery(
+                query,
+                parameters
+                    ?.map(param => (
+                        typeof param === 'string' && param.length > 500 ?
+                            param.slice(0, 500) + '...' :
+                            param
+                    )),
+                qr
+            );
+        };
     }
 
     async initalize() {
@@ -56,5 +75,9 @@ export default class Database {
         this.recipeStepRepository = this.connection.getRepository(RecipeStep);
         this.tagRepository = this.connection.getRepository(Tag);
         this.unitRepository = this.connection.getRepository(Unit);
+    }
+
+    transaction<T>(runInTransaction: (entityManager: EntityManager) => Promise<T>): Promise<T> {
+        return this.dataSource.transaction(runInTransaction);
     }
 }

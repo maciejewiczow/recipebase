@@ -3,6 +3,7 @@ import {
     Column,
     DeleteDateColumn,
     Entity,
+    JoinColumn,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
@@ -13,19 +14,20 @@ import RecipeStep from './RecipeStep';
 @Entity('RecipeSection')
 export default class RecipeSection {
     @PrimaryGeneratedColumn()
-        id!: number;
+    id!: number;
 
     @Column({ type: 'varchar', nullable: true, length: 1000 })
-        name!: string | null;
+    name!: string | null;
 
     @ManyToOne(() => Recipe, r => r.sections)
-        recipe?: Recipe;
+    recipe?: Recipe;
 
     @OneToMany(() => RecipeStep, rs => rs.recipeSection, { cascade: true })
-        recipeSteps?: RecipeStep[];
+    @JoinColumn()
+    recipeSteps?: RecipeStep[];
 
     @DeleteDateColumn({ nullable: true })
-        deletedAt!: Date | null;
+    deletedAt!: Date | null;
 
     constructor() {
         makeAutoObservable(this);

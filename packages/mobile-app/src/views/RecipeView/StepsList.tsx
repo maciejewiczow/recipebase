@@ -30,34 +30,34 @@ const getProgression = (currentSection: number, currentStep: number, i: number, 
 };
 
 export const StepsList: React.FC<StepsListProps> = observer(({ currentStep, currentSection, onChildrenLayout }) => {
-    const root = useRootStore();
+    const { currentRecipe } = useRootStore();
 
-    if (!root.recipes?.currentRecipe)
+    if (!currentRecipe.recipe)
         return null;
 
-    if ((root.recipes.currentRecipe.sections?.length ?? 0) === 0)
+    if ((currentRecipe.recipe.sections?.length ?? 0) === 0)
         return <Text>No steps to show</Text>;
 
     return (
-        <View>{
-            root.recipes.currentRecipe.sections?.flatMap((section, si) => ([
-                (root.recipes?.currentRecipe?.sections?.length ?? 0) > 1 && section.name && (
-                    <SectionTitle isFirstChild={si === 0} key={section.id}>{section.name}</SectionTitle>
+        <View>
+            {currentRecipe.recipe.sections?.flatMap((section, sectionIndex) => ([
+                (currentRecipe.recipe?.sections?.length ?? 0) > 1 && section.name && (
+                    <SectionTitle isFirstChild={sectionIndex === 0} key={section.id}>{section.name}</SectionTitle>
                 ),
                 ...(section.recipeSteps?.map((step, i) => (
-                    <RecipeStepRow onLayout={e => onChildrenLayout?.(e, getKey(i, si))} key={getKey(step.id, section.id)}>
+                    <RecipeStepRow onLayout={e => onChildrenLayout?.(e, getKey(i, sectionIndex))} key={getKey(step.id, section.id)}>
                         <RecipeStepLineDecorator
-                            progression={getProgression(currentSection, currentStep, i, si)}
+                            progression={getProgression(currentSection, currentStep, i, sectionIndex)}
                             isLast={i === (section.recipeSteps?.length ?? 1) - 1}
                         />
                         <RecipeStepText
-                            isCurrent={currentStep === i && currentSection === si}
+                            isCurrent={currentStep === i && currentSection === sectionIndex}
                         >
                             {step.content}
                         </RecipeStepText>
                     </RecipeStepRow>
                 )) ?? []),
-            ]))
-        }</View>
+            ]))}
+        </View>
     );
 });

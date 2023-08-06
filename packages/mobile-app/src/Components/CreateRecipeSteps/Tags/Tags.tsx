@@ -1,10 +1,10 @@
 import React from 'react';
 import { TagCreator } from '~/components/TagCreator';
-import { SectionHeader, StepWrapper } from '../common.styles';
+import { StepHeader, StepWrapper } from '../common.styles';
 
 export const Tags: React.FC = () => (
     <StepWrapper>
-        <SectionHeader>Tags</SectionHeader>
+        <StepHeader>Tags</StepHeader>
         <TagCreator />
     </StepWrapper>
 );

@@ -2,37 +2,37 @@ import React from 'react';
 import { DeleteSectionIcon, RecipeSectionWrapper, SectionNameInput, SectionNameInputRow } from './Steps.styles';
 import { useRootStore } from '~/RootStoreContext';
 import { RecipeStep } from 'backend-logic';
-import { AddSectionButton, ScrollableStepWrapper, SectionHeader } from '../common.styles';
+import { AddSectionButton, ScrollableStepWrapper, StepHeader } from '../common.styles';
 import { RecipeStepView } from './RecipeStepView';
 import { TouchableNativeFeedback } from 'react-native';
 import { observer } from 'mobx-react-lite';
 
 export const Steps: React.FC = observer(() => {
-    const { recipes } = useRootStore();
+    const { draftRecipe } = useRootStore();
 
     const addStep = (sectionId: number, recipeStep: RecipeStep) => () => {
         if (recipeStep.content)
-            recipes.addNewDraftRecipeStep(sectionId);
+            draftRecipe.addNewStep(sectionId);
     };
 
     const setStepContent = (sectionId: number, stepId: number) => (content: string) => {
-        recipes.setDraftRecipeStepContent(sectionId, stepId, content);
+        draftRecipe.setStepContent(sectionId, stepId, content);
     };
 
     const setStectionName = (sectionId: number) => (name: string) => {
-        recipes.setDraftRecipeSectionName(sectionId, name);
+        draftRecipe.setSectionName(sectionId, name);
     };
 
     const removeSection = (sectionId: number) => () => {
-        recipes.removeDraftRecipeSection(sectionId);
+        draftRecipe.removeSection(sectionId);
     };
 
     return (
         <ScrollableStepWrapper>
-            <SectionHeader>Recipe steps</SectionHeader>
-            {recipes.draftRecipe.sections?.length === 1 ? (
-                recipes.draftRecipe.sections[0].recipeSteps?.map((step, index) => {
-                    const section = recipes.draftRecipe.sections?.[0];
+            <StepHeader>Recipe steps</StepHeader>
+            {draftRecipe.recipe.sections?.length === 1 ? (
+                draftRecipe.recipe.sections[0].recipeSteps?.map((step, index) => {
+                    const section = draftRecipe.recipe.sections?.[0];
 
                     if (!section)
                         return null;
@@ -49,7 +49,7 @@ export const Steps: React.FC = observer(() => {
                     );
                 })
             ) : (
-                recipes.draftRecipe.sections?.map(section => (
+                draftRecipe.recipe.sections?.map(section => (
                     <RecipeSectionWrapper key={section.id}>
                         <SectionNameInputRow>
                             <SectionNameInput
@@ -77,7 +77,7 @@ export const Steps: React.FC = observer(() => {
                 ))
             )}
             <AddSectionButton
-                onPress={recipes.addNewDraftRecipeSection}
+                onPress={draftRecipe.addNewSection}
             >
                 Add section
             </AddSectionButton>

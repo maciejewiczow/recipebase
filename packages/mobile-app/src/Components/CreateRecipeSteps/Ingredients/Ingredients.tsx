@@ -1,104 +1,80 @@
 import React from 'react';
-import { IngredientSectionWrapper } from './Ingredients.styles';
 import { useRootStore } from '~/RootStoreContext';
-import { RecipeIngredientView } from './RecipeIngredientView';
-import { TouchableNativeFeedback } from 'react-native';
-import { Label } from '~/components/Input/Input.styles';
-import { RecipeIngredient } from 'backend-logic';
+import { renderItem } from './RecipeIngredientView';
+import { IngredientSection, RecipeIngredient } from 'backend-logic';
+import { observer } from 'mobx-react-lite';
 import {
     AddSectionButton,
-    DeleteSectionIcon,
+    IngredientList,
     ScrollableStepWrapper,
-    SectionHeader,
-    SectionNameInput,
-    SectionNameInputRow,
-} from '../common.styles';
-import { observer } from 'mobx-react-lite';
+    SectionHeaderWithMargin,
+    StepHeader,
+} from './Ingredients.styles';
+import { AddIngredientButton } from './AddIngredientButton';
+
+export type ItemType = RecipeIngredient | IngredientSection;
+
+const sectionsToItems = (sections: IngredientSection[]): ItemType[] => {
+    if (sections.length <= 1) {
+        return sections[0].recipeIngredients?.map<ItemType>(ri => {
+            [ri.ingredientSection] = sections;
+
+            return ri;
+        }) ?? [];
+    }
+
+    return sections.flatMap<ItemType>((section, index) => ([
+        ...(index !== 0 ? [section] : []),
+        ...(
+            section.recipeIngredients?.map<ItemType>(ri => {
+                ri.ingredientSection = section;
+
+                return ri;
+            }) ?? []
+        ),
+    ]));
+};
 
 export const Ingredients: React.FC = observer(() => {
-    const { recipes } = useRootStore();
+    const { draftRecipe } = useRootStore();
 
-    const addIngredient = (sectionId: number, ri: RecipeIngredient) => () => {
-        if (ri.ingredient?.name?.trim() || recipes.draftRecipeQuantityStrings[sectionId]?.[ri.id])
-            recipes.addNewDraftRecipeIngredient(sectionId);
-    };
+    const data = sectionsToItems(draftRecipe.recipe.ingredientSections ?? []);
 
-    const removeIngredientSection = (sectionId: number) => () => {
-        recipes.removeDraftRecipeIngredientSection(sectionId);
-    };
+    const hasMoreThanOneSection = (draftRecipe.recipe.ingredientSections?.length ?? 0) > 1;
 
-    const setIngredientName = (sectionId: number, ingredientId: number) => (name: string) => {
-        recipes.setDraftRecipeIngredientName(sectionId, ingredientId, name);
-    };
-
-    const setIngredientQuantity = (sectionId: number, ingredientId: number) => (qty: string) => {
-        recipes.setDraftRecipeIngredientQuantity(sectionId, ingredientId, qty);
-    };
-
-    const setIngredientSectionName = (sectionId: number) => (name: string) => {
-        recipes.setDraftRecipeIngredientSectionName(sectionId, name);
-    };
+    const lastRecipeSectionId = draftRecipe.recipe.ingredientSections?.at(-1)?.id;
 
     return (
         <ScrollableStepWrapper>
-            <SectionHeader>Ingredients</SectionHeader>
-            {recipes.draftRecipe.ingredientSections?.length === 1 ? (
-                <>
-                    {recipes.draftRecipe.ingredientSections[0].recipeIngredients?.map((ri, index) => {
-                        const section = recipes.draftRecipe.ingredientSections?.[0];
-
-                        if (!section)
-                            return null;
-
-                        return (
-                            <RecipeIngredientView
-                                ingredient={ri}
-                                isLast={index === (section.recipeIngredients?.length ?? 1) - 1}
-                                quantity={recipes.draftRecipeQuantityStrings[section.id]?.[ri.id]}
-                                addRecipeIngredient={addIngredient(section.id, ri)}
-                                setIngredientName={setIngredientName(section.id, ri.id)}
-                                setIngredientQuantity={setIngredientQuantity(section.id, ri.id)}
-                                key={ri.id}
-                            />
-                        );
-                    })}
-                </>
-            ) : (
-                <>
-                    {recipes.draftRecipe.ingredientSections?.map(ingredientSection => (
-                        <IngredientSectionWrapper key={ingredientSection.id}>
-                            <SectionNameInputRow>
-                                <SectionNameInput
-                                    label="Section name"
-                                    value={ingredientSection.name ?? ''}
-                                    onChange={setIngredientSectionName(ingredientSection.id)}
-                                />
-                                <TouchableNativeFeedback>
-                                    <DeleteSectionIcon onPress={removeIngredientSection(ingredientSection.id)} />
-                                </TouchableNativeFeedback>
-                            </SectionNameInputRow>
-                            <Label>Ingredients</Label>
-                            {ingredientSection.recipeIngredients?.map((recipeIngredient, index) => (
-                                <RecipeIngredientView
-                                    ingredient={recipeIngredient}
-                                    quantity={recipes.draftRecipeQuantityStrings[ingredientSection.id]?.[recipeIngredient.id]}
-                                    isLast={index === (ingredientSection.recipeIngredients?.length ?? 1) - 1}
-                                    addRecipeIngredient={addIngredient(ingredientSection.id, recipeIngredient)}
-                                    setIngredientName={setIngredientName(ingredientSection.id, recipeIngredient.id)}
-                                    setIngredientQuantity={setIngredientQuantity(ingredientSection.id, recipeIngredient.id)}
-                                    key={recipeIngredient.id}
-                                />
-                            ))}
-                        </IngredientSectionWrapper>
-                    ))}
-                </>
+            <StepHeader>Ingredients</StepHeader>
+            {hasMoreThanOneSection && (
+                <SectionHeaderWithMargin
+                    section={draftRecipe.recipe.ingredientSections?.[0]}
+                />
+            )}
+            <IngredientList<ItemType>
+                data={data}
+                keyExtractor={item => (
+                    item instanceof RecipeIngredient
+                        ? item.id.toString() + '-' + item.ingredientSection?.id.toString() :
+                        item.id.toString()
+                )}
+                renderItem={renderItem}
+                onDragEnd={({ data: sections }) => (
+                    draftRecipe.setIngredientSectionsFromArray(sections)
+                )}
+            />
+            {lastRecipeSectionId && (
+                <AddIngredientButton targetSectionId={lastRecipeSectionId} />
             )}
             <AddSectionButton
-                onPress={recipes.addNewDraftRecipeIngredientSection}
+                onPress={draftRecipe.addNewIngredientSection}
             >
                 Add section
             </AddSectionButton>
         </ScrollableStepWrapper>
     );
 });
+
+Ingredients.displayName = 'Ingredients';
 

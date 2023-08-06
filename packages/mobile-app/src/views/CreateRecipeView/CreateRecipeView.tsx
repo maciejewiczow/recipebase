@@ -1,20 +1,20 @@
-import { useNavigation } from '@react-navigation/native';
-import { Recipe } from 'backend-logic';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { RootNavigationProp } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
 import {
-    Details,
     Import,
-    Ingredients,
     NameAndPhoto,
+    Details,
     Steps,
+    Ingredients,
     Tags,
 } from '~/components/CreateRecipeSteps';
 import { Stepper } from '~/components/Stepper';
 
 export const CreateRecipeView: React.FC = () => {
-    const { recipes } = useRootStore();
+    const { draftRecipe, tags } = useRootStore();
     const navigation = useNavigation<RootNavigationProp>();
 
     return (
@@ -29,8 +29,10 @@ export const CreateRecipeView: React.FC = () => {
             ]}
             lastStepButtonText="Create"
             onFinish={async () => {
-                const recipe = await recipes.saveDraftRecipe() as unknown as Recipe;
-                navigation.navigate('Recipe', { recipeId: recipe.id });
+                await tags.saveDraftTags();
+
+                const { id } = await draftRecipe.save();
+                navigation.navigate('Recipe', { recipeId: id });
             }}
         />
     );

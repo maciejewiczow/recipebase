@@ -26,7 +26,7 @@ export const Input = styled(OriginalInput).attrs({
     margin-bottom: 12px;
 `;
 
-export const SectionHeader = styled.Text`
+export const StepHeader = styled.Text`
     margin-bottom: 18px;
     font-size: 20px;
     font-weight: 400;
@@ -48,6 +48,11 @@ export const SectionNameInput = styled(Input)`
     flex-grow: 1;
     max-width: 77.5%;
     margin-bottom: 0;
+`;
+
+export const DeleteSectionIconWrapper = styled.TouchableOpacity`
+    align-items: center;
+    justify-content: center;
 `;
 
 export const DeleteSectionIcon = createStyledIcon(FaIcon, {

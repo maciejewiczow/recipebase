@@ -1,6 +1,9 @@
 import { Database, Recipe, Tag } from 'backend-logic';
-import { computed, makeAutoObservable } from 'mobx';
+import { computed, flow, makeAutoObservable } from 'mobx';
 import { byNumberDesc } from 'backend-logic/src/utils/arrayUtils';
+import { cloneDeep } from 'lodash';
+import { removeTemporaryIds } from '../utils/removeTemporaryIds';
+import { yieldResult } from '../utils/yieldResult';
 
 export interface TagWithCount extends Tag {
     recipeCount: number;
@@ -19,7 +22,7 @@ export class Tags {
         makeAutoObservable(this);
     }
 
-    *fetchTags() {
+    fetchTags = flow(function* (this: Tags) {
         const res: TagWithCount[] = yield this.database.tagRepository
             ?.createQueryBuilder('tag')
             .loadRelationCountAndMap('tag.recipeCount', 'tag.recipes', 'recipeCount')
@@ -29,7 +32,7 @@ export class Tags {
             .filter(tag => tag.recipeCount > 0)
             .sort(byNumberDesc(tag => tag.recipeCount))
             .map(tag => ({ tag, isSelected: false }));
-    }
+    });
 
     toggleTagSelectedById(id: number) {
         const item = this.tags.find(it => it.tag.id === id);
@@ -95,4 +98,17 @@ export class Tags {
     get partitionedTags() {
         return [...this.selectedTags, ...this.notSelectedTags];
     }
+
+    saveDraftTags = flow(function* (this: Tags) {
+        const tagsToSave = cloneDeep(this.draftTags.map(({ recipeCount, ...tag }) => tag));
+
+        removeTemporaryIds(tagsToSave);
+
+        const savedTags = yield* yieldResult(() => this.database.tagRepository?.save(tagsToSave))();
+
+        this.draftTags = [];
+        yield this.fetchTags();
+
+        return savedTags;
+    });
 }

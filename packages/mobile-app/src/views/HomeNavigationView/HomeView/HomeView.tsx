@@ -14,11 +14,13 @@ import { NoSearchResultsListView } from './NoSearchResultsListView';
 import { useRootStore } from '~/RootStoreContext';
 
 export const HomeView: React.FC = observer(() => {
-    const root = useRootStore();
+    const { recipes, tags } = useRootStore();
     const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
-        root.recipes.fetchRecipes(searchText);
+        const promise = recipes.fetchRecipes(searchText);
+
+        return () => promise.cancel();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchText]);
 
@@ -32,14 +34,14 @@ export const HomeView: React.FC = observer(() => {
                 placeholder="Search by name, tag..."
             />
             <TagList />
-            {root.recipes?.isFetchingRecipes ? (
+            {recipes.isFetchingRecipes ? (
                 <ActivityIndicator size={60} color="#999" />
             ) : (
 
-                ((root.recipes.filterRecipesByTags(root.tags.selectedTags).length ?? 0) > 0) ? (
-                    root.recipes.filterRecipesByTags(root.tags.selectedTags).map(item => <RecipeListItem key={item.id} recipe={item} />)
+                ((recipes.filterRecipesByTags(tags.selectedTags).length ?? 0) > 0) ? (
+                    recipes.filterRecipesByTags(tags.selectedTags).map(item => <RecipeListItem key={item.id} recipe={item} />)
                 ) : (
-                    searchText.trim().length === 0 && (root.tags?.selectedTags.length ?? 0) === 0 ? (
+                    searchText.trim().length === 0 && (tags.selectedTags.length ?? 0) === 0 ? (
                         <EmptyListView />
                     ) : (
                         <NoSearchResultsListView />

@@ -3,27 +3,23 @@ import {
     Column,
     DeleteDateColumn,
     Entity,
+    JoinColumn,
     OneToMany,
-    PrimaryGeneratedColumn,
+    PrimaryColumn,
 } from 'typeorm';
 import RecipeIngredient from './RecipeIngredient';
 
 @Entity('Unit')
 export default class Unit {
-    @PrimaryGeneratedColumn()
-        id!: number;
-
-    @Column({ type: 'varchar', unique: true })
-        name!: string;
-
-    @Column('simple-array')
-        plurals!: string[];
+    @PrimaryColumn({ type: 'varchar' })
+    name!: string;
 
     @OneToMany(() => RecipeIngredient, ri => ri.unit, { cascade: true })
-        recipeIngredients?: RecipeIngredient[];
+    @JoinColumn()
+    recipeIngredients?: RecipeIngredient[];
 
     @DeleteDateColumn({ nullable: true })
-        deletedAt!: Date | null;
+    deletedAt!: Date | null;
 
     constructor() {
         makeAutoObservable(this);
