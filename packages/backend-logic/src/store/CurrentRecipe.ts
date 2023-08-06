@@ -42,6 +42,7 @@ export class CurrentRecipe {
 
         rcp.coverImage = rcpCover?.coverImage ?? '';
         this.recipe = rcp;
+
         this.isFetchingCurrentRecipe = false;
     });
 

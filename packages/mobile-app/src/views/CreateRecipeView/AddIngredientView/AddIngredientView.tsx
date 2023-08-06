@@ -1,5 +1,5 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootStackParams } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
 import { StepHeader, StepWrapper } from '~/components/CreateRecipeSteps/common.styles';
@@ -10,18 +10,37 @@ import { UnitSelect } from './UnitSelect';
 
 export interface ViewProps {
     targetSectionId: number;
+    recipeIngredientToEditId?: number;
 }
 
 export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams, 'AddIngredientView'>> = observer(({
-    route: { params: { targetSectionId } },
+    route: { params: { targetSectionId, recipeIngredientToEditId } },
     navigation,
 }) => {
+    const isInEditMode = recipeIngredientToEditId !== undefined;
+
     const { draftRecipe, draftIngredient } = useRootStore();
-    const [isInIngredientSearchMode, setIsInIngredientSearchMode] = useState(true);
+    const [isInIngredientSearchMode, setIsInIngredientSearchMode] = useState(isInEditMode);
+
+    useEffect(() => {
+        setIsInIngredientSearchMode(!isInEditMode);
+    }, [isInEditMode]);
+
+    useEffect(() => {
+        if (isInEditMode) {
+            const ingredient = draftRecipe.recipe.ingredientSections?.[targetSectionId]
+                .recipeIngredients?.find(ri => ri.id === recipeIngredientToEditId);
+
+            if (ingredient)
+                draftIngredient.setRecipeIngredient(ingredient);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [recipeIngredientToEditId, targetSectionId]);
 
     const saveIngredient = () => {
         draftIngredient.commitSelectedIngredient();
-        draftRecipe.addNewRecipeIngredient(targetSectionId, draftIngredient.recipeIngredient);
+        if (!isInEditMode)
+            draftRecipe.addNewRecipeIngredient(targetSectionId, draftIngredient.recipeIngredient);
         draftIngredient.reset();
         navigation.goBack();
     };

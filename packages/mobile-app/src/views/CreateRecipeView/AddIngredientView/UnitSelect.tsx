@@ -1,9 +1,10 @@
-import { Unit } from 'backend-logic';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { BottomSheetSelectProps } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { UnitItemWrapper, UnitName, UnitSelectInput as UnitSelectInput } from './AddIngredientView.styles';
 import { useRootStore } from '~/RootStoreContext';
 import { observer } from 'mobx-react-lite';
+import invariant from 'tiny-invariant';
+import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
 
 interface UnitListItemType {
     unitName: string;
@@ -15,6 +16,8 @@ export const UnitSelect: React.FC = observer(() => {
 
     useEffect(() => {
         const promise = units.fetchUnits(draftIngredient.unitSearchString ?? '');
+
+        promise.catch(catchCancelledFlow);
 
         return () => promise.cancel();
     }, [draftIngredient.unitSearchString, units]);
@@ -28,7 +31,7 @@ export const UnitSelect: React.FC = observer(() => {
     ), []);
 
     const renderValue: BottomSheetSelectProps<UnitListItemType>['renderValue'] = useCallback(
-        ({ item }) => item.unitName,
+        item => item.unitName,
         []
     );
 
@@ -60,10 +63,10 @@ export const UnitSelect: React.FC = observer(() => {
             draftIngredient.setUnitName(item.unitName);
         } else {
             const unit = units.units.find(u => u.name === item.unitName);
-            if (unit)
-                draftIngredient.setUnit(unit);
-            else
-                console.warn(`Unit with name ${item.unitName} not found`);
+
+            invariant(!!unit, `Unit ${item.unitName} does not exist`);
+
+            draftIngredient.setUnit(unit);
         }
 
         draftIngredient.commitSelectedUnit();
@@ -79,6 +82,7 @@ export const UnitSelect: React.FC = observer(() => {
             isEqual={isEqual}
             value={value}
             onChange={onChange}
+            searchText={draftIngredient.unitSearchString}
             onSearchTextChange={draftIngredient.setUnitSearchString}
         />
     );

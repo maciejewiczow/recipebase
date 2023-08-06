@@ -19,18 +19,31 @@ import { SectionHeader } from './SectionHeader';
 import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import { useNavigation } from '@react-navigation/native';
+import { RootNavigationProp } from '~/RootNavigation';
 
-const IngredientView: React.FC<{ ingredient: RecipeIngredient; drag: () => void }> = ({
+const IngredientView: React.FC<{ ingredient: RecipeIngredient; drag: () => void }> = observer(({
     ingredient: { id, ingredient, unit, quantityFrom, quantityTo, ingredientSection },
     drag,
 }) => {
     const { draftRecipe } = useRootStore();
+    const navigation = useNavigation<RootNavigationProp>();
 
     const removeIngredient = () => {
         if (ingredientSection)
             draftRecipe.removeRecipeIngredient(ingredientSection.id, id);
-        else
-            console.warn('Missing section');
+    };
+
+    const editIngredient = () => {
+        if (ingredientSection) {
+            navigation.navigate(
+                'AddIngredientView',
+                {
+                    targetSectionId: ingredientSection.id,
+                    recipeIngredientToEditId: id,
+                }
+            );
+        }
     };
 
     return (
@@ -52,7 +65,7 @@ const IngredientView: React.FC<{ ingredient: RecipeIngredient; drag: () => void 
                         <EditIcon />
                     </MenuTrigger>
                     <MenuOptions>
-                        <MenuOption>
+                        <MenuOption onSelect={editIngredient}>
                             <MenuItemWrapper>
                                 <MenuItemText>Edit</MenuItemText>
                             </MenuItemWrapper>
@@ -67,7 +80,7 @@ const IngredientView: React.FC<{ ingredient: RecipeIngredient; drag: () => void 
             </EditIconWrapper>
         </RecipeIngredientWrapper>
     );
-};
+});
 
 const SectionSeparatorView: React.FC<{ section: IngredientSection }> = observer(({ section }) => {
     const { draftRecipe } = useRootStore();

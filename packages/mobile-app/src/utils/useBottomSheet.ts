@@ -31,8 +31,6 @@ export const useBottomSheetModal = (args?: Partial<UseBottomSheetModalArgs>): Us
         height: '45%',
     });
 
-    console.log(onOpen);
-
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const snapPoints = useMemo(() => ([1, height ?? '45%']), [height]);
     const onChangeRef = useNonMemoCallbackRef(onChange);

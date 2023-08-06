@@ -63,4 +63,12 @@ export class DraftIngredient {
         this.recipeIngredient = RecipeIngredient.createWithTemporaryId();
         this.quantityString = '';
     };
+
+    @action setRecipeIngredient = (ri: RecipeIngredient) => {
+        this.recipeIngredient = ri;
+        this.ingredient = ri.ingredient ?? Ingredient.createWithTemporaryId();
+        this.unit = ri.unit ?? new Unit();
+        this.unitSearchString = '';
+        this.quantityString = ri.quantityFrom + (ri.quantityTo !== undefined ? `-${ri.quantityTo}` : '');
+    };
 }

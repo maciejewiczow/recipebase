@@ -5,6 +5,7 @@ import { FlatList, FlatListProps } from 'react-native';
 import { useRootStore } from '~/RootStoreContext';
 import { Label } from '~/components/Input/Input.styles';
 import { ListItemWrapper, StoredIngredientName } from './AddIngredientView.styles';
+import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
 
 interface IngredientListItemType {
     ingredient: Ingredient;
@@ -20,6 +21,8 @@ export const IngredientList: React.FC<IngredientListProps> = observer(({ setIsIn
 
     useEffect(() => {
         const promise = ingredients.fetchIngredients(draftIngredient.ingredient.name ?? '');
+
+        promise.catch(catchCancelledFlow);
 
         return () => promise.cancel();
     }, [draftIngredient.ingredient.name, ingredients]);

@@ -1,17 +1,7 @@
 import { action, computed, flow, makeAutoObservable } from 'mobx';
 import { ILike } from 'typeorm';
-import {
-    Database,
-    IngredientSection,
-    Recipe,
-    RecipeIngredient,
-    RecipeSection,
-    RecipeStep,
-} from 'backend-logic';
+import { Database, Recipe } from 'backend-logic';
 import { TagWithSelectedState } from './Tags';
-import { validateRecipe, removeEmptyIngredientsAndSteps, parseQuantityString, saveRecipe } from './recipeUtils';
-import { cloneDeep } from 'lodash';
-import { removeTemporaryIds } from '../utils/removeTemporaryIds';
 import { yieldResult } from '../utils/yieldResult';
 
 export class Recipes {
@@ -24,6 +14,7 @@ export class Recipes {
 
     fetchRecipes = flow(function* (this: Recipes, searchText: string) {
         this.isFetchingRecipes = true;
+
         const escapedText = searchText
             .trim()
             .replace(/%/g, '\\%')

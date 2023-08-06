@@ -44,7 +44,7 @@ export interface BottomSheetSelectProps<T> {
     style?: StyleProp<ViewStyle>;
     options: T[];
     renderOption: (opt: ListOption<T>) => ReactElement;
-    renderValue: (opt: Option<T>) => string | number | null | undefined;
+    renderValue: (val: T) => string | number | null | undefined;
     onChange?: (opt: Option<T>) => void;
     keyExtractor?: (item: T) => Stringable;
     isEqual: (a: T, b: T) => boolean;
@@ -75,18 +75,15 @@ export const BottomSheetSelect = <T extends unknown>({
         onOpen: () => searchInputRef.current?.focus(),
     });
 
-    const [selectedOption, setSelectedOption] = useState<OptionWithIndex<T>>();
+    const [currentValue, setCurrentValue] = useState<T>();
 
     useEffect(() => {
-        if (value)
-            setSelectedOption(prev => (prev ? { ...prev, item: value } : undefined));
-        else
-            setSelectedOption(undefined);
+        setCurrentValue(value);
     }, [value]);
 
     const forwardChange = useCallback(
         (opt: OptionWithIndex<T>) => {
-            setSelectedOption(opt);
+            setCurrentValue(opt.item);
             onChange?.(opt);
             bottomSheetModal.close();
         },
@@ -96,9 +93,9 @@ export const BottomSheetSelect = <T extends unknown>({
     const data = useMemo(
         () => options.map<Option<T>>(item => ({
             item,
-            isActive: !!selectedOption && isEqual(item, selectedOption.item),
+            isActive: !!currentValue && isEqual(item, currentValue),
         })),
-        [isEqual, options, selectedOption]
+        [isEqual, options, currentValue]
     );
 
     const renderItem: ListRenderItem<Option<T>> = useCallback(
@@ -120,8 +117,8 @@ export const BottomSheetSelect = <T extends unknown>({
             <Label>{label}</Label>
             <TouchableWithoutFeedback onPress={bottomSheetModal.open}>
                 <PseudoInput>
-                    {selectedOption ? (
-                        <Value>{renderValue(selectedOption)}</Value>
+                    {currentValue ? (
+                        <Value>{renderValue(currentValue)}</Value>
                     ) : (
                         <Placeholder>{placeholder}</Placeholder>
                     )}

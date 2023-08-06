@@ -29,6 +29,7 @@ import {
     Text,
     MenuItemWrapper,
 } from './RecipeView.styles';
+import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
 
 interface MultiplierDropdownItem {
     label: string;
@@ -61,6 +62,8 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
 
     useEffect(() => {
         const promise = currentRecipe.fetchRecipeById(route.params.recipeId);
+
+        promise.catch(catchCancelledFlow);
 
         return () => promise.cancel();
         // eslint-disable-next-line react-hooks/exhaustive-deps

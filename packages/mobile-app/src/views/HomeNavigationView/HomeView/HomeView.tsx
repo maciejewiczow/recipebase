@@ -12,6 +12,7 @@ import {
 } from './HomeView.styles';
 import { NoSearchResultsListView } from './NoSearchResultsListView';
 import { useRootStore } from '~/RootStoreContext';
+import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
 
 export const HomeView: React.FC = observer(() => {
     const { recipes, tags } = useRootStore();
@@ -19,6 +20,8 @@ export const HomeView: React.FC = observer(() => {
 
     useEffect(() => {
         const promise = recipes.fetchRecipes(searchText);
+
+        promise.catch(catchCancelledFlow);
 
         return () => promise.cancel();
         // eslint-disable-next-line react-hooks/exhaustive-deps

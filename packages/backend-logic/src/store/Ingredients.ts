@@ -22,13 +22,12 @@ export class Ingredients {
 
         this.isFetchingIngredients = true;
 
+
         const ingredients = yield* yieldResult(() => this.database.ingredientRepository?.find({
             where: {
                 name: ILike(`%${term}%`),
             },
         }))();
-
-        console.log(ingredients?.map(i => i.name));
 
         if (ingredients)
             this.ingredients = ingredients;
