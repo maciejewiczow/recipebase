@@ -31,6 +31,7 @@ const getButtonBorderColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
 
             case 'primary-outline':
             case 'secondary-outline':
+            case 'transparent':
                 return '#747474';
         }
     }
@@ -45,6 +46,9 @@ const getButtonBorderColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
 
         case 'secondary':
             return '#E5E5E5';
+
+        case 'transparent':
+            return 'transparent';
     }
 };
 
@@ -52,10 +56,16 @@ const getButtonTextColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
     if (disabled)
         return '#848484';
 
-    if (variant === 'secondary')
-        return '#616161';
+    switch (variant) {
+        case 'secondary':
+            return '#555';
 
-    return 'white';
+        case 'transparent':
+            return '#333';
+
+        default:
+            return 'white';
+    }
 };
 
 export const Base = styled.View<ButtonPartsStyleProps>`

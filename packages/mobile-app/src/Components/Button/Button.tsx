@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, TouchableNativeFeedback, ViewStyle } from 'react-native';
 import { Base, ButtonText } from './Button.styles';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'primary-outline' | 'secondary-outline';
+export type ButtonVariant = 'primary' | 'secondary' | 'primary-outline' | 'secondary-outline' | 'transparent';
 
 export interface ButtonProps {
     children?: React.ReactNode;
