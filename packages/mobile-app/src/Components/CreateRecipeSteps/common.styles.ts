@@ -1,8 +1,16 @@
-import styled, { css } from 'styled-components/native';
+import { css, styled } from 'styled-components/native';
 import { Input as OriginalInput } from '~/components/Input';
 import { Button } from '../Button';
 import { createStyledIcon } from '~/utils/createStyledIcon';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import { NestableDraggableFlatList, NestableScrollContainer } from 'react-native-draggable-flatlist';
+
+export const draggableListStepMargin = css`
+    margin-left: 16px;
+    margin-right: 16px;
+`;
 
 export const StepWrapper = styled.View`
     flex: 1;
@@ -16,6 +24,10 @@ export const ScrollableStepWrapper = styled.ScrollView.attrs({
 })`
     flex: 1;
     padding: 12px;
+`;
+
+export const NestableScrollableStepWrapper = styled(NestableScrollContainer)`
+    flex: 1;
 `;
 
 export const Input = styled(OriginalInput).attrs({
@@ -37,6 +49,7 @@ export const AddSectionButton = styled(Button).attrs({
     variant: 'secondary',
 })`
     margin-top: 4px;
+    ${draggableListStepMargin}
 `;
 
 export const SectionNameInputRow = styled.View`
@@ -55,6 +68,10 @@ export const DeleteSectionIconWrapper = styled.TouchableOpacity`
     justify-content: center;
 `;
 
+export const DraggableList = styled(NestableDraggableFlatList)`
+    margin: 0;
+` as typeof NestableDraggableFlatList;
+
 export const DeleteSectionIcon = createStyledIcon(FaIcon, {
     name: 'trash',
     color: 'black',
@@ -65,3 +82,55 @@ export const DeleteSectionIcon = createStyledIcon(FaIcon, {
     text-align-vertical: center;
     margin-top: 20px;
 `);
+
+export const AddIcon = createStyledIcon(EntypoIcon, {
+    name: 'plus',
+    size: 20,
+    color: '#333',
+});
+
+export const EditIcon = createStyledIcon(EntypoIcon, {
+    name: 'dots-three-vertical',
+    size: 16,
+}, css`
+    vertical-align: middle;
+    color: #555;
+`);
+
+export const DragHandleIcon = createStyledIcon(MaterialIcon, {
+    name: 'drag-handle',
+    size: 25,
+}, css`
+    vertical-align: middle;
+    color: #555;
+`);
+
+export const DragHandleWrapper = styled.TouchableOpacity``;
+
+export const EditIconWrapper = styled.TouchableOpacity`
+    align-items: center;
+`;
+
+export const MenuItemWrapper = styled.View`
+    padding: 8px 8px;
+`;
+
+export const MenuItemText = styled.Text`
+    color: #444;
+`;
+
+export const DraggableListItemWrapper = styled.View`
+    background: #f3f0f1;
+    padding: 8px 16px;
+`;
+
+export const StepHeaderWithMargin = styled(StepHeader)`
+    margin-top: 16px;
+    ${draggableListStepMargin}
+`;
+
+export const AddListItemButton = styled(Button).attrs({
+    variant: 'transparent',
+})`
+    ${draggableListStepMargin}
+`;

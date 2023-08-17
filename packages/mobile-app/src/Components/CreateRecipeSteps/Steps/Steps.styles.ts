@@ -1,49 +1,31 @@
 import styled, { css } from 'styled-components/native';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import { Input, Input as OriginalInput } from '../common.styles';
-import { createStyledIcon } from '~/utils/createStyledIcon';
-import FaIcon from 'react-native-vector-icons/FontAwesome';
+import { RecipeSectionHeader } from './RecipeSectionHeader';
+import { Button } from '~/components/Button';
 
-export const SectionNameInputRow = styled.View`
-    flex-flow: row nowrap;
-    margin-bottom: 8px;
+const allMargin = css`
+    margin-left: 16px;
+    margin-right: 16px;
 `;
 
-export const SectionNameInput = styled(OriginalInput)`
-    flex-grow: 1;
-    max-width: 77.5%;
-    margin-bottom: 0;
-`;
-
-export const DeleteSectionIcon = createStyledIcon(FaIcon, {
-    name: 'trash',
-    color: 'black',
-    size: 30,
-}, css`
-    width: 70px;
-    text-align: center;
-    text-align-vertical: center;
-    margin-top: 20px;
-`);
-
-export const RecipeSectionWrapper = styled.View`
-    margin-bottom: 8px;
+export const RecipeSectionHeaderWithMargin = styled(RecipeSectionHeader)`
+    ${allMargin}
 `;
 
 export const RecipeStepWrapper = styled.View`
     flex-flow: row nowrap;
+    gap: 12px;
 `;
 
-export const DragIcon = createStyledIcon(MaterialIcon, {
-    name: 'drag-handle',
-    color: 'black',
-    size: 30,
-}, css`
-    text-align: center;
-    text-align-vertical: center;
-`);
+export const AddStepButton = styled(Button).attrs({
+    variant: 'transparent',
+})`
+    ${allMargin}
+`;
 
-export const RecipeStepInput = styled(Input)`
-    flex-grow: 1;
-    max-width: 100%;
+export const StepPreviewText = styled.Text.attrs({
+    numberOfLines: 1,
+})`
+    color: #444;
+    font-size: 16px;
+    flex: 1;
 `;

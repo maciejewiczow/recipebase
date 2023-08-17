@@ -2,13 +2,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useEffect, useState } from 'react';
 import { RootStackParams } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
-import { StepHeader, StepWrapper } from '~/components/CreateRecipeSteps/common.styles';
+import { StepHeader, StepHeaderWithMargin, StepWrapper } from '~/components/CreateRecipeSteps/common.styles';
 import { IngredientNameInput, InputsRow, QuantityInput, SaveButton } from './AddIngredientView.styles';
 import { observer } from 'mobx-react-lite';
 import { IngredientList } from './IngredientList';
 import { UnitSelect } from './UnitSelect';
 
-export interface ViewProps {
+export interface AddIngredientViewRouteProps {
     targetSectionId: number;
     recipeIngredientToEditId?: number;
 }
@@ -47,7 +47,7 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
 
     return (
         <StepWrapper>
-            <StepHeader>New ingredient</StepHeader>
+            <StepHeader>Ingredient</StepHeader>
             <IngredientNameInput
                 label="Ingredient name"
                 placeholder="Search for ingredients"

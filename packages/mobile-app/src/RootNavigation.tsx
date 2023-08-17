@@ -13,7 +13,8 @@ import { SelecMethodModalViewRouteProps } from './views/SelectionMethodModalView
 import * as views from '~/views';
 import { useFlipper } from '@react-navigation/devtools';
 import Config from 'react-native-config';
-import { ViewProps } from './views/CreateRecipeView/AddIngredientView/AddIngredientView';
+import { AddIngredientViewRouteProps } from './views/CreateRecipeView/AddIngredientView/AddIngredientView';
+import { AddStepViewRouteProps } from './views/CreateRecipeView';
 
 export interface ISubNavigator<T extends ParamListBase, K extends keyof T> {
     screen: K;
@@ -28,8 +29,8 @@ export type RootStackParams = {
     GDriveFilePicker: GDriveFilePickerViewProps;
     Recipe: RecipeViewProps;
     CreateRecipe: undefined;
-    AddIngredientView: ViewProps;
-    AddStepView: undefined;
+    AddIngredientView: AddIngredientViewRouteProps;
+    AddStepView: AddStepViewRouteProps;
 };
 
 export type RootNavigationProp = NavigationProp<RootStackParams>;

@@ -1,87 +1,75 @@
 import React from 'react';
-import { DeleteSectionIcon, RecipeSectionWrapper, SectionNameInput, SectionNameInputRow } from './Steps.styles';
 import { useRootStore } from '~/RootStoreContext';
-import { RecipeStep } from 'backend-logic';
-import { AddSectionButton, ScrollableStepWrapper, StepHeader } from '../common.styles';
-import { RecipeStepView } from './RecipeStepView';
-import { TouchableNativeFeedback } from 'react-native';
+import { RecipeSection, RecipeStep } from 'backend-logic';
+import { AddSectionButton, DraggableList, NestableScrollableStepWrapper, StepHeaderWithMargin } from '../common.styles';
 import { observer } from 'mobx-react-lite';
+import { RecipeSectionHeaderWithMargin } from './Steps.styles';
+import { AddStepButton } from './AddStepButton';
+import { renderItem } from './RecipeStepView';
+
+export type ItemType = RecipeStep | RecipeSection;
+
+const sectionsToItems = (sections: RecipeSection[]): ItemType[] => {
+    if (sections.length <= 1) {
+        return sections[0].recipeSteps?.map<ItemType>(rs => {
+            if (!rs.recipeSection)
+                [rs.recipeSection] = sections;
+
+            return rs;
+        }) ?? [];
+    }
+
+    return sections.flatMap<ItemType>((section, index) => ([
+        ...(index !== 0 ? [section] : []),
+        ...(
+            section.recipeSteps?.map<ItemType>(rs => {
+                if (!rs.recipeSection)
+                    rs.recipeSection = section;
+
+                return rs;
+            }) ?? []
+        ),
+    ]));
+};
 
 export const Steps: React.FC = observer(() => {
     const { draftRecipe } = useRootStore();
 
-    const addStep = (sectionId: number, recipeStep: RecipeStep) => () => {
-        if (recipeStep.content)
-            draftRecipe.addNewStep(sectionId);
-    };
+    const data = sectionsToItems(draftRecipe.recipe.sections ?? []);
 
-    const setStepContent = (sectionId: number, stepId: number) => (content: string) => {
-        draftRecipe.setStepContent(sectionId, stepId, content);
-    };
+    const hasMoreThanOneSection = (draftRecipe.recipe.sections?.length ?? 0) > 1;
 
-    const setStectionName = (sectionId: number) => (name: string) => {
-        draftRecipe.setSectionName(sectionId, name);
-    };
-
-    const removeSection = (sectionId: number) => () => {
-        draftRecipe.removeSection(sectionId);
-    };
+    const lastSectionId = draftRecipe.recipe.sections?.at(-1)?.id;
 
     return (
-        <ScrollableStepWrapper>
-            <StepHeader>Recipe steps</StepHeader>
-            {draftRecipe.recipe.sections?.length === 1 ? (
-                draftRecipe.recipe.sections[0].recipeSteps?.map((step, index) => {
-                    const section = draftRecipe.recipe.sections?.[0];
-
-                    if (!section)
-                        return null;
-
-                    return (
-                        <RecipeStepView
-                            key={step.id}
-                            isLast={index === (section.recipeSteps?.length ?? 0) - 1}
-                            step={step}
-                            addRecipeStep={addStep(section.id, step)}
-                            setStepContent={setStepContent(section.id, step.id)}
-                            noDragIcon
-                        />
-                    );
-                })
-            ) : (
-                draftRecipe.recipe.sections?.map(section => (
-                    <RecipeSectionWrapper key={section.id}>
-                        <SectionNameInputRow>
-                            <SectionNameInput
-                                value={section.name ?? ''}
-                                label="Section name"
-                                onChange={setStectionName(section.id)}
-                            />
-                            <TouchableNativeFeedback
-                                onPress={removeSection(section.id)}
-                            >
-                                <DeleteSectionIcon />
-                            </TouchableNativeFeedback>
-                        </SectionNameInputRow>
-                        {section.recipeSteps?.map((step, index) => (
-                            <RecipeStepView
-                                key={step.id}
-                                isLast={index === (section.recipeSteps?.length ?? 0) - 1}
-                                step={step}
-                                addRecipeStep={addStep(section.id, step)}
-                                setStepContent={setStepContent(section.id, step.id)}
-                                noDragIcon
-                            />
-                        ))}
-                    </RecipeSectionWrapper>
-                ))
+        <NestableScrollableStepWrapper>
+            <StepHeaderWithMargin>Recipe steps</StepHeaderWithMargin>
+            {hasMoreThanOneSection && (
+                <RecipeSectionHeaderWithMargin
+                    section={draftRecipe.recipe.sections?.[0]}
+                />
+            )}
+            <DraggableList<ItemType>
+                data={data}
+                keyExtractor={item => (
+                    item instanceof RecipeStep
+                        ? item.id.toString() + '-' + item.recipeSection?.id.toString() :
+                        item.id.toString()
+                )}
+                renderItem={renderItem}
+                onDragEnd={({ data: sections }) => (
+                    draftRecipe.setRecipeSectionsFromArray(sections)
+                )}
+            />
+            {lastSectionId && (
+                <AddStepButton targetSectionId={lastSectionId} />
             )}
             <AddSectionButton
                 onPress={draftRecipe.addNewSection}
             >
                 Add section
             </AddSectionButton>
-        </ScrollableStepWrapper>
+        </NestableScrollableStepWrapper>
     );
 });
 

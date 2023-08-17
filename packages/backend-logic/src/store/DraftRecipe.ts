@@ -52,10 +52,13 @@ export class DraftRecipe {
         section.name = name;
     };
 
-    @action addNewStep = (sectionId: number) => {
+    @action addNewStep = (sectionId: number, stepContent: string) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
 
-        section?.recipeSteps?.push(RecipeStep.createWithTemporaryId());
+        const step = RecipeStep.createWithTemporaryId();
+        step.content = stepContent;
+
+        section?.recipeSteps?.push(step);
     };
 
     @action setStepContent = (sectionId: number, stepId: number, content: string) => {
@@ -113,6 +116,15 @@ export class DraftRecipe {
         section.recipeIngredients = section.recipeIngredients?.filter(ri => ri.id !== recipeIngredientId);
     };
 
+    @action removeRecipeStep = (sectionId: number, stepId: number) => {
+        const section = this.recipe.sections?.find(s => s.id === sectionId);
+
+        if (!section)
+            return;
+
+        section.recipeSteps = section.recipeSteps?.filter(s => s.id !== stepId);
+    };
+
     @action setIngredientSectionsFromArray = (items: (IngredientSection | RecipeIngredient)[]) => {
         if (!items.some(item => item instanceof IngredientSection) && this.recipe.ingredientSections?.[0].recipeIngredients) {
             this.recipe.ingredientSections[0].recipeIngredients = items
@@ -141,6 +153,41 @@ export class DraftRecipe {
 
         this.recipe.ingredientSections = sections;
     };
+
+    @action setRecipeSectionsFromArray = (items: (RecipeStep | RecipeSection)[]) => {
+        if (!items.some(item => item instanceof RecipeSection) && this.recipe.sections?.[0].recipeSteps) {
+            this.recipe.sections[0].recipeSteps = items
+                .filter((item): item is RecipeStep => item instanceof RecipeStep);
+
+            return;
+        }
+
+        if (this.recipe.sections?.[0])
+            this.recipe.sections[0].recipeSteps = [];
+
+        const sections: RecipeSection[] = this.recipe.sections?.[0] ?
+            [this.recipe.sections?.[0]] :
+            [];
+
+        for (const item of items) {
+            if (item instanceof RecipeSection) {
+                item.recipeSteps = [];
+                sections.push(item);
+            } else {
+                const section = sections.at(-1);
+
+                section?.recipeSteps?.push(item);
+            }
+        }
+
+        this.recipe.sections = sections;
+    };
+
+    getStepContent(sectionId: number, stepId?: number) {
+        const section = this.recipe.sections?.find(s => s.id === sectionId);
+
+        return section?.recipeSteps?.find(s => s.id === stepId)?.content;
+    }
 
     save = flow(function* (this: DraftRecipe) {
         const recipeToSave = cloneDeep(this.recipe);

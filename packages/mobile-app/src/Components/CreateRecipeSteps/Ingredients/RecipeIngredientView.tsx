@@ -1,26 +1,15 @@
 import { IngredientSection, RecipeIngredient } from 'backend-logic';
-import {
-    DragHandleIcon,
-    DragHandleWrapper,
-    EditIcon,
-    EditIconWrapper,
-    IngredientNameWrapper,
-    ListItemWrapper,
-    MenuItemText,
-    MenuItemWrapper,
-    QuantityWrapper,
-    RecipeIngredientWrapper,
-    Text,
-} from './Ingredients.styles';
+import { IngredientNameWrapper, QuantityWrapper, RecipeIngredientWrapper, Text } from './Ingredients.styles';
 import { ItemType } from './Ingredients';
 import { RenderItem, ScaleDecorator, ShadowDecorator } from 'react-native-draggable-flatlist';
 import { AddIngredientButton } from './AddIngredientButton';
-import { SectionHeader } from './SectionHeader';
 import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { useNavigation } from '@react-navigation/native';
 import { RootNavigationProp } from '~/RootNavigation';
+import { IngredientSectionHeader } from './IngredientSectionHeader';
+import { DragHandleIcon, DragHandleWrapper, DraggableListItemWrapper } from '../common.styles';
+import { ListItemMenu } from '../ListItemMenu';
 
 const IngredientView: React.FC<{ ingredient: RecipeIngredient; drag: () => void }> = observer(({
     ingredient: { id, ingredient, unit, quantityFrom, quantityTo, ingredientSection },
@@ -59,25 +48,10 @@ const IngredientView: React.FC<{ ingredient: RecipeIngredient; drag: () => void 
             <IngredientNameWrapper>
                 <Text>{ingredient?.name}</Text>
             </IngredientNameWrapper>
-            <EditIconWrapper>
-                <Menu>
-                    <MenuTrigger>
-                        <EditIcon />
-                    </MenuTrigger>
-                    <MenuOptions>
-                        <MenuOption onSelect={editIngredient}>
-                            <MenuItemWrapper>
-                                <MenuItemText>Edit</MenuItemText>
-                            </MenuItemWrapper>
-                        </MenuOption>
-                        <MenuOption onSelect={removeIngredient}>
-                            <MenuItemWrapper>
-                                <MenuItemText>Remove</MenuItemText>
-                            </MenuItemWrapper>
-                        </MenuOption>
-                    </MenuOptions>
-                </Menu>
-            </EditIconWrapper>
+            <ListItemMenu
+                onEditPress={editIngredient}
+                onRemovePress={removeIngredient}
+            />
         </RecipeIngredientWrapper>
     );
 });
@@ -92,7 +66,7 @@ const SectionSeparatorView: React.FC<{ section: IngredientSection }> = observer(
             {prevSectionIndex >= 0 && draftRecipe.recipe.ingredientSections && (
                 <AddIngredientButton targetSectionId={draftRecipe.recipe.ingredientSections[prevSectionIndex].id} />
             )}
-            <SectionHeader section={section} />
+            <IngredientSectionHeader section={section} />
         </>
     );
 });
@@ -103,7 +77,7 @@ export const renderItem: RenderItem<ItemType> = ({
 }) => (
     <ShadowDecorator>
         <ScaleDecorator>
-            <ListItemWrapper>
+            <DraggableListItemWrapper>
                 {item instanceof RecipeIngredient ? (
                     <IngredientView
                         ingredient={item}
@@ -114,7 +88,7 @@ export const renderItem: RenderItem<ItemType> = ({
                         section={item}
                     />
                 )}
-            </ListItemWrapper>
+            </DraggableListItemWrapper>
         </ScaleDecorator>
     </ShadowDecorator>
 );

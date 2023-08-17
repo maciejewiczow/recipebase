@@ -5,4 +5,4 @@ export const CreateIcon = createViewIcon(Icon, 'add-circle')``;
 
 export * from './CreateRecipeView';
 export * from './AddStepView';
-export * from './AddIngredientView/AddIngredientView';
+export * from './AddIngredientView';

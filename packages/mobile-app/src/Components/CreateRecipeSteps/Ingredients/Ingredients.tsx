@@ -3,21 +3,17 @@ import { useRootStore } from '~/RootStoreContext';
 import { renderItem } from './RecipeIngredientView';
 import { IngredientSection, RecipeIngredient } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
-import {
-    AddSectionButton,
-    IngredientList,
-    ScrollableStepWrapper,
-    SectionHeaderWithMargin,
-    StepHeader,
-} from './Ingredients.styles';
+import { IngredientSectionHeaderWithMargin } from './Ingredients.styles';
 import { AddIngredientButton } from './AddIngredientButton';
+import { AddSectionButton, DraggableList, NestableScrollableStepWrapper, StepHeaderWithMargin } from '../common.styles';
 
 export type ItemType = RecipeIngredient | IngredientSection;
 
 const sectionsToItems = (sections: IngredientSection[]): ItemType[] => {
     if (sections.length <= 1) {
         return sections[0].recipeIngredients?.map<ItemType>(ri => {
-            [ri.ingredientSection] = sections;
+            if (!ri.ingredientSection)
+                [ri.ingredientSection] = sections;
 
             return ri;
         }) ?? [];
@@ -27,7 +23,8 @@ const sectionsToItems = (sections: IngredientSection[]): ItemType[] => {
         ...(index !== 0 ? [section] : []),
         ...(
             section.recipeIngredients?.map<ItemType>(ri => {
-                ri.ingredientSection = section;
+                if (!ri.ingredientSection)
+                    ri.ingredientSection = section;
 
                 return ri;
             }) ?? []
@@ -45,14 +42,14 @@ export const Ingredients: React.FC = observer(() => {
     const lastRecipeSectionId = draftRecipe.recipe.ingredientSections?.at(-1)?.id;
 
     return (
-        <ScrollableStepWrapper>
-            <StepHeader>Ingredients</StepHeader>
+        <NestableScrollableStepWrapper>
+            <StepHeaderWithMargin>Ingredients</StepHeaderWithMargin>
             {hasMoreThanOneSection && (
-                <SectionHeaderWithMargin
+                <IngredientSectionHeaderWithMargin
                     section={draftRecipe.recipe.ingredientSections?.[0]}
                 />
             )}
-            <IngredientList<ItemType>
+            <DraggableList<ItemType>
                 data={data}
                 keyExtractor={item => (
                     item instanceof RecipeIngredient
@@ -72,7 +69,7 @@ export const Ingredients: React.FC = observer(() => {
             >
                 Add section
             </AddSectionButton>
-        </ScrollableStepWrapper>
+        </NestableScrollableStepWrapper>
     );
 });
 
