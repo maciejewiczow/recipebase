@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import {
-    Wrapper,
     TagView,
-    Label,
     TagsWrapper,
     TagNameInput,
     DropdownWrapper,
@@ -13,6 +11,7 @@ import {
     TagNameText,
     TagRecipeCountText,
 } from './TagCreator.styles';
+import { ToastAndroid } from 'react-native';
 
 export const TagCreator: React.FC = observer(() => {
     const { tags } = useRootStore();
@@ -22,17 +21,12 @@ export const TagCreator: React.FC = observer(() => {
     const showTagInputOrAddNewTag = () => {
         setIsInputVisible(true);
 
-        if (newTagName)
-            tags.addDraftTag(newTagName);
+        if (newTagName) {
+            const added = tags.addDraftTag(newTagName);
+            if (!added)
+                ToastAndroid.show('Tags have to be unique', ToastAndroid.LONG);
+        }
 
-        setNewTagName('');
-    };
-
-    const addNewTag = () => {
-        if (newTagName)
-            tags.addDraftTag(newTagName);
-
-        setIsInputVisible(false);
         setNewTagName('');
     };
 
@@ -44,45 +38,45 @@ export const TagCreator: React.FC = observer(() => {
 
     const editTag = (id: number) => () => {
         setIsInputVisible(true);
+        showTagInputOrAddNewTag();
         setNewTagName(tags.draftTags.find(t => t.id === id)?.name ?? '');
         tags.removeDraftTagById(id);
     };
 
     return (
-        <Wrapper>
-            <Label>Tags</Label>
-            <TagsWrapper>
-                {tags.draftTags.map(tag => (
-                    <TagView
-                        key={tag.id}
-                        name={tag.name}
-                        onPress={editTag(tag.id)}
-                        noMinWidth
+        <TagsWrapper>
+            {tags.draftTags.map(tag => (
+                <TagView
+                    key={tag.id}
+                    name={tag.name}
+                    onPress={editTag(tag.id)}
+                    noMinWidth
+                />
+            ))}
+            {isInputVisible && (
+                <InputWithDropdownWrapper>
+                    <TagNameInput
+                        onChangeText={setNewTagName}
+                        value={newTagName}
+                        onEndEditing={showTagInputOrAddNewTag}
+                        onSubmitEditing={showTagInputOrAddNewTag}
+                        onBlur={showTagInputOrAddNewTag}
+                        autoFocus
+                        blurOnSubmit={false}
+                        autoCapitalize="none"
                     />
-                ))}
-                {isInputVisible && (
-                    <InputWithDropdownWrapper>
-                        <TagNameInput
-                            onChangeText={setNewTagName}
-                            value={newTagName}
-                            onEndEditing={addNewTag}
-                            autoFocus
-                            blurOnSubmit={false}
-                            autoCapitalize="none"
-                        />
-                        <DropdownWrapper>
-                            {tags.filterByName(newTagName).map(tag => (
-                                <DropdownRow key={tag.id} onPress={addExistingTagToDrafts(tag.id)}>
-                                    <TagNameText>{tag.name}</TagNameText>
-                                    <TagRecipeCountText>{tag.recipeCount}</TagRecipeCountText>
-                                </DropdownRow>
-                            ))}
-                        </DropdownWrapper>
-                    </InputWithDropdownWrapper>
-                )}
-                <TagView onPress={showTagInputOrAddNewTag} name="+" isSelected noMinWidth isLastChild />
-            </TagsWrapper>
-        </Wrapper>
+                    <DropdownWrapper>
+                        {tags.filterByName(newTagName).map(tag => (
+                            <DropdownRow key={tag.id} onPress={addExistingTagToDrafts(tag.id)}>
+                                <TagNameText>{tag.name}</TagNameText>
+                                <TagRecipeCountText>{tag.recipeCount}</TagRecipeCountText>
+                            </DropdownRow>
+                        ))}
+                    </DropdownWrapper>
+                </InputWithDropdownWrapper>
+            )}
+            <TagView onPress={showTagInputOrAddNewTag} name="+" isSelected noMinWidth isLastChild />
+        </TagsWrapper>
     );
 });
 

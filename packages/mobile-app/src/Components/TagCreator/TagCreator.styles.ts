@@ -1,11 +1,8 @@
 import styled, { css } from 'styled-components/native';
 import { TagView as OriginalTagView } from '../TagList/TagView';
 
-export const Wrapper = styled.View`
-    flex: 1;
-`;
-
 export const TagsWrapper = styled.View`
+    flex: 1;
     flex-flow: row wrap;
 `;
 

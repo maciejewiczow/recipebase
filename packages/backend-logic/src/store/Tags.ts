@@ -44,6 +44,9 @@ export class Tags {
     }
 
     addDraftTag(name: string) {
+        if (this.draftTags.find(t => t.name.toLowerCase() === name.toLowerCase()))
+            return false;
+
         const newTag: TagWithCount = {
             name,
             id: Math.random(),
@@ -51,8 +54,8 @@ export class Tags {
             deletedAt: null,
         };
 
-        if (!this.draftTags.find(t => t.name.toLowerCase() === name.toLowerCase()))
-            this.draftTags.push(newTag);
+        this.draftTags.push(newTag);
+        return true;
     }
 
     copyTagToDraftTags(tagId: number) {
