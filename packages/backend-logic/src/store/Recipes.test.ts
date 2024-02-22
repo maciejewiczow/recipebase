@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Database, Recipe } from 'backend-logic';
+import { Database } from 'backend-logic';
 import { ILike } from 'typeorm';
 import { initalizeTestDatabase } from '../utils/testUtils';
 import { Recipes } from './Recipes';
@@ -60,12 +60,11 @@ describe('Recipes', () => {
 
             expect(recipes.isFetchingRecipes).toBeFalsy();
 
-            // const gen = recipes.fetchRecipes('test');
-
-            // const val = await gen.next().value;
+            const promise = recipes.fetchRecipes('test');
 
             expect(recipes.isFetchingRecipes).toBeTruthy();
-            // gen.next(val);
+
+            await promise;
 
             expect(recipes.isFetchingRecipes).toBeFalsy();
         });
@@ -86,7 +85,7 @@ describe('Recipes', () => {
 
             await recipes.fetchRecipes('  ');
 
-            expect(recipes.recipes.length).toBe((await database.recipeRepository?.find())?.length);
+            expect(recipes.recipes.length).toBe((await database.recipeRepository.find()).length);
         });
 
         it('treats words in quotes as single search term', async () => {
@@ -117,8 +116,7 @@ describe('Recipes', () => {
 
             await recipes.fetchRecipes('');
 
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const tags = await database.tagRepository!.find();
+            const tags = await database.tagRepository.find();
 
             const filteredRecipes = recipes.filterRecipesByTags([
                 { tag: { ...tags[0], recipeCount: 0 }, isSelected: true },
@@ -131,73 +129,6 @@ describe('Recipes', () => {
                 expect(recipe.tags).toContainEqual(tags[0]);
                 expect(recipe.tags).toContainEqual(tags[1]);
             }
-        });
-    });
-
-    describe('fetchRecipeById', () => {
-        it('sets currentRecipe to the recipe with given id, including all relations', async () => {
-            const recipes = new Recipes(database);
-
-            await recipes.fetchRecipeById(1);
-
-            const loadedRecipe = recipes.currentRecipe;
-
-            expect(loadedRecipe).toBeDefined();
-            expect(loadedRecipe?.id).toBe(1);
-            expect(loadedRecipe?.ingredientSections).toBeDefined();
-            expect(loadedRecipe?.ingredientSections?.length).toBeGreaterThan(0);
-            expect(loadedRecipe?.sections).toBeDefined();
-            expect(loadedRecipe?.sections?.length).toBeGreaterThan(0);
-            expect(loadedRecipe?.tags).toBeDefined();
-
-            for (const section of loadedRecipe?.sections || [])
-                expect(section.recipeSteps).toBeDefined();
-
-            for (const ingredientSection of loadedRecipe?.ingredientSections || []) {
-                expect(ingredientSection.recipeIngredients).toBeDefined();
-
-                for (const rcpIngredient of ingredientSection.recipeIngredients || []) {
-                    expect(rcpIngredient.ingredient).toBeDefined();
-                    expect(rcpIngredient.unit).toBeDefined();
-                }
-            }
-        });
-
-        it.todo('sets isFetchingCurrentRecipe to true when the recipe is loading', async () => {
-            // const recipes = new Recipes(database);
-
-            // expect(recipes.isFetchingCurrentRecipe).toBeFalsy();
-
-            // const gen = recipes.fetchRecipeById(1);
-            // let genVal = gen.next();
-
-            // expect(recipes.isFetchingCurrentRecipe).toBeTruthy();
-
-            // // @ts-ignore
-            // genVal = gen.next(await genVal.value);
-            // // @ts-ignore
-            // genVal = gen.next(await genVal.value);
-
-            // expect(recipes.isFetchingCurrentRecipe).toBeFalsy();
-        });
-
-        it.todo('loads coverImage in a separate query to avoid data duplication in relation joins', async () => {
-            // const recipes = new Recipes(database);
-
-            // const gen = recipes.fetchRecipeById(1);
-            // let genVal = gen.next();
-            // let recipe = (await genVal.value) as Recipe;
-
-            // expect(recipe.coverImage).toBeUndefined();
-
-            // // @ts-ignore
-            // genVal = gen.next(recipe);
-
-            // recipe = (await genVal.value) as Recipe;
-
-            // expect(recipe.coverImage).toBeDefined();
-            // // @ts-ignore
-            // genVal = gen.next(recipe);
         });
     });
 });

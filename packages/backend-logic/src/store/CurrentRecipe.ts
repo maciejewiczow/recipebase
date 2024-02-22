@@ -17,7 +17,7 @@ export class CurrentRecipe {
     fetchRecipeById = flow(function* (this: CurrentRecipe, id: Recipe['id']) {
         this.isFetchingCurrentRecipe = true;
 
-        const rcp = yield* yieldResult(() => this.database.recipeRepository?.findOne({
+        const rcp = yield* yieldResult(() => this.database.recipeRepository.findOne({
             where: { id },
             select: ['id', 'description', 'ingredientSections', 'name', 'tags', 'sections'],
             relations: [
@@ -35,7 +35,7 @@ export class CurrentRecipe {
         if (!rcp)
             return;
 
-        const rcpCover = yield* yieldResult(() => this.database.recipeRepository?.findOne({
+        const rcpCover = yield* yieldResult(() => this.database.recipeRepository.findOne({
             where: { id },
             select: ['coverImage'],
         }))();
@@ -71,7 +71,7 @@ export class CurrentRecipe {
         if (!this.recipe)
             return;
 
-        this.database.recipeRepository?.softRemove(this.recipe);
+        this.database.recipeRepository.softRemove(this.recipe);
         const removedId = this.recipe.id;
         this.recipe = undefined;
 
