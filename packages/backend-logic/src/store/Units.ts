@@ -17,7 +17,7 @@ export class Units {
 
         this.isFetchingUnits = true;
 
-        const units = yield* yieldResult(() => this.database.unitRepository?.find(
+        const units = yield* yieldResult(() => this.database.unitRepository.find(
             term ? {
                 where: {
                     name: ILike(`%${term}%`),
@@ -25,8 +25,7 @@ export class Units {
             } : {}
         ))();
 
-        if (units)
-            this.units = units;
+        this.units = units;
 
         this.isFetchingUnits = false;
     });

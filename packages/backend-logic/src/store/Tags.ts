@@ -24,7 +24,7 @@ export class Tags {
 
     fetchTags = flow(function* (this: Tags) {
         const res: TagWithCount[] = yield this.database.tagRepository
-            ?.createQueryBuilder('tag')
+            .createQueryBuilder('tag')
             .loadRelationCountAndMap('tag.recipeCount', 'tag.recipes', 'recipeCount')
             .getMany();
 
@@ -107,7 +107,7 @@ export class Tags {
 
         removeTemporaryIds(tagsToSave);
 
-        const savedTags = yield* yieldResult(() => this.database.tagRepository?.save(tagsToSave))();
+        const savedTags = yield* yieldResult(() => this.database.tagRepository.save(tagsToSave))();
 
         this.draftTags = [];
         yield this.fetchTags();

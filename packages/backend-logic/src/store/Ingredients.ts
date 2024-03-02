@@ -23,14 +23,11 @@ export class Ingredients {
         this.isFetchingIngredients = true;
 
 
-        const ingredients = yield* yieldResult(() => this.database.ingredientRepository?.find({
+        this.ingredients = yield* yieldResult(() => this.database.ingredientRepository.find({
             where: {
                 name: ILike(`%${term}%`),
             },
         }))();
-
-        if (ingredients)
-            this.ingredients = ingredients;
 
         this.isFetchingIngredients = false;
     });

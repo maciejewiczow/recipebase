@@ -83,7 +83,6 @@ export class Root {
     }
 
     private async initalizeDatabase(dbPath: string) {
-        this.database = new Database(dbPath, sqlite);
-        await this.database.initalize();
+        this.database = await Database.init(dbPath, sqlite);
     }
 }

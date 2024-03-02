@@ -26,7 +26,7 @@ export class Recipes {
 
         this.recipes = yield* yieldResult(() => (
             this.database.recipeRepository
-                ?.find({
+                .find({
                     where: escapedText.length > 0 ? (
                         terms?.flatMap(term => ([
                             { name: ILike(`%${term}%`) },

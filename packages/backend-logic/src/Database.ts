@@ -10,18 +10,24 @@ import Unit from './entities/Unit';
 
 export default class Database {
     private dataSource: DataSource;
-    private connection?: DataSource;
+    private connection!: DataSource;
 
-    ingredientRepository?: Repository<Ingredient>;
-    ingredientSectionRepository?: Repository<IngredientSection>;
-    recipeRepository?: Repository<Recipe>;
-    recipeIngredientRepository?: Repository<RecipeIngredient>;
-    recipeSectionRepository?: Repository<RecipeSection>;
-    recipeStepRepository?: Repository<RecipeStep>;
-    tagRepository?: Repository<Tag>;
-    unitRepository?: Repository<Unit>;
+    ingredientRepository!: Repository<Ingredient>;
+    ingredientSectionRepository!: Repository<IngredientSection>;
+    recipeRepository!: Repository<Recipe>;
+    recipeIngredientRepository!: Repository<RecipeIngredient>;
+    recipeSectionRepository!: Repository<RecipeSection>;
+    recipeStepRepository!: Repository<RecipeStep>;
+    tagRepository!: Repository<Tag>;
+    unitRepository!: Repository<Unit>;
 
-    constructor(dbFilePath: string, storageDriver?: any) {
+    public static async init(dbFilePath: string, storageDriver?: unknown) {
+        const db = new Database(dbFilePath, storageDriver);
+        await db.initalize();
+        return db;
+    }
+
+    private constructor(dbFilePath: string, storageDriver?: unknown) {
         this.dataSource = new DataSource({
             type: 'react-native',
             database: 'recipebase',
@@ -64,7 +70,7 @@ export default class Database {
         };
     }
 
-    async initalize() {
+    private async initalize() {
         this.connection = await this.dataSource.initialize();
 
         this.ingredientRepository = this.connection.getRepository(Ingredient);
