@@ -7399,6 +7399,11 @@ react-native-dropdown-picker@^5.4.6:
   resolved "https://registry.yarnpkg.com/react-native-dropdown-picker/-/react-native-dropdown-picker-5.4.6.tgz#3736fc468de4a295e4df8d1f65ed2eadaf9b445f"
   integrity sha512-T1XBHbE++M6aRU3wFYw3MvcOuabhWZ29RK/Ivdls2r1ZkZ62iEBZknLUPeVLMX3x6iUxj4Zgr3X2DGlEGXeHsA==
 
+react-native-file-access@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-file-access/-/react-native-file-access-3.0.4.tgz#cc760232d6a153db152497f6a073c71c4cb911b0"
+  integrity sha512-sDmGeIIiSlLSrdtvEtADQ1uMoF+Zoegvu/Wr0z0Ej9lU8tHX0C1q+fJnCEBJSUjQ31rSzlabjWgQDKbpOEBdWg==
+
 react-native-flipper@^0.207.0:
   version "0.207.0"
   resolved "https://registry.yarnpkg.com/react-native-flipper/-/react-native-flipper-0.207.0.tgz#a0e5576c2f80fac002dda678dfa431184a3348be"
@@ -7465,6 +7470,11 @@ react-native-safe-area-context@^4.5.3:
   version "4.7.1"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.7.1.tgz#b7be2d68dee909717cfa439bb5c7966042d231e8"
   integrity sha512-X2pJG2ttmAbiGlItWedvDkZg1T1ikmEDiz+7HsiIwAIm2UbFqlhqn+B1JF53mSxPzdNaDcCQVHRNPvj8oFu6Yg==
+
+react-native-scoped-storage@^1.9.5:
+  version "1.9.5"
+  resolved "https://registry.yarnpkg.com/react-native-scoped-storage/-/react-native-scoped-storage-1.9.5.tgz#79be31569acc5b878cc31404cec2b38f8813f251"
+  integrity sha512-XMlJowlOdNfNUhBI+y7hvP0+lJTqBubErm0gGOmRDnNZ8Uc2QanLL4DR2ZSsAp8e8+G7bgB6UQNAbWRgH0muvg==
 
 react-native-screens@^3.21.0:
   version "3.22.1"
