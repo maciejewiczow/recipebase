@@ -1,72 +1,42 @@
 import React from 'react';
-import { PermissionsAndroid, Platform, ToastAndroid, TouchableOpacity } from 'react-native';
-import { DocumentPickerOptions, pickDirectory, pickSingle } from 'react-native-document-picker';
-import { SupportedPlatforms } from 'react-native-document-picker/lib/typescript/fileTypes';
-import ReactNativeBlobUtil from 'react-native-blob-util';
+import { PermissionsAndroid, TouchableOpacity } from 'react-native';
 import { FileSelectionButtonProps, SelecMethodModalViewRouteProps } from './ViewProps';
 import { FilesystemIcon, Tile, TileText } from './SelectionMethodModalView.styles';
-import RNBlobFetch from 'rn-blob-fetch';
+import ReactNativeBlobUtil from 'react-native-blob-util';
+import * as fs from 'react-native-scoped-storage';
+import { FileSystem, Dirs, Util, AndroidScoped } from 'react-native-file-access';
+import RNFetchBlob from 'rn-blob-fetch';
 
 export const FilesystemSelectionMethodButton: React.FC<SelecMethodModalViewRouteProps & FileSelectionButtonProps> = ({ selectWhat, onFileSelected }) => {
     const pickFromFileSystem = async () => {
-        const opts: DocumentPickerOptions<SupportedPlatforms> = {
-            presentationStyle: 'fullScreen',
-            type: 'application/octet-stream',
-        };
+        const mimeType = 'application/octet-stream';
+
+        const dirs = await fs.openDocumentTree(true);
 
         try {
-            if (Platform.OS === 'android') {
-                const res = await PermissionsAndroid.requestMultiple([
-                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-                    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-                ]);
-
-                if (Object.values(res).find(status => status !== 'granted')) {
-                    console.log('permission denied', res);
-                    return;
-                }
-            }
-
-            let dbFilePath: string;
+            let fileUri: string;
             if (selectWhat === 'directory') {
-                const directory = await pickDirectory(opts);
+                const file = await fs.createDocument('myRecipeDatabase.db', mimeType, '', 'base64');
 
-                if (!directory)
-                    return;
-
-                directory.uri = decodeURIComponent(directory.uri);
-
-                console.log(directory);
-
-                if (!directory.uri.startsWith('content://com.android.externalstorage.documents/tree/primary:')) {
-                    ToastAndroid.show('This location is not currently supported :(', ToastAndroid.LONG);
-                    return;
-                }
-
-                dbFilePath = directory.uri.replace('content://com.android.externalstorage.documents/tree/primary:', '/storage/emulated/0/');
-
-                if (!dbFilePath.endsWith('/'))
-                    dbFilePath += '/';
-
-                dbFilePath += 'recipebase.db';
-                console.log(dbFilePath);
-
-                await ReactNativeBlobUtil.fs.createFile(dbFilePath, '', 'utf8');
+                fileUri = file.uri;
             } else {
-                const file = await pickSingle(opts);
+                const file = await fs.openDocument(true, 'base64');
 
-                file.uri = decodeURIComponent(file.uri);
-
-                console.log(file);
-
-                const statResult = await RNBlobFetch.fs.stat(file.uri);
-
-                console.log(statResult);
-
-                dbFilePath = statResult.path;
+                fileUri = file.uri;
             }
 
-            onFileSelected?.(dbFilePath);
+            fileUri = decodeURIComponent(fileUri);
+
+            console.log(fileUri, Util.basename(fileUri), AndroidScoped.appendPath(Dirs.CacheDir, Util.basename(fileUri)));
+
+            console.log((await FileSystem.statDir(Dirs.CacheDir)).map(({ filename }) => filename));
+            await FileSystem.cp(fileUri, Dirs.CacheDir, () => {});
+
+            const statResult = await FileSystem.stat(Dirs.CacheDir + '/' + Util.basename(fileUri));
+
+            console.log(statResult);
+
+            // onFileSelected?.( statResult.path);
         } catch (e) {
             console.log(e);
         }

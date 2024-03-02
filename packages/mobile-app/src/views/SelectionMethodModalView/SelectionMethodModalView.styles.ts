@@ -22,6 +22,7 @@ export const TileWrapper = styled.View`
 
 export const Tile = styled.View`
     border-radius: ${({ theme }) => theme.border.radiusSmall};
+    elevation: 2;
     border: 1px solid #eee;
     width: 130px;
     background: white;
