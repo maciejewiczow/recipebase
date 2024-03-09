@@ -1,9 +1,10 @@
 import styled from 'styled-components/native';
 import DashedLine from 'react-native-dashed-line';
-import { RecipeProgression, RecipeStepLineDecoratorProps } from './RecipeStepLineDecorator';
+import { RecipeStepLineDecoratorProps } from './RecipeStepLineDecorator';
+import { RecipeProgression } from './types';
 
 export const Wrapper = styled.View`
-    width: 0px;
+    width: 0;
     align-items: center;
 `;
 

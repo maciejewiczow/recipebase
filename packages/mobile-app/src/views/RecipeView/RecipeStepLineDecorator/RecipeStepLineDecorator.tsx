@@ -1,12 +1,7 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { Circle, Line, Wrapper } from './RecipeStepLineDecorator.styles';
-
-export enum RecipeProgression {
-    past,
-    current,
-    future,
-}
+import { RecipeProgression } from './types';
 
 export interface RecipeStepLineDecoratorProps {
     progression: RecipeProgression;
