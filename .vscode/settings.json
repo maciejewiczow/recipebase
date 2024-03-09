@@ -1,11 +1,10 @@
 {
     "eslint.workingDirectories": [
-        "packages/recipe-scrapper",
         "packages/mobile-app",
         "packages/backend-logic"
     ],
     "jest.jestCommandLine": "npx jest ",
     "files.exclude": {
         "**/node_modules": true
-    },
+    }
 }

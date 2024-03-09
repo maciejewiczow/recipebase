@@ -7,23 +7,23 @@ import React, {
     useState,
 } from 'react';
 import {
-    Wrapper,
-    PseudoInput,
-    Placeholder,
-    ListWrapper,
-    Value,
-    SearchInput,
-} from './BottomSheetSelect.styles';
-import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
-import {
-    StyleProp,
-    ViewStyle,
-    TouchableWithoutFeedback,
     ListRenderItem,
+    StyleProp,
     TextInput,
+    TouchableWithoutFeedback,
+    ViewStyle,
 } from 'react-native';
-import { Label } from '../Input/Input.styles';
+import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useBottomSheetModal } from '~/utils/useBottomSheet';
+import { Label } from '../Input/Input.styles';
+import {
+    ListWrapper,
+    Placeholder,
+    PseudoInput,
+    SearchInput,
+    Value,
+    Wrapper,
+} from './BottomSheetSelect.styles';
 
 interface Option<T> {
     item: T;
@@ -53,8 +53,7 @@ export interface BottomSheetSelectProps<T> {
     onSearchTextChange?: (text: string) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
-export const BottomSheetSelect = <T extends unknown>({
+export const BottomSheetSelect = <T,>({
     label,
     placeholder,
     style,
@@ -72,7 +71,7 @@ export const BottomSheetSelect = <T extends unknown>({
 
     const { props, bottomSheetModal } = useBottomSheetModal({
         height: '45%',
-        onOpen: () => searchInputRef.current?.focus(),
+        onOpen: useCallback(() => searchInputRef.current?.focus(), []),
     });
 
     const [currentValue, setCurrentValue] = useState<T>();
@@ -82,34 +81,34 @@ export const BottomSheetSelect = <T extends unknown>({
     }, [value]);
 
     const forwardChange = useCallback(
-        (opt: OptionWithIndex<T>) => {
+        (opt: Option<T>) => {
             setCurrentValue(opt.item);
             onChange?.(opt);
             bottomSheetModal.close();
         },
-        [bottomSheetModal, onChange]
+        [bottomSheetModal, onChange],
     );
 
     const data = useMemo(
         () => options.map<Option<T>>(item => ({
-            item,
-            isActive: !!currentValue && isEqual(item, currentValue),
-        })),
-        [isEqual, options, currentValue]
+                item,
+                isActive: !!currentValue && isEqual(item, currentValue),
+            })),
+        [isEqual, options, currentValue],
     );
 
     const renderItem: ListRenderItem<Option<T>> = useCallback(
         ({ item, index }) => renderOption({
-            ...item,
-            index,
-            select: () => forwardChange({ ...item, index }),
-        }),
-        [forwardChange, renderOption]
+                ...item,
+                index,
+                select: () => forwardChange(item),
+            }),
+        [forwardChange, renderOption],
     );
 
     const keyExtr = useCallback(
         ({ item }: Option<T>, index: number) => (keyExtractor?.(item) ?? index).toString(),
-        [keyExtractor]
+        [keyExtractor],
     );
 
     return (
@@ -130,7 +129,10 @@ export const BottomSheetSelect = <T extends unknown>({
                         ref={searchInputRef}
                         value={searchText}
                         onChange={onSearchTextChange}
+                        // eslint-disable-next-line jsx-a11y/no-autofocus
+                        autoFocus
                         autoCapitalize="none"
+                        onSubmitEditing={() => forwardChange(data[0])}
                     />
                     <BottomSheetFlatList<Option<T>>
                         keyboardShouldPersistTaps="handled"
@@ -143,4 +145,3 @@ export const BottomSheetSelect = <T extends unknown>({
         </Wrapper>
     );
 };
-
