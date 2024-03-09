@@ -48,5 +48,14 @@ export const UnitName = styled.Text<{ isCustom: boolean; isActive: boolean }>`
     ${({ isCustom }) => isCustom && css`
         font-style: italic;
     `}
-    color: ${({ isActive }) => (isActive ? '#333' : '#777')}
+    color: ${({ isActive }) => (isActive ? '#333' : '#777')};
+`;
+
+export const EmptyListImageWrapper = styled.View`
+    gap: 24px;
+`;
+
+export const EmptyListText = styled.Text`
+    font-size: 22px;
+    text-align: center;
 `;

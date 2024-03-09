@@ -70,7 +70,7 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
                     <UnitSelect />
                 </InputsRow>
             )}
-            <SaveButton onPress={saveIngredient}>
+            <SaveButton onPress={saveIngredient} disabled={isInIngredientSearchMode}>
                 Save
             </SaveButton>
         </StepWrapper>

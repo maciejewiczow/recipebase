@@ -4,8 +4,9 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { FlatList, FlatListProps } from 'react-native';
 import { useRootStore } from '~/RootStoreContext';
 import { Label } from '~/components/Input/Input.styles';
-import { ListItemWrapper, StoredIngredientName } from './AddIngredientView.styles';
+import { EmptyListImageWrapper, EmptyListText, ListItemWrapper, StoredIngredientName } from './AddIngredientView.styles';
 import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
+import { IngredientsIcon } from '~/components/Svg/IngredientsIcon';
 
 interface IngredientListItemType {
     ingredient: Ingredient;
@@ -29,7 +30,7 @@ export const IngredientList: React.FC<IngredientListProps> = observer(({ setIsIn
 
     const data = useMemo(() => (
         [
-            ...(ingredients.ingredients.some(i => i.name === draftIngredient.ingredient.name) ? [] : [
+            ...(ingredients.ingredients.some(i => i.name === draftIngredient.ingredient.name) || !draftIngredient.ingredient.name ? [] : [
                 {
                     ingredient: draftIngredient.ingredient,
                     isCustom: true,
@@ -66,6 +67,12 @@ export const IngredientList: React.FC<IngredientListProps> = observer(({ setIsIn
             ListHeaderComponent={<Label>Search results</Label>}
             data={data}
             renderItem={renderItem}
+            ListEmptyComponent={
+                <EmptyListImageWrapper>
+                    <IngredientsIcon fill="#999" />
+                    <EmptyListText>Search for some ingredients...</EmptyListText>
+                </EmptyListImageWrapper>
+            }
         />
     );
 });
