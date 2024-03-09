@@ -1,11 +1,11 @@
 import { cloneDeep } from 'lodash';
 import { action, flow, makeAutoObservable } from 'mobx';
-import Database from '../Database';
-import IngredientSection from '../entities/IngredientSection';
-import Recipe from '../entities/Recipe';
-import RecipeIngredient from '../entities/RecipeIngredient';
-import RecipeSection from '../entities/RecipeSection';
-import RecipeStep from '../entities/RecipeStep';
+import { Database } from '../Database';
+import { IngredientSection } from '../entities/IngredientSection';
+import { Recipe } from '../entities/Recipe';
+import { RecipeIngredient } from '../entities/RecipeIngredient';
+import { RecipeSection } from '../entities/RecipeSection';
+import { RecipeStep } from '../entities/RecipeStep';
 import { removeTemporaryIds } from '../utils/removeTemporaryIds';
 import { yieldResult } from '../utils/yieldResult';
 import {
@@ -54,7 +54,9 @@ export class DraftRecipe {
             is => is.id === sectionId,
         );
 
-        if (!section) {return;}
+        if (!section) {
+            return;
+        }
 
         section.name = name;
     };
@@ -75,11 +77,15 @@ export class DraftRecipe {
     ) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
 
-        if (!section) {return;}
+        if (!section) {
+            return;
+        }
 
         const step = section.recipeSteps?.find(s => s.id === stepId);
 
-        if (!step) {return;}
+        if (!step) {
+            return;
+        }
 
         step.content = content;
     };
@@ -87,7 +93,9 @@ export class DraftRecipe {
     @action setSectionName = (sectionId: number, name: string) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
 
-        if (!section) {return;}
+        if (!section) {
+            return;
+        }
 
         section.name = name;
     };
@@ -113,9 +121,13 @@ export class DraftRecipe {
             s => s.id === sectionId,
         );
 
-        if (!section) {return;}
+        if (!section) {
+            return;
+        }
 
-        if (!section.recipeIngredients) {section.recipeIngredients = [];}
+        if (!section.recipeIngredients) {
+            section.recipeIngredients = [];
+        }
 
         section.recipeIngredients?.push(ri);
     };
@@ -128,7 +140,9 @@ export class DraftRecipe {
             s => s.id === sectionId,
         );
 
-        if (!section) {return;}
+        if (!section) {
+            return;
+        }
 
         section.recipeIngredients = section.recipeIngredients?.filter(
             ri => ri.id !== recipeIngredientId,
@@ -138,7 +152,9 @@ export class DraftRecipe {
     @action removeRecipeStep = (sectionId: number, stepId: number) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
 
-        if (!section) {return;}
+        if (!section) {
+            return;
+        }
 
         section.recipeSteps = section.recipeSteps?.filter(s => s.id !== stepId);
     };
@@ -151,14 +167,18 @@ export class DraftRecipe {
             this.recipe.ingredientSections?.[0].recipeIngredients
         ) {
             this.recipe.ingredientSections[0].recipeIngredients = items.filter(
-                (item): item is RecipeIngredient => item instanceof RecipeIngredient,
+                // prettier-ignore
+                (item): item is RecipeIngredient => (
+                    item instanceof RecipeIngredient
+                ),
             );
 
             return;
         }
 
-        if (this.recipe.ingredientSections?.[0])
-            {this.recipe.ingredientSections[0].recipeIngredients = [];}
+        if (this.recipe.ingredientSections?.[0]) {
+            this.recipe.ingredientSections[0].recipeIngredients = [];
+        }
 
         const sections: IngredientSection[] = this.recipe
             .ingredientSections?.[0]
@@ -193,7 +213,9 @@ export class DraftRecipe {
             return;
         }
 
-        if (this.recipe.sections?.[0]) {this.recipe.sections[0].recipeSteps = [];}
+        if (this.recipe.sections?.[0]) {
+            this.recipe.sections[0].recipeSteps = [];
+        }
 
         const sections: RecipeSection[] = this.recipe.sections?.[0]
             ? [this.recipe.sections?.[0]]
@@ -226,8 +248,10 @@ export class DraftRecipe {
         removeEmptyIngredientsAndSteps(recipeToSave);
         removeTemporaryIds(recipeToSave);
 
-        const savedRecipe = yield* yieldResult(() => saveRecipe(recipeToSave, this.database),
-        )();
+        // prettier-ignore
+        const savedRecipe = yield* yieldResult(() => (
+            saveRecipe(recipeToSave, this.database)
+        ))();
 
         this.recipe = Recipe.createEmpty();
 

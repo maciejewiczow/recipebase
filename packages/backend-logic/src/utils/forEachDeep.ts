@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type Visitor = (
     key: string | number,
     value: any,
     obj: any,
     path: string,
-) => any;
+) => unknown;
 
 const forEachObject = (
     obj: Record<string | number, any>,
@@ -20,7 +21,7 @@ const forEachObject = (
     }
 };
 
-const forEachArray = (array: any[], fn: Visitor, path: string) => {
+const forEachArray = (array: unknown[], fn: Visitor, path: string) => {
     array.forEach((value, index, arr) => {
         const deepPath = `${path}[${index}]`;
 
@@ -31,7 +32,11 @@ const forEachArray = (array: any[], fn: Visitor, path: string) => {
     });
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function forEachDeep(value: any, fn: Visitor, path = '') {
-    if (Array.isArray(value)) {forEachArray(value, fn, path);}
-    else if (typeof value === 'object' && value) {forEachObject(value, fn, path);}
+    if (Array.isArray(value)) {
+        forEachArray(value, fn, path);
+    } else if (typeof value === 'object' && value) {
+        forEachObject(value, fn, path);
+    }
 }

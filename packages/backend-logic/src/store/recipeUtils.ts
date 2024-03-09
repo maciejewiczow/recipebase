@@ -1,13 +1,13 @@
 import { numericQuantity } from 'numeric-quantity';
 import invariant from 'tiny-invariant';
-import Database from '../Database';
-import Ingredient from '../entities/Ingredient';
-import IngredientSection from '../entities/IngredientSection';
-import Recipe from '../entities/Recipe';
-import RecipeIngredient from '../entities/RecipeIngredient';
-import RecipeSection from '../entities/RecipeSection';
-import RecipeStep from '../entities/RecipeStep';
-import Unit from '../entities/Unit';
+import { Database } from '../Database';
+import { Ingredient } from '../entities/Ingredient';
+import { IngredientSection } from '../entities/IngredientSection';
+import { Recipe } from '../entities/Recipe';
+import { RecipeIngredient } from '../entities/RecipeIngredient';
+import { RecipeSection } from '../entities/RecipeSection';
+import { RecipeStep } from '../entities/RecipeStep';
+import { Unit } from '../entities/Unit';
 
 const qtyParsingRegex = /(\d+(?:[./]\d+)?)\s*-\s*(\d+(?:[./]\d+)?)/;
 
@@ -35,16 +35,18 @@ export const parseQuantityString = (quantityString: string) => {
 };
 
 export const removeEmptyIngredientsAndSteps = (recipe: Recipe) => {
-    for (const ingredientSection of recipe.ingredientSections ?? [])
-        {ingredientSection.recipeIngredients =
+    for (const ingredientSection of recipe.ingredientSections ?? []) {
+        ingredientSection.recipeIngredients =
             ingredientSection.recipeIngredients?.filter(
                 ri => !!ri.ingredient?.name?.trim(),
-            );}
+            );
+    }
 
-    for (const section of recipe.sections ?? [])
-        {section.recipeSteps = section.recipeSteps?.filter(
+    for (const section of recipe.sections ?? []) {
+        section.recipeSteps = section.recipeSteps?.filter(
             step => !!step?.content?.trim(),
-        );}
+        );
+    }
 
     recipe.ingredientSections = recipe.ingredientSections?.filter(
         s => s.recipeIngredients?.length !== 0,
@@ -53,32 +55,40 @@ export const removeEmptyIngredientsAndSteps = (recipe: Recipe) => {
 };
 
 export const validateRecipe = (recipe: Recipe) => {
-    if (!recipe.name) {throw new Error('Recipe name cannot be empty');}
+    if (!recipe.name) {
+        throw new Error('Recipe name cannot be empty');
+    }
 
-    if (!recipe.ingredientSections || recipe.ingredientSections.length === 0)
-        {throw new Error('Recipe has to have at least one ingredient section');}
+    if (!recipe.ingredientSections || recipe.ingredientSections.length === 0) {
+        throw new Error('Recipe has to have at least one ingredient section');
+    }
 
-    if (!recipe.sections || recipe.sections.length === 0)
-        {throw new Error('Recipe has to have at least one section');}
+    if (!recipe.sections || recipe.sections.length === 0) {
+        throw new Error('Recipe has to have at least one section');
+    }
 };
 
-export const saveRecipe = (recipe: Recipe, database: Database) => database.transaction(async manager => {
-        const promises: Promise<any>[] = [];
+// prettier-ignore
+export const saveRecipe = (recipe: Recipe, database: Database) => (
+    database.transaction(async manager => {
+        const promises: Promise<unknown>[] = [];
 
         for (const ingredientSection of recipe.ingredientSections ?? []) {
             for (const recipeIngredient of ingredientSection.recipeIngredients ??
                 []) {
-                if (recipeIngredient.ingredient)
-                    {promises.push(
+                if (recipeIngredient.ingredient) {
+                    promises.push(
                         manager
                             .getRepository(Ingredient)
                             .save(recipeIngredient.ingredient),
-                    );}
+                    );
+                }
 
-                if (recipeIngredient.unit)
-                    {promises.push(
+                if (recipeIngredient.unit) {
+                    promises.push(
                         manager.getRepository(Unit).save(recipeIngredient.unit),
-                    );}
+                    );
+                }
 
                 promises.push(
                     manager
@@ -107,4 +117,5 @@ export const saveRecipe = (recipe: Recipe, database: Database) => database.trans
         await Promise.all(promises);
 
         return manager.getRepository(Recipe).save(recipe);
-    });
+    })
+);

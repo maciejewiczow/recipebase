@@ -1,8 +1,8 @@
 import { action, makeAutoObservable } from 'mobx';
-import Database from '../Database';
-import Ingredient from '../entities/Ingredient';
-import RecipeIngredient from '../entities/RecipeIngredient';
-import Unit from '../entities/Unit';
+import { Database } from '../Database';
+import { Ingredient } from '../entities/Ingredient';
+import { RecipeIngredient } from '../entities/RecipeIngredient';
+import { Unit } from '../entities/Unit';
 import { parseQuantityString } from './recipeUtils';
 
 export class DraftIngredient {
