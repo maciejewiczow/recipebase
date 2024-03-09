@@ -15,9 +15,7 @@ export const TabBarProgressStep = styled.TouchableOpacity<{
     flex: 1;
     border-bottom-width: 4px;
     border-bottom-color: ${({ theme, isCompleted, completedTintColor }) =>
-        isCompleted
-            ? completedTintColor ?? theme.palette.primaryAccent
-            : 'transparent'};
+        isCompleted ? completedTintColor ?? theme.palette.primaryAccent : 'transparent'};
 `;
 
 export const BottomBarWrapper = styled.View`

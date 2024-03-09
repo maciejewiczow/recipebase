@@ -15,10 +15,7 @@ export const parseQuantityString = (quantityString: string) => {
     if (qtyParsingRegex.test(quantityString)) {
         const qtyMatches = quantityString.match(qtyParsingRegex);
 
-        invariant(
-            !!qtyMatches,
-            `qtyMatches were null, quanittyString: ${quantityString}`,
-        );
+        invariant(!!qtyMatches, `qtyMatches were null, quanittyString: ${quantityString}`);
 
         const [_, quantityFrom, quantityTo] = qtyMatches;
 
@@ -36,21 +33,16 @@ export const parseQuantityString = (quantityString: string) => {
 
 export const removeEmptyIngredientsAndSteps = (recipe: Recipe) => {
     for (const ingredientSection of recipe.ingredientSections ?? []) {
-        ingredientSection.recipeIngredients =
-            ingredientSection.recipeIngredients?.filter(
-                ri => !!ri.ingredient?.name?.trim(),
-            );
-    }
-
-    for (const section of recipe.sections ?? []) {
-        section.recipeSteps = section.recipeSteps?.filter(
-            step => !!step?.content?.trim(),
+        ingredientSection.recipeIngredients = ingredientSection.recipeIngredients?.filter(
+            ri => !!ri.ingredient?.name?.trim(),
         );
     }
 
-    recipe.ingredientSections = recipe.ingredientSections?.filter(
-        s => s.recipeIngredients?.length !== 0,
-    );
+    for (const section of recipe.sections ?? []) {
+        section.recipeSteps = section.recipeSteps?.filter(step => !!step?.content?.trim());
+    }
+
+    recipe.ingredientSections = recipe.ingredientSections?.filter(s => s.recipeIngredients?.length !== 0);
     recipe.sections = recipe.sections?.filter(s => s.recipeSteps?.length !== 0);
 };
 

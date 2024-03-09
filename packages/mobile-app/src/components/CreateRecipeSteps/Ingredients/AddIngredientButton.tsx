@@ -7,17 +7,11 @@ interface AddIngredientButtonProps {
     targetSectionId: number;
 }
 
-export const AddIngredientButton: React.FC<AddIngredientButtonProps> = ({
-    targetSectionId,
-}) => {
+export const AddIngredientButton: React.FC<AddIngredientButtonProps> = ({ targetSectionId }) => {
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
     return (
-        <AddListItemButton
-            onPress={() =>
-                navigation.navigate('AddIngredientView', { targetSectionId })
-            }
-        >
+        <AddListItemButton onPress={() => navigation.navigate('AddIngredientView', { targetSectionId })}>
             <AddIcon /> Add ingredient
         </AddListItemButton>
     );

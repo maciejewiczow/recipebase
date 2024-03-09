@@ -2,14 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { ActivityIndicator } from 'react-native';
 import { EmptyListView } from './EmptyListView';
-import {
-    Wrapper,
-    Subtitle,
-    Title,
-    SearchBar,
-    TagList,
-    RecipeListItem,
-} from './HomeView.styles';
+import { Wrapper, Subtitle, Title, SearchBar, TagList, RecipeListItem } from './HomeView.styles';
 import { NoSearchResultsListView } from './NoSearchResultsListView';
 import { useRootStore } from '~/RootStoreContext';
 import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
@@ -42,16 +35,14 @@ export const HomeView: React.FC = observer(() => {
                     size={60}
                     color="#999"
                 />
-            ) : (recipes.filterRecipesByTags(tags.selectedTags).length ?? 0) >
-              0 ? (
+            ) : (recipes.filterRecipesByTags(tags.selectedTags).length ?? 0) > 0 ? (
                 recipes.filterRecipesByTags(tags.selectedTags).map(item => (
                     <RecipeListItem
                         key={item.id}
                         recipe={item}
                     />
                 ))
-            ) : searchText.trim().length === 0 &&
-              (tags.selectedTags.length ?? 0) === 0 ? (
+            ) : searchText.trim().length === 0 && (tags.selectedTags.length ?? 0) === 0 ? (
                 <EmptyListView />
             ) : (
                 <NoSearchResultsListView />

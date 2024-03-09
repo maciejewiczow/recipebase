@@ -14,8 +14,7 @@ interface MinWidthProps {
     noMinWidth?: boolean;
 }
 
-type TagBodyProps = IsSelectedProps &
-    OrderProps & { horizontalMargin: number } & MinWidthProps;
+type TagBodyProps = IsSelectedProps & OrderProps & { horizontalMargin: number } & MinWidthProps;
 
 export const TagBody = styled.TouchableOpacity<TagBodyProps>`
     padding: 10px 14px;

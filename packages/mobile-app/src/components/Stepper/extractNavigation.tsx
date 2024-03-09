@@ -10,9 +10,7 @@ type ScreenComponentProps = ComponentProps<ScreenComponent>;
 
 export const extractNavigation =
     (
-        setNavigation: React.Dispatch<
-            React.SetStateAction<StepperNavigation | undefined>
-        >,
+        setNavigation: React.Dispatch<React.SetStateAction<StepperNavigation | undefined>>,
         Component: ScreenComponent,
     ): React.FC<ScreenComponentProps> =>
     props => {

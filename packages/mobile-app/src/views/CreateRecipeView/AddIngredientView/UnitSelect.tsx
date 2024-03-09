@@ -1,10 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { BottomSheetSelectProps } from '~/components/BottomSheetSelect/BottomSheetSelect';
-import {
-    UnitItemWrapper,
-    UnitName,
-    UnitSelectInput as UnitSelectInput,
-} from './AddIngredientView.styles';
+import { UnitItemWrapper, UnitName, UnitSelectInput as UnitSelectInput } from './AddIngredientView.styles';
 import { useRootStore } from '~/RootStoreContext';
 import { observer } from 'mobx-react-lite';
 import invariant from 'tiny-invariant';
@@ -19,37 +15,33 @@ export const UnitSelect: React.FC = observer(() => {
     const { draftIngredient, units } = useRootStore();
 
     useEffect(() => {
-        const promise = units.fetchUnits(
-            draftIngredient.unitSearchString ?? '',
-        );
+        const promise = units.fetchUnits(draftIngredient.unitSearchString ?? '');
 
         promise.catch(catchCancelledFlow);
 
         return () => promise.cancel();
     }, [draftIngredient.unitSearchString, units]);
 
-    const renderOption: BottomSheetSelectProps<UnitListItemType>['renderOption'] =
-        useCallback(
-            ({ item, select, isActive }) => (
-                <UnitItemWrapper onPress={select}>
-                    <UnitName
-                        isCustom={item.isCustom}
-                        isActive={isActive}
-                    >
-                        {item.unitName}
-                    </UnitName>
-                </UnitItemWrapper>
-            ),
-            [],
-        );
-
-    const renderValue: BottomSheetSelectProps<UnitListItemType>['renderValue'] =
-        useCallback(item => item.unitName, []);
-
-    const isEqual = useCallback(
-        (a: UnitListItemType, b: UnitListItemType) => a.unitName === b.unitName,
+    const renderOption: BottomSheetSelectProps<UnitListItemType>['renderOption'] = useCallback(
+        ({ item, select, isActive }) => (
+            <UnitItemWrapper onPress={select}>
+                <UnitName
+                    isCustom={item.isCustom}
+                    isActive={isActive}
+                >
+                    {item.unitName}
+                </UnitName>
+            </UnitItemWrapper>
+        ),
         [],
     );
+
+    const renderValue: BottomSheetSelectProps<UnitListItemType>['renderValue'] = useCallback(
+        item => item.unitName,
+        [],
+    );
+
+    const isEqual = useCallback((a: UnitListItemType, b: UnitListItemType) => a.unitName === b.unitName, []);
 
     const data = useMemo<UnitListItemType[]>(
         () => [
@@ -78,9 +70,7 @@ export const UnitSelect: React.FC = observer(() => {
         [draftIngredient.unit.name],
     );
 
-    const onChange: Defined<
-        BottomSheetSelectProps<UnitListItemType>['onChange']
-    > = useCallback(
+    const onChange: Defined<BottomSheetSelectProps<UnitListItemType>['onChange']> = useCallback(
         ({ item }) => {
             if (item.isCustom) {
                 draftIngredient.setUnitName(item.unitName);

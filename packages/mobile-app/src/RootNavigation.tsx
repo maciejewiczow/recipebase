@@ -23,10 +23,7 @@ export interface ISubNavigator<T extends ParamListBase, K extends keyof T> {
 
 export type RootStackParams = {
     Splash: undefined;
-    HomeTabNavigator: ISubNavigator<
-        HomeTabNavigationParams,
-        keyof HomeTabNavigationParams
-    >;
+    HomeTabNavigator: ISubNavigator<HomeTabNavigationParams, keyof HomeTabNavigationParams>;
     SelectDatabase: undefined;
     SelectMethodModal: SelecMethodModalViewRouteProps;
     GDriveFilePicker: GDriveFilePickerViewProps;
@@ -40,8 +37,7 @@ export type RootNavigationProp = NavigationProp<RootStackParams>;
 
 export const Stack = createNativeStackNavigator<RootStackParams>();
 
-export const rootNavigationRef =
-    createNavigationContainerRef<RootStackParams>();
+export const rootNavigationRef = createNavigationContainerRef<RootStackParams>();
 
 export default class RootNavigation {
     static navigate: typeof rootNavigationRef.navigate = (...args) => {
@@ -50,16 +46,12 @@ export default class RootNavigation {
             rootNavigationRef.navigate(...args);
     };
 
-    static replace = <
-        Route extends keyof RootStackParams = keyof RootStackParams,
-    >(
+    static replace = <Route extends keyof RootStackParams = keyof RootStackParams>(
         name: Route,
         params?: RootStackParams[Route],
     ) => {
         if (rootNavigationRef.isReady())
-            rootNavigationRef.dispatch(
-                StackActions.replace(name as string, params),
-            );
+            rootNavigationRef.dispatch(StackActions.replace(name as string, params));
     };
 
     static goBack = () => {

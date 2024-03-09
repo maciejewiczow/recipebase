@@ -23,8 +23,7 @@ export const TagCreator: React.FC = observer(() => {
 
         if (newTagName) {
             const added = tags.addDraftTag(newTagName);
-            if (!added)
-                ToastAndroid.show('Tags have to be unique', ToastAndroid.LONG);
+            if (!added) ToastAndroid.show('Tags have to be unique', ToastAndroid.LONG);
         }
 
         setNewTagName('');
@@ -72,9 +71,7 @@ export const TagCreator: React.FC = observer(() => {
                                 onPress={addExistingTagToDrafts(tag.id)}
                             >
                                 <TagNameText>{tag.name}</TagNameText>
-                                <TagRecipeCountText>
-                                    {tag.recipeCount}
-                                </TagRecipeCountText>
+                                <TagRecipeCountText>{tag.recipeCount}</TagRecipeCountText>
                             </DropdownRow>
                         ))}
                     </DropdownWrapper>

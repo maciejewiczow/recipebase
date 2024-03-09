@@ -85,8 +85,10 @@ describe('parseQuantityStringsToIngredientQuantities', () => {
 
         expect(result.quantityFrom).toBeCloseTo(expected.quantityFrom);
 
-        if (expected.quantityTo !== undefined)
-            {expect(result.quantityTo).toBeCloseTo(expected.quantityTo);}
-        else {expect(result.quantityTo).toBeUndefined();}
+        if (expected.quantityTo !== undefined) {
+            expect(result.quantityTo).toBeCloseTo(expected.quantityTo);
+        } else {
+            expect(result.quantityTo).toBeUndefined();
+        }
     });
 });

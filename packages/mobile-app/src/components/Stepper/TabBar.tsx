@@ -1,10 +1,7 @@
 import { TabBarProgressStep, TabBarWrapper } from './Stepper.styles';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 
-export const TabBar: React.FC<MaterialTopTabBarProps> = ({
-    state,
-    descriptors,
-}) => (
+export const TabBar: React.FC<MaterialTopTabBarProps> = ({ state, descriptors }) => (
     <TabBarWrapper>
         {state.routes.map((route, index) => {
             const { options } = descriptors[route.key];

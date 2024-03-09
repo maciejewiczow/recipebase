@@ -16,11 +16,7 @@ export interface StepperProps {
     hideBackButtonOnFirstStep?: boolean;
 }
 
-export const Stepper: React.FC<StepperProps> = ({
-    steps,
-    onFinish,
-    lastStepButtonText,
-}) => {
+export const Stepper: React.FC<StepperProps> = ({ steps, onFinish, lastStepButtonText }) => {
     const [navigation, setNavigation] = useState<StepperNavigation>();
 
     return (

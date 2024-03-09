@@ -5,10 +5,7 @@ import { createStyledIcon } from '~/utils/createStyledIcon';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import {
-    NestableDraggableFlatList,
-    NestableScrollContainer,
-} from 'react-native-draggable-flatlist';
+import { NestableDraggableFlatList, NestableScrollContainer } from 'react-native-draggable-flatlist';
 
 export const draggableListStepMargin = css`
     margin-left: 16px;

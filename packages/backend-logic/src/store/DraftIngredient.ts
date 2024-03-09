@@ -37,10 +37,8 @@ export class DraftIngredient {
     }
 
     @action commitSelectedIngredient = () => {
-        ({
-            quantityFrom: this.recipeIngredient.quantityFrom,
-            quantityTo: this.recipeIngredient.quantityTo,
-        } = parseQuantityString(this.quantityString));
+        ({ quantityFrom: this.recipeIngredient.quantityFrom, quantityTo: this.recipeIngredient.quantityTo } =
+            parseQuantityString(this.quantityString));
         this.recipeIngredient.ingredient = this.ingredient;
     };
 
@@ -69,8 +67,6 @@ export class DraftIngredient {
         this.ingredient = ri.ingredient ?? Ingredient.createWithTemporaryId();
         this.unit = ri.unit ?? new Unit();
         this.unitSearchString = '';
-        this.quantityString =
-            ri.quantityFrom +
-            (ri.quantityTo !== undefined ? `-${ri.quantityTo}` : '');
+        this.quantityString = ri.quantityFrom + (ri.quantityTo !== undefined ? `-${ri.quantityTo}` : '');
     };
 }

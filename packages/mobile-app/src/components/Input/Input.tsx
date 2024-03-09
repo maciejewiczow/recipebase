@@ -29,10 +29,7 @@ export interface InputProps
 }
 
 export const Input = forwardRef<TextInputComponent, InputProps>(
-    (
-        { numberOfLines = 1, onChange, style, label, inputStyle, ...rest },
-        ref,
-    ) => (
+    ({ numberOfLines = 1, onChange, style, label, inputStyle, ...rest }, ref) => (
         <Wrapper style={style}>
             {label && <Label>{label}</Label>}
             <TextInput

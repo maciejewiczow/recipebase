@@ -9,12 +9,7 @@ export interface SearchBarProps {
     searchText: string;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({
-    style,
-    placeholder,
-    searchText,
-    onChange,
-}) => (
+export const SearchBar: React.FC<SearchBarProps> = ({ style, placeholder, searchText, onChange }) => (
     <InputWrapper style={style}>
         <SearchIcon />
         <Input

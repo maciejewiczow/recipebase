@@ -40,13 +40,7 @@ const Backdrop = (props: BottomSheetBackdropProps) => (
 );
 
 export const useBottomSheetModal = (
-    {
-        height = '45%',
-        onChange,
-        onOpen,
-        onClose,
-        onAnimate,
-    }: Partial<UseBottomSheetModalArgs> = {
+    { height = '45%', onChange, onOpen, onClose, onAnimate }: Partial<UseBottomSheetModalArgs> = {
         height: '45%',
     },
 ): UseBottomSheetModalReturn => {
@@ -61,21 +55,18 @@ export const useBottomSheetModal = (
         bottomSheetModalRef.current?.close();
     }, []);
 
-    const forwardOnChange: Defined<BottomSheetModalProps['onChange']> =
-        useCallback(
-            index => {
-                if (index === -1) {
-                    bottomSheetModalRef.current?.close();
-                }
+    const forwardOnChange: Defined<BottomSheetModalProps['onChange']> = useCallback(
+        index => {
+            if (index === -1) {
+                bottomSheetModalRef.current?.close();
+            }
 
-                onChange?.(index);
-            },
-            [onChange],
-        );
+            onChange?.(index);
+        },
+        [onChange],
+    );
 
-    const triggerAnimationCallbacks: Defined<
-        BottomSheetModalProps['onAnimate']
-    > = useCallback(
+    const triggerAnimationCallbacks: Defined<BottomSheetModalProps['onAnimate']> = useCallback(
         (from, to) => {
             if (from === -1 && to !== -1) {
                 onOpen?.();

@@ -10,19 +10,17 @@ interface IngredientSectionHeaderProps {
     style?: StyleProp<ViewStyle>;
 }
 
-export const IngredientSectionHeader: React.FC<IngredientSectionHeaderProps> =
-    observer(({ section, style }) => {
+export const IngredientSectionHeader: React.FC<IngredientSectionHeaderProps> = observer(
+    ({ section, style }) => {
         const { draftRecipe } = useRootStore();
 
         const removeIngredientSection = (sectionId?: number) => () => {
             if (sectionId) draftRecipe.removeIngredientSection(sectionId);
         };
 
-        const setIngredientSectionName =
-            (sectionId?: number) => (name: string) => {
-                if (sectionId)
-                    draftRecipe.setIngredientSectionName(sectionId, name);
-            };
+        const setIngredientSectionName = (sectionId?: number) => (name: string) => {
+            if (sectionId) draftRecipe.setIngredientSectionName(sectionId, name);
+        };
 
         return (
             <SectionHeader
@@ -32,4 +30,5 @@ export const IngredientSectionHeader: React.FC<IngredientSectionHeaderProps> =
                 onSectionDeletePress={removeIngredientSection(section?.id)}
             />
         );
-    });
+    },
+);

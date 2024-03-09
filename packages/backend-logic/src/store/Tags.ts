@@ -25,11 +25,7 @@ export class Tags {
     fetchTags = flow(function* (this: Tags) {
         const res: TagWithCount[] = yield this.database.tagRepository
             .createQueryBuilder('tag')
-            .loadRelationCountAndMap(
-                'tag.recipeCount',
-                'tag.recipes',
-                'recipeCount',
-            )
+            .loadRelationCountAndMap('tag.recipeCount', 'tag.recipes', 'recipeCount')
             .getMany();
 
         this.tags = res
@@ -41,18 +37,17 @@ export class Tags {
     toggleTagSelectedById(id: number) {
         const item = this.tags.find(it => it.tag.id === id);
 
-        if (!item) {return;}
+        if (!item) {
+            return;
+        }
 
         item.isSelected = !item.isSelected;
     }
 
     addDraftTag(name: string) {
-        if (
-            this.draftTags.find(
-                t => t.name.toLowerCase() === name.toLowerCase(),
-            )
-        )
-            {return false;}
+        if (this.draftTags.find(t => t.name.toLowerCase() === name.toLowerCase())) {
+            return false;
+        }
 
         const newTag: TagWithCount = {
             name,
@@ -68,13 +63,9 @@ export class Tags {
     copyTagToDraftTags(tagId: number) {
         const tag = this.tags.find(t => t.tag.id === tagId)?.tag;
 
-        if (
-            tag &&
-            !this.draftTags.find(
-                t => t.name.toLowerCase() === tag.name.toLowerCase(),
-            )
-        )
-            {this.draftTags.push(tag);}
+        if (tag && !this.draftTags.find(t => t.name.toLowerCase() === tag.name.toLowerCase())) {
+            this.draftTags.push(tag);
+        }
     }
 
     removeDraftTagById(id: number) {
@@ -82,20 +73,22 @@ export class Tags {
     }
 
     copyRecipeTagsToDraftTags(recipe: Recipe | undefined) {
-        if (!recipe) {return;}
+        if (!recipe) {
+            return;
+        }
 
-        this.draftTags =
-            recipe.tags?.map(tag => ({ ...tag, recipeCount: 1 })) ?? [];
+        this.draftTags = recipe.tags?.map(tag => ({ ...tag, recipeCount: 1 })) ?? [];
     }
 
     @computed
     filterByName(filterString: string) {
-        if (!filterString) {return [];}
+        if (!filterString) {
+            return [];
+        }
 
         return this.tags
             .map(t => t.tag)
-            .filter(t => t.name.toLowerCase().includes(filterString.toLowerCase()),
-            );
+            .filter(t => t.name.toLowerCase().includes(filterString.toLowerCase()));
     }
 
     get tagsWithDraftTags() {
@@ -115,14 +108,11 @@ export class Tags {
     }
 
     saveDraftTags = flow(function* (this: Tags) {
-        const tagsToSave = cloneDeep(
-            this.draftTags.map(({ recipeCount, ...tag }) => tag),
-        );
+        const tagsToSave = cloneDeep(this.draftTags.map(({ recipeCount, ...tag }) => tag));
 
         removeTemporaryIds(tagsToSave);
 
-        const savedTags = yield* yieldResult(() => this.database.tagRepository.save(tagsToSave),
-        )();
+        const savedTags = yield* yieldResult(() => this.database.tagRepository.save(tagsToSave))();
 
         this.draftTags = [];
         yield this.fetchTags();

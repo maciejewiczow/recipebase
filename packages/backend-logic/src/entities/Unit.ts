@@ -1,11 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import {
-    DeleteDateColumn,
-    Entity,
-    JoinColumn,
-    OneToMany,
-    PrimaryColumn,
-} from 'typeorm';
+import { DeleteDateColumn, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 import { RecipeIngredient } from './RecipeIngredient';
 
 @Entity('Unit')

@@ -23,8 +23,7 @@ describe('Recipes', () => {
 
             await recipes.fetchRecipes('%__%%%_%_%_%__ddd__%%');
 
-            const expectedSearchTerm =
-                '\\%\\_\\_\\%\\%\\%\\_\\%\\_\\%\\_\\%\\_\\_ddd\\_\\_\\%\\%';
+            const expectedSearchTerm = '\\%\\_\\_\\%\\%\\%\\_\\%\\_\\%\\_\\%\\_\\_ddd\\_\\_\\%\\%';
             expect(find).toHaveBeenCalledWith({
                 where: [
                     { name: ILike(`%${expectedSearchTerm}%`) },
@@ -41,8 +40,9 @@ describe('Recipes', () => {
 
             expect(recipes.recipes.length).toBeGreaterThan(0);
 
-            for (const recipe of recipes.recipes)
-                {expect(recipe.description).toMatch(/(lorem|dolor)/gi);}
+            for (const recipe of recipes.recipes) {
+                expect(recipe.description).toMatch(/(lorem|dolor)/gi);
+            }
         });
 
         it('gets only recipes which name contains any word from the seach term', async () => {
@@ -52,26 +52,24 @@ describe('Recipes', () => {
 
             expect(recipes.recipes.length).toBeGreaterThan(0);
 
-            for (const recipe of recipes.recipes)
-                {expect(recipe.name).toMatch(/(test|ciacho)/gi);}
+            for (const recipe of recipes.recipes) {
+                expect(recipe.name).toMatch(/(test|ciacho)/gi);
+            }
         });
 
-        it.todo(
-            'sets the loading status to true when the recipes are loading',
-            async () => {
-                const recipes = new Recipes(database);
+        it.todo('sets the loading status to true when the recipes are loading', async () => {
+            const recipes = new Recipes(database);
 
-                expect(recipes.isFetchingRecipes).toBeFalsy();
+            expect(recipes.isFetchingRecipes).toBeFalsy();
 
-                const promise = recipes.fetchRecipes('test');
+            const promise = recipes.fetchRecipes('test');
 
-                expect(recipes.isFetchingRecipes).toBeTruthy();
+            expect(recipes.isFetchingRecipes).toBeTruthy();
 
-                await promise;
+            await promise;
 
-                expect(recipes.isFetchingRecipes).toBeFalsy();
-            },
-        );
+            expect(recipes.isFetchingRecipes).toBeFalsy();
+        });
 
         it('loads tags for each recipe', async () => {
             const recipes = new Recipes(database);
@@ -80,8 +78,9 @@ describe('Recipes', () => {
 
             expect(recipes.recipes.length).toBeGreaterThan(0);
 
-            for (const recipe of recipes.recipes)
-                {expect(recipe.tags).toBeDefined();}
+            for (const recipe of recipes.recipes) {
+                expect(recipe.tags).toBeDefined();
+            }
         });
 
         it('loads all recipes when the search term is empty or white space', async () => {
@@ -89,9 +88,7 @@ describe('Recipes', () => {
 
             await recipes.fetchRecipes('  ');
 
-            expect(recipes.recipes.length).toBe(
-                (await database.recipeRepository.find()).length,
-            );
+            expect(recipes.recipes.length).toBe((await database.recipeRepository.find()).length);
         });
 
         it('treats words in quotes as single search term', async () => {
@@ -101,10 +98,9 @@ describe('Recipes', () => {
 
             expect(recipes.recipes.length).toBeGreaterThan(0);
 
-            for (const recipe of recipes.recipes)
-                {expect(recipe.name + recipe.description).toMatch(
-                    /(Test recipe|dobre ciacho)/gi,
-                );}
+            for (const recipe of recipes.recipes) {
+                expect(recipe.name + recipe.description).toMatch(/(Test recipe|dobre ciacho)/gi);
+            }
         });
     });
 

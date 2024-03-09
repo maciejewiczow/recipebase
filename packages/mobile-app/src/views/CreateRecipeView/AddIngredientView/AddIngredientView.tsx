@@ -3,29 +3,19 @@ import { TextInput } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { observer } from 'mobx-react-lite';
-import {
-    StepHeader,
-    StepWrapper,
-} from '~/components/CreateRecipeSteps/common.styles';
+import { StepHeader, StepWrapper } from '~/components/CreateRecipeSteps/common.styles';
 import { RootStackParams } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
 import { IngredientList } from './IngredientList';
 import { UnitSelect } from './UnitSelect';
-import {
-    IngredientNameInput,
-    InputsRow,
-    QuantityInput,
-    SaveButton,
-} from './AddIngredientView.styles';
+import { IngredientNameInput, InputsRow, QuantityInput, SaveButton } from './AddIngredientView.styles';
 
 export interface AddIngredientViewRouteProps {
     targetSectionId: number;
     recipeIngredientToEditId?: number;
 }
 
-export const AddIngredientView: React.FC<
-    NativeStackScreenProps<RootStackParams, 'AddIngredientView'>
-> = observer(
+export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams, 'AddIngredientView'>> = observer(
     ({
         route: {
             params: { targetSectionId, recipeIngredientToEditId },
@@ -35,8 +25,7 @@ export const AddIngredientView: React.FC<
         const isInEditMode = recipeIngredientToEditId !== undefined;
 
         const { draftRecipe, draftIngredient } = useRootStore();
-        const [isInIngredientSearchMode, setIsInIngredientSearchMode] =
-            useState(isInEditMode);
+        const [isInIngredientSearchMode, setIsInIngredientSearchMode] = useState(isInEditMode);
         const inputRef = useRef<TextInput>(null);
 
         useFocusEffect(
@@ -51,9 +40,7 @@ export const AddIngredientView: React.FC<
 
         useEffect(() => {
             if (isInEditMode) {
-                const ingredient = draftRecipe.recipe.ingredientSections?.[
-                    targetSectionId
-                ].recipeIngredients?.find(
+                const ingredient = draftRecipe.recipe.ingredientSections?.[targetSectionId].recipeIngredients?.find(
                     ri => ri.id === recipeIngredientToEditId,
                 );
 
@@ -67,10 +54,7 @@ export const AddIngredientView: React.FC<
         const saveIngredient = () => {
             draftIngredient.commitSelectedIngredient();
             if (!isInEditMode) {
-                draftRecipe.addNewRecipeIngredient(
-                    targetSectionId,
-                    draftIngredient.recipeIngredient,
-                );
+                draftRecipe.addNewRecipeIngredient(targetSectionId, draftIngredient.recipeIngredient);
             }
             draftIngredient.reset();
             navigation.goBack();
@@ -88,11 +72,7 @@ export const AddIngredientView: React.FC<
                     onChange={draftIngredient.setName}
                 />
                 {isInIngredientSearchMode ? (
-                    <IngredientList
-                        setIsInIngredientSearchMode={
-                            setIsInIngredientSearchMode
-                        }
-                    />
+                    <IngredientList setIsInIngredientSearchMode={setIsInIngredientSearchMode} />
                 ) : (
                     <InputsRow>
                         <QuantityInput

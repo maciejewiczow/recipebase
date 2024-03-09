@@ -4,8 +4,4 @@ export { SelectDatabaseView } from './SelectDatabaseView/SelectDatabaseView';
 export { SelectionMethodModalView } from './SelectionMethodModalView/SelectionMethodModalView';
 export { GDriveFilePickerView } from './GDriveFilePickerView/GDriveFilePickerView';
 export { RecipeView } from './RecipeView';
-export {
-    CreateRecipeView,
-    AddIngredientView,
-    AddStepView,
-} from './CreateRecipeView';
+export { CreateRecipeView, AddIngredientView, AddStepView } from './CreateRecipeView';

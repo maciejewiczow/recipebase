@@ -2,10 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Wrapper } from './HomeNavigationView.styles';
 import { HomeIcon, HomeView } from './HomeView';
-import {
-    SearchByIngredientIcon,
-    SearchByIngredientView,
-} from './SearchByIngredientView';
+import { SearchByIngredientIcon, SearchByIngredientView } from './SearchByIngredientView';
 import { SettingsView, SettingsIcon } from './SettingsView';
 import { BottomTabBar } from '~/components/BottomTabBar';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -21,9 +18,9 @@ export type HomeTabNavigationParams = {
 
 const Tab = createBottomTabNavigator<HomeTabNavigationParams>();
 
-export const HomeNavigationView: React.FC<
-    NativeStackScreenProps<RootStackParams, 'HomeTabNavigator'>
-> = ({ navigation }) => (
+export const HomeNavigationView: React.FC<NativeStackScreenProps<RootStackParams, 'HomeTabNavigator'>> = ({
+    navigation,
+}) => (
     <Wrapper>
         <Tab.Navigator
             tabBar={BottomTabBar}

@@ -76,9 +76,7 @@ export class CurrentRecipe {
         }
 
         if (draftRecipe.ingredientSections.length === 0) {
-            draftRecipe.ingredientSections.push(
-                IngredientSection.createWithTemporaryId(),
-            );
+            draftRecipe.ingredientSections.push(IngredientSection.createWithTemporaryId());
         }
 
         if (draftRecipe.sections.length === 0) {

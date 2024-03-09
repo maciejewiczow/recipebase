@@ -1,11 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import {
-    Column,
-    DeleteDateColumn,
-    Entity,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Ingredient } from './Ingredient';
 import { IngredientSection } from './IngredientSection';
 import { Unit } from './Unit';

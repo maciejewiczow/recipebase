@@ -18,13 +18,9 @@ const App = () => {
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView style={{ flex: 1 }}>
                 {Config.DEBUG && <FlipperAsyncStorage />}
-                <StatusBar
-                    barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-                />
+                <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
                 {/* TODO: dark theme */}
-                <ThemeProvider
-                    theme={/* isDarkMode ? darkTheme : */ lightTheme}
-                >
+                <ThemeProvider theme={/* isDarkMode ? darkTheme : */ lightTheme}>
                     <BottomSheetModalProvider>
                         <MenuProvider>
                             <RootStoreContext.Provider value={rootStore}>

@@ -3,11 +3,7 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { IconWrapper, Wrapper, Text } from './BottomTabBar.styles';
 import { ViewIconProps } from '~/views/HomeNavigationView/createViewIcon';
 
-export const BottomTabBar: React.FC<BottomTabBarProps> = ({
-    state,
-    descriptors,
-    navigation,
-}) => (
+export const BottomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => (
     <Wrapper>
         {state.routes.map((route, index) => {
             const { options } = descriptors[route.key];

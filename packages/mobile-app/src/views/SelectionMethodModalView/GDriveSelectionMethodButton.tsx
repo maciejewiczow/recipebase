@@ -7,10 +7,7 @@ import {
     User,
 } from '@react-native-google-signin/google-signin';
 import { Tile, GDriveIcon, TileText } from './SelectionMethodModalView.styles';
-import {
-    FileSelectionButtonProps,
-    SelecMethodModalViewRouteProps,
-} from './ViewProps';
+import { FileSelectionButtonProps, SelecMethodModalViewRouteProps } from './ViewProps';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '~/RootNavigation';
 
@@ -24,8 +21,7 @@ export const GDriveSelectionMethodButton: React.FC<
             await GoogleSignin.hasPlayServices();
 
             let userInfo: User;
-            if (await GoogleSignin.isSignedIn())
-                userInfo = await GoogleSignin.signInSilently();
+            if (await GoogleSignin.isSignedIn()) userInfo = await GoogleSignin.signInSilently();
             else userInfo = await GoogleSignin.signIn();
 
             console.log(userInfo); // just to see if things are working
@@ -45,17 +41,11 @@ export const GDriveSelectionMethodButton: React.FC<
             } else if (err.code === statusCodes.IN_PROGRESS) {
                 // operation (e.g. sign in) is in progress already
                 console.log('in progress ');
-                ToastAndroid.show(
-                    'Sign in already in progress',
-                    ToastAndroid.SHORT,
-                );
+                ToastAndroid.show('Sign in already in progress', ToastAndroid.SHORT);
             } else if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
                 // play services not available or outdated
                 console.log('play services not available');
-                ToastAndroid.show(
-                    'Play Services are not available or outdated',
-                    ToastAndroid.SHORT,
-                );
+                ToastAndroid.show('Play Services are not available or outdated', ToastAndroid.SHORT);
             } else {
                 // some other error happened
                 console.log('some error happened');

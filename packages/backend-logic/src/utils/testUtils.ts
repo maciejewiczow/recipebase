@@ -37,8 +37,7 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
         dataSource,
         connection,
         ingredientRepository: connection.getRepository(Ingredient),
-        ingredientSectionRepository:
-            connection.getRepository(IngredientSection),
+        ingredientSectionRepository: connection.getRepository(IngredientSection),
         recipeRepository: connection.getRepository(Recipe),
         recipeIngredientRepository: connection.getRepository(RecipeIngredient),
         recipeSectionRepository: connection.getRepository(RecipeSection),
@@ -454,27 +453,23 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
     await dbObject.recipeRepository.save(recipes);
 
     await Promise.all(
-        recipes.flatMap(recipe => recipe.ingredientSections?.map(section => dbObject.ingredientSectionRepository.save(section),
+        recipes.flatMap(recipe => recipe.ingredientSections?.map(section => dbObject.ingredientSectionRepository.save(section)),
+        ),
+    );
+
+    await Promise.all(
+        recipes.flatMap(recipe => recipe.ingredientSections?.flatMap(section => section.recipeIngredients?.map(ri => dbObject.ingredientSectionRepository.save(ri)),
             ),
         ),
     );
 
     await Promise.all(
-        recipes.flatMap(recipe => recipe.ingredientSections?.flatMap(section => section.recipeIngredients?.map(ri => dbObject.ingredientSectionRepository.save(ri),
-                ),
-            ),
+        recipes.flatMap(recipe => recipe.sections?.map(section => dbObject.recipeSectionRepository.save(section)),
         ),
     );
 
     await Promise.all(
-        recipes.flatMap(recipe => recipe.sections?.map(section => dbObject.recipeSectionRepository.save(section),
-            ),
-        ),
-    );
-
-    await Promise.all(
-        recipes.flatMap(recipe => recipe.sections?.flatMap(section => section.recipeSteps?.map(rs => dbObject.recipeStepRepository.save(rs),
-                ),
+        recipes.flatMap(recipe => recipe.sections?.flatMap(section => section.recipeSteps?.map(rs => dbObject.recipeStepRepository.save(rs)),
             ),
         ),
     );

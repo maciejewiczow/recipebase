@@ -1,11 +1,7 @@
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '~/RootNavigation';
-import {
-    TileWrapper,
-    TitleText,
-    Wrapper,
-} from './SelectionMethodModalView.styles';
+import { TileWrapper, TitleText, Wrapper } from './SelectionMethodModalView.styles';
 import { FilesystemSelectionMethodButton } from './FilesystemSelectionMethodButton';
 import { GDriveSelectionMethodButton } from './GDriveSelectionMethodButton';
 import { useRootStore } from '~/RootStoreContext';
@@ -25,9 +21,7 @@ export const SelectionMethodModalView: React.FC<
     return (
         <Wrapper>
             <TitleText>
-                {selectWhat === 'directory'
-                    ? 'Select new database location'
-                    : 'Select database'}
+                {selectWhat === 'directory' ? 'Select new database location' : 'Select database'}
             </TitleText>
             <TileWrapper>
                 <FilesystemSelectionMethodButton

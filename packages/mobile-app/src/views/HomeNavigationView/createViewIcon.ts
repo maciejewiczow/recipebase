@@ -6,10 +6,7 @@ export interface ViewIconProps {
     focused?: boolean;
 }
 
-export const createViewIcon = (
-    icon: typeof Icon | typeof FA5Icon,
-    name: string,
-) =>
+export const createViewIcon = (icon: typeof Icon | typeof FA5Icon, name: string) =>
     styled(icon).attrs<{ focused: boolean }>(({ focused, theme }) => ({
         name,
         size: 30,

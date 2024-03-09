@@ -45,8 +45,6 @@ export const TagView: React.FC<TagViewProps> = ({
         >
             {name}
         </TagName>
-        {count !== undefined && (
-            <RecipeCount isSelected={isSelected}>{count}</RecipeCount>
-        )}
+        {count !== undefined && <RecipeCount isSelected={isSelected}>{count}</RecipeCount>}
     </TagBody>
 );

@@ -1,18 +1,5 @@
-import React, {
-    ReactElement,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from 'react';
-import {
-    ListRenderItem,
-    StyleProp,
-    TextInput,
-    TouchableWithoutFeedback,
-    ViewStyle,
-} from 'react-native';
+import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ListRenderItem, StyleProp, TextInput, TouchableWithoutFeedback, ViewStyle } from 'react-native';
 import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useBottomSheetModal } from '~/utils/useBottomSheet';
 import { Label } from '../Input/Input.styles';
@@ -109,8 +96,7 @@ export const BottomSheetSelect = <T,>({
     );
 
     const keyExtr = useCallback(
-        ({ item }: Option<T>, index: number) =>
-            (keyExtractor?.(item) ?? index).toString(),
+        ({ item }: Option<T>, index: number) => (keyExtractor?.(item) ?? index).toString(),
         [keyExtractor],
     );
 

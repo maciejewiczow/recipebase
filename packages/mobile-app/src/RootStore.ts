@@ -39,10 +39,7 @@ export class Root {
         const dbFilePath = await AsyncStorage.getItem(Root.dbPathStorageKey);
 
         if (!dbFilePath) {
-            const newPath = AndroidScoped.appendPath(
-                Dirs.DocumentDir,
-                'database.db',
-            );
+            const newPath = AndroidScoped.appendPath(Dirs.DocumentDir, 'database.db');
             await this.initalizeDbAndUpdateSavedFilePath(newPath);
         } else {
             await this.initalizeAndGoHome(dbFilePath);
@@ -62,8 +59,7 @@ export class Root {
     }
 
     private initalizeStore() {
-        if (!this.database)
-            throw new Error('Cannot initalize store without database');
+        if (!this.database) throw new Error('Cannot initalize store without database');
 
         this.recipes = new Recipes(this.database);
         this.tags = new Tags(this.database);

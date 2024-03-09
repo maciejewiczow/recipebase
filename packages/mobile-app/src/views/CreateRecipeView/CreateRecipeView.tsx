@@ -1,13 +1,6 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import {
-    Details,
-    Import,
-    Ingredients,
-    NameAndPhoto,
-    Steps,
-    Tags,
-} from '~/components/CreateRecipeSteps';
+import { Details, Import, Ingredients, NameAndPhoto, Steps, Tags } from '~/components/CreateRecipeSteps';
 import { Stepper } from '~/components/Stepper';
 import { RootNavigationProp } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';

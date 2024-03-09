@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '~/RootNavigation';
-import {
-    StepHeader,
-    StepWrapper,
-} from '~/components/CreateRecipeSteps/common.styles';
+import { StepHeader, StepWrapper } from '~/components/CreateRecipeSteps/common.styles';
 import { SaveButton } from '../AddIngredientView/AddIngredientView.styles';
 import { StepContentInput, StepContentWrapper } from './AddStepView.styles';
 import { observer } from 'mobx-react-lite';
@@ -15,9 +12,7 @@ export interface AddStepViewRouteProps {
     stepToEditId?: number;
 }
 
-export const AddStepView: React.FC<
-    NativeStackScreenProps<RootStackParams, 'AddStepView'>
-> = observer(
+export const AddStepView: React.FC<NativeStackScreenProps<RootStackParams, 'AddStepView'>> = observer(
     ({
         route: {
             params: { targetSectionId, stepToEditId },
@@ -30,14 +25,8 @@ export const AddStepView: React.FC<
         );
 
         const saveStep = () => {
-            if (stepToEditId === undefined)
-                draftRecipe.addNewStep(targetSectionId, stepContent);
-            else
-                draftRecipe.setStepContent(
-                    targetSectionId,
-                    stepToEditId,
-                    stepContent,
-                );
+            if (stepToEditId === undefined) draftRecipe.addNewStep(targetSectionId, stepContent);
+            else draftRecipe.setStepContent(targetSectionId, stepToEditId, stepContent);
 
             navigation.goBack();
         };

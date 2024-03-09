@@ -30,9 +30,7 @@ describe('Tags', () => {
             expect(tags.tags.length).toBeGreaterThan(0);
 
             for (let i = 0; i < tags.tags.length - 1; i++) {
-                expect(tags.tags[i].tag.recipeCount).toBeGreaterThanOrEqual(
-                    tags.tags[i + 1].tag.recipeCount,
-                );
+                expect(tags.tags[i].tag.recipeCount).toBeGreaterThanOrEqual(tags.tags[i + 1].tag.recipeCount);
             }
         });
 
@@ -57,15 +55,11 @@ describe('Tags', () => {
 
             tags.toggleTagSelectedById(1);
 
-            expect(
-                tags.tags.find(tag => tag.tag.id === 1)?.isSelected,
-            ).toBeTruthy();
+            expect(tags.tags.find(tag => tag.tag.id === 1)?.isSelected).toBeTruthy();
 
             tags.toggleTagSelectedById(1);
 
-            expect(
-                tags.tags.find(tag => tag.tag.id === 1)?.isSelected,
-            ).toBeFalsy();
+            expect(tags.tags.find(tag => tag.tag.id === 1)?.isSelected).toBeFalsy();
         });
     });
 });

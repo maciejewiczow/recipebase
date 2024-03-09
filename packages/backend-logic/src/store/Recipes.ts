@@ -15,18 +15,13 @@ export class Recipes {
     fetchRecipes = flow(function* (this: Recipes, searchText: string) {
         this.isFetchingRecipes = true;
 
-        const escapedText = searchText
-            .trim()
-            .replace(/%/g, '\\%')
-            .replace(/_/g, '\\_');
+        const escapedText = searchText.trim().replace(/%/g, '\\%').replace(/_/g, '\\_');
 
         const matches = escapedText.match(/(?:[^\s"]+|"[^"]*")+/g);
 
         const terms =
-            matches?.map(term => (term.startsWith('"') && term.endsWith('"')
-                    ? term.slice(1, -1)
-                    : term),
-            ) || [];
+            matches?.map(term => (term.startsWith('"') && term.endsWith('"') ? term.slice(1, -1) : term)) ||
+            [];
 
         this.recipes = yield* yieldResult(
             () => this.database.recipeRepository.find({
@@ -44,8 +39,7 @@ export class Recipes {
         this.isFetchingRecipes = false;
     });
 
-    @computed filterRecipesByTags = (selectedTags: TagWithSelectedState[]) => this.recipes.filter(rc => selectedTags?.every(selectedTag => rc.tags?.find(tag => selectedTag.tag.id === tag.id),
-            ),
+    @computed filterRecipesByTags = (selectedTags: TagWithSelectedState[]) => this.recipes.filter(rc => selectedTags?.every(selectedTag => rc.tags?.find(tag => selectedTag.tag.id === tag.id)),
         );
 
     @action removeRecipe = (id: number) => {

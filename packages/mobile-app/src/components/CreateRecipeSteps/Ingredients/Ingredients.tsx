@@ -40,40 +40,28 @@ export const Ingredients: React.FC = observer(() => {
 
     const data = sectionsToItems(draftRecipe.recipe.ingredientSections ?? []);
 
-    const hasMoreThanOneSection =
-        (draftRecipe.recipe.ingredientSections?.length ?? 0) > 1;
+    const hasMoreThanOneSection = (draftRecipe.recipe.ingredientSections?.length ?? 0) > 1;
 
-    const lastRecipeSectionId =
-        draftRecipe.recipe.ingredientSections?.at(-1)?.id;
+    const lastRecipeSectionId = draftRecipe.recipe.ingredientSections?.at(-1)?.id;
 
     return (
         <NestableScrollableStepWrapper>
             <StepHeaderWithMargin>Ingredients</StepHeaderWithMargin>
             {hasMoreThanOneSection && (
-                <IngredientSectionHeaderWithMargin
-                    section={draftRecipe.recipe.ingredientSections?.[0]}
-                />
+                <IngredientSectionHeaderWithMargin section={draftRecipe.recipe.ingredientSections?.[0]} />
             )}
             <DraggableList<ItemType>
                 data={data}
                 keyExtractor={item =>
                     item instanceof RecipeIngredient
-                        ? item.id.toString() +
-                          '-' +
-                          item.ingredientSection?.id.toString()
+                        ? item.id.toString() + '-' + item.ingredientSection?.id.toString()
                         : item.id.toString()
                 }
                 renderItem={renderItem}
-                onDragEnd={({ data: sections }) =>
-                    draftRecipe.setIngredientSectionsFromArray(sections)
-                }
+                onDragEnd={({ data: sections }) => draftRecipe.setIngredientSectionsFromArray(sections)}
             />
-            {lastRecipeSectionId && (
-                <AddIngredientButton targetSectionId={lastRecipeSectionId} />
-            )}
-            <AddSectionButton onPress={draftRecipe.addNewIngredientSection}>
-                Add section
-            </AddSectionButton>
+            {lastRecipeSectionId && <AddIngredientButton targetSectionId={lastRecipeSectionId} />}
+            <AddSectionButton onPress={draftRecipe.addNewIngredientSection}>Add section</AddSectionButton>
         </NestableScrollableStepWrapper>
     );
 });

@@ -36,8 +36,7 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
                 variant="primary"
                 disabled={isLastStep && !lastStepButtonText}
                 onPress={() => {
-                    if (!isLastStep && nextRouteName)
-                        navigation.navigate(nextRouteName);
+                    if (!isLastStep && nextRouteName) navigation.navigate(nextRouteName);
                     else onFinish?.();
                 }}
             >

@@ -40,8 +40,7 @@ export const Steps: React.FC = observer(() => {
 
     const data = sectionsToItems(draftRecipe.recipe.sections ?? []);
 
-    const hasMoreThanOneSection =
-        (draftRecipe.recipe.sections?.length ?? 0) > 1;
+    const hasMoreThanOneSection = (draftRecipe.recipe.sections?.length ?? 0) > 1;
 
     const lastSectionId = draftRecipe.recipe.sections?.at(-1)?.id;
 
@@ -49,28 +48,20 @@ export const Steps: React.FC = observer(() => {
         <NestableScrollableStepWrapper>
             <StepHeaderWithMargin>Recipe steps</StepHeaderWithMargin>
             {hasMoreThanOneSection && (
-                <RecipeSectionHeaderWithMargin
-                    section={draftRecipe.recipe.sections?.[0]}
-                />
+                <RecipeSectionHeaderWithMargin section={draftRecipe.recipe.sections?.[0]} />
             )}
             <DraggableList<ItemType>
                 data={data}
                 keyExtractor={item =>
                     item instanceof RecipeStep
-                        ? item.id.toString() +
-                          '-' +
-                          item.recipeSection?.id.toString()
+                        ? item.id.toString() + '-' + item.recipeSection?.id.toString()
                         : item.id.toString()
                 }
                 renderItem={renderItem}
-                onDragEnd={({ data: sections }) =>
-                    draftRecipe.setRecipeSectionsFromArray(sections)
-                }
+                onDragEnd={({ data: sections }) => draftRecipe.setRecipeSectionsFromArray(sections)}
             />
             {lastSectionId && <AddStepButton targetSectionId={lastSectionId} />}
-            <AddSectionButton onPress={draftRecipe.addNewSection}>
-                Add section
-            </AddSectionButton>
+            <AddSectionButton onPress={draftRecipe.addNewSection}>Add section</AddSectionButton>
         </NestableScrollableStepWrapper>
     );
 });

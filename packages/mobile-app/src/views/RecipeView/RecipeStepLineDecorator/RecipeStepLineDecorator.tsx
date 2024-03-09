@@ -9,9 +9,11 @@ export interface RecipeStepLineDecoratorProps {
     isLast?: boolean;
 }
 
-export const RecipeStepLineDecorator: React.FC<
-    RecipeStepLineDecoratorProps
-> = ({ progression, style, isLast }) => (
+export const RecipeStepLineDecorator: React.FC<RecipeStepLineDecoratorProps> = ({
+    progression,
+    style,
+    isLast,
+}) => (
     <Wrapper style={style}>
         <Circle progression={progression} />
         {!isLast && <Line progression={progression} />}

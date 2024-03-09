@@ -1,16 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-type Visitor = (
-    key: string | number,
-    value: any,
-    obj: any,
-    path: string,
-) => unknown;
+type Visitor = (key: string | number, value: any, obj: any, path: string) => unknown;
 
-const forEachObject = (
-    obj: Record<string | number, any>,
-    fn: Visitor,
-    path: string,
-) => {
+const forEachObject = (obj: Record<string | number, any>, fn: Visitor, path: string) => {
     for (const key of Object.keys(obj)) {
         const deepPath = path ? `${path}.${key}` : key;
 
