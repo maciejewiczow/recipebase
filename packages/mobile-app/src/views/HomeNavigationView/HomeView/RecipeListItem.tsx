@@ -17,7 +17,7 @@ export const RecipeListItem: React.FC<RecipeListItemProps> = observer(({ recipe,
 
     return (
         <RecipeItemWrapper style={style} onPress={() => navigation.navigate('Recipe', { recipeId: recipe.id })}>
-            <CoverImage source={{ uri: `data:image/jpeg;base64,${recipe.coverImage}` }} />
+            <CoverImage source={{ uri: recipe.coverImage }} />
             <Name>{recipe.name}</Name>
             <SmallTagList recipe={recipe} />
         </RecipeItemWrapper>

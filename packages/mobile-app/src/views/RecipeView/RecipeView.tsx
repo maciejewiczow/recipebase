@@ -162,7 +162,7 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
     return (
         <Wrapper>
             <ScrollWrapper ref={scrollContainerRef as any}>
-                <Background source={{ uri: `data:image/jpeg;base64,${currentRecipe.recipe.coverImage}` }}>
+                <Background source={{ uri: currentRecipe.recipe.coverImage }}>
                     <BackIconWrapper onPress={() => navigation.goBack()}>
                         <BackIcon />
                     </BackIconWrapper>
