@@ -13,9 +13,7 @@ import {
     Units,
 } from 'backend-logic';
 import RootNavigation from './RootNavigation';
-import { createMobxDebugger } from 'mobx-flipper';
-import { spy } from 'mobx';
-import { debugMobxActions } from 'mobx-action-flipper';
+import { Dirs, AndroidScoped } from 'react-native-file-access';
 
 GoogleSignin.configure({
     scopes: [/* 'https://www.googleapis.com/auth/drive' */],
@@ -36,13 +34,14 @@ export class Root {
     draftRecipe!: DraftRecipe;
 
     async initalize() {
-        // await AsyncStorage.removeItem(Initalize.dbPathStorageKey);
         const dbFilePath = await AsyncStorage.getItem(Root.dbPathStorageKey);
 
-        if (!dbFilePath)
-            RootNavigation.replace('SelectDatabase');
-        else
+        if (!dbFilePath) {
+            const newPath = AndroidScoped.appendPath(Dirs.DocumentDir, 'database.db');
+            await this.initalizeDbAndUpdateSavedFilePath(newPath);
+        } else {
             await this.initalizeAndGoHome(dbFilePath);
+        }
     }
 
     async initalizeDbAndUpdateSavedFilePath(dbFilePath: string) {

@@ -30,7 +30,7 @@ export const FilesystemSelectionMethodButton: React.FC<SelecMethodModalViewRoute
             console.log(fileUri, Util.basename(fileUri), AndroidScoped.appendPath(Dirs.CacheDir, Util.basename(fileUri)));
 
             console.log((await FileSystem.statDir(Dirs.CacheDir)).map(({ filename }) => filename));
-            await FileSystem.cp(fileUri, Dirs.CacheDir, () => {});
+            await FileSystem.cp(fileUri, Dirs.CacheDir);
 
             const statResult = await FileSystem.stat(Dirs.CacheDir + '/' + Util.basename(fileUri));
 
