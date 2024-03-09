@@ -55,7 +55,10 @@ export const ImageInput: React.FC<ImageInputProps> = ({
             });
 
             const statResult = await RNBlobFetch.fs.stat(res.uri);
-            const file: string = await RNBlobFetch.fs.readFile(statResult.path, 'base64');
+            const file: string = await RNBlobFetch.fs.readFile(
+                statResult.path,
+                'base64',
+            );
 
             onChange?.(`data:${res.type};base64,${file}`);
         } catch (e) {
@@ -75,7 +78,10 @@ export const ImageInput: React.FC<ImageInputProps> = ({
                 </TouchableNativeFeedback>
             ) : (
                 <>
-                    <PickedImage resizeMode="cover" source={{ uri: value }} />
+                    <PickedImage
+                        resizeMode="cover"
+                        source={{ uri: value }}
+                    />
                     <Button
                         onPress={triggerFilePicker}
                         style={{

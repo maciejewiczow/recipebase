@@ -1,17 +1,16 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { RootNavigationProp } from '~/RootNavigation';
-import { useRootStore } from '~/RootStoreContext';
 import {
-    Import,
-    NameAndPhoto,
     Details,
-    Steps,
+    Import,
     Ingredients,
+    NameAndPhoto,
+    Steps,
     Tags,
 } from '~/components/CreateRecipeSteps';
 import { Stepper } from '~/components/Stepper';
+import { RootNavigationProp } from '~/RootNavigation';
+import { useRootStore } from '~/RootStoreContext';
 
 export const CreateRecipeView: React.FC = () => {
     const { draftRecipe, tags } = useRootStore();

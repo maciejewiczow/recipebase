@@ -1,8 +1,8 @@
 import { flow, makeAutoObservable } from 'mobx';
-import Database from '../Database';
 import { ILike } from 'typeorm';
-import { yieldResult } from '../utils/yieldResult';
+import Database from '../Database';
 import Unit from '../entities/Unit';
+import { yieldResult } from '../utils/yieldResult';
 
 export class Units {
     isFetchingUnits = false;
@@ -18,12 +18,15 @@ export class Units {
         this.isFetchingUnits = true;
 
         const units = yield* yieldResult(() => this.database.unitRepository.find(
-            term ? {
-                where: {
-                    name: ILike(`%${term}%`),
-                },
-            } : {}
-        ))();
+                term
+                    ? {
+                          where: {
+                              name: ILike(`%${term}%`),
+                          },
+                      }
+                    : {},
+            ),
+        )();
 
         this.units = units;
 

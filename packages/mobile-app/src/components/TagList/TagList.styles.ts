@@ -14,7 +14,8 @@ interface MinWidthProps {
     noMinWidth?: boolean;
 }
 
-type TagBodyProps = IsSelectedProps & OrderProps & { horizontalMargin: number } & MinWidthProps;
+type TagBodyProps = IsSelectedProps &
+    OrderProps & { horizontalMargin: number } & MinWidthProps;
 
 export const TagBody = styled.TouchableOpacity<TagBodyProps>`
     padding: 10px 14px;
@@ -25,17 +26,23 @@ export const TagBody = styled.TouchableOpacity<TagBodyProps>`
     justify-content: space-between;
     border-radius: ${({ theme }) => theme.border.radiusBig};
 
-    ${({ isFirstChild, horizontalMargin }) => isFirstChild && css`
-        margin-left: ${horizontalMargin}px;
-    `}
+    ${({ isFirstChild, horizontalMargin }) =>
+        isFirstChild &&
+        css`
+            margin-left: ${horizontalMargin}px;
+        `}
 
-    ${({ isLastChild, horizontalMargin }) => isLastChild && css`
-        margin-right: ${horizontalMargin}px;
-    `}
+    ${({ isLastChild, horizontalMargin }) =>
+        isLastChild &&
+        css`
+            margin-right: ${horizontalMargin}px;
+        `}
 
-    ${({ noMinWidth }) => !noMinWidth && css`
-        min-width: 85px;
-    `}
+    ${({ noMinWidth }) =>
+        !noMinWidth &&
+        css`
+            min-width: 85px;
+        `}
 `;
 
 export const TagName = styled.Text<IsSelectedProps>`

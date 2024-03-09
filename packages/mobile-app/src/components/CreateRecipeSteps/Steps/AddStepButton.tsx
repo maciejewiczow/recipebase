@@ -8,14 +8,18 @@ interface AddIngredientButtonProps {
     targetSectionId: number;
 }
 
-export const AddStepButton: React.FC<AddIngredientButtonProps> = ({ targetSectionId }) => {
+export const AddStepButton: React.FC<AddIngredientButtonProps> = ({
+    targetSectionId,
+}) => {
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
     return (
         <AddStepButtonStyled
-            onPress={() => navigation.navigate('AddStepView', { targetSectionId })}
+            onPress={() =>
+                navigation.navigate('AddStepView', { targetSectionId })
+            }
         >
-            <AddIcon />  Add step
+            <AddIcon /> Add step
         </AddStepButtonStyled>
     );
 };

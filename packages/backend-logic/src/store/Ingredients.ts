@@ -1,7 +1,7 @@
 import { flow, makeAutoObservable } from 'mobx';
+import { ILike } from 'typeorm';
 import Database from '../Database';
 import Ingredient from '../entities/Ingredient';
-import { ILike } from 'typeorm';
 import { yieldResult } from '../utils/yieldResult';
 
 export class Ingredients {
@@ -22,12 +22,12 @@ export class Ingredients {
 
         this.isFetchingIngredients = true;
 
-
         this.ingredients = yield* yieldResult(() => this.database.ingredientRepository.find({
-            where: {
-                name: ILike(`%${term}%`),
-            },
-        }))();
+                where: {
+                    name: ILike(`%${term}%`),
+                },
+            }),
+        )();
 
         this.isFetchingIngredients = false;
     });

@@ -7,8 +7,7 @@ interface ButtonPartsStyleProps {
 }
 
 const getButtonBg = ({ variant, disabled }: ButtonPartsStyleProps) => {
-    if (disabled)
-        return '#F0F0F0';
+    if (disabled) return '#F0F0F0';
 
     switch (variant) {
         case 'primary':
@@ -53,8 +52,7 @@ const getButtonBorderColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
 };
 
 const getButtonTextColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
-    if (disabled)
-        return '#848484';
+    if (disabled) return '#848484';
 
     switch (variant) {
         case 'secondary':
@@ -70,7 +68,7 @@ const getButtonTextColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
 
 export const Base = styled.View<ButtonPartsStyleProps>`
     background-color: ${props => getButtonBg(props)};
-    border-color:  ${props => getButtonBorderColor(props)};
+    border-color: ${props => getButtonBorderColor(props)};
 
     border-width: 2px;
     border-radius: ${({ theme }) => theme.border.radiusSmall};

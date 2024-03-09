@@ -69,6 +69,8 @@ export class DraftIngredient {
         this.ingredient = ri.ingredient ?? Ingredient.createWithTemporaryId();
         this.unit = ri.unit ?? new Unit();
         this.unitSearchString = '';
-        this.quantityString = ri.quantityFrom + (ri.quantityTo !== undefined ? `-${ri.quantityTo}` : '');
+        this.quantityString =
+            ri.quantityFrom +
+            (ri.quantityTo !== undefined ? `-${ri.quantityTo}` : '');
     };
 }

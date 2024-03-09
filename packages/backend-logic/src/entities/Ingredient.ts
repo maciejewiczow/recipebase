@@ -7,10 +7,10 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import RecipeIngredient from './RecipeIngredient';
+import { RecipeIngredient } from './RecipeIngredient';
 
 @Entity('Ingredient')
-export default class Ingredient {
+export class Ingredient {
     @PrimaryGeneratedColumn()
     id!: number;
 

@@ -1,6 +1,16 @@
 import React from 'react';
-import { EditIcon, EditIconWrapper, MenuItemText, MenuItemWrapper } from './common.styles';
-import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import {
+    EditIcon,
+    EditIconWrapper,
+    MenuItemText,
+    MenuItemWrapper,
+} from './common.styles';
+import {
+    Menu,
+    MenuOption,
+    MenuOptions,
+    MenuTrigger,
+} from 'react-native-popup-menu';
 
 interface ListItemMenuProps {
     onEditPress: () => void;
@@ -31,4 +41,3 @@ export const ListItemMenu: React.FC<ListItemMenuProps> = ({
         </Menu>
     </EditIconWrapper>
 );
-

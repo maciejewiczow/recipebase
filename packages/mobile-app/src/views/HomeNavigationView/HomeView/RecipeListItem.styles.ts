@@ -24,7 +24,8 @@ export const TagList = styled.FlatList`
 ` as unknown as typeof FlatList;
 
 export const TagListItem = styled.Text<{ isSelected?: boolean }>`
-    color: ${({ isSelected, theme }) => (isSelected ? theme.palette.primaryAccent : '#00000080')};
+    color: ${({ isSelected, theme }) =>
+        isSelected ? theme.palette.primaryAccent : '#00000080'};
 `;
 
 export const ListSeparator = styled.Text`

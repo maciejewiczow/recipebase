@@ -1,8 +1,8 @@
+import { Database, Recipe } from 'backend-logic';
 import { action, computed, flow, makeAutoObservable } from 'mobx';
 import { ILike } from 'typeorm';
-import { Database, Recipe } from 'backend-logic';
-import { TagWithSelectedState } from './Tags';
 import { yieldResult } from '../utils/yieldResult';
+import { TagWithSelectedState } from './Tags';
 
 export class Recipes {
     isFetchingRecipes = false;
@@ -22,31 +22,31 @@ export class Recipes {
 
         const matches = escapedText.match(/(?:[^\s"]+|"[^"]*")+/g);
 
-        const terms = matches?.map(term => (term.startsWith('"') && term.endsWith('"') ? term.slice(1, -1) : term)) || [];
+        const terms =
+            matches?.map(term => (term.startsWith('"') && term.endsWith('"')
+                    ? term.slice(1, -1)
+                    : term),
+            ) || [];
 
-        this.recipes = yield* yieldResult(() => (
-            this.database.recipeRepository
-                .find({
-                    where: escapedText.length > 0 ? (
-                        terms?.flatMap(term => ([
-                            { name: ILike(`%${term}%`) },
-                            { description: ILike(`%${term}%`) },
-                        ]))
-                    ) : undefined,
+        this.recipes = yield* yieldResult(
+            () => this.database.recipeRepository.find({
+                    where:
+                        escapedText.length > 0
+                            ? terms?.flatMap(term => [
+                                  { name: ILike(`%${term}%`) },
+                                  { description: ILike(`%${term}%`) },
+                              ])
+                            : undefined,
                     relations: ['tags'],
-                }) || [])
+                }) || [],
         )();
 
         this.isFetchingRecipes = false;
     });
 
-    @computed filterRecipesByTags = (selectedTags: TagWithSelectedState[]) => (
-        this.recipes.filter(rc => selectedTags
-            ?.every(selectedTag => rc.tags
-                ?.find(tag => selectedTag.tag.id === tag.id)
-            )
-        )
-    );
+    @computed filterRecipesByTags = (selectedTags: TagWithSelectedState[]) => this.recipes.filter(rc => selectedTags?.every(selectedTag => rc.tags?.find(tag => selectedTag.tag.id === tag.id),
+            ),
+        );
 
     @action removeRecipe = (id: number) => {
         this.recipes = this.recipes.filter(r => r.id !== id);

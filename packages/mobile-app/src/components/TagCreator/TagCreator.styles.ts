@@ -8,7 +8,7 @@ export const TagsWrapper = styled.View`
 
 export const Label = styled.Text`
     font-size: 13px;
-    color: #8F8F8F;
+    color: #8f8f8f;
     margin-bottom: 8px;
 `;
 
@@ -21,9 +21,11 @@ export const TagView = styled(OriginalTagView).attrs({
         color: '#333',
     },
 })`
-    ${({ isSelected }) => !isSelected && css`
-        background: white;
-    `}
+    ${({ isSelected }) =>
+        !isSelected &&
+        css`
+            background: white;
+        `}
     margin-bottom: 8px;
     color: #333;
 `;

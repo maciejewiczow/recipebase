@@ -1,14 +1,18 @@
+import { cloneDeep } from 'lodash';
 import { action, flow, makeAutoObservable } from 'mobx';
 import Database from '../Database';
-import Recipe from '../entities/Recipe';
-import RecipeSection from '../entities/RecipeSection';
-import { cloneDeep } from 'lodash';
 import IngredientSection from '../entities/IngredientSection';
+import Recipe from '../entities/Recipe';
 import RecipeIngredient from '../entities/RecipeIngredient';
+import RecipeSection from '../entities/RecipeSection';
 import RecipeStep from '../entities/RecipeStep';
 import { removeTemporaryIds } from '../utils/removeTemporaryIds';
 import { yieldResult } from '../utils/yieldResult';
-import { validateRecipe, removeEmptyIngredientsAndSteps, saveRecipe } from './recipeUtils';
+import {
+    removeEmptyIngredientsAndSteps,
+    saveRecipe,
+    validateRecipe,
+} from './recipeUtils';
 
 export class DraftRecipe {
     recipe = Recipe.createEmpty();
@@ -40,14 +44,17 @@ export class DraftRecipe {
     };
 
     @action removeIngredientSection = (sectionId: number) => {
-        this.recipe.ingredientSections = this.recipe.ingredientSections?.filter(section => section.id !== sectionId);
+        this.recipe.ingredientSections = this.recipe.ingredientSections?.filter(
+            section => section.id !== sectionId,
+        );
     };
 
     @action setIngredientSectionName = (sectionId: number, name: string) => {
-        const section = this.recipe.ingredientSections?.find(is => is.id === sectionId);
+        const section = this.recipe.ingredientSections?.find(
+            is => is.id === sectionId,
+        );
 
-        if (!section)
-            return;
+        if (!section) {return;}
 
         section.name = name;
     };
@@ -61,16 +68,18 @@ export class DraftRecipe {
         section?.recipeSteps?.push(step);
     };
 
-    @action setStepContent = (sectionId: number, stepId: number, content: string) => {
+    @action setStepContent = (
+        sectionId: number,
+        stepId: number,
+        content: string,
+    ) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
 
-        if (!section)
-            return;
+        if (!section) {return;}
 
         const step = section.recipeSteps?.find(s => s.id === stepId);
 
-        if (!step)
-            return;
+        if (!step) {return;}
 
         step.content = content;
     };
@@ -78,14 +87,15 @@ export class DraftRecipe {
     @action setSectionName = (sectionId: number, name: string) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
 
-        if (!section)
-            return;
+        if (!section) {return;}
 
         section.name = name;
     };
 
     @action removeSection = (sectionId: number) => {
-        this.recipe.sections = this.recipe.sections?.filter(section => section.id !== sectionId);
+        this.recipe.sections = this.recipe.sections?.filter(
+            section => section.id !== sectionId,
+        );
     };
 
     @action addNewSection = () => {
@@ -95,50 +105,65 @@ export class DraftRecipe {
         this.recipe.sections?.push(newSection);
     };
 
-    @action addNewRecipeIngredient = (sectionId: number, ri: RecipeIngredient) => {
-        const section = this.recipe.ingredientSections?.find(s => s.id === sectionId);
+    @action addNewRecipeIngredient = (
+        sectionId: number,
+        ri: RecipeIngredient,
+    ) => {
+        const section = this.recipe.ingredientSections?.find(
+            s => s.id === sectionId,
+        );
 
-        if (!section)
-            return;
+        if (!section) {return;}
 
-        if (!section.recipeIngredients)
-            section.recipeIngredients = [];
+        if (!section.recipeIngredients) {section.recipeIngredients = [];}
 
         section.recipeIngredients?.push(ri);
     };
 
-    @action removeRecipeIngredient = (sectionId: number, recipeIngredientId: number) => {
-        const section = this.recipe.ingredientSections?.find(s => s.id === sectionId);
+    @action removeRecipeIngredient = (
+        sectionId: number,
+        recipeIngredientId: number,
+    ) => {
+        const section = this.recipe.ingredientSections?.find(
+            s => s.id === sectionId,
+        );
 
-        if (!section)
-            return;
+        if (!section) {return;}
 
-        section.recipeIngredients = section.recipeIngredients?.filter(ri => ri.id !== recipeIngredientId);
+        section.recipeIngredients = section.recipeIngredients?.filter(
+            ri => ri.id !== recipeIngredientId,
+        );
     };
 
     @action removeRecipeStep = (sectionId: number, stepId: number) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
 
-        if (!section)
-            return;
+        if (!section) {return;}
 
         section.recipeSteps = section.recipeSteps?.filter(s => s.id !== stepId);
     };
 
-    @action setIngredientSectionsFromArray = (items: (IngredientSection | RecipeIngredient)[]) => {
-        if (!items.some(item => item instanceof IngredientSection) && this.recipe.ingredientSections?.[0].recipeIngredients) {
-            this.recipe.ingredientSections[0].recipeIngredients = items
-                .filter((item): item is RecipeIngredient => item instanceof RecipeIngredient);
+    @action setIngredientSectionsFromArray = (
+        items: (IngredientSection | RecipeIngredient)[],
+    ) => {
+        if (
+            !items.some(item => item instanceof IngredientSection) &&
+            this.recipe.ingredientSections?.[0].recipeIngredients
+        ) {
+            this.recipe.ingredientSections[0].recipeIngredients = items.filter(
+                (item): item is RecipeIngredient => item instanceof RecipeIngredient,
+            );
 
             return;
         }
 
         if (this.recipe.ingredientSections?.[0])
-            this.recipe.ingredientSections[0].recipeIngredients = [];
+            {this.recipe.ingredientSections[0].recipeIngredients = [];}
 
-        const sections: IngredientSection[] = this.recipe.ingredientSections?.[0] ?
-            [this.recipe.ingredientSections?.[0]] :
-            [];
+        const sections: IngredientSection[] = this.recipe
+            .ingredientSections?.[0]
+            ? [this.recipe.ingredientSections?.[0]]
+            : [];
 
         for (const item of items) {
             if (item instanceof IngredientSection) {
@@ -154,20 +179,25 @@ export class DraftRecipe {
         this.recipe.ingredientSections = sections;
     };
 
-    @action setRecipeSectionsFromArray = (items: (RecipeStep | RecipeSection)[]) => {
-        if (!items.some(item => item instanceof RecipeSection) && this.recipe.sections?.[0].recipeSteps) {
-            this.recipe.sections[0].recipeSteps = items
-                .filter((item): item is RecipeStep => item instanceof RecipeStep);
+    @action setRecipeSectionsFromArray = (
+        items: (RecipeStep | RecipeSection)[],
+    ) => {
+        if (
+            !items.some(item => item instanceof RecipeSection) &&
+            this.recipe.sections?.[0].recipeSteps
+        ) {
+            this.recipe.sections[0].recipeSteps = items.filter(
+                (item): item is RecipeStep => item instanceof RecipeStep,
+            );
 
             return;
         }
 
-        if (this.recipe.sections?.[0])
-            this.recipe.sections[0].recipeSteps = [];
+        if (this.recipe.sections?.[0]) {this.recipe.sections[0].recipeSteps = [];}
 
-        const sections: RecipeSection[] = this.recipe.sections?.[0] ?
-            [this.recipe.sections?.[0]] :
-            [];
+        const sections: RecipeSection[] = this.recipe.sections?.[0]
+            ? [this.recipe.sections?.[0]]
+            : [];
 
         for (const item of items) {
             if (item instanceof RecipeSection) {
@@ -196,7 +226,8 @@ export class DraftRecipe {
         removeEmptyIngredientsAndSteps(recipeToSave);
         removeTemporaryIds(recipeToSave);
 
-        const savedRecipe = yield* yieldResult(() => saveRecipe(recipeToSave, this.database))();
+        const savedRecipe = yield* yieldResult(() => saveRecipe(recipeToSave, this.database),
+        )();
 
         this.recipe = Recipe.createEmpty();
 

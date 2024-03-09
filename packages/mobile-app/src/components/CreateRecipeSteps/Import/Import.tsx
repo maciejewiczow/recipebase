@@ -24,4 +24,3 @@ export const Import: React.FC = () => {
         </Wrapper>
     );
 };
-

@@ -19,7 +19,7 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
     const isLastStep = state.index === state.routeNames.length - 1;
 
     const nextRouteName = !isLastStep && state.routeNames[state.index + 1];
-    const prevRouteName = (state.index > 0) && state.routeNames[state.index - 1];
+    const prevRouteName = state.index > 0 && state.routeNames[state.index - 1];
 
     return (
         <BottomBarWrapper>
@@ -27,8 +27,7 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
                 variant="secondary"
                 disabled={!prevRouteName}
                 onPress={() => {
-                    if (prevRouteName)
-                        navigation.navigate(prevRouteName);
+                    if (prevRouteName) navigation.navigate(prevRouteName);
                 }}
             >
                 Back
@@ -39,11 +38,16 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
                 onPress={() => {
                     if (!isLastStep && nextRouteName)
                         navigation.navigate(nextRouteName);
-                    else
-                        onFinish?.();
+                    else onFinish?.();
                 }}
             >
-                {isLastStep && lastStepButtonText ? lastStepButtonText : <>Next  <IconNext /></>}
+                {isLastStep && lastStepButtonText ? (
+                    lastStepButtonText
+                ) : (
+                    <>
+                        Next <IconNext />
+                    </>
+                )}
             </Button>
         </BottomBarWrapper>
     );

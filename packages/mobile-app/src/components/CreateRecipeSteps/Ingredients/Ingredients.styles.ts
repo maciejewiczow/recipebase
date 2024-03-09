@@ -1,8 +1,13 @@
 import styled from 'styled-components/native';
-import { Input as CommonInput, draggableListStepMargin } from '../common.styles';
+import {
+    Input as CommonInput,
+    draggableListStepMargin,
+} from '../common.styles';
 import { IngredientSectionHeader } from './IngredientSectionHeader';
 
-export const IngredientSectionHeaderWithMargin = styled(IngredientSectionHeader)`
+export const IngredientSectionHeaderWithMargin = styled(
+    IngredientSectionHeader,
+)`
     ${draggableListStepMargin}
 `;
 

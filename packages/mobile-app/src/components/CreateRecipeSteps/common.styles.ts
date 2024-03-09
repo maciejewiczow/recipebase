@@ -5,7 +5,10 @@ import { createStyledIcon } from '~/utils/createStyledIcon';
 import FaIcon from 'react-native-vector-icons/FontAwesome';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import { NestableDraggableFlatList, NestableScrollContainer } from 'react-native-draggable-flatlist';
+import {
+    NestableDraggableFlatList,
+    NestableScrollContainer,
+} from 'react-native-draggable-flatlist';
 
 export const draggableListStepMargin = css`
     margin-left: 16px;
@@ -72,16 +75,20 @@ export const DraggableList = styled(NestableDraggableFlatList)`
     margin: 0;
 ` as typeof NestableDraggableFlatList;
 
-export const DeleteSectionIcon = createStyledIcon(FaIcon, {
-    name: 'trash',
-    color: 'black',
-    size: 30,
-}, css`
-    width: 70px;
-    text-align: center;
-    text-align-vertical: center;
-    margin-top: 20px;
-`);
+export const DeleteSectionIcon = createStyledIcon(
+    FaIcon,
+    {
+        name: 'trash',
+        color: 'black',
+        size: 30,
+    },
+    css`
+        width: 70px;
+        text-align: center;
+        text-align-vertical: center;
+        margin-top: 20px;
+    `,
+);
 
 export const AddIcon = createStyledIcon(EntypoIcon, {
     name: 'plus',
@@ -89,21 +96,29 @@ export const AddIcon = createStyledIcon(EntypoIcon, {
     color: '#333',
 });
 
-export const EditIcon = createStyledIcon(EntypoIcon, {
-    name: 'dots-three-vertical',
-    size: 16,
-}, css`
-    vertical-align: middle;
-    color: #555;
-`);
+export const EditIcon = createStyledIcon(
+    EntypoIcon,
+    {
+        name: 'dots-three-vertical',
+        size: 16,
+    },
+    css`
+        vertical-align: middle;
+        color: #555;
+    `,
+);
 
-export const DragHandleIcon = createStyledIcon(MaterialIcon, {
-    name: 'drag-handle',
-    size: 25,
-}, css`
-    vertical-align: middle;
-    color: #555;
-`);
+export const DragHandleIcon = createStyledIcon(
+    MaterialIcon,
+    {
+        name: 'drag-handle',
+        size: 25,
+    },
+    css`
+        vertical-align: middle;
+        color: #555;
+    `,
+);
 
 export const DragHandleWrapper = styled.TouchableOpacity``;
 

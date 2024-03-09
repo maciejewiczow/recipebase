@@ -12,14 +12,21 @@ interface RecipeListItemProps {
     style?: StyleProp<ViewStyle>;
 }
 
-export const RecipeListItem: React.FC<RecipeListItemProps> = observer(({ recipe, style }) => {
-    const navigation = useNavigation<NavigationProp<RootStackParams>>();
+export const RecipeListItem: React.FC<RecipeListItemProps> = observer(
+    ({ recipe, style }) => {
+        const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
-    return (
-        <RecipeItemWrapper style={style} onPress={() => navigation.navigate('Recipe', { recipeId: recipe.id })}>
-            <CoverImage source={{ uri: recipe.coverImage }} />
-            <Name>{recipe.name}</Name>
-            <SmallTagList recipe={recipe} />
-        </RecipeItemWrapper>
-    );
-});
+        return (
+            <RecipeItemWrapper
+                style={style}
+                onPress={() =>
+                    navigation.navigate('Recipe', { recipeId: recipe.id })
+                }
+            >
+                <CoverImage source={{ uri: recipe.coverImage }} />
+                <Name>{recipe.name}</Name>
+                <SmallTagList recipe={recipe} />
+            </RecipeItemWrapper>
+        );
+    },
+);

@@ -52,20 +52,25 @@ export default class Database {
 
         this.dataSource.logger.logQueryError = (error, query, params, _) => {
             console.error('query failed: ', query, ' -- PARAMETERS: ', params);
-            console.error('Query error: ', typeof error === 'object' ? JSON.stringify(error, null, 4) : error);
+            console.error(
+                'Query error: ',
+                typeof error === 'object'
+                    ? JSON.stringify(error, null, 4)
+                    : error,
+            );
         };
 
-        const originalLogQuery = this.dataSource.logger.logQuery.bind(this.dataSource.logger);
+        const originalLogQuery = this.dataSource.logger.logQuery.bind(
+            this.dataSource.logger,
+        );
         this.dataSource.logger.logQuery = (query, parameters, qr) => {
             originalLogQuery(
                 query,
-                parameters
-                    ?.map(param => (
-                        typeof param === 'string' && param.length > 500 ?
-                            param.slice(0, 500) + '...' :
-                            param
-                    )),
-                qr
+                parameters?.map(param => (typeof param === 'string' && param.length > 500
+                        ? param.slice(0, 500) + '...'
+                        : param),
+                ),
+                qr,
             );
         };
     }
@@ -74,16 +79,21 @@ export default class Database {
         this.connection = await this.dataSource.initialize();
 
         this.ingredientRepository = this.connection.getRepository(Ingredient);
-        this.ingredientSectionRepository = this.connection.getRepository(IngredientSection);
+        this.ingredientSectionRepository =
+            this.connection.getRepository(IngredientSection);
         this.recipeRepository = this.connection.getRepository(Recipe);
-        this.recipeIngredientRepository = this.connection.getRepository(RecipeIngredient);
-        this.recipeSectionRepository = this.connection.getRepository(RecipeSection);
+        this.recipeIngredientRepository =
+            this.connection.getRepository(RecipeIngredient);
+        this.recipeSectionRepository =
+            this.connection.getRepository(RecipeSection);
         this.recipeStepRepository = this.connection.getRepository(RecipeStep);
         this.tagRepository = this.connection.getRepository(Tag);
         this.unitRepository = this.connection.getRepository(Unit);
     }
 
-    transaction<T>(runInTransaction: (entityManager: EntityManager) => Promise<T>): Promise<T> {
+    transaction<T>(
+        runInTransaction: (entityManager: EntityManager) => Promise<T>,
+    ): Promise<T> {
         return this.dataSource.transaction(runInTransaction);
     }
 }

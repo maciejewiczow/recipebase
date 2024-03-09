@@ -5,6 +5,9 @@ import { RuleSet } from 'styled-components/native/dist/types';
 export const createStyledIcon = <T extends IconProps, Props extends object>(
     icon: React.ComponentType<IconProps>,
     presetProps: T,
-    css?: RuleSet<Props>
+    css?: RuleSet<Props>,
     // @ts-expect-error idk how to fix this error
-) => styled(icon).attrs(presetProps)`${css}` as React.FC<Omit<IconProps, keyof T>>;
+) =>
+    styled(icon).attrs(presetProps)`
+        ${css}
+    ` as React.FC<Omit<IconProps, keyof T>>;

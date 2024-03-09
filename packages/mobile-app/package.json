@@ -11,7 +11,7 @@
         "typecheck": "tsc"
     },
     "dependencies": {
-        "@gorhom/bottom-sheet": "^4.4.7",
+        "@gorhom/bottom-sheet": "^4.6.1",
         "@react-native-async-storage/async-storage": "^1.18.2",
         "@react-native-google-signin/google-signin": "^10.0.1",
         "@react-navigation/bottom-tabs": "^6.5.8",
@@ -79,7 +79,7 @@
         "babel-jest": "^29.2.1",
         "babel-plugin-root-import": "^6.6.0",
         "babel-plugin-transform-typescript-metadata": "^0.3.2",
-        "eslint": "^8.19.0",
+        "eslint": "^8.57.0",
         "jest": "^29.2.1",
         "metro-react-native-babel-preset": "^0.76.7",
         "prettier": "^2.4.1",

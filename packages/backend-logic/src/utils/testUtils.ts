@@ -37,7 +37,8 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
         dataSource,
         connection,
         ingredientRepository: connection.getRepository(Ingredient),
-        ingredientSectionRepository: connection.getRepository(IngredientSection),
+        ingredientSectionRepository:
+            connection.getRepository(IngredientSection),
         recipeRepository: connection.getRepository(Recipe),
         recipeIngredientRepository: connection.getRepository(RecipeIngredient),
         recipeSectionRepository: connection.getRepository(RecipeSection),
@@ -139,8 +140,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                     name: 'Ingredient section 2',
                     recipeIngredients: [
                         {
-
-
                             // @ts-ignore
                             ingredient: ingredients[1],
                             quantityFrom: 3,
@@ -148,7 +147,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                             unit: units[1],
                         },
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[5],
                             quantityFrom: 400,
@@ -156,7 +154,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                             unit: units[11],
                         },
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[8],
                             quantityFrom: 40,
@@ -165,7 +162,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                             unit: units[9],
                         },
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[10],
                             quantityFrom: 1,
@@ -177,7 +173,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
             ],
             sections: [
                 {
-
                     name: null,
                     recipeSteps: [
                         // @ts-ignore
@@ -211,11 +206,9 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
             ],
             ingredientSections: [
                 {
-
                     name: null,
                     recipeIngredients: [
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[0],
                             quantityFrom: 3,
@@ -223,7 +216,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                             unit: units[0],
                         },
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[6],
                             quantityFrom: 2.5,
@@ -235,7 +227,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
             ],
             sections: [
                 {
-
                     name: null,
                     recipeSteps: [
                         // @ts-ignore
@@ -279,11 +270,9 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
             ],
             ingredientSections: [
                 {
-
                     name: null,
                     recipeIngredients: [
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[0],
                             quantityFrom: 3,
@@ -291,7 +280,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                             unit: units[0],
                         },
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[6],
                             quantityFrom: 2.5,
@@ -303,7 +291,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
             ],
             sections: [
                 {
-
                     name: 'Section 1',
                     recipeSteps: [
                         // @ts-ignore
@@ -339,7 +326,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                     ],
                 },
                 {
-
                     name: 'Section 2',
                     recipeSteps: [
                         // @ts-ignore
@@ -367,11 +353,9 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
             tags: [tags[8]],
             ingredientSections: [
                 {
-
                     name: 'Ingredient section 1',
                     recipeIngredients: [
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[0],
                             quantityFrom: 3,
@@ -379,7 +363,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                             unit: units[0],
                         },
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[6],
                             quantityFrom: 2.5,
@@ -389,11 +372,9 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                     ],
                 },
                 {
-
                     name: 'Ingredient section 2',
                     recipeIngredients: [
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[0],
                             quantityFrom: 3,
@@ -401,7 +382,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                             unit: units[0],
                         },
                         {
-
                             // @ts-ignore
                             ingredient: ingredients[6],
                             quantityFrom: 2.5,
@@ -413,7 +393,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
             ],
             sections: [
                 {
-
                     name: 'Section 1',
                     recipeSteps: [
                         // @ts-ignore
@@ -449,7 +428,6 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
                     ],
                 },
                 {
-
                     name: 'Section 2',
                     recipeSteps: [
                         // @ts-ignore
@@ -476,45 +454,29 @@ export const initalizeTestDatabase = async (): Promise<Database> => {
     await dbObject.recipeRepository.save(recipes);
 
     await Promise.all(
-        recipes
-            .flatMap(recipe => (
-                recipe.ingredientSections
-                    ?.map(section => (
-                        dbObject.ingredientSectionRepository.save(section)
-                    ))
-            ))
+        recipes.flatMap(recipe => recipe.ingredientSections?.map(section => dbObject.ingredientSectionRepository.save(section),
+            ),
+        ),
     );
 
     await Promise.all(
-        recipes
-            .flatMap(recipe => (
-                recipe.ingredientSections
-                    ?.flatMap(section => (
-                        section.recipeIngredients
-                            ?.map(ri => dbObject.ingredientSectionRepository.save(ri))
-                    ))
-            ))
+        recipes.flatMap(recipe => recipe.ingredientSections?.flatMap(section => section.recipeIngredients?.map(ri => dbObject.ingredientSectionRepository.save(ri),
+                ),
+            ),
+        ),
     );
 
     await Promise.all(
-        recipes
-            .flatMap(recipe => (
-                recipe.sections
-                    ?.map(section => (
-                        dbObject.recipeSectionRepository.save(section)
-                    ))
-            ))
+        recipes.flatMap(recipe => recipe.sections?.map(section => dbObject.recipeSectionRepository.save(section),
+            ),
+        ),
     );
 
     await Promise.all(
-        recipes
-            .flatMap(recipe => (
-                recipe.sections
-                    ?.flatMap(section => (
-                        section.recipeSteps
-                            ?.map(rs => dbObject.recipeStepRepository.save(rs))
-                    ))
-            ))
+        recipes.flatMap(recipe => recipe.sections?.flatMap(section => section.recipeSteps?.map(rs => dbObject.recipeStepRepository.save(rs),
+                ),
+            ),
+        ),
     );
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

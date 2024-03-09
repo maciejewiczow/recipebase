@@ -90,7 +90,8 @@ export const BottomSheetSelect = <T,>({
     );
 
     const data = useMemo(
-        () => options.map<Option<T>>(item => ({
+        () =>
+            options.map<Option<T>>(item => ({
                 item,
                 isActive: !!currentValue && isEqual(item, currentValue),
             })),
@@ -98,7 +99,8 @@ export const BottomSheetSelect = <T,>({
     );
 
     const renderItem: ListRenderItem<Option<T>> = useCallback(
-        ({ item, index }) => renderOption({
+        ({ item, index }) =>
+            renderOption({
                 ...item,
                 index,
                 select: () => forwardChange(item),
@@ -107,7 +109,8 @@ export const BottomSheetSelect = <T,>({
     );
 
     const keyExtr = useCallback(
-        ({ item }: Option<T>, index: number) => (keyExtractor?.(item) ?? index).toString(),
+        ({ item }: Option<T>, index: number) =>
+            (keyExtractor?.(item) ?? index).toString(),
         [keyExtractor],
     );
 

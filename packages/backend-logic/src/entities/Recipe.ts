@@ -1,14 +1,14 @@
 import { makeAutoObservable } from 'mobx';
 import {
     Column,
+    DeleteDateColumn,
     Entity,
-    PrimaryGeneratedColumn,
+    Index,
+    JoinColumn,
     JoinTable,
     ManyToMany,
     OneToMany,
-    Index,
-    DeleteDateColumn,
-    JoinColumn,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 import IngredientSection from './IngredientSection';
 import RecipeSection from './RecipeSection';

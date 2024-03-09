@@ -16,7 +16,9 @@ import RootNavigation from './RootNavigation';
 import { Dirs, AndroidScoped } from 'react-native-file-access';
 
 GoogleSignin.configure({
-    scopes: [/* 'https://www.googleapis.com/auth/drive' */],
+    scopes: [
+        /* 'https://www.googleapis.com/auth/drive' */
+    ],
     webClientId: Config.GOOGLE_CLIENT_ID,
     offlineAccess: true,
 });
@@ -37,7 +39,10 @@ export class Root {
         const dbFilePath = await AsyncStorage.getItem(Root.dbPathStorageKey);
 
         if (!dbFilePath) {
-            const newPath = AndroidScoped.appendPath(Dirs.DocumentDir, 'database.db');
+            const newPath = AndroidScoped.appendPath(
+                Dirs.DocumentDir,
+                'database.db',
+            );
             await this.initalizeDbAndUpdateSavedFilePath(newPath);
         } else {
             await this.initalizeAndGoHome(dbFilePath);

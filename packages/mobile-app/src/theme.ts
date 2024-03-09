@@ -24,4 +24,3 @@ export const darkTheme = cloneDeep(common) as DefaultTheme;
 
 darkTheme.palette.background = '#000';
 darkTheme.palette.text = '#fff';
-

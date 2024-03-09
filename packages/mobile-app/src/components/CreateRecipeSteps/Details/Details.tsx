@@ -24,4 +24,3 @@ export const Details: React.FC = observer(() => {
         </StepWrapper>
     );
 });
-

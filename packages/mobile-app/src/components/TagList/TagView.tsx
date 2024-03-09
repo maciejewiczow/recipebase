@@ -39,7 +39,14 @@ export const TagView: React.FC<TagViewProps> = ({
         noMinWidth={noMinWidth}
         style={style}
     >
-        <TagName style={tagNameStyle} isSelected={isSelected}>{name}</TagName>
-        {count !== undefined && <RecipeCount isSelected={isSelected}>{count}</RecipeCount>}
+        <TagName
+            style={tagNameStyle}
+            isSelected={isSelected}
+        >
+            {name}
+        </TagName>
+        {count !== undefined && (
+            <RecipeCount isSelected={isSelected}>{count}</RecipeCount>
+        )}
     </TagBody>
 );

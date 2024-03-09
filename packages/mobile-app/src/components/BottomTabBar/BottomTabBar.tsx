@@ -3,13 +3,15 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { IconWrapper, Wrapper, Text } from './BottomTabBar.styles';
 import { ViewIconProps } from '~/views/HomeNavigationView/createViewIcon';
 
-export const BottomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => (
+export const BottomTabBar: React.FC<BottomTabBarProps> = ({
+    state,
+    descriptors,
+    navigation,
+}) => (
     <Wrapper>
         {state.routes.map((route, index) => {
             const { options } = descriptors[route.key];
-            const label = options.tabBarLabel ??
-                options.title ??
-                route.name;
+            const label = options.tabBarLabel ?? options.title ?? route.name;
 
             const Icon = options.tabBarIcon as React.FC<ViewIconProps>;
             const isFocused = state.index === index;
@@ -45,11 +47,9 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, 
                     onLongPress={onLongPress}
                 >
                     <Icon focused={isFocused} />
-                    <Text focused={isFocused}>
-                        {label as string}
-                    </Text>
+                    <Text focused={isFocused}>{label as string}</Text>
                 </IconWrapper>
             );
         })}
-    </Wrapper >
+    </Wrapper>
 );

@@ -1,5 +1,5 @@
-import styled from 'styled-components/native';
 import DashedLine from 'react-native-dashed-line';
+import styled from 'styled-components/native';
 import { RecipeStepLineDecoratorProps } from './RecipeStepLineDecorator';
 import { RecipeProgression } from './types';
 
@@ -9,9 +9,13 @@ export const Wrapper = styled.View`
 `;
 
 export const Circle = styled.View<RecipeStepLineDecoratorProps>`
-    background: ${({ progression }) => (progression === RecipeProgression.past ? '#CFCFCF' : 'white')};
+    background: ${({ progression }) =>
+        progression === RecipeProgression.past ? '#CFCFCF' : 'white'};
     border-width: 5px;
-    border-color: ${({ progression, theme }) => (progression === RecipeProgression.current ? theme.palette.primaryAccent : '#CFCFCF')};
+    border-color: ${({ progression, theme }) =>
+        progression === RecipeProgression.current
+            ? theme.palette.primaryAccent
+            : '#CFCFCF'};
     border-style: solid;
 
     border-radius: 10px;
@@ -19,12 +23,17 @@ export const Circle = styled.View<RecipeStepLineDecoratorProps>`
     height: 20px;
 `;
 
-export const Line = styled(DashedLine).attrs<RecipeStepLineDecoratorProps>(({ progression, theme }) => ({
-    axis: 'vertical',
-    dashColor: (progression === RecipeProgression.current ? theme.palette.primaryAccent : '#CFCFCF'),
-    dashThickness: 4,
-    dashGap: progression !== RecipeProgression.past ? 7 : 0,
-    dashLength: 7,
-}))<RecipeStepLineDecoratorProps>`
+export const Line = styled(DashedLine).attrs<RecipeStepLineDecoratorProps>(
+    ({ progression, theme }) => ({
+        axis: 'vertical',
+        dashColor:
+            progression === RecipeProgression.current
+                ? theme.palette.primaryAccent
+                : '#CFCFCF',
+        dashThickness: 4,
+        dashGap: progression !== RecipeProgression.past ? 7 : 0,
+        dashLength: 7,
+    }),
+)<RecipeStepLineDecoratorProps>`
     flex: 1;
 `;

@@ -10,7 +10,11 @@ export const NameAndPhoto: React.FC = observer(() => {
     return (
         <StepWrapper>
             <StepHeader>Name and photo</StepHeader>
-            <Input label="Name" value={draftRecipe.recipe.name} onChange={draftRecipe.setName} />
+            <Input
+                label="Name"
+                value={draftRecipe.recipe.name}
+                onChange={draftRecipe.setName}
+            />
             <ImageInput
                 label="Cover image"
                 value={draftRecipe.recipe.coverImage}
@@ -19,4 +23,3 @@ export const NameAndPhoto: React.FC = observer(() => {
         </StepWrapper>
     );
 });
-

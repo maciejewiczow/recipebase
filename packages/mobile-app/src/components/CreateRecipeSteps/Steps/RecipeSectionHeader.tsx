@@ -10,26 +10,26 @@ interface RecipeSectionHeaderProps {
     style?: StyleProp<ViewStyle>;
 }
 
-export const RecipeSectionHeader: React.FC<RecipeSectionHeaderProps> = observer(({ section, style }) => {
-    const { draftRecipe } = useRootStore();
+export const RecipeSectionHeader: React.FC<RecipeSectionHeaderProps> = observer(
+    ({ section, style }) => {
+        const { draftRecipe } = useRootStore();
 
-    const removeIngredientSection = (sectionId?: number) => () => {
-        if (sectionId)
-            draftRecipe.removeSection(sectionId);
-    };
+        const removeIngredientSection = (sectionId?: number) => () => {
+            if (sectionId) draftRecipe.removeSection(sectionId);
+        };
 
-    const setIngredientSectionName = (sectionId?: number) => (name: string) => {
-        if (sectionId)
-            draftRecipe.setSectionName(sectionId, name);
-    };
+        const setIngredientSectionName =
+            (sectionId?: number) => (name: string) => {
+                if (sectionId) draftRecipe.setSectionName(sectionId, name);
+            };
 
-    return (
-        <SectionHeader
-            style={style}
-            sectionName={section?.name ?? ''}
-            onSectionNameChange={setIngredientSectionName(section?.id)}
-            onSectionDeletePress={removeIngredientSection(section?.id)}
-        />
-    );
-});
-
+        return (
+            <SectionHeader
+                style={style}
+                sectionName={section?.name ?? ''}
+                onSectionNameChange={setIngredientSectionName(section?.id)}
+                onSectionDeletePress={removeIngredientSection(section?.id)}
+            />
+        );
+    },
+);

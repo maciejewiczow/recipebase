@@ -38,18 +38,23 @@ export const HomeView: React.FC = observer(() => {
             />
             <TagList />
             {recipes.isFetchingRecipes ? (
-                <ActivityIndicator size={60} color="#999" />
+                <ActivityIndicator
+                    size={60}
+                    color="#999"
+                />
+            ) : (recipes.filterRecipesByTags(tags.selectedTags).length ?? 0) >
+              0 ? (
+                recipes.filterRecipesByTags(tags.selectedTags).map(item => (
+                    <RecipeListItem
+                        key={item.id}
+                        recipe={item}
+                    />
+                ))
+            ) : searchText.trim().length === 0 &&
+              (tags.selectedTags.length ?? 0) === 0 ? (
+                <EmptyListView />
             ) : (
-
-                ((recipes.filterRecipesByTags(tags.selectedTags).length ?? 0) > 0) ? (
-                    recipes.filterRecipesByTags(tags.selectedTags).map(item => <RecipeListItem key={item.id} recipe={item} />)
-                ) : (
-                    searchText.trim().length === 0 && (tags.selectedTags.length ?? 0) === 0 ? (
-                        <EmptyListView />
-                    ) : (
-                        <NoSearchResultsListView />
-                    )
-                )
+                <NoSearchResultsListView />
             )}
         </Wrapper>
     );

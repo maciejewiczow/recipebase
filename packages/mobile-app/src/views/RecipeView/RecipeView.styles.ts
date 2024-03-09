@@ -60,9 +60,11 @@ export const SectionTitle = styled.Text<{ isFirstChild?: boolean }>`
     color: #777;
     font-size: 16px;
     margin-bottom: 8px;
-    ${({ isFirstChild }) => !isFirstChild && css`
-        margin-top: 12px;
-    `}
+    ${({ isFirstChild }) =>
+        !isFirstChild &&
+        css`
+            margin-top: 12px;
+        `}
 `;
 
 export const Content = styled.View`
@@ -161,7 +163,7 @@ export const IngredientRow = styled.View`
 `;
 
 export const IngredientText = styled.Text`
-    color: #4B4B4B;
+    color: #4b4b4b;
     font-size: 17px;
 `;
 

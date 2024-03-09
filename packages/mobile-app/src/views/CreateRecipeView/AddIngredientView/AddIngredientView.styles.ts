@@ -16,9 +16,11 @@ export const ListItemWrapper = styled.TouchableOpacity`
 export const StoredIngredientName = styled.Text<{ isCustomItem: boolean }>`
     color: #444;
     font-size: 16px;
-    ${({ isCustomItem }) => isCustomItem && css`
-        font-style: italic;
-    `}
+    ${({ isCustomItem }) =>
+        isCustomItem &&
+        css`
+            font-style: italic;
+        `}
 `;
 
 export const SaveButton = styled(Button).attrs({
@@ -45,9 +47,11 @@ export const UnitItemWrapper = styled.TouchableOpacity`
 
 export const UnitName = styled.Text<{ isCustom: boolean; isActive: boolean }>`
     font-size: 16px;
-    ${({ isCustom }) => isCustom && css`
-        font-style: italic;
-    `}
+    ${({ isCustom }) =>
+        isCustom &&
+        css`
+            font-style: italic;
+        `}
     color: ${({ isActive }) => (isActive ? '#333' : '#777')};
 `;
 

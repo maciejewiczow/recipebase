@@ -1,4 +1,4 @@
-export { };
+export {};
 
 declare global {
     export type EmptyObject = Record<string, never>;

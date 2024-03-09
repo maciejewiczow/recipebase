@@ -8,4 +8,3 @@ export const Tags: React.FC = () => (
         <TagCreator />
     </StepWrapper>
 );
-

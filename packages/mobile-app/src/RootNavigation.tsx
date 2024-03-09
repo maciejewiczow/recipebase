@@ -23,7 +23,10 @@ export interface ISubNavigator<T extends ParamListBase, K extends keyof T> {
 
 export type RootStackParams = {
     Splash: undefined;
-    HomeTabNavigator: ISubNavigator<HomeTabNavigationParams, keyof HomeTabNavigationParams>;
+    HomeTabNavigator: ISubNavigator<
+        HomeTabNavigationParams,
+        keyof HomeTabNavigationParams
+    >;
     SelectDatabase: undefined;
     SelectMethodModal: SelecMethodModalViewRouteProps;
     GDriveFilePicker: GDriveFilePickerViewProps;
@@ -37,7 +40,8 @@ export type RootNavigationProp = NavigationProp<RootStackParams>;
 
 export const Stack = createNativeStackNavigator<RootStackParams>();
 
-export const rootNavigationRef = createNavigationContainerRef<RootStackParams>();
+export const rootNavigationRef =
+    createNavigationContainerRef<RootStackParams>();
 
 export default class RootNavigation {
     static navigate: typeof rootNavigationRef.navigate = (...args) => {
@@ -46,14 +50,20 @@ export default class RootNavigation {
             rootNavigationRef.navigate(...args);
     };
 
-    static replace = <Route extends keyof RootStackParams = keyof RootStackParams>(name: Route, params?: RootStackParams[Route]) => {
+    static replace = <
+        Route extends keyof RootStackParams = keyof RootStackParams,
+    >(
+        name: Route,
+        params?: RootStackParams[Route],
+    ) => {
         if (rootNavigationRef.isReady())
-            rootNavigationRef.dispatch(StackActions.replace(name as string, params));
+            rootNavigationRef.dispatch(
+                StackActions.replace(name as string, params),
+            );
     };
 
     static goBack = () => {
-        if (rootNavigationRef.isReady())
-            rootNavigationRef.goBack();
+        if (rootNavigationRef.isReady()) rootNavigationRef.goBack();
     };
 }
 
@@ -69,13 +79,37 @@ export const RootNavigationComponent: React.FC = () => {
                     animation: 'slide_from_right',
                 }}
             >
-                <Stack.Screen name="Splash" component={views.SplashView} />
-                <Stack.Screen name="HomeTabNavigator" component={views.HomeNavigationView} />
-                <Stack.Screen name="SelectDatabase" component={views.SelectDatabaseView} options={{ animation: 'none' }} />
-                <Stack.Screen name="GDriveFilePicker" component={views.GDriveFilePickerView} />
-                <Stack.Screen name="Recipe" component={views.RecipeView} />
-                <Stack.Group screenOptions={{ presentation: 'modal', animation: 'slide_from_bottom' }}>
-                    <Stack.Screen name="SelectMethodModal" component={views.SelectionMethodModalView} />
+                <Stack.Screen
+                    name="Splash"
+                    component={views.SplashView}
+                />
+                <Stack.Screen
+                    name="HomeTabNavigator"
+                    component={views.HomeNavigationView}
+                />
+                <Stack.Screen
+                    name="SelectDatabase"
+                    component={views.SelectDatabaseView}
+                    options={{ animation: 'none' }}
+                />
+                <Stack.Screen
+                    name="GDriveFilePicker"
+                    component={views.GDriveFilePickerView}
+                />
+                <Stack.Screen
+                    name="Recipe"
+                    component={views.RecipeView}
+                />
+                <Stack.Group
+                    screenOptions={{
+                        presentation: 'modal',
+                        animation: 'slide_from_bottom',
+                    }}
+                >
+                    <Stack.Screen
+                        name="SelectMethodModal"
+                        component={views.SelectionMethodModalView}
+                    />
                     <Stack.Group
                         screenOptions={{
                             headerShown: true,

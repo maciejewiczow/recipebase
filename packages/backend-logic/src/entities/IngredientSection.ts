@@ -1,12 +1,12 @@
 import { makeAutoObservable } from 'mobx';
 import {
     Column,
+    DeleteDateColumn,
     Entity,
-    PrimaryGeneratedColumn,
+    JoinColumn,
     ManyToOne,
     OneToMany,
-    DeleteDateColumn,
-    JoinColumn,
+    PrimaryGeneratedColumn,
 } from 'typeorm';
 import Recipe from './Recipe';
 import RecipeIngredient from './RecipeIngredient';
@@ -22,7 +22,9 @@ export default class IngredientSection {
     @ManyToOne(() => Recipe, r => r.ingredientSections)
     recipe?: Recipe;
 
-    @OneToMany(() => RecipeIngredient, ri => ri.ingredientSection, { cascade: true })
+    @OneToMany(() => RecipeIngredient, ri => ri.ingredientSection, {
+        cascade: true,
+    })
     @JoinColumn()
     recipeIngredients?: RecipeIngredient[];
 

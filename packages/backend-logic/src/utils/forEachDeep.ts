@@ -1,6 +1,15 @@
-type Visitor = (key: string | number, value: any, obj: any, path: string) => any
+type Visitor = (
+    key: string | number,
+    value: any,
+    obj: any,
+    path: string,
+) => any;
 
-const forEachObject = (obj: Record<string | number, any>, fn: Visitor, path: string) => {
+const forEachObject = (
+    obj: Record<string | number, any>,
+    fn: Visitor,
+    path: string,
+) => {
     for (const key of Object.keys(obj)) {
         const deepPath = path ? `${path}.${key}` : key;
 
@@ -23,8 +32,6 @@ const forEachArray = (array: any[], fn: Visitor, path: string) => {
 };
 
 export function forEachDeep(value: any, fn: Visitor, path = '') {
-    if (Array.isArray(value))
-        forEachArray(value, fn, path);
-    else if (typeof value === 'object' && value)
-        forEachObject(value, fn, path);
+    if (Array.isArray(value)) {forEachArray(value, fn, path);}
+    else if (typeof value === 'object' && value) {forEachObject(value, fn, path);}
 }

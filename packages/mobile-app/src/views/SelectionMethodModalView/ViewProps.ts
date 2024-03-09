@@ -3,5 +3,5 @@ export interface SelecMethodModalViewRouteProps {
 }
 
 export interface FileSelectionButtonProps {
-    onFileSelected?: (filePath: string) => any;
+    onFileSelected?: (filePath: string) => void;
 }

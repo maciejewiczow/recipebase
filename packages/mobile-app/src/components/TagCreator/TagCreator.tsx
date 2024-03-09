@@ -67,16 +67,26 @@ export const TagCreator: React.FC = observer(() => {
                     />
                     <DropdownWrapper>
                         {tags.filterByName(newTagName).map(tag => (
-                            <DropdownRow key={tag.id} onPress={addExistingTagToDrafts(tag.id)}>
+                            <DropdownRow
+                                key={tag.id}
+                                onPress={addExistingTagToDrafts(tag.id)}
+                            >
                                 <TagNameText>{tag.name}</TagNameText>
-                                <TagRecipeCountText>{tag.recipeCount}</TagRecipeCountText>
+                                <TagRecipeCountText>
+                                    {tag.recipeCount}
+                                </TagRecipeCountText>
                             </DropdownRow>
                         ))}
                     </DropdownWrapper>
                 </InputWithDropdownWrapper>
             )}
-            <TagView onPress={showTagInputOrAddNewTag} name="+" isSelected noMinWidth isLastChild />
+            <TagView
+                onPress={showTagInputOrAddNewTag}
+                name="+"
+                isSelected
+                noMinWidth
+                isLastChild
+            />
         </TagsWrapper>
     );
 });
-

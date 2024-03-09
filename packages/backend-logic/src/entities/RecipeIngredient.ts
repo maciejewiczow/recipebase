@@ -6,12 +6,12 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import Ingredient from './Ingredient';
+import { Ingredient } from './Ingredient';
 import IngredientSection from './IngredientSection';
 import Unit from './Unit';
 
 @Entity('RecipeIngredient')
-export default class RecipeIngredient {
+export class RecipeIngredient {
     @PrimaryGeneratedColumn()
     id!: number;
 

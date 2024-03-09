@@ -11,11 +11,11 @@ export const SearchIcon = createStyledIcon(
     },
     css`
         margin: 0 10px;
-    `
+    `,
 );
 
 export const InputWrapper = styled.View`
-    background: #F3F3F3;
+    background: #f3f3f3;
     border-radius: ${({ theme }) => theme.border.radiusBig};
     padding: 0 10px;
     flex-flow: row nowrap;
@@ -23,7 +23,9 @@ export const InputWrapper = styled.View`
     align-items: center;
 `;
 
-export const Input = styled.TextInput.attrs({ placeholderTextColor: '#CBCACA' })`
+export const Input = styled.TextInput.attrs({
+    placeholderTextColor: '#CBCACA',
+})`
     flex: 1;
     color: #777;
     font-size: 20px;

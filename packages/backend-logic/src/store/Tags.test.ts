@@ -18,7 +18,7 @@ describe('Tags', () => {
             expect(tags.tags.length).toBeGreaterThan(0);
 
             for (const tag of tags.tags)
-                expect(tag.tag.recipeCount).toBeGreaterThan(0);
+                {expect(tag.tag.recipeCount).toBeGreaterThan(0);}
         });
 
         it('sorts the tags descending by recipe count', async () => {
@@ -29,7 +29,9 @@ describe('Tags', () => {
             expect(tags.tags.length).toBeGreaterThan(0);
 
             for (let i = 0; i < tags.tags.length - 1; i++)
-                expect(tags.tags[i].tag.recipeCount).toBeGreaterThanOrEqual(tags.tags[i + 1].tag.recipeCount);
+                {expect(tags.tags[i].tag.recipeCount).toBeGreaterThanOrEqual(
+                    tags.tags[i + 1].tag.recipeCount,
+                );}
         });
 
         it('sets initial tag state to not selected', async () => {
@@ -39,8 +41,7 @@ describe('Tags', () => {
 
             expect(tags.tags.length).toBeGreaterThan(0);
 
-            for (const tag of tags.tags)
-                expect(tag.isSelected).toBeFalsy();
+            for (const tag of tags.tags) {expect(tag.isSelected).toBeFalsy();}
         });
     });
 
@@ -52,11 +53,15 @@ describe('Tags', () => {
 
             tags.toggleTagSelectedById(1);
 
-            expect(tags.tags.find(tag => tag.tag.id === 1)?.isSelected).toBeTruthy();
+            expect(
+                tags.tags.find(tag => tag.tag.id === 1)?.isSelected,
+            ).toBeTruthy();
 
             tags.toggleTagSelectedById(1);
 
-            expect(tags.tags.find(tag => tag.tag.id === 1)?.isSelected).toBeFalsy();
+            expect(
+                tags.tags.find(tag => tag.tag.id === 1)?.isSelected,
+            ).toBeFalsy();
         });
     });
 });

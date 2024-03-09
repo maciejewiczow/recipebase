@@ -11,34 +11,44 @@ export interface SearchBarProps {
     horizontalMargin?: number;
 }
 
-export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMargin = 16 }) => {
-    const root = useRootStore();
+export const TagList: React.FC<SearchBarProps> = observer(
+    ({ style, horizontalMargin = 16 }) => {
+        const root = useRootStore();
 
-    useEffect(() => {
-        root.tags.fetchTags();
-    }, [root]);
+        useEffect(() => {
+            root.tags.fetchTags();
+        }, [root]);
 
-    return (
-        <List
-            style={style}
-            data={root.tags.partitionedTags}
-            renderItem={({ item, index }) => (
-                <Observer>
-                    {() => (
-                        <TagView
-                            count={item.tag.recipeCount}
-                            name={item.tag.name || ''}
-                            isSelected={item.isSelected}
-                            onPress={() => root.tags?.toggleTagSelectedById(item.tag.id)}
-                            isFirstChild={index === 0}
-                            isLastChild={index === (root.tags?.tags.length ?? 1) - 1}
-                            horizontalMargin={horizontalMargin}
-                        />
-                    )}
-                </Observer>
-            )}
-            keyExtractor={(item: TagWithSelectedState) => item.tag.id.toString()}
-            horizontal
-        />
-    );
-});
+        return (
+            <List
+                style={style}
+                data={root.tags.partitionedTags}
+                renderItem={({ item, index }) => (
+                    <Observer>
+                        {() => (
+                            <TagView
+                                count={item.tag.recipeCount}
+                                name={item.tag.name || ''}
+                                isSelected={item.isSelected}
+                                onPress={() =>
+                                    root.tags?.toggleTagSelectedById(
+                                        item.tag.id,
+                                    )
+                                }
+                                isFirstChild={index === 0}
+                                isLastChild={
+                                    index === (root.tags?.tags.length ?? 1) - 1
+                                }
+                                horizontalMargin={horizontalMargin}
+                            />
+                        )}
+                    </Observer>
+                )}
+                keyExtractor={(item: TagWithSelectedState) =>
+                    item.tag.id.toString()
+                }
+                horizontal
+            />
+        );
+    },
+);

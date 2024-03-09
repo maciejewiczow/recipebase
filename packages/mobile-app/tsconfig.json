@@ -3,18 +3,14 @@
     "compilerOptions": {
         "target": "esnext",
         "module": "commonjs",
-        "lib": [
-            "es2017",
-        ],
+        "lib": ["es2017"],
         "jsx": "react-native",
         "noEmit": true,
         "moduleResolution": "node",
         "esModuleInterop": true,
         "baseUrl": "./src",
         "paths": {
-            "~/*": [
-                "*"
-            ]
-        },
+            "~/*": ["*"]
+        }
     }
 }

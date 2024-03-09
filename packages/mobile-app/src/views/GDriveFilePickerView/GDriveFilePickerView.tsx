@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { GDrive, ListQueryBuilder, FilesResponse } from '@robinbobin/react-native-google-drive-api-wrapper';
+import {
+    GDrive,
+    ListQueryBuilder,
+    FilesResponse,
+} from '@robinbobin/react-native-google-drive-api-wrapper';
 import { Button } from '~/components/Button';
 import { RootStackParams } from '~/RootNavigation';
 import {
@@ -11,7 +15,9 @@ import {
     Wrapper,
 } from './GDriveFilePickerView.styles';
 
-export const GDriveFilePickerView: React.FC<NativeStackScreenProps<RootStackParams, 'GDriveFilePicker'>> = ({ navigation, route }) => {
+export const GDriveFilePickerView: React.FC<
+    NativeStackScreenProps<RootStackParams, 'GDriveFilePicker'>
+> = ({ navigation, route }) => {
     const gdrive = useMemo(() => {
         const gd = new GDrive();
         gd.accessToken = route.params.userInfo.accessToken;
@@ -23,7 +29,12 @@ export const GDriveFilePickerView: React.FC<NativeStackScreenProps<RootStackPara
     useEffect(() => {
         (async () => {
             setFiles(
-                await gdrive.files.list({ q: new ListQueryBuilder().in(route.params.currentFolderId || 'root', 'parent') }) as FilesResponse
+                (await gdrive.files.list({
+                    q: new ListQueryBuilder().in(
+                        route.params.currentFolderId || 'root',
+                        'parent',
+                    ),
+                })) as FilesResponse,
             );
         })();
     }, [gdrive.files, route.params.currentFolderId]);
@@ -33,9 +44,7 @@ export const GDriveFilePickerView: React.FC<NativeStackScreenProps<RootStackPara
             <Header>
                 <HeaderText>Pick a file</HeaderText>
             </Header>
-            <Files>
-
-            </Files>
+            <Files></Files>
             <Bottom>
                 <Button variant="primary">Select</Button>
             </Bottom>

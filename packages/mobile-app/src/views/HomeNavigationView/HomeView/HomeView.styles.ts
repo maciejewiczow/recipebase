@@ -28,7 +28,7 @@ export const Title = styled.Text`
 `;
 
 export const Subtitle = styled.Text`
-    color: #9E9E9E;
+    color: #9e9e9e;
     font-size: 20px;
     ${allMargin}
 `;
@@ -48,7 +48,7 @@ export const RecipeIcon = styled(OriginalRecipeIcon).attrs({
 `;
 
 export const EmptyListTitle = styled.Text`
-    color: #9E9E9E;
+    color: #9e9e9e;
     font-size: 30px;
     margin-bottom: 24px;
     text-align: center;
@@ -57,7 +57,7 @@ export const EmptyListTitle = styled.Text`
 `;
 
 export const EmptyListSubtitle = styled.Text`
-    color: #CCCCCC;
+    color: #cccccc;
     font-size: 22px;
     text-align: center;
     ${allMargin}
