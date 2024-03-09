@@ -21,6 +21,7 @@
     "plugins": ["@typescript-eslint", "simple-import-sort", "import"],
     "root": true,
     "rules": {
+        "jsx-a11y/no-autofocus": "off",
         "curly": ["warn", "all"],
         "eqeqeq": ["error", "smart"],
         "import/first": "warn",
