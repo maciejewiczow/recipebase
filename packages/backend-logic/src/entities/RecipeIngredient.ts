@@ -7,8 +7,8 @@ import {
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Ingredient } from './Ingredient';
-import IngredientSection from './IngredientSection';
-import Unit from './Unit';
+import { IngredientSection } from './IngredientSection';
+import { Unit } from './Unit';
 
 @Entity('RecipeIngredient')
 export class RecipeIngredient {

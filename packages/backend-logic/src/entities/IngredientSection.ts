@@ -8,11 +8,11 @@ import {
     OneToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import Recipe from './Recipe';
-import RecipeIngredient from './RecipeIngredient';
+import { Recipe } from './Recipe';
+import { RecipeIngredient } from './RecipeIngredient';
 
 @Entity('IngredientSection')
-export default class IngredientSection {
+export class IngredientSection {
     @PrimaryGeneratedColumn()
     id!: number;
 

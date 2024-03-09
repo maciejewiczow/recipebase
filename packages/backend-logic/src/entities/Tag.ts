@@ -6,10 +6,10 @@ import {
     ManyToMany,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import Recipe from './Recipe';
+import { Recipe } from './Recipe';
 
 @Entity('Tag')
-export default class Tag {
+export class Tag {
     @PrimaryGeneratedColumn()
     id!: number;
 

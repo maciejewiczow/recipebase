@@ -1,14 +1,14 @@
 import { DataSource, EntityManager, Repository } from 'typeorm';
-import Ingredient from './entities/Ingredient';
-import IngredientSection from './entities/IngredientSection';
-import Recipe from './entities/Recipe';
-import RecipeIngredient from './entities/RecipeIngredient';
-import RecipeSection from './entities/RecipeSection';
-import RecipeStep from './entities/RecipeStep';
-import Tag from './entities/Tag';
-import Unit from './entities/Unit';
+import { Ingredient } from './entities/Ingredient';
+import { IngredientSection } from './entities/IngredientSection';
+import { Recipe } from './entities/Recipe';
+import { RecipeIngredient } from './entities/RecipeIngredient';
+import { RecipeSection } from './entities/RecipeSection';
+import { RecipeStep } from './entities/RecipeStep';
+import { Tag } from './entities/Tag';
+import { Unit } from './entities/Unit';
 
-export default class Database {
+export class Database {
     private dataSource: DataSource;
     private connection!: DataSource;
 
@@ -66,10 +66,13 @@ export default class Database {
         this.dataSource.logger.logQuery = (query, parameters, qr) => {
             originalLogQuery(
                 query,
-                parameters?.map(param => (typeof param === 'string' && param.length > 500
+                // TODO: make prettier leave the parthesis in place
+                // prettier-ignore
+                parameters?.map(param => (
+                    typeof param === 'string' && param.length > 500
                         ? param.slice(0, 500) + '...'
-                        : param),
-                ),
+                        : param
+                )),
                 qr,
             );
         };

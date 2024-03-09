@@ -6,10 +6,10 @@ import {
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
-import RecipeSection from './RecipeSection';
+import { RecipeSection } from './RecipeSection';
 
 @Entity('RecipeStep')
-export default class RecipeStep {
+export class RecipeStep {
     @PrimaryGeneratedColumn()
     id!: number;
 

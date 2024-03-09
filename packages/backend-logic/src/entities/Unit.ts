@@ -1,16 +1,15 @@
 import { makeAutoObservable } from 'mobx';
 import {
-    Column,
     DeleteDateColumn,
     Entity,
     JoinColumn,
     OneToMany,
     PrimaryColumn,
 } from 'typeorm';
-import RecipeIngredient from './RecipeIngredient';
+import { RecipeIngredient } from './RecipeIngredient';
 
 @Entity('Unit')
-export default class Unit {
+export class Unit {
     @PrimaryColumn({ type: 'varchar' })
     name!: string;
 
