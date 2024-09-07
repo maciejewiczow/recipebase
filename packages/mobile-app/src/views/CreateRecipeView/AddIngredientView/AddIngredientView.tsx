@@ -15,83 +15,91 @@ export interface AddIngredientViewRouteProps {
     recipeIngredientToEditId?: number;
 }
 
-export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams, 'AddIngredientView'>> = observer(
-    ({
-        route: {
-            params: { targetSectionId, recipeIngredientToEditId },
-        },
-        navigation,
-    }) => {
-        const isInEditMode = recipeIngredientToEditId !== undefined;
+export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams, 'AddIngredientView'>> =
+    observer(
+        ({
+            route: {
+                params: { targetSectionId, recipeIngredientToEditId },
+            },
+            navigation,
+        }) => {
+            const isInEditMode = recipeIngredientToEditId !== undefined;
 
-        const { draftRecipe, draftIngredient } = useRootStore();
-        const [isInIngredientSearchMode, setIsInIngredientSearchMode] = useState(isInEditMode);
-        const inputRef = useRef<TextInput>(null);
+            const { draftRecipe, draftIngredient } = useRootStore();
+            const [isInIngredientSearchMode, setIsInIngredientSearchMode] = useState(isInEditMode);
+            const inputRef = useRef<TextInput>(null);
 
-        useFocusEffect(
-            useCallback(() => {
-                inputRef.current?.focus();
-            }, []),
-        );
+            useFocusEffect(
+                useCallback(() => {
+                    if (!isInEditMode) {
+                        inputRef.current?.focus();
+                    }
 
-        useEffect(() => {
-            setIsInIngredientSearchMode(!isInEditMode);
-        }, [isInEditMode]);
+                    return () => draftIngredient.reset();
+                }, [draftIngredient, isInEditMode]),
+            );
 
-        useEffect(() => {
-            if (isInEditMode) {
-                const ingredient = draftRecipe.recipe.ingredientSections?.[targetSectionId].recipeIngredients?.find(
-                    ri => ri.id === recipeIngredientToEditId,
-                );
+            useEffect(() => {
+                setIsInIngredientSearchMode(!isInEditMode);
+            }, [isInEditMode]);
 
-                if (ingredient) {
-                    draftIngredient.setRecipeIngredient(ingredient);
+            useEffect(() => {
+                if (isInEditMode) {
+                    const ingredient = draftRecipe.recipe.ingredientSections
+                        ?.find(section => section.id === targetSectionId)
+                        ?.recipeIngredients?.find(ri => ri.id === recipeIngredientToEditId);
+
+                    if (ingredient) {
+                        draftIngredient.setRecipeIngredient(ingredient);
+                    }
                 }
-            }
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [recipeIngredientToEditId, targetSectionId]);
+                // eslint-disable-next-line react-hooks/exhaustive-deps
+            }, [recipeIngredientToEditId, targetSectionId]);
 
-        const saveIngredient = () => {
-            draftIngredient.commitSelectedIngredient();
-            if (!isInEditMode) {
-                draftRecipe.addNewRecipeIngredient(targetSectionId, draftIngredient.recipeIngredient);
-            }
-            draftIngredient.reset();
-            navigation.goBack();
-        };
+            const saveIngredient = () => {
+                draftIngredient.commitSelectedIngredient();
+                if (!isInEditMode) {
+                    draftRecipe.addNewRecipeIngredient(targetSectionId, draftIngredient.recipeIngredient);
+                }
+                draftIngredient.reset();
+                navigation.goBack();
+            };
 
-        return (
-            <StepWrapper>
-                <StepHeader>Ingredient</StepHeader>
-                <IngredientNameInput
-                    ref={inputRef}
-                    label="Ingredient name"
-                    placeholder="Search for ingredients"
-                    onFocus={() => setIsInIngredientSearchMode(true)}
-                    value={draftIngredient.ingredient.name}
-                    onChange={draftIngredient.setName}
-                />
-                {isInIngredientSearchMode ? (
-                    <IngredientList setIsInIngredientSearchMode={setIsInIngredientSearchMode} />
-                ) : (
-                    <InputsRow>
-                        <QuantityInput
-                            label="Quantity"
-                            placeholder="1 or 1/2..."
-                            value={draftIngredient.quantityString}
-                            onChange={draftIngredient.setQuantityString}
-                            autoFocus
+            return (
+                <StepWrapper>
+                    <StepHeader>Ingredient</StepHeader>
+                    <IngredientNameInput
+                        ref={inputRef}
+                        label="Ingredient name"
+                        placeholder="Search for ingredients"
+                        onFocus={() => setIsInIngredientSearchMode(true)}
+                        value={draftIngredient.ingredient.name}
+                        onChange={draftIngredient.setName}
+                    />
+                    {isInIngredientSearchMode ? (
+                        <IngredientList
+                            isInEditMode={isInEditMode}
+                            setIsInIngredientSearchMode={setIsInIngredientSearchMode}
                         />
-                        <UnitSelect />
-                    </InputsRow>
-                )}
-                <SaveButton
-                    onPress={saveIngredient}
-                    disabled={isInIngredientSearchMode}
-                >
-                    Save
-                </SaveButton>
-            </StepWrapper>
-        );
-    },
-);
+                    ) : (
+                        <InputsRow>
+                            <QuantityInput
+                                label="Quantity"
+                                placeholder="1 or 1/2..."
+                                value={draftIngredient.quantityString}
+                                onChange={draftIngredient.setQuantityString}
+                                autoFocus
+                            />
+                            <UnitSelect />
+                        </InputsRow>
+                    )}
+                    <SaveButton
+                        onPress={saveIngredient}
+                        disabled={isInIngredientSearchMode}
+                    >
+                        Save
+                    </SaveButton>
+                </StepWrapper>
+            );
+        },
+    );

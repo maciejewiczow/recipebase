@@ -1,12 +1,17 @@
 import { Database } from '../Database';
-import { initalizeTestDatabase } from '../utils/testUtils';
+import { TestDatabaseBuilder } from '../utils/testUtils';
 import { Tags } from './Tags';
 
 describe('Tags', () => {
     let database: Database;
+    let cleanup: () => Promise<void>;
 
     beforeEach(async () => {
-        database = await initalizeTestDatabase();
+        ({ database, cleanup } = await new TestDatabaseBuilder().withContent().build());
+    });
+
+    afterEach(async () => {
+        await cleanup();
     });
 
     describe('fetchTags', () => {

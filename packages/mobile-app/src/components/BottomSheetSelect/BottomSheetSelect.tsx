@@ -55,13 +55,11 @@ export const BottomSheetSelect = <T,>({
     onSearchTextChange,
 }: BottomSheetSelectProps<T>) => {
     const searchInputRef = useRef<TextInput>(null);
+    const [currentValue, setCurrentValue] = useState<T>();
 
     const { props, bottomSheetModal } = useBottomSheetModal({
-        height: '45%',
-        onOpen: useCallback(() => searchInputRef.current?.focus(), []),
+        onClose: useCallback(() => onSearchTextChange?.(''), [onSearchTextChange]),
     });
-
-    const [currentValue, setCurrentValue] = useState<T>();
 
     useEffect(() => {
         setCurrentValue(value);
@@ -77,8 +75,7 @@ export const BottomSheetSelect = <T,>({
     );
 
     const data = useMemo(
-        () =>
-            options.map<Option<T>>(item => ({
+        () => options.map<Option<T>>(item => ({
                 item,
                 isActive: !!currentValue && isEqual(item, currentValue),
             })),
@@ -86,8 +83,7 @@ export const BottomSheetSelect = <T,>({
     );
 
     const renderItem: ListRenderItem<Option<T>> = useCallback(
-        ({ item, index }) =>
-            renderOption({
+        ({ item, index }) => renderOption({
                 ...item,
                 index,
                 select: () => forwardChange(item),
@@ -103,7 +99,14 @@ export const BottomSheetSelect = <T,>({
     return (
         <Wrapper style={style}>
             <Label>{label}</Label>
-            <TouchableWithoutFeedback onPress={bottomSheetModal.open}>
+            <TouchableWithoutFeedback
+                onPress={() => {
+                    if (currentValue) {
+                        onSearchTextChange?.(renderValue(currentValue)?.toString() ?? '');
+                    }
+                    bottomSheetModal.open();
+                }}
+            >
                 <PseudoInput>
                     {currentValue ? (
                         <Value>{renderValue(currentValue)}</Value>
@@ -118,10 +121,11 @@ export const BottomSheetSelect = <T,>({
                         ref={searchInputRef}
                         value={searchText}
                         onChange={onSearchTextChange}
-                        // eslint-disable-next-line jsx-a11y/no-autofocus
-                        autoFocus
                         autoCapitalize="none"
-                        onSubmitEditing={() => forwardChange(data[0])}
+                        autoFocus
+                        onSubmitEditing={() => {
+                            forwardChange(data[0]);
+                        }}
                     />
                     <BottomSheetFlatList<Option<T>>
                         keyboardShouldPersistTaps="handled"

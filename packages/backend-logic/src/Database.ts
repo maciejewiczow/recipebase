@@ -88,6 +88,6 @@ export class Database {
     }
 
     transaction<T>(runInTransaction: (entityManager: EntityManager) => Promise<T>): Promise<T> {
-        return this.dataSource.transaction(runInTransaction);
+        return this.connection.transaction(runInTransaction);
     }
 }

@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Database } from 'backend-logic';
 import { ILike } from 'typeorm';
-import { initalizeTestDatabase } from '../utils/testUtils';
+import { TestDatabaseBuilder } from '../utils/testUtils';
 import { Recipes } from './Recipes';
 
 describe('Recipes', () => {
     let database: Database;
+    let cleanup: () => Promise<void>;
 
     beforeEach(async () => {
-        database = await initalizeTestDatabase();
+        ({ database, cleanup } = await new TestDatabaseBuilder().withContent().build());
+    });
+
+    afterEach(async () => {
+        await cleanup();
     });
 
     describe('fetchRecipes', () => {
@@ -57,7 +62,7 @@ describe('Recipes', () => {
             }
         });
 
-        it.todo('sets the loading status to true when the recipes are loading', async () => {
+        it('sets the loading status to true when the recipes are loading', async () => {
             const recipes = new Recipes(database);
 
             expect(recipes.isFetchingRecipes).toBeFalsy();

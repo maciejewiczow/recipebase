@@ -1,9 +1,9 @@
 import React from 'react';
-import { Recipe } from 'backend-logic';
 import { StyleProp, ViewStyle } from 'react-native';
-import { ListSeparator, TagList, TagListItem } from './RecipeListItem.styles';
+import { Recipe } from 'backend-logic';
 import { Observer, observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
+import { ListSeparator, TagList, TagListItem } from './RecipeListItem.styles';
 
 interface ItemTagListProps {
     recipe: Recipe;
@@ -12,7 +12,7 @@ interface ItemTagListProps {
 }
 
 export const SmallTagList: React.FC<ItemTagListProps> = observer(({ recipe, noHighlightSelected }) => {
-    const root = useRootStore();
+    const { tags } = useRootStore();
 
     return (
         <TagList
@@ -24,7 +24,7 @@ export const SmallTagList: React.FC<ItemTagListProps> = observer(({ recipe, noHi
                             isSelected={
                                 noHighlightSelected
                                     ? false
-                                    : !!root.tags?.selectedTags.find(t => t.tag.id === item.id)
+                                    : !!tags.selectedTags.find(t => t.tag.id === item.id)
                             }
                         >
                             {item.name}
@@ -32,7 +32,7 @@ export const SmallTagList: React.FC<ItemTagListProps> = observer(({ recipe, noHi
                     )}
                 </Observer>
             )}
-            ItemSeparatorComponent={() => <ListSeparator>•</ListSeparator>}
+            ItemSeparatorComponent={() => <ListSeparator> • </ListSeparator>}
             horizontal
         />
     );

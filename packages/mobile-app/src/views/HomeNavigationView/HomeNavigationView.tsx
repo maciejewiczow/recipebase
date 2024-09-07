@@ -1,13 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Wrapper } from './HomeNavigationView.styles';
-import { HomeIcon, HomeView } from './HomeView';
-import { SearchByIngredientIcon, SearchByIngredientView } from './SearchByIngredientView';
-import { SettingsView, SettingsIcon } from './SettingsView';
-import { BottomTabBar } from '~/components/BottomTabBar';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BottomTabBar } from '~/components/BottomTabBar';
 import { RootStackParams } from '~/RootNavigation';
 import { CreateIcon } from '../CreateRecipeView';
+import { HomeIcon, HomeView } from './HomeView';
+import { SearchByIngredientIcon, SearchByIngredientView } from './SearchByIngredientView';
+import { SettingsIcon,SettingsView } from './SettingsView';
+import { Wrapper } from './HomeNavigationView.styles';
 
 export type HomeTabNavigationParams = {
     Home: undefined;

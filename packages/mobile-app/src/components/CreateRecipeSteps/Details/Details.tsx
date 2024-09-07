@@ -1,7 +1,7 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import { Input, StepHeader, StepWrapper } from '../common.styles';
-import { observer } from 'mobx-react-lite';
 
 export const Details: React.FC = observer(() => {
     const { draftRecipe } = useRootStore();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { StackActions, useNavigation } from '@react-navigation/native';
 import { Details, Import, Ingredients, NameAndPhoto, Steps, Tags } from '~/components/CreateRecipeSteps';
 import { Stepper } from '~/components/Stepper';
 import { RootNavigationProp } from '~/RootNavigation';
@@ -20,11 +20,11 @@ export const CreateRecipeView: React.FC = () => {
                 { name: 'Tags', component: Tags },
             ]}
             lastStepButtonText="Create"
+            lastStepButtonLoading={draftRecipe.isSavingRecipe}
             onFinish={async () => {
-                await tags.saveDraftTags();
-
-                const { id } = await draftRecipe.save();
-                navigation.navigate('Recipe', { recipeId: id });
+                const recipe = await draftRecipe.save();
+                await tags.saveDraftTags(recipe);
+                navigation.dispatch(StackActions.replace('Recipe', { recipeId: recipe.id }));
             }}
         />
     );

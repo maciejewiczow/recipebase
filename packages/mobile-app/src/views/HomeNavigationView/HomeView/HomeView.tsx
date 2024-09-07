@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { observer } from 'mobx-react-lite';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator } from 'react-native';
-import { EmptyListView } from './EmptyListView';
-import { Wrapper, Subtitle, Title, SearchBar, TagList, RecipeListItem } from './HomeView.styles';
-import { NoSearchResultsListView } from './NoSearchResultsListView';
+import { useFocusEffect } from '@react-navigation/native';
+import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
+import { EmptyListView } from './EmptyListView';
+import { NoSearchResultsListView } from './NoSearchResultsListView';
+import { RecipeListItem, SearchBar, Subtitle, TagList, Title, Wrapper } from './HomeView.styles';
 
 export const HomeView: React.FC = observer(() => {
     const { recipes, tags } = useRootStore();
     const [searchText, setSearchText] = useState('');
 
-    useEffect(() => {
+    const fetchRecipes = useCallback(() => {
         const promise = recipes.fetchRecipes(searchText);
 
         promise.catch(catchCancelledFlow);
 
         return () => promise.cancel();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchText]);
+    }, [recipes, searchText]);
+
+    useFocusEffect(fetchRecipes);
+    useEffect(fetchRecipes, [fetchRecipes]);
 
     return (
         <Wrapper>

@@ -11,8 +11,7 @@ export const Wrapper = styled.View`
 export const Circle = styled.View<RecipeStepLineDecoratorProps>`
     background: ${({ progression }) => (progression === RecipeProgression.past ? '#CFCFCF' : 'white')};
     border-width: 5px;
-    border-color: ${({ progression, theme }) =>
-        progression === RecipeProgression.current ? theme.palette.primaryAccent : '#CFCFCF'};
+    border-color: ${({ progression, theme }) => (progression === RecipeProgression.current ? theme.palette.primaryAccent : '#CFCFCF')};
     border-style: solid;
 
     border-radius: 10px;

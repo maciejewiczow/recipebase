@@ -7,7 +7,9 @@ interface ButtonPartsStyleProps {
 }
 
 const getButtonBg = ({ variant, disabled }: ButtonPartsStyleProps) => {
-    if (disabled) return '#F0F0F0';
+    if (disabled) {
+        return '#F0F0F0';
+    }
 
     switch (variant) {
         case 'primary':
@@ -52,7 +54,9 @@ const getButtonBorderColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
 };
 
 const getButtonTextColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
-    if (disabled) return '#848484';
+    if (disabled) {
+        return '#848484';
+    }
 
     switch (variant) {
         case 'secondary':
@@ -82,3 +86,7 @@ export const ButtonText = styled.Text<ButtonPartsStyleProps>`
     font-size: 18px;
     color: ${props => getButtonTextColor(props)};
 `;
+
+export const Loading = styled.ActivityIndicator.attrs({
+    color: 'white',
+})``;

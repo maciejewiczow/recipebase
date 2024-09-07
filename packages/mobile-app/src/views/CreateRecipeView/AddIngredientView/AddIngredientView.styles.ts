@@ -10,14 +10,13 @@ export const IngredientNameInput = styled(Input)`
 export const ListItemWrapper = styled.TouchableOpacity`
     padding: 12px 0;
     flex: 1;
-    height: 50px;
+    min-height: 50px;
 `;
 
 export const StoredIngredientName = styled.Text<{ isCustomItem: boolean }>`
     color: #444;
     font-size: 16px;
-    ${({ isCustomItem }) =>
-        isCustomItem &&
+    ${({ isCustomItem }) => isCustomItem &&
         css`
             font-style: italic;
         `}
@@ -47,8 +46,7 @@ export const UnitItemWrapper = styled.TouchableOpacity`
 
 export const UnitName = styled.Text<{ isCustom: boolean; isActive: boolean }>`
     font-size: 16px;
-    ${({ isCustom }) =>
-        isCustom &&
+    ${({ isCustom }) => isCustom &&
         css`
             font-style: italic;
         `}

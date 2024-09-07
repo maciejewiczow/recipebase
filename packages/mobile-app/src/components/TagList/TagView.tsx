@@ -6,7 +6,7 @@ export interface TagViewProps {
     name: string;
     count?: number;
     isSelected?: boolean;
-    onPress?: () => any;
+    onPress?: () => void;
     isFirstChild?: boolean;
     isLastChild?: boolean;
     notPressable?: boolean;

@@ -1,18 +1,20 @@
 import React from 'react';
-import { BottomBarWrapper, Button, IconNext } from './Stepper.styles';
 import { NavigationProp } from '@react-navigation/native';
 import { StepperNavParams } from './Tab';
+import { BottomBarWrapper, Button, IconNext } from './Stepper.styles';
 
 interface StepperBottomBarProps {
     navigation: NavigationProp<StepperNavParams>;
     onFinish: (() => void) | undefined;
     lastStepButtonText: string | undefined;
+    lastStepButtonLoading: boolean | undefined;
 }
 
 export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
     navigation,
     onFinish,
     lastStepButtonText,
+    lastStepButtonLoading,
 }) => {
     const state = navigation.getState();
 
@@ -27,7 +29,9 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
                 variant="secondary"
                 disabled={!prevRouteName}
                 onPress={() => {
-                    if (prevRouteName) navigation.navigate(prevRouteName);
+                    if (prevRouteName) {
+                        navigation.navigate(prevRouteName);
+                    }
                 }}
             >
                 Back
@@ -35,9 +39,13 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
             <Button
                 variant="primary"
                 disabled={isLastStep && !lastStepButtonText}
+                loading={isLastStep && lastStepButtonLoading}
                 onPress={() => {
-                    if (!isLastStep && nextRouteName) navigation.navigate(nextRouteName);
-                    else onFinish?.();
+                    if (!isLastStep && nextRouteName) {
+                        navigation.navigate(nextRouteName);
+                    } else {
+                        onFinish?.();
+                    }
                 }}
             >
                 {isLastStep && lastStepButtonText ? (

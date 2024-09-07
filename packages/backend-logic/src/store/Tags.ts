@@ -16,7 +16,7 @@ export interface TagWithSelectedState {
 
 export class Tags {
     tags: TagWithSelectedState[] = [];
-    draftTags: TagWithCount[] = [];
+    draftTags: Tag[] = [];
 
     constructor(private database: Database) {
         makeAutoObservable(this);
@@ -49,10 +49,9 @@ export class Tags {
             return false;
         }
 
-        const newTag: TagWithCount = {
+        const newTag: Tag = {
             name,
             id: Math.random(),
-            recipeCount: 1,
             deletedAt: null,
         };
 
@@ -77,7 +76,7 @@ export class Tags {
             return;
         }
 
-        this.draftTags = recipe.tags?.map(tag => ({ ...tag, recipeCount: 1 })) ?? [];
+        this.draftTags = recipe.tags ?? [];
     }
 
     @computed
@@ -107,8 +106,12 @@ export class Tags {
         return [...this.selectedTags, ...this.notSelectedTags];
     }
 
-    saveDraftTags = flow(function* (this: Tags) {
-        const tagsToSave = cloneDeep(this.draftTags.map(({ recipeCount, ...tag }) => tag));
+    saveDraftTags = flow(function* (this: Tags, recipe: Recipe) {
+        const tagsToSave = cloneDeep(this.draftTags);
+
+        for (const tag of tagsToSave) {
+            tag.recipes = [...(tag.recipes ?? []), recipe];
+        }
 
         removeTemporaryIds(tagsToSave);
 

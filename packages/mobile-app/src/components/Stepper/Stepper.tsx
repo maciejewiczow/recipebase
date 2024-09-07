@@ -1,8 +1,8 @@
 import React, { ComponentProps, useState } from 'react';
-import { StepperNavigation, Tab } from './Tab';
-import { TabBar } from './TabBar';
 import { extractNavigation } from './extractNavigation';
 import { StepperBottomBar } from './StepperBottomBar';
+import { StepperNavigation, Tab } from './Tab';
+import { TabBar } from './TabBar';
 
 interface Step {
     name: string;
@@ -13,10 +13,16 @@ export interface StepperProps {
     steps: Step[];
     onFinish?: () => void;
     lastStepButtonText?: string;
+    lastStepButtonLoading?: boolean;
     hideBackButtonOnFirstStep?: boolean;
 }
 
-export const Stepper: React.FC<StepperProps> = ({ steps, onFinish, lastStepButtonText }) => {
+export const Stepper: React.FC<StepperProps> = ({
+    steps,
+    onFinish,
+    lastStepButtonText,
+    lastStepButtonLoading,
+}) => {
     const [navigation, setNavigation] = useState<StepperNavigation>();
 
     return (
@@ -39,6 +45,7 @@ export const Stepper: React.FC<StepperProps> = ({ steps, onFinish, lastStepButto
                     onFinish={onFinish}
                     navigation={navigation}
                     lastStepButtonText={lastStepButtonText}
+                    lastStepButtonLoading={lastStepButtonLoading}
                 />
             )}
         </>

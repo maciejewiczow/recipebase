@@ -1,7 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import sqlite from 'react-native-sqlite-storage';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { Config } from 'react-native-config';
+import { AndroidScoped, Dirs } from 'react-native-file-access';
+import sqlite from 'react-native-sqlite-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import {
     CurrentRecipe,
     Database,
@@ -13,7 +14,6 @@ import {
     Units,
 } from 'backend-logic';
 import RootNavigation from './RootNavigation';
-import { Dirs, AndroidScoped } from 'react-native-file-access';
 
 GoogleSignin.configure({
     scopes: [
@@ -59,7 +59,9 @@ export class Root {
     }
 
     private initalizeStore() {
-        if (!this.database) throw new Error('Cannot initalize store without database');
+        if (!this.database) {
+            throw new Error('Cannot initalize store without database');
+        }
 
         this.recipes = new Recipes(this.database);
         this.tags = new Tags(this.database);

@@ -7,7 +7,7 @@ import { parseQuantityString } from './recipeUtils';
 
 export class DraftIngredient {
     unitSearchString = '';
-    unit = new Unit();
+    unit = Unit.createWithTemporaryId();
     ingredient = Ingredient.createWithTemporaryId();
     recipeIngredient = RecipeIngredient.createWithTemporaryId();
     quantityString = '';
@@ -21,6 +21,7 @@ export class DraftIngredient {
     };
 
     @action createCustomUnit = () => {
+        this.unit = Unit.createWithTemporaryId();
         this.unit.name = this.unitSearchString.trim();
     };
 
@@ -56,7 +57,7 @@ export class DraftIngredient {
 
     @action reset = () => {
         this.unitSearchString = '';
-        this.unit = new Unit();
+        this.unit = Unit.createWithTemporaryId();
         this.ingredient = Ingredient.createWithTemporaryId();
         this.recipeIngredient = RecipeIngredient.createWithTemporaryId();
         this.quantityString = '';
@@ -65,7 +66,7 @@ export class DraftIngredient {
     @action setRecipeIngredient = (ri: RecipeIngredient) => {
         this.recipeIngredient = ri;
         this.ingredient = ri.ingredient ?? Ingredient.createWithTemporaryId();
-        this.unit = ri.unit ?? new Unit();
+        this.unit = ri.unit ?? Unit.createWithTemporaryId();
         this.unitSearchString = '';
         this.quantityString = ri.quantityFrom + (ri.quantityTo !== undefined ? `-${ri.quantityTo}` : '');
     };

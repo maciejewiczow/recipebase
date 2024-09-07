@@ -1,14 +1,17 @@
-import { parseQuantityString } from './recipeUtils';
-
-interface TestCaseData {
-    quantityString: string;
-    expected: {
-        quantityFrom: number;
-        quantityTo: number | undefined;
-    };
-}
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { mockData, TestDatabaseBuilder } from '../utils/testUtils';
+import { CurrentRecipe } from './CurrentRecipe';
+import { parseQuantityString, saveRecipe } from './recipeUtils';
 
 describe('parseQuantityStringsToIngredientQuantities', () => {
+    interface TestCaseData {
+        quantityString: string;
+        expected: {
+            quantityFrom: number;
+            quantityTo: number | undefined;
+        };
+    }
+
     it.each<TestCaseData>([
         {
             quantityString: '12',
@@ -77,7 +80,7 @@ describe('parseQuantityStringsToIngredientQuantities', () => {
             quantityString: '12.5 - 69/420',
             expected: {
                 quantityFrom: 12.5,
-                quantityTo: 420.69,
+                quantityTo: 69 / 420,
             },
         },
     ])("parses '$quantityString' correctly", ({ quantityString, expected }) => {
@@ -91,4 +94,34 @@ describe('parseQuantityStringsToIngredientQuantities', () => {
             expect(result.quantityTo).toBeUndefined();
         }
     });
+});
+
+describe('saveRecipe', () => {
+    it('saves the recipe to an empty database', async () => {
+        const { database, cleanup } = await new TestDatabaseBuilder().build();
+
+        await saveRecipe(mockData.recipes[0], database);
+
+        expect(await database.recipeRepository.find()).toHaveLength(1);
+
+        const currentRecipeStore = new CurrentRecipe(database);
+
+        await currentRecipeStore.fetchRecipeById(1);
+
+        expect(currentRecipeStore.recipe).toBeTruthy();
+        expect(currentRecipeStore.recipe?.tags?.length).toBeGreaterThan(0);
+        expect(currentRecipeStore.recipe?.ingredientSections?.length).toBeGreaterThan(0);
+        expect(currentRecipeStore.recipe?.sections?.length).toBeGreaterThan(0);
+
+        await cleanup();
+    });
+
+    it('saves the recipe to a database that already has some other recipes', async () => {
+        const { database } = await new TestDatabaseBuilder().withContent().build();
+
+        expect(await database.unitRepository.find()).toHaveLength(0);
+    });
+    it.todo('saves the recipe that uses some ingredients and units already present in the db');
+    it.todo('saves the recipe that uses a soft deleted unit to the db');
+    it.todo('saves the recipe that uses a soft deleted ingredient');
 });

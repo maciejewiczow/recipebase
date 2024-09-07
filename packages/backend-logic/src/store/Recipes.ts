@@ -1,5 +1,5 @@
 import { Database, Recipe } from 'backend-logic';
-import { action, computed, flow, makeAutoObservable } from 'mobx';
+import { computed, flow, makeAutoObservable } from 'mobx';
 import { ILike } from 'typeorm';
 import { yieldResult } from '../utils/yieldResult';
 import { TagWithSelectedState } from './Tags';
@@ -24,7 +24,8 @@ export class Recipes {
             [];
 
         this.recipes = yield* yieldResult(
-            () => this.database.recipeRepository.find({
+            () =>
+                this.database.recipeRepository.find({
                     where:
                         escapedText.length > 0
                             ? terms?.flatMap(term => [
@@ -39,10 +40,8 @@ export class Recipes {
         this.isFetchingRecipes = false;
     });
 
-    @computed filterRecipesByTags = (selectedTags: TagWithSelectedState[]) => this.recipes.filter(rc => selectedTags?.every(selectedTag => rc.tags?.find(tag => selectedTag.tag.id === tag.id)),
+    @computed filterRecipesByTags = (selectedTags: TagWithSelectedState[]) =>
+        this.recipes.filter(rc =>
+            selectedTags?.every(selectedTag => rc.tags?.find(tag => selectedTag.tag.id === tag.id)),
         );
-
-    @action removeRecipe = (id: number) => {
-        this.recipes = this.recipes.filter(r => r.id !== id);
-    };
 }

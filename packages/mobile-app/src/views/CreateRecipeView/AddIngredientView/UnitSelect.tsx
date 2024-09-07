@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
-import { BottomSheetSelectProps } from '~/components/BottomSheetSelect/BottomSheetSelect';
-import { UnitItemWrapper, UnitName, UnitSelectInput as UnitSelectInput } from './AddIngredientView.styles';
-import { useRootStore } from '~/RootStoreContext';
+import { Unit } from 'backend-logic';
+import { uniq } from 'lodash';
 import { observer } from 'mobx-react-lite';
 import invariant from 'tiny-invariant';
+import { BottomSheetSelectProps } from '~/components/BottomSheetSelect/BottomSheetSelect';
+import { useRootStore } from '~/RootStoreContext';
 import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
+import { isTruthy } from '~/utils/isTruthy';
+import { UnitItemWrapper, UnitName, UnitSelectInput as UnitSelectInput } from './AddIngredientView.styles';
 
 interface UnitListItemType {
     unitName: string;
@@ -12,7 +15,7 @@ interface UnitListItemType {
 }
 
 export const UnitSelect: React.FC = observer(() => {
-    const { draftIngredient, units } = useRootStore();
+    const { draftIngredient, units, draftRecipe } = useRootStore();
 
     useEffect(() => {
         const promise = units.fetchUnits(draftIngredient.unitSearchString ?? '');
@@ -43,10 +46,24 @@ export const UnitSelect: React.FC = observer(() => {
 
     const isEqual = useCallback((a: UnitListItemType, b: UnitListItemType) => a.unitName === b.unitName, []);
 
+    const unitsWithDrafts = useMemo<Unit[]>(
+        () => [
+            ...(uniq(
+                draftRecipe.recipe.ingredientSections
+                    ?.flatMap(is => is.recipeIngredients)
+                    .filter(isTruthy)
+                    .map(({ unit }) => unit)
+                    .filter(isTruthy),
+            ) ?? []),
+            ...units.units,
+        ],
+        [draftRecipe.recipe.ingredientSections, units.units],
+    );
+
     const data = useMemo<UnitListItemType[]>(
         () => [
             ...(draftIngredient.unitSearchString &&
-            !units.units.some(u => u.name === draftIngredient.unitSearchString)
+            !unitsWithDrafts.some(x => x.name === draftIngredient.unitSearchString)
                 ? [
                       {
                           unitName: draftIngredient.unitSearchString,
@@ -54,12 +71,9 @@ export const UnitSelect: React.FC = observer(() => {
                       },
                   ]
                 : []),
-            ...units.units.map(unit => ({
-                unitName: unit.name,
-                isCustom: false,
-            })),
+            ...unitsWithDrafts.map(unit => ({ unitName: unit.name, isCustom: false })),
         ],
-        [draftIngredient.unitSearchString, units.units],
+        [draftIngredient.unitSearchString, unitsWithDrafts],
     );
 
     const value = useMemo<UnitListItemType>(
@@ -75,7 +89,7 @@ export const UnitSelect: React.FC = observer(() => {
             if (item.isCustom) {
                 draftIngredient.setUnitName(item.unitName);
             } else {
-                const unit = units.units.find(u => u.name === item.unitName);
+                const unit = unitsWithDrafts.find(u => u.name === item.unitName);
 
                 invariant(!!unit, `Unit ${item.unitName} does not exist`);
 
@@ -84,7 +98,7 @@ export const UnitSelect: React.FC = observer(() => {
 
             draftIngredient.commitSelectedUnit();
         },
-        [draftIngredient, units.units],
+        [draftIngredient, unitsWithDrafts],
     );
 
     return (

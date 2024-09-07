@@ -1,35 +1,35 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { observer } from 'mobx-react-lite';
 import React, { useEffect, useRef, useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, View } from 'react-native';
-import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
-import { useRootStore } from '~/RootStoreContext';
+import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { observer } from 'mobx-react-lite';
 import { RootStackParams } from '~/RootNavigation';
+import { useRootStore } from '~/RootStoreContext';
+import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
 import { SmallTagList } from '~/views/HomeNavigationView/HomeView/SmallTagList';
 import { IngredientList } from './IngredientList';
 import { getKey, StepsList } from './StepsList';
 import {
-    ScrollWrapper,
     Background,
-    Content,
-    RecipeName,
-    BottomBar,
-    LeftButton,
-    RightButton,
-    SubHeaderText,
-    IngredientsHeader,
-    IngredientMultiplierPicker,
-    StepsHeaderText,
-    Wrapper,
-    Description,
     BackIcon,
     BackIconWrapper,
-    MenuWrapper,
+    BottomBar,
+    Content,
+    Description,
+    IngredientMultiplierPicker,
+    IngredientsHeader,
+    LeftButton,
     MenuIcon,
-    Text,
     MenuItemWrapper,
+    MenuWrapper,
+    RecipeName,
+    RightButton,
+    ScrollWrapper,
+    StepsHeaderText,
+    SubHeaderText,
+    Text,
+    Wrapper,
 } from './RecipeView.styles';
-import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
 
 interface MultiplierDropdownItem {
     label: string;
@@ -51,7 +51,7 @@ const additionalScrollOffset = 100;
 
 export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recipe'>> = observer(
     ({ route, navigation }) => {
-        const { currentRecipe, recipes, tags } = useRootStore();
+        const { currentRecipe } = useRootStore();
         const [currentSection, setCurrentSection] = useState<number>(0);
         const [currentStep, setCurrentStep] = useState<number | null>(null);
         const [ingredientMultiplier, setIngredientMultiplier] = useState(1);
@@ -77,7 +77,9 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
                 if (next === currentRecipe.recipe?.sections?.[currentSection]?.recipeSteps?.length) {
                     next = 0;
                     setCurrentSection(section => {
-                        if (section + 1 === currentRecipe.recipe?.sections?.length) return section;
+                        if (section + 1 === currentRecipe.recipe?.sections?.length) {
+                            return section;
+                        }
 
                         return section + 1;
                     });
@@ -119,7 +121,9 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
         const isLastStep = () => {
             const sectionCount = currentRecipe.recipe?.sections?.length ?? 0;
 
-            if (currentSection + 1 < sectionCount) return false;
+            if (currentSection + 1 < sectionCount) {
+                return false;
+            }
 
             const lastSection = currentRecipe.recipe?.sections?.[sectionCount - 1];
 
@@ -140,10 +144,8 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
                 [
                     {
                         text: 'Ok',
-                        onPress: () => {
-                            const removedRecipeId = currentRecipe.delete();
-
-                            if (removedRecipeId) recipes.removeRecipe(removedRecipeId);
+                        onPress: async () => {
+                            await currentRecipe.delete();
 
                             navigation.navigate('HomeTabNavigator', {
                                 screen: 'Home',
@@ -171,7 +173,7 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
 
         return (
             <Wrapper>
-                <ScrollWrapper ref={scrollContainerRef as any}>
+                <ScrollWrapper ref={scrollContainerRef}>
                     <Background source={{ uri: currentRecipe.recipe.coverImage }}>
                         <BackIconWrapper onPress={() => navigation.goBack()}>
                             <BackIcon />

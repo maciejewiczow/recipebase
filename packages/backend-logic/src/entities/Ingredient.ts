@@ -7,7 +7,7 @@ export class Ingredient {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({ type: 'varchar', length: 1000 })
+    @Column({ type: 'varchar', length: 1000, unique: true })
     name!: string;
 
     @OneToMany(() => RecipeIngredient, ri => ri.ingredient, { cascade: true })

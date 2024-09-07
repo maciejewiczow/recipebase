@@ -1,3 +1,5 @@
+import Config from 'react-native-config';
+import { useFlipper } from '@react-navigation/devtools';
 import {
     createNavigationContainerRef,
     NavigationContainer,
@@ -6,15 +8,13 @@ import {
     StackActions,
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as views from '~/views';
+import { AddStepViewRouteProps } from './views/CreateRecipeView';
+import { AddIngredientViewRouteProps } from './views/CreateRecipeView/AddIngredientView/AddIngredientView';
 import { GDriveFilePickerViewProps } from './views/GDriveFilePickerView/ViewProps';
 import { HomeTabNavigationParams } from './views/HomeNavigationView/HomeNavigationView';
 import { RecipeViewProps } from './views/RecipeView/ViewProps';
 import { SelecMethodModalViewRouteProps } from './views/SelectionMethodModalView/ViewProps';
-import * as views from '~/views';
-import { useFlipper } from '@react-navigation/devtools';
-import Config from 'react-native-config';
-import { AddIngredientViewRouteProps } from './views/CreateRecipeView/AddIngredientView/AddIngredientView';
-import { AddStepViewRouteProps } from './views/CreateRecipeView';
 
 export interface ISubNavigator<T extends ParamListBase, K extends keyof T> {
     screen: K;
@@ -41,21 +41,25 @@ export const rootNavigationRef = createNavigationContainerRef<RootStackParams>()
 
 export default class RootNavigation {
     static navigate: typeof rootNavigationRef.navigate = (...args) => {
-        if (rootNavigationRef.isReady())
+        if (rootNavigationRef.isReady()) {
             // @ts-expect-error typescript is paranoid
             rootNavigationRef.navigate(...args);
+        }
     };
 
     static replace = <Route extends keyof RootStackParams = keyof RootStackParams>(
         name: Route,
         params?: RootStackParams[Route],
     ) => {
-        if (rootNavigationRef.isReady())
+        if (rootNavigationRef.isReady()) {
             rootNavigationRef.dispatch(StackActions.replace(name as string, params));
+        }
     };
 
     static goBack = () => {
-        if (rootNavigationRef.isReady()) rootNavigationRef.goBack();
+        if (rootNavigationRef.isReady()) {
+            rootNavigationRef.goBack();
+        }
     };
 }
 

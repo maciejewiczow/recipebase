@@ -25,20 +25,17 @@ export const TagBody = styled.TouchableOpacity<TagBodyProps>`
     justify-content: space-between;
     border-radius: ${({ theme }) => theme.border.radiusBig};
 
-    ${({ isFirstChild, horizontalMargin }) =>
-        isFirstChild &&
+    ${({ isFirstChild, horizontalMargin }) => isFirstChild &&
         css`
             margin-left: ${horizontalMargin}px;
         `}
 
-    ${({ isLastChild, horizontalMargin }) =>
-        isLastChild &&
+    ${({ isLastChild, horizontalMargin }) => isLastChild &&
         css`
             margin-right: ${horizontalMargin}px;
         `}
 
-    ${({ noMinWidth }) =>
-        !noMinWidth &&
+    ${({ noMinWidth }) => !noMinWidth &&
         css`
             min-width: 85px;
         `}

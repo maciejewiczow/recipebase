@@ -1,11 +1,11 @@
+import { NestableDraggableFlatList, NestableScrollContainer } from 'react-native-draggable-flatlist';
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import FaIcon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { css, styled } from 'styled-components/native';
 import { Input as OriginalInput } from '~/components/Input';
-import { Button } from '../Button';
 import { createStyledIcon } from '~/utils/createStyledIcon';
-import FaIcon from 'react-native-vector-icons/FontAwesome';
-import EntypoIcon from 'react-native-vector-icons/Entypo';
-import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import { NestableDraggableFlatList, NestableScrollContainer } from 'react-native-draggable-flatlist';
+import { Button } from '../Button';
 
 export const draggableListStepMargin = css`
     margin-left: 16px;
@@ -36,6 +36,7 @@ export const Input = styled(OriginalInput).attrs({
     },
 })`
     margin-bottom: 12px;
+    max-height: 60%;
 `;
 
 export const StepHeader = styled.Text`

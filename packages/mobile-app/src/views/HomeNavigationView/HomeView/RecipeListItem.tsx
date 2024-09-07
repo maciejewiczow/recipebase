@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { observer } from 'mobx-react-lite';
-import { Recipe } from 'backend-logic';
-import { CoverImage, Name, RecipeItemWrapper } from './RecipeListItem.styles';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Recipe } from 'backend-logic';
+import { observer } from 'mobx-react-lite';
 import { RootStackParams } from '~/RootNavigation';
 import { SmallTagList } from './SmallTagList';
+import { CoverImage, Name, RecipeItemWrapper } from './RecipeListItem.styles';
 
 interface RecipeListItemProps {
     recipe: Recipe;

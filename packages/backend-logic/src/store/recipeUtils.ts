@@ -1,10 +1,10 @@
 import { numericQuantity } from 'numeric-quantity';
 import invariant from 'tiny-invariant';
+import { IsNull, Not } from 'typeorm';
 import { Database } from '../Database';
 import { Ingredient } from '../entities/Ingredient';
 import { IngredientSection } from '../entities/IngredientSection';
 import { Recipe } from '../entities/Recipe';
-import { RecipeIngredient } from '../entities/RecipeIngredient';
 import { RecipeSection } from '../entities/RecipeSection';
 import { RecipeStep } from '../entities/RecipeStep';
 import { Unit } from '../entities/Unit';
@@ -15,7 +15,7 @@ export const parseQuantityString = (quantityString: string) => {
     if (qtyParsingRegex.test(quantityString)) {
         const qtyMatches = quantityString.match(qtyParsingRegex);
 
-        invariant(!!qtyMatches, `qtyMatches were null, quanittyString: ${quantityString}`);
+        invariant(!!qtyMatches, `qtyMatches were null, quanityString: ${quantityString}`);
 
         const [_, quantityFrom, quantityTo] = qtyMatches;
 
@@ -60,54 +60,53 @@ export const validateRecipe = (recipe: Recipe) => {
     }
 };
 
-// prettier-ignore
-export const saveRecipe = (recipe: Recipe, database: Database) => (
+export const saveRecipe = (recipe: Recipe, database: Database) =>
+    // eslint-disable-next-line implicit-arrow-linebreak
     database.transaction(async manager => {
-        const promises: Promise<unknown>[] = [];
-
         for (const ingredientSection of recipe.ingredientSections ?? []) {
-            for (const recipeIngredient of ingredientSection.recipeIngredients ??
-                []) {
-                if (recipeIngredient.ingredient) {
-                    promises.push(
-                        manager
-                            .getRepository(Ingredient)
-                            .save(recipeIngredient.ingredient),
-                    );
-                }
-
+            for (const recipeIngredient of ingredientSection.recipeIngredients ?? []) {
                 if (recipeIngredient.unit) {
-                    promises.push(
-                        manager.getRepository(Unit).save(recipeIngredient.unit),
-                    );
+                    const deletedUnit = await manager.getRepository(Unit).findOne({
+                        withDeleted: true,
+                        where: {
+                            deletedAt: Not(IsNull()),
+                            name: recipeIngredient.unit.name,
+                        },
+                    });
+
+                    if (deletedUnit) {
+                        deletedUnit.deletedAt = null;
+                        recipeIngredient.unit = deletedUnit;
+                    }
+
+                    await manager.getRepository(Unit).save(recipeIngredient.unit);
                 }
 
-                promises.push(
-                    manager
-                        .getRepository(RecipeIngredient)
-                        .save(recipeIngredient),
-                );
+                if (recipeIngredient.ingredient) {
+                    const deletedIngredient = await manager.getRepository(Ingredient).findOne({
+                        withDeleted: true,
+                        where: {
+                            deletedAt: Not(IsNull()),
+                            name: recipeIngredient.ingredient.name,
+                        },
+                    });
+
+                    if (deletedIngredient) {
+                        deletedIngredient.deletedAt = null;
+                        recipeIngredient.ingredient = deletedIngredient;
+                    }
+
+                    await manager.getRepository(Ingredient).save(recipeIngredient.ingredient);
+                }
             }
-            promises.push(
-                manager
-                    .getRepository(IngredientSection)
-                    .save(ingredientSection),
-            );
+
+            await manager.getRepository(IngredientSection).save(ingredientSection);
         }
 
         for (const recipeSection of recipe.sections ?? []) {
-            promises.push(
-                manager
-                    .getRepository(RecipeStep)
-                    .save(recipeSection.recipeSteps ?? []),
-            );
-            promises.push(
-                manager.getRepository(RecipeSection).save(recipeSection),
-            );
+            const section = await manager.getRepository(RecipeSection).save(recipeSection);
+            await manager.getRepository(RecipeStep).save(section.recipeSteps ?? []);
         }
 
-        await Promise.all(promises);
-
         return manager.getRepository(Recipe).save(recipe);
-    })
-);
+    });

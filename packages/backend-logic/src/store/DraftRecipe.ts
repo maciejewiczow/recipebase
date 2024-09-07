@@ -12,6 +12,7 @@ import { removeEmptyIngredientsAndSteps, saveRecipe, validateRecipe } from './re
 
 export class DraftRecipe {
     recipe = Recipe.createEmpty();
+    isSavingRecipe = false;
 
     constructor(private database: Database) {
         makeAutoObservable(this);
@@ -208,19 +209,24 @@ export class DraftRecipe {
     }
 
     save = flow(function* (this: DraftRecipe) {
-        const recipeToSave = cloneDeep(this.recipe);
+        try {
+            this.isSavingRecipe = true;
+            const recipeToSave = cloneDeep(this.recipe);
 
-        validateRecipe(recipeToSave);
-        removeEmptyIngredientsAndSteps(recipeToSave);
-        removeTemporaryIds(recipeToSave);
+            validateRecipe(recipeToSave);
+            removeEmptyIngredientsAndSteps(recipeToSave);
+            removeTemporaryIds(recipeToSave);
 
-        // prettier-ignore
-        const savedRecipe = yield* yieldResult(() => (
-            saveRecipe(recipeToSave, this.database)
-        ))();
+            // prettier-ignore
+            const savedRecipe = yield* yieldResult(() => (
+                saveRecipe(recipeToSave, this.database)
+            ))();
 
-        this.recipe = Recipe.createEmpty();
+            this.recipe = Recipe.createEmpty();
 
-        return savedRecipe;
+            return savedRecipe;
+        } finally {
+            this.isSavingRecipe = false;
+        }
     });
 }

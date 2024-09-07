@@ -15,20 +15,15 @@ export class Ingredients {
     fetchIngredients = flow(function* (this: Ingredients, searchText: string) {
         const term = searchText.trim();
 
-        if (!term) {
-            this.ingredients = [];
-            return;
-        }
-
         this.isFetchingIngredients = true;
 
         // prettier-ignore
         this.ingredients = yield* yieldResult(() => (
-            this.database.ingredientRepository.find({
+            this.database.ingredientRepository.find(term ? {
                 where: {
                     name: ILike(`%${term}%`),
                 },
-            })
+            } : undefined)
         ))();
 
         this.isFetchingIngredients = false;
