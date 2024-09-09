@@ -3,6 +3,7 @@ import { Database } from '../Database';
 import { Ingredient } from '../entities/Ingredient';
 import { RecipeIngredient } from '../entities/RecipeIngredient';
 import { Unit } from '../entities/Unit';
+import { isTemporaryId } from '../utils/isTemporaryId';
 import { parseQuantityString } from './recipeUtils';
 
 export class DraftIngredient {
@@ -26,7 +27,15 @@ export class DraftIngredient {
     };
 
     @action setName = (name: string) => {
-        this.ingredient.name = name;
+        if (isTemporaryId(this.ingredient.id)) {
+            this.ingredient.name = name;
+        } else {
+            const i = Ingredient.createWithTemporaryId();
+
+            i.name = name;
+
+            this.ingredient = i;
+        }
     };
 
     @action setQuantityString = (value: string) => {

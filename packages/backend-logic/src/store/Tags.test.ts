@@ -4,14 +4,17 @@ import { Tags } from './Tags';
 
 describe('Tags', () => {
     let database: Database;
-    let cleanup: () => Promise<void>;
+
+    beforeAll(() => {
+        TestDatabaseBuilder.init()
+    })
 
     beforeEach(async () => {
-        ({ database, cleanup } = await new TestDatabaseBuilder().withContent().build());
+        database = await new TestDatabaseBuilder().withContent().build()
     });
 
     afterEach(async () => {
-        await cleanup();
+        await TestDatabaseBuilder.cleanup();
     });
 
     describe('fetchTags', () => {

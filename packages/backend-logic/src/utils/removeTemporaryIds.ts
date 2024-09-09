@@ -1,4 +1,5 @@
 import { forEachDeep } from './forEachDeep';
+import { isTemporaryId } from './isTemporaryId';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const removeTemporaryIds = (obj: any) => {
@@ -12,7 +13,7 @@ export const removeTemporaryIds = (obj: any) => {
         }
 
         // eslint-disable-next-line yoda
-        if (key === 'id' && typeof value === 'number' && 0 < value && value < 1) {
+        if (key === 'id' && typeof value === 'number' && isTemporaryId(value)) {
             parent[key] = undefined;
         }
 

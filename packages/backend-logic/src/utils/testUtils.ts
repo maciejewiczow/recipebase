@@ -10,6 +10,7 @@ import {
     Tag,
     Unit,
 } from 'backend-logic';
+import sqlite3 from 'sqlite3';
 import { DataSource, EntityManager } from 'typeorm';
 
 const tags: Partial<Tag>[] = [
@@ -420,40 +421,45 @@ export const mockData = {
 };
 
 export class TestDatabaseBuilder {
-    private dataSource: DataSource;
+    private static dataSource: DataSource;
     private database!: Database;
 
     private shouldIncludeContent = false;
     private shouldDeleteRecipe = false;
 
     private recipeToDelete?: Recipe;
+    private recipeToSkip?: Recipe;
 
-    constructor() {
-        this.dataSource = new DataSource({
-            type: 'sqlite',
-            database: ':memory:',
-            name: Math.random().toString().split('.')[1],
-            logging: false,
-            dropSchema: true,
-            synchronize: true,
-            entities: [
-                RecipeStep,
-                Ingredient,
-                IngredientSection,
-                Recipe,
-                RecipeIngredient,
-                RecipeSection,
-                Tag,
-                Unit,
-            ],
-        });
+    public static init() {
+        if (!TestDatabaseBuilder.dataSource) {
+            TestDatabaseBuilder.dataSource = new DataSource({
+                type: 'sqlite',
+                database: ':memory:',
+                driver: sqlite3,
+                logging: false,
+                dropSchema: true,
+                synchronize: true,
+                entities: [
+                    RecipeStep,
+                    Ingredient,
+                    IngredientSection,
+                    Recipe,
+                    RecipeIngredient,
+                    RecipeSection,
+                    Tag,
+                    Unit,
+                ],
+            });
+        }
     }
 
     private async init() {
-        const connection = await this.dataSource.initialize();
+        const connection = TestDatabaseBuilder.dataSource.isInitialized
+            ? TestDatabaseBuilder.dataSource
+            : await TestDatabaseBuilder.dataSource.initialize();
 
         const dbObject = {
-            dataSource: this.dataSource,
+            dataSource: connection,
             connection,
             ingredientRepository: connection.getRepository(Ingredient),
             ingredientSectionRepository: connection.getRepository(IngredientSection),
@@ -471,8 +477,10 @@ export class TestDatabaseBuilder {
         this.database = dbObject;
     }
 
-    withContent() {
+    withContent({ skipRecipe }: { skipRecipe?: Recipe } = {}) {
         this.shouldIncludeContent = true;
+        this.recipeToSkip = skipRecipe;
+
         return this;
     }
 
@@ -532,7 +540,7 @@ export class TestDatabaseBuilder {
         await this.database.unitRepository.save(units);
         await this.database.tagRepository.save(tags);
         await this.database.ingredientRepository.save(ingredients);
-        await this.database.recipeRepository.save(recipes);
+        await this.database.recipeRepository.save(recipes.filter(r => r !== this.recipeToSkip));
 
         // await Promise.all(
         //     recipes.flatMap(recipe =>
@@ -576,14 +584,20 @@ export class TestDatabaseBuilder {
             await this.deleteRecipe();
         }
 
-        return {
-            database: this.database,
-            cleanup: async () => {
-                await this.dataSource.dropDatabase();
-                if (this.dataSource.isInitialized) {
-                    await this.dataSource.destroy();
-                }
-            },
-        };
+        return this.database;
+    }
+
+    public static async cleanup() {
+        try {
+            await TestDatabaseBuilder.dataSource.query(`
+                PRAGMA writable_schema = 1;
+                DELETE FROM sqlite_master;
+                PRAGMA writable_schema = 0;
+                VACUUM;
+                PRAGMA integrity_check;
+            `);
+        } catch (error) {
+            throw new Error(`ERROR: Cleaning test database: ${error}`);
+        }
     }
 }
