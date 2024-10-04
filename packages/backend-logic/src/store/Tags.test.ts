@@ -1,16 +1,13 @@
 import { Database } from '../Database';
-import { TestDatabaseBuilder } from '../utils/testUtils';
+import { createMockData, TestDatabaseBuilder } from '../utils/testUtils';
 import { Tags } from './Tags';
 
 describe('Tags', () => {
     let database: Database;
 
-    beforeAll(() => {
-        TestDatabaseBuilder.init()
-    })
-
     beforeEach(async () => {
-        database = await new TestDatabaseBuilder().withContent().build()
+        TestDatabaseBuilder.init();
+        database = await new TestDatabaseBuilder().withContent(createMockData()).build();
     });
 
     afterEach(async () => {

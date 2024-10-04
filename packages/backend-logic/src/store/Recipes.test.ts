@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Database } from 'backend-logic';
 import { ILike } from 'typeorm';
-import { TestDatabaseBuilder } from '../utils/testUtils';
+import { createMockData, TestDatabaseBuilder } from '../utils/testUtils';
 import { Recipes } from './Recipes';
 
 describe('Recipes', () => {
     let database: Database;
 
-    beforeAll(() => {
-        TestDatabaseBuilder.init()
-    })
-
     beforeEach(async () => {
-        database = await new TestDatabaseBuilder().withContent().build()
+        TestDatabaseBuilder.init();
+        database = await new TestDatabaseBuilder().withContent(createMockData()).build();
     });
 
     afterEach(async () => {

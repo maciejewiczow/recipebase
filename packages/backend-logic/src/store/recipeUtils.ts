@@ -64,6 +64,7 @@ export const saveRecipe = (recipe: Recipe, database: Database) =>
     // eslint-disable-next-line implicit-arrow-linebreak
     database.transaction(async manager => {
         for (const ingredientSection of recipe.ingredientSections ?? []) {
+            const usedIngredients = new Set<Ingredient>();
             for (const recipeIngredient of ingredientSection.recipeIngredients ?? []) {
                 if (recipeIngredient.unit) {
                     const deletedUnit = await manager.getRepository(Unit).findOne({
@@ -94,6 +95,12 @@ export const saveRecipe = (recipe: Recipe, database: Database) =>
                     if (deletedIngredient) {
                         deletedIngredient.deletedAt = null;
                         recipeIngredient.ingredient = deletedIngredient;
+                    }
+
+                    if (usedIngredients.has(recipeIngredient.ingredient)) {
+                        throw new Error('The same ingredient cannot be used twice in one section');
+                    } else {
+                        usedIngredients.add(recipeIngredient.ingredient);
                     }
 
                     await manager.getRepository(Ingredient).save(recipeIngredient.ingredient);
