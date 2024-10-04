@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ActivityIndicator, Alert, ScrollView, View } from 'react-native';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { observer } from 'mobx-react-lite';
 import { RootStackParams } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
-import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
+import { useRunCancellablePromise } from '~/utils/useRunCancellablePromise';
 import { SmallTagList } from '~/views/HomeNavigationView/HomeView/SmallTagList';
 import { IngredientList } from './IngredientList';
 import { getKey, StepsList } from './StepsList';
@@ -61,14 +61,10 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
         const [topContentHeight, setTopContentHeight] = useState<number>(0);
         const scrollContainerRef = useRef<ScrollView>(null);
 
-        useEffect(() => {
-            const promise = currentRecipe.fetchRecipeById(route.params.recipeId);
-
-            promise.catch(catchCancelledFlow);
-
-            return () => promise.cancel();
-            // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [route.params.recipeId]);
+        useRunCancellablePromise(
+            () => currentRecipe.fetchRecipeById(route.params.recipeId),
+            [route.params.recipeId],
+        );
 
         const nextStep = () => {
             setCurrentStep(step => {

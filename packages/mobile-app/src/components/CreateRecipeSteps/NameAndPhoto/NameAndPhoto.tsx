@@ -1,8 +1,8 @@
 import React from 'react';
-import { ImageInput } from './NameAndPhoto.styles';
+import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import { Input, StepHeader, StepWrapper } from '../common.styles';
-import { observer } from 'mobx-react-lite';
+import { ImageInput } from './NameAndPhoto.styles';
 
 export const NameAndPhoto: React.FC = observer(() => {
     const { draftRecipe } = useRootStore();

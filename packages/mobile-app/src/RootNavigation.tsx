@@ -52,7 +52,7 @@ export default class RootNavigation {
         params?: RootStackParams[Route],
     ) => {
         if (rootNavigationRef.isReady()) {
-            rootNavigationRef.dispatch(StackActions.replace(name as string, params));
+            rootNavigationRef.dispatch(StackActions.replace(name, params));
         }
     };
 

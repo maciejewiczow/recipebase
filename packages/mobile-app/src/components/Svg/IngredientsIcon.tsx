@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable max-len */
 import React from 'react';
 import Svg, { Path, SvgProps } from 'react-native-svg';

@@ -1,79 +1,41 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
-import { Unit } from 'backend-logic';
-import { uniq } from 'lodash';
+import React, { useCallback, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import invariant from 'tiny-invariant';
 import { BottomSheetSelectProps } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { useRootStore } from '~/RootStoreContext';
-import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
-import { isTruthy } from '~/utils/isTruthy';
+import { useRunCancellablePromise } from '~/utils/useRunCancellablePromise';
+import { UnitListItemType, useUnitSelectData } from './hooks';
 import { UnitItemWrapper, UnitName, UnitSelectInput as UnitSelectInput } from './AddIngredientView.styles';
 
-interface UnitListItemType {
-    unitName: string;
-    isCustom: boolean;
-}
+const renderOption: BottomSheetSelectProps<UnitListItemType>['renderOption'] = ({
+    item,
+    select,
+    isActive,
+}) => (
+    <UnitItemWrapper onPress={select}>
+        <UnitName
+            isCustom={item.isCustom}
+            isActive={isActive}
+        >
+            {item.unitName}
+        </UnitName>
+    </UnitItemWrapper>
+);
+
+const isUnitEqual = (a: UnitListItemType, b: UnitListItemType) => a.unitName === b.unitName;
 
 export const UnitSelect: React.FC = observer(() => {
-    const { draftIngredient, units, draftRecipe } = useRootStore();
+    const { draftIngredient, units } = useRootStore();
+    const [data, unitsWithDrafts] = useUnitSelectData();
 
-    useEffect(() => {
-        const promise = units.fetchUnits(draftIngredient.unitSearchString ?? '');
-
-        promise.catch(catchCancelledFlow);
-
-        return () => promise.cancel();
-    }, [draftIngredient.unitSearchString, units]);
-
-    const renderOption: BottomSheetSelectProps<UnitListItemType>['renderOption'] = useCallback(
-        ({ item, select, isActive }) => (
-            <UnitItemWrapper onPress={select}>
-                <UnitName
-                    isCustom={item.isCustom}
-                    isActive={isActive}
-                >
-                    {item.unitName}
-                </UnitName>
-            </UnitItemWrapper>
-        ),
-        [],
+    useRunCancellablePromise(
+        () => units.fetchUnits(draftIngredient.unitSearchString ?? ''),
+        [draftIngredient.unitSearchString, units],
     );
 
     const renderValue: BottomSheetSelectProps<UnitListItemType>['renderValue'] = useCallback(
         item => item.unitName,
         [],
-    );
-
-    const isEqual = useCallback((a: UnitListItemType, b: UnitListItemType) => a.unitName === b.unitName, []);
-
-    const unitsWithDrafts = useMemo<Unit[]>(
-        () => [
-            ...(uniq(
-                draftRecipe.recipe.ingredientSections
-                    ?.flatMap(is => is.recipeIngredients)
-                    .filter(isTruthy)
-                    .map(({ unit }) => unit)
-                    .filter(isTruthy),
-            ) ?? []),
-            ...units.units,
-        ],
-        [draftRecipe.recipe.ingredientSections, units.units],
-    );
-
-    const data = useMemo<UnitListItemType[]>(
-        () => [
-            ...(draftIngredient.unitSearchString &&
-            !unitsWithDrafts.some(x => x.name === draftIngredient.unitSearchString)
-                ? [
-                      {
-                          unitName: draftIngredient.unitSearchString,
-                          isCustom: true,
-                      },
-                  ]
-                : []),
-            ...unitsWithDrafts.map(unit => ({ unitName: unit.name, isCustom: false })),
-        ],
-        [draftIngredient.unitSearchString, unitsWithDrafts],
     );
 
     const value = useMemo<UnitListItemType>(
@@ -108,7 +70,7 @@ export const UnitSelect: React.FC = observer(() => {
             options={data}
             renderOption={renderOption}
             renderValue={renderValue}
-            isEqual={isEqual}
+            isEqual={isUnitEqual}
             value={value}
             onChange={onChange}
             searchText={draftIngredient.unitSearchString}
