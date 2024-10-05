@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Ingredient, Unit } from 'backend-logic';
-import { uniq, uniqBy } from 'lodash';
+import { uniqBy } from 'lodash';
 import { useRootStore } from '~/RootStoreContext';
 import { isTruthy } from '~/utils/isTruthy';
 
@@ -65,19 +65,24 @@ const shouldShowDraftingredient = (
     );
 };
 
-export const useIngredientListData = (isInEditMode: boolean) => {
+export const useIngredientListData = (isInEditMode: boolean, searchString: string) => {
     const { ingredients, draftIngredient, draftRecipe } = useRootStore();
 
     const ingredientsWithDrafts = useMemo<IngredientListItemType[]>(
-        () => uniq([
-                ...(draftRecipe.recipe.ingredientSections
-                    ?.flatMap(is => is.recipeIngredients)
-                    .filter(isTruthy)
-                    .map(({ ingredient }) => ingredient)
-                    .filter(isTruthy) ?? []),
-                ...ingredients.ingredients,
-            ]).map(ingredient => ({ ingredient, isCustom: false })),
-        [draftRecipe.recipe.ingredientSections, ingredients.ingredients],
+        () => uniqBy(
+                [
+                    ...(draftRecipe.recipe.ingredientSections
+                        ?.flatMap(is => is.recipeIngredients)
+                        .filter(isTruthy)
+                        .map(({ ingredient }) => ingredient)
+                        .filter(isTruthy)
+                        .filter(ingredient => ingredient.name.toLowerCase().includes(searchString.toLowerCase()),
+                        ) ?? []),
+                    ...ingredients.ingredients,
+                ],
+                i => i.id,
+            ).map(ingredient => ({ ingredient, isCustom: false })),
+        [draftRecipe.recipe.ingredientSections, ingredients.ingredients, searchString],
     );
 
     const data = useMemo<IngredientListItemType[]>(

@@ -65,6 +65,17 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
                 navigation.goBack();
             };
 
+            const updateIngredientName = (name: string) => {
+                const shouldCopy =
+                    draftRecipe.recipe.ingredientSections
+                        ?.flatMap(section => section.recipeIngredients ?? [])
+                        .some(ri => ri.ingredient?.id === draftIngredient.ingredient.id) ?? false;
+
+                console.log({ shouldCopy });
+
+                draftIngredient.setName(name, shouldCopy);
+            };
+
             return (
                 <StepWrapper>
                     <StepHeader>Ingredient</StepHeader>
@@ -74,7 +85,7 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
                         placeholder="Search for ingredients"
                         onFocus={() => setIsInIngredientSearchMode(true)}
                         value={draftIngredient.ingredient.name}
-                        onChange={draftIngredient.setName}
+                        onChange={updateIngredientName}
                     />
                     {isInIngredientSearchMode ? (
                         <IngredientList

@@ -26,8 +26,8 @@ export class DraftIngredient {
         this.unit.name = this.unitSearchString.trim();
     };
 
-    @action setName = (name: string) => {
-        if (isTemporaryId(this.ingredient.id)) {
+    @action setName = (name: string, shouldCopy: boolean) => {
+        if (isTemporaryId(this.ingredient.id) && !shouldCopy) {
             this.ingredient.name = name;
         } else {
             const i = Ingredient.createWithTemporaryId();

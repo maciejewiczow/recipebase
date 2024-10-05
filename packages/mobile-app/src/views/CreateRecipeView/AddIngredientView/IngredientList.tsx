@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useDeferredValue } from 'react';
 import { FlatList, FlatListProps } from 'react-native';
 import { Observer, observer } from 'mobx-react-lite';
 import { Label } from '~/components/Input/Input.styles';
@@ -21,13 +21,14 @@ interface IngredientListProps {
 export const IngredientList: React.FC<IngredientListProps> = observer(
     ({ setIsInIngredientSearchMode, isInEditMode }) => {
         const { ingredients, draftIngredient } = useRootStore();
+        const searchString = useDeferredValue(draftIngredient.ingredient.name ?? '');
 
         useRunCancellablePromise(
-            () => ingredients.fetchIngredients(draftIngredient.ingredient.name ?? ''),
-            [draftIngredient.ingredient.name, ingredients],
+            () => ingredients.fetchIngredients(searchString),
+            [searchString, ingredients],
         );
 
-        const data = useIngredientListData(isInEditMode);
+        const data = useIngredientListData(isInEditMode, searchString ?? '');
 
         const renderItem: Defined<FlatListProps<IngredientListItemType>['renderItem']> = useCallback(
             ({ item }) => (
