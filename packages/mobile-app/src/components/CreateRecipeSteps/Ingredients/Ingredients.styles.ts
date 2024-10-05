@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
-import { Input as CommonInput, draggableListStepMargin } from '../common.styles';
 import { IngredientSectionHeader } from './IngredientSectionHeader';
+import { draggableListStepMargin, Input as CommonInput } from '../common.styles';
 
 export const IngredientSectionHeaderWithMargin = styled(IngredientSectionHeader)`
     ${draggableListStepMargin}

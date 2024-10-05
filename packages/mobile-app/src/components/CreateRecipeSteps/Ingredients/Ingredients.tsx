@@ -1,16 +1,16 @@
 import React from 'react';
-import { useRootStore } from '~/RootStoreContext';
-import { renderItem } from './RecipeIngredientView';
 import { IngredientSection, RecipeIngredient } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
-import { IngredientSectionHeaderWithMargin } from './Ingredients.styles';
+import { useRootStore } from '~/RootStoreContext';
 import { AddIngredientButton } from './AddIngredientButton';
+import { renderItem } from './RecipeIngredientView';
 import {
     AddSectionButton,
     DraggableList,
     NestableScrollableStepWrapper,
     StepHeaderWithMargin,
 } from '../common.styles';
+import { IngredientSectionHeaderWithMargin } from './Ingredients.styles';
 
 export type ItemType = RecipeIngredient | IngredientSection;
 
@@ -18,7 +18,9 @@ const sectionsToItems = (sections: IngredientSection[]): ItemType[] => {
     if (sections.length <= 1) {
         return (
             sections[0].recipeIngredients?.map<ItemType>(ri => {
-                if (!ri.ingredientSection) [ri.ingredientSection] = sections;
+                if (!ri.ingredientSection) {
+                    [ri.ingredientSection] = sections;
+                }
 
                 return ri;
             }) ?? []
@@ -28,7 +30,9 @@ const sectionsToItems = (sections: IngredientSection[]): ItemType[] => {
     return sections.flatMap<ItemType>((section, index) => [
         ...(index !== 0 ? [section] : []),
         ...(section.recipeIngredients?.map<ItemType>(ri => {
-            if (!ri.ingredientSection) ri.ingredientSection = section;
+            if (!ri.ingredientSection) {
+                ri.ingredientSection = section;
+            }
 
             return ri;
         }) ?? []),
@@ -52,10 +56,9 @@ export const Ingredients: React.FC = observer(() => {
             )}
             <DraggableList<ItemType>
                 data={data}
-                keyExtractor={item =>
-                    item instanceof RecipeIngredient
+                keyExtractor={item => (item instanceof RecipeIngredient
                         ? item.id.toString() + '-' + item.ingredientSection?.id.toString()
-                        : item.id.toString()
+                        : item.id.toString())
                 }
                 renderItem={renderItem}
                 onDragEnd={({ data: sections }) => draftRecipe.setIngredientSectionsFromArray(sections)}

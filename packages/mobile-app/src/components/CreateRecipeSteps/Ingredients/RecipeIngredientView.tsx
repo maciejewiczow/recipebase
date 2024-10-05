@@ -1,15 +1,15 @@
-import { IngredientSection, RecipeIngredient } from 'backend-logic';
-import { IngredientNameWrapper, QuantityWrapper, RecipeIngredientWrapper, Text } from './Ingredients.styles';
-import { ItemType } from './Ingredients';
 import { RenderItem, ScaleDecorator, ShadowDecorator } from 'react-native-draggable-flatlist';
-import { AddIngredientButton } from './AddIngredientButton';
-import { observer } from 'mobx-react-lite';
-import { useRootStore } from '~/RootStoreContext';
 import { useNavigation } from '@react-navigation/native';
+import { IngredientSection, RecipeIngredient } from 'backend-logic';
+import { observer } from 'mobx-react-lite';
 import { RootNavigationProp } from '~/RootNavigation';
-import { IngredientSectionHeader } from './IngredientSectionHeader';
-import { DragHandleIcon, DragHandleWrapper, DraggableListItemWrapper } from '../common.styles';
+import { useRootStore } from '~/RootStoreContext';
 import { ListItemMenu } from '../ListItemMenu';
+import { AddIngredientButton } from './AddIngredientButton';
+import { ItemType } from './Ingredients';
+import { IngredientSectionHeader } from './IngredientSectionHeader';
+import { DraggableListItemWrapper, DragHandleIcon, DragHandleWrapper } from '../common.styles';
+import { IngredientNameWrapper, QuantityWrapper, RecipeIngredientWrapper, Text } from './Ingredients.styles';
 
 const IngredientView: React.FC<{
     ingredient: RecipeIngredient;
@@ -20,7 +20,9 @@ const IngredientView: React.FC<{
         const navigation = useNavigation<RootNavigationProp>();
 
         const removeIngredient = () => {
-            if (ingredientSection) draftRecipe.removeRecipeIngredient(ingredientSection.id, id);
+            if (ingredientSection) {
+                draftRecipe.removeRecipeIngredient(ingredientSection.id, id);
+            }
         };
 
         const editIngredient = () => {
