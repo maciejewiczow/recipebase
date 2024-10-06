@@ -42,6 +42,6 @@ export class Recipes {
 
     @computed filterRecipesByTags = (selectedTags: TagWithSelectedState[]) =>
         this.recipes.filter(rc =>
-            selectedTags?.every(selectedTag => rc.tags?.find(tag => selectedTag.tag.id === tag.id)),
+            selectedTags?.every(selectedTag => rc.tags?.some(tag => selectedTag.tag.id === tag.id)),
         );
 }

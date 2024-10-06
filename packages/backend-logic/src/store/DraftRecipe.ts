@@ -56,30 +56,17 @@ export class DraftRecipe {
         section.name = name;
     };
 
-    @action addNewStep = (sectionId: number, stepContent: string) => {
+    @action addNewStep = (sectionId: number, step: RecipeStep) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
-
-        const step = RecipeStep.createWithTemporaryId();
-        step.content = stepContent;
 
         section?.recipeSteps?.push(step);
     };
 
-    @action setStepContent = (sectionId: number, stepId: number, content: string) => {
-        const section = this.recipe.sections?.find(s => s.id === sectionId);
-
-        if (!section) {
-            return;
-        }
-
-        const step = section.recipeSteps?.find(s => s.id === stepId);
-
-        if (!step) {
-            return;
-        }
-
-        step.content = content;
-    };
+    getStepById(stepId: number) {
+        return this.recipe.sections
+            ?.flatMap(section => section.recipeSteps)
+            ?.find(step => step?.id === stepId);
+    }
 
     @action setSectionName = (sectionId: number, name: string) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
@@ -217,10 +204,7 @@ export class DraftRecipe {
             removeEmptyIngredientsAndSteps(recipeToSave);
             removeTemporaryIds(recipeToSave);
 
-            // prettier-ignore
-            const savedRecipe = yield* yieldResult(() => (
-                saveRecipe(recipeToSave, this.database)
-            ))();
+            const savedRecipe = yield* yieldResult(() => saveRecipe(recipeToSave, this.database))();
 
             this.recipe = Recipe.createEmpty();
 

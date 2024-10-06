@@ -1,5 +1,14 @@
 import { makeAutoObservable } from 'mobx';
-import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    DeleteDateColumn,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
+import { RecipeIngredient } from './RecipeIngredient';
 import { RecipeSection } from './RecipeSection';
 
 @Entity('RecipeStep')
@@ -15,6 +24,10 @@ export class RecipeStep {
 
     @DeleteDateColumn({ nullable: true })
     deletedAt!: Date | null;
+
+    @OneToMany(() => RecipeIngredient, ri => ri.referencingRecipeStep, { cascade: true })
+    @JoinColumn()
+    referencedIngredients?: RecipeIngredient[];
 
     constructor() {
         makeAutoObservable(this);

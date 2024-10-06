@@ -1,5 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import Database from '../Database';
+import { Database } from '../Database';
 
 export class <%= baseFileName %> {
     constructor(private database: Database) {

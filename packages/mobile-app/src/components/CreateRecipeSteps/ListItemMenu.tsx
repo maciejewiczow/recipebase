@@ -1,6 +1,6 @@
 import React from 'react';
-import { EditIcon, EditIconWrapper, MenuItemText, MenuItemWrapper } from './common.styles';
 import { Menu, MenuOption, MenuOptions, MenuTrigger } from 'react-native-popup-menu';
+import { EditIcon, EditIconWrapper, MenuItemText, MenuItemWrapper } from './common.styles';
 
 interface ListItemMenuProps {
     onEditPress: () => void;

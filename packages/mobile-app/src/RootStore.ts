@@ -8,6 +8,7 @@ import {
     Database,
     DraftIngredient,
     DraftRecipe,
+    DraftStep,
     Ingredients,
     Recipes,
     Tags,
@@ -34,6 +35,7 @@ export class Root {
     units!: Units;
     draftIngredient!: DraftIngredient;
     draftRecipe!: DraftRecipe;
+    draftStep!: DraftStep;
 
     async initalize() {
         const dbFilePath = await AsyncStorage.getItem(Root.dbPathStorageKey);
@@ -70,6 +72,7 @@ export class Root {
         this.draftIngredient = new DraftIngredient(this.database);
         this.currentRecipe = new CurrentRecipe(this.database);
         this.draftRecipe = new DraftRecipe(this.database);
+        this.draftStep = new DraftStep(this.database);
 
         // FIXME: uncomment after the plugin supports circular structures
         // if (Config.DEBUG) {

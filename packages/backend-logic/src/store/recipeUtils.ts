@@ -97,6 +97,7 @@ export const saveRecipe = (recipe: Recipe, database: Database) =>
                         recipeIngredient.ingredient = deletedIngredient;
                     }
 
+                    // TODO: move this to the validation step
                     if (usedIngredients.has(recipeIngredient.ingredient)) {
                         throw new Error('The same ingredient cannot be used twice in one section');
                     } else {

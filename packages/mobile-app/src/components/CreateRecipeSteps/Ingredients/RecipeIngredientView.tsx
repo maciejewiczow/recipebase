@@ -2,6 +2,7 @@ import { RenderItem, ScaleDecorator, ShadowDecorator } from 'react-native-dragga
 import { useNavigation } from '@react-navigation/native';
 import { IngredientSection, RecipeIngredient } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
+import { RecipeIngredientListItem } from '~/components/RecipeIngredientListItem';
 import { RootNavigationProp } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
 import { ListItemMenu } from '../ListItemMenu';
@@ -9,54 +10,46 @@ import { AddIngredientButton } from './AddIngredientButton';
 import { ItemType } from './Ingredients';
 import { IngredientSectionHeader } from './IngredientSectionHeader';
 import { DraggableListItemWrapper, DragHandleIcon, DragHandleWrapper } from '../common.styles';
-import { IngredientNameWrapper, QuantityWrapper, RecipeIngredientWrapper, Text } from './Ingredients.styles';
 
 const IngredientView: React.FC<{
     ingredient: RecipeIngredient;
     drag: () => void;
-}> = observer(
-    ({ ingredient: { id, ingredient, unit, quantityFrom, quantityTo, ingredientSection }, drag }) => {
-        const { draftRecipe } = useRootStore();
-        const navigation = useNavigation<RootNavigationProp>();
+}> = observer(({ ingredient, drag }) => {
+    const { draftRecipe } = useRootStore();
+    const navigation = useNavigation<RootNavigationProp>();
 
-        const removeIngredient = () => {
-            if (ingredientSection) {
-                draftRecipe.removeRecipeIngredient(ingredientSection.id, id);
-            }
-        };
+    const removeIngredient = () => {
+        if (ingredient.ingredientSection) {
+            draftRecipe.removeRecipeIngredient(ingredient.ingredientSection.id, ingredient.id);
+        }
+    };
 
-        const editIngredient = () => {
-            if (ingredientSection) {
-                navigation.navigate('AddIngredientView', {
-                    targetSectionId: ingredientSection.id,
-                    recipeIngredientToEditId: id,
-                });
-            }
-        };
+    const editIngredient = () => {
+        if (ingredient.ingredientSection) {
+            navigation.navigate('AddIngredientView', {
+                targetSectionId: ingredient.ingredientSection.id,
+                recipeIngredientToEditId: ingredient.id,
+            });
+        }
+    };
 
-        return (
-            <RecipeIngredientWrapper>
+    return (
+        <RecipeIngredientListItem
+            leftSection={
                 <DragHandleWrapper onPressIn={drag}>
                     <DragHandleIcon />
                 </DragHandleWrapper>
-                <QuantityWrapper>
-                    <Text>
-                        {quantityFrom}
-                        {quantityTo ? '-' : ''}
-                        {quantityTo} {unit?.name}
-                    </Text>
-                </QuantityWrapper>
-                <IngredientNameWrapper>
-                    <Text>{ingredient?.name}</Text>
-                </IngredientNameWrapper>
+            }
+            rightSection={
                 <ListItemMenu
                     onEditPress={editIngredient}
                     onRemovePress={removeIngredient}
                 />
-            </RecipeIngredientWrapper>
-        );
-    },
-);
+            }
+            recipeIngredient={ingredient}
+        />
+    );
+});
 
 const SectionSeparatorView: React.FC<{ section: IngredientSection }> = observer(({ section }) => {
     const { draftRecipe } = useRootStore();

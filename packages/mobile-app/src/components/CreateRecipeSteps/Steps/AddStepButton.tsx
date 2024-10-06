@@ -1,8 +1,8 @@
-import { NavigationProp, useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '~/RootNavigation';
-import { AddStepButton as AddStepButtonStyled } from './Steps.styles';
 import { AddIcon } from '../common.styles';
+import { AddStepButton as AddStepButtonStyled } from './Steps.styles';
 
 interface AddIngredientButtonProps {
     targetSectionId: number;

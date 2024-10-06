@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native';
-import { RecipeSectionHeader } from './RecipeSectionHeader';
 import { Button } from '~/components/Button';
+import { RecipeSectionHeader } from './RecipeSectionHeader';
 
 const allMargin = css`
     margin-left: 16px;

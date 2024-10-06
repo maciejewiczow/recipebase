@@ -1,7 +1,7 @@
+export { AddIngredientView, AddStepIngredientView, AddStepView, CreateRecipeView } from './CreateRecipeView';
+export { GDriveFilePickerView } from './GDriveFilePickerView/GDriveFilePickerView';
 export { HomeNavigationView } from './HomeNavigationView/HomeNavigationView';
-export { SplashView } from './SplashView/SplashView';
+export { RecipeView } from './RecipeView';
 export { SelectDatabaseView } from './SelectDatabaseView/SelectDatabaseView';
 export { SelectionMethodModalView } from './SelectionMethodModalView/SelectionMethodModalView';
-export { GDriveFilePickerView } from './GDriveFilePickerView/GDriveFilePickerView';
-export { RecipeView } from './RecipeView';
-export { CreateRecipeView, AddIngredientView, AddStepView } from './CreateRecipeView';
+export { SplashView } from './SplashView/SplashView';

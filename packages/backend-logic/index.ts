@@ -10,6 +10,7 @@ import { Unit } from './src/entities/Unit';
 import { CurrentRecipe } from './src/store/CurrentRecipe';
 import { DraftIngredient } from './src/store/DraftIngredient';
 import { DraftRecipe } from './src/store/DraftRecipe';
+import { DraftStep } from './src/store/DraftStep';
 import { Ingredients } from './src/store/Ingredients';
 import { Recipes } from './src/store/Recipes';
 import { Tags } from './src/store/Tags';
@@ -34,4 +35,5 @@ export {
     Tags,
     Unit,
     Units,
+    DraftStep
 };

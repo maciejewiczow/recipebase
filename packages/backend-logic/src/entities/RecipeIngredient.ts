@@ -2,6 +2,7 @@ import { makeAutoObservable } from 'mobx';
 import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Ingredient } from './Ingredient';
 import { IngredientSection } from './IngredientSection';
+import { RecipeStep } from './RecipeStep';
 import { Unit } from './Unit';
 
 @Entity('RecipeIngredient')
@@ -23,6 +24,9 @@ export class RecipeIngredient {
 
     @ManyToOne(() => Unit, u => u.recipeIngredients)
     unit?: Unit;
+
+    @ManyToOne(() => RecipeStep, step => step.referencedIngredients)
+    referencingRecipeStep?: RecipeStep;
 
     @DeleteDateColumn({ nullable: true })
     deletedAt!: Date | null;
