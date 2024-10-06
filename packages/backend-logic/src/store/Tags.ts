@@ -110,7 +110,16 @@ export class Tags {
         const tagsToSave = cloneDeep(this.draftTags);
 
         for (const tag of tagsToSave) {
-            tag.recipes = [...(tag.recipes ?? []), recipe];
+            const tagFromDb = yield* yieldResult(() =>
+                // eslint-disable-next-line implicit-arrow-linebreak
+                this.database.tagRepository.findOne({
+                    where: { id: tag.id },
+                    relations: {
+                        recipes: true,
+                    },
+                }),
+            )();
+            tag.recipes = [...(tagFromDb?.recipes ?? []), recipe];
         }
 
         removeTemporaryIds(tagsToSave);

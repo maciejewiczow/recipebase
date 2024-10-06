@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import Animated from 'react-native-reanimated';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import styled from 'styled-components/native';

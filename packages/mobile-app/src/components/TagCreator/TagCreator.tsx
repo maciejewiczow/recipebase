@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import { ToastAndroid } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import {
-    TagView,
-    TagsWrapper,
-    TagNameInput,
+    DropdownRow,
     DropdownWrapper,
     InputWithDropdownWrapper,
-    DropdownRow,
+    TagNameInput,
     TagNameText,
     TagRecipeCountText,
+    TagsWrapper,
+    TagView,
 } from './TagCreator.styles';
-import { ToastAndroid } from 'react-native';
 
 export const TagCreator: React.FC = observer(() => {
     const { tags } = useRootStore();
@@ -23,7 +23,9 @@ export const TagCreator: React.FC = observer(() => {
 
         if (newTagName) {
             const added = tags.addDraftTag(newTagName);
-            if (!added) ToastAndroid.show('Tags have to be unique', ToastAndroid.LONG);
+            if (!added) {
+                ToastAndroid.show('Tags have to be unique', ToastAndroid.LONG);
+            }
         }
 
         setNewTagName('');
