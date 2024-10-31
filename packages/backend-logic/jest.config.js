@@ -8,4 +8,5 @@ module.exports = {
     modulePathIgnorePatterns: [
         "react-native"
     ],
+    setupTestFrameworkScriptFile: "<rootDir>/test-setup.ts"
 }

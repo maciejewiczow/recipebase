@@ -71,14 +71,6 @@ export class Tags {
         this.draftTags = this.draftTags.filter(t => t.id !== id);
     }
 
-    copyRecipeTagsToDraftTags(recipe: Recipe | undefined) {
-        if (!recipe) {
-            return;
-        }
-
-        this.draftTags = recipe.tags ?? [];
-    }
-
     @computed
     filterByName(filterString: string) {
         if (!filterString) {
@@ -88,10 +80,6 @@ export class Tags {
         return this.tags
             .map(t => t.tag)
             .filter(t => t.name.toLowerCase().includes(filterString.toLowerCase()));
-    }
-
-    get tagsWithDraftTags() {
-        return [...this.tags.map(t => t.tag), ...this.draftTags];
     }
 
     get selectedTags() {
