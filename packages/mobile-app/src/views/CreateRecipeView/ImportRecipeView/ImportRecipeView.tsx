@@ -37,7 +37,7 @@ import {
 
 type ImportRecipeViewProps = NativeStackScreenProps<RootStackParams, 'ImportRecipeView'>;
 
-const supportedContentTypes = ['image/jpeg', 'image/png'];
+const supportedContentTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
 const getImageDimensions = (path: string) => new Promise<{ width: number; height: number }>((resolve, reject) => {
         Image.getSize(path, (width, height) => resolve({ width, height }), reject);
@@ -265,6 +265,8 @@ export const ImportRecipeView: React.FC<ImportRecipeViewProps> = ({ navigation }
                     setMainErrorText('Invalid access token');
                     return;
                 }
+
+                console.log(error, data, response.status);
 
                 return;
             }
