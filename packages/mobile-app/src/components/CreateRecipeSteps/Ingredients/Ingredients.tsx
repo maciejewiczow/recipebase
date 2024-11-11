@@ -15,7 +15,11 @@ import { IngredientSectionHeaderWithMargin } from './Ingredients.styles';
 export type ItemType = RecipeIngredient | IngredientSection;
 
 const sectionsToItems = (sections: IngredientSection[]): ItemType[] => {
-    if (sections.length <= 1) {
+    if (sections.length === 0) {
+        return [];
+    }
+
+    if (sections.length === 1) {
         return (
             sections[0].recipeIngredients?.map<ItemType>(ri => {
                 if (!ri.ingredientSection) {

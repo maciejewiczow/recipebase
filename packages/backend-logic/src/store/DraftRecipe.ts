@@ -38,6 +38,8 @@ export class DraftRecipe {
         const newSection = IngredientSection.createWithTemporaryId();
         newSection.recipeIngredients = [];
         this.recipe.ingredientSections?.push(newSection);
+
+        return newSection;
     };
 
     @action removeIngredientSection = (sectionId: number) => {
@@ -87,6 +89,8 @@ export class DraftRecipe {
         newSection.recipeSteps = [];
 
         this.recipe.sections?.push(newSection);
+
+        return newSection;
     };
 
     @action addNewRecipeIngredient = (sectionId: number, ri: RecipeIngredient) => {
@@ -206,11 +210,15 @@ export class DraftRecipe {
 
             const savedRecipe = yield* yieldResult(() => saveRecipe(recipeToSave, this.database))();
 
-            this.recipe = Recipe.createEmpty();
+            this.clear();
 
             return savedRecipe;
         } finally {
             this.isSavingRecipe = false;
         }
     });
+
+    @action clear() {
+        this.recipe = Recipe.createEmpty();
+    }
 }

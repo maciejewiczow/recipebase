@@ -11,11 +11,18 @@ export const inputStyles = css`
     color: #000;
 `;
 
+export const InputWrapper = styled.View`
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+`;
+
 export const TextInput = styled.TextInput.attrs({
     placeholderTextColor: '#bbb',
     textAlignVertical: 'top',
 })`
     ${inputStyles}
+    flex: 1;
 `;
 
 export const Label = styled.Text`

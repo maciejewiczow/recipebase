@@ -2,7 +2,7 @@ import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button } from '~/components/Button';
 import { RootStackParams } from '~/RootNavigation';
-import { Background, AppTitle, Gradient } from '../SplashView/SplashView.styles';
+import { AppTitle, Background, Gradient } from '../SplashView/SplashView.styles';
 import { TopButton } from './SelectDatabaseView.styles';
 
 export const SelectDatabaseView: React.FC<NativeStackScreenProps<RootStackParams, 'SelectDatabase'>> = ({
@@ -13,8 +13,7 @@ export const SelectDatabaseView: React.FC<NativeStackScreenProps<RootStackParams
             <AppTitle>Recipebase</AppTitle>
             <TopButton
                 variant="primary"
-                onPress={() =>
-                    navigation.navigate('SelectMethodModal', {
+                onPress={() => navigation.navigate('SelectMethodModal', {
                         selectWhat: 'directory',
                     })
                 }
@@ -23,8 +22,7 @@ export const SelectDatabaseView: React.FC<NativeStackScreenProps<RootStackParams
             </TopButton>
             <Button
                 variant="secondary-outline"
-                onPress={() =>
-                    navigation.navigate('SelectMethodModal', {
+                onPress={() => navigation.navigate('SelectMethodModal', {
                         selectWhat: 'file',
                     })
                 }

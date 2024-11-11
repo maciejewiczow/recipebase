@@ -5,12 +5,14 @@ import { Stepper } from '~/components/Stepper';
 import { RootNavigationProp } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
 
+export type StepNames = 'Import' | 'NameAndPhoto' | 'Details' | 'Ingredients' | 'Steps' | 'Tags';
+
 export const CreateRecipeView: React.FC = () => {
     const { draftRecipe, tags } = useRootStore();
     const navigation = useNavigation<RootNavigationProp>();
 
     return (
-        <Stepper
+        <Stepper<StepNames>
             steps={[
                 { name: 'Import', component: Import },
                 { name: 'NameAndPhoto', component: NameAndPhoto },

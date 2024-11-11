@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { Ingredient, Unit } from 'backend-logic';
 import { uniqBy } from 'lodash';
+import { DefaultItem } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { useRootStore } from '~/RootStoreContext';
 import { isTruthy } from '~/utils/isTruthy';
 
-export interface UnitListItemType {
-    unitName: string;
+export interface UnitListItemType extends DefaultItem {
     isCustom: boolean;
 }
 
@@ -33,12 +33,13 @@ export const useUnitSelectData = () => {
             !unitsWithDrafts.some(x => x.name === draftIngredient.unitSearchString)
                 ? [
                       {
-                          unitName: draftIngredient.unitSearchString,
+                          label: draftIngredient.unitSearchString,
+                          value: draftIngredient.unitSearchString,
                           isCustom: true,
                       },
                   ]
                 : []),
-            ...unitsWithDrafts.map(unit => ({ unitName: unit.name, isCustom: false })),
+            ...unitsWithDrafts.map(unit => ({ label: unit.name, value: unit.name, isCustom: false })),
         ],
         [draftIngredient.unitSearchString, unitsWithDrafts],
     );

@@ -9,7 +9,7 @@ export const Wrapper = styled(Animated.View)`
     height: ${size}px;
     width: ${size}px;
     border-radius: ${size}px;
-    border-width: 2;
+    border-width: 2px;
     align-items: center;
     justify-content: center;
 `;

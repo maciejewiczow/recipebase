@@ -9,7 +9,8 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as views from '~/views';
-import { AddStepViewRouteProps } from './views/CreateRecipeView';
+import { StepperSubNavigator } from './components/Stepper/Stepper';
+import { AddStepViewRouteProps, StepNames } from './views/CreateRecipeView';
 import { AddIngredientViewRouteProps } from './views/CreateRecipeView/AddIngredientView/AddIngredientView';
 import { GDriveFilePickerViewProps } from './views/GDriveFilePickerView/ViewProps';
 import { HomeTabNavigationParams } from './views/HomeNavigationView/HomeNavigationView';
@@ -28,10 +29,11 @@ export type RootStackParams = {
     SelectMethodModal: SelecMethodModalViewRouteProps;
     GDriveFilePicker: GDriveFilePickerViewProps;
     Recipe: RecipeViewProps;
-    CreateRecipe: undefined;
+    CreateRecipe: StepperSubNavigator<StepNames>;
     AddIngredientView: AddIngredientViewRouteProps;
     AddStepView: AddStepViewRouteProps;
     AddStepIngredientView: undefined;
+    ImportRecipeView: undefined;
 };
 
 export type RootNavigationProp = NavigationProp<RootStackParams>;
@@ -139,6 +141,13 @@ export const RootNavigationComponent: React.FC = () => {
                             component={views.AddStepIngredientView}
                             options={{
                                 title: 'Add step ingredients',
+                            }}
+                        />
+                        <Stack.Screen
+                            name="ImportRecipeView"
+                            component={views.ImportRecipeView}
+                            options={{
+                                title: 'Import from a website',
                             }}
                         />
                     </Stack.Group>

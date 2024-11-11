@@ -6,6 +6,7 @@ const common: DefaultTheme = {
         primaryAccent: '#D86B0B',
         background: '',
         text: '',
+        error: '#94031b',
     },
     border: {
         radiusGigantic: '30px',

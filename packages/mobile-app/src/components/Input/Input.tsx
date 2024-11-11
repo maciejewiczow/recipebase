@@ -6,7 +6,7 @@ import {
     TextStyle,
     ViewStyle,
 } from 'react-native';
-import { Label, TextInput, Wrapper } from './Input.styles';
+import { InputWrapper, Label, TextInput, Wrapper } from './Input.styles';
 
 export interface InputProps
     extends Pick<
@@ -21,24 +21,32 @@ export interface InputProps
         | 'autoCapitalize'
         | 'onSubmitEditing'
         | 'autoFocus'
+        | 'textContentType'
+        | 'keyboardType'
+        | 'inputMode'
+        | 'secureTextEntry'
     > {
     label?: string;
     style?: StyleProp<ViewStyle>;
     onChange?: (val: string) => void;
     inputStyle?: StyleProp<TextStyle>;
+    rightIcon?: React.ReactNode;
 }
 
 export const Input = forwardRef<TextInputComponent, InputProps>(
-    ({ numberOfLines = 1, onChange, style, label, inputStyle, ...rest }, ref) => (
+    ({ numberOfLines = 1, onChange, style, label, inputStyle, rightIcon, ...rest }, ref) => (
         <Wrapper style={style}>
             {label && <Label>{label}</Label>}
-            <TextInput
-                ref={ref}
-                style={inputStyle}
-                onChangeText={onChange}
-                numberOfLines={numberOfLines}
-                {...rest}
-            />
+            <InputWrapper>
+                <TextInput
+                    ref={ref}
+                    style={inputStyle}
+                    onChangeText={onChange}
+                    numberOfLines={numberOfLines}
+                    {...rest}
+                />
+                {rightIcon}
+            </InputWrapper>
         </Wrapper>
     ),
 );

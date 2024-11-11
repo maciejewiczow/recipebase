@@ -6,6 +6,7 @@ declare module 'styled-components/native' {
             text: string;
             background: string;
             primaryAccent: string;
+            error: string;
         };
         border: {
             radiusGigantic: string;

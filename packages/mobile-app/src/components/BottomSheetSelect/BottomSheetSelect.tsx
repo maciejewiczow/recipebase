@@ -1,9 +1,13 @@
-import React, { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ListRenderItem, StyleProp, TextInput, TouchableWithoutFeedback, ViewStyle } from 'react-native';
+import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ListRenderItem, StyleProp, TextInput, TouchableOpacity, ViewStyle } from 'react-native';
 import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useBottomSheetModal } from '~/utils/useBottomSheet';
 import { Label } from '../Input/Input.styles';
 import {
+    DefaultItemText,
+    DefaultItemWrapper,
+    InputPressable,
+    InputRow,
     ListWrapper,
     Placeholder,
     PseudoInput,
@@ -12,53 +16,89 @@ import {
     Wrapper,
 } from './BottomSheetSelect.styles';
 
-interface Option<T> {
+export interface DefaultItem {
+    label: string;
+    value: string;
+}
+
+interface Option<T extends DefaultItem> {
     item: T;
     isActive: boolean;
 }
 
-interface OptionWithIndex<T> extends Option<T> {
+interface OptionWithIndex<T extends DefaultItem> extends Option<T> {
     index: number;
 }
 
-interface ListOption<T> extends OptionWithIndex<T> {
+interface ListOption<T extends DefaultItem> extends OptionWithIndex<T> {
     select: () => void;
 }
 
-export interface BottomSheetSelectProps<T> {
+type RenderOption<T extends DefaultItem = DefaultItem> = (opt: ListOption<T>) => ReactElement;
+type RenderValue<T extends DefaultItem = DefaultItem> = (val: T) => string | number | null | undefined;
+type IsEqual<T extends DefaultItem = DefaultItem> = (a: T, b: T) => boolean;
+type KeyExtractor<T extends DefaultItem = DefaultItem> = (item: T) => Stringable;
+
+export type BottomSheetSelectProps<T extends DefaultItem> = {
     label?: string;
     placeholder?: string;
     style?: StyleProp<ViewStyle>;
     options: T[];
-    renderOption: (opt: ListOption<T>) => ReactElement;
-    renderValue: (val: T) => string | number | null | undefined;
+    renderOption?: RenderOption<T>;
+    renderValue?: RenderValue<T>;
     onChange?: (opt: Option<T>) => void;
-    keyExtractor?: (item: T) => Stringable;
-    isEqual: (a: T, b: T) => boolean;
+    keyExtractor?: KeyExtractor<T>;
+    isEqual?: IsEqual<T>;
     value?: T;
-    searchText?: string;
-    onSearchTextChange?: (text: string) => void;
-}
+    iconRight?: ReactNode;
+} & (
+    | {
+          searchable: true;
+          searchText?: string;
+          onSearchTextChange?: (text: string) => void;
+      }
+    | {
+          searchable?: false;
+      }
+);
 
-export const BottomSheetSelect = <T,>({
+const defaultIsEqual: IsEqual = (a, b) => a.value === b.value;
+
+const defaultRenderOption: RenderOption = ({ select, isActive, item }: ListOption<DefaultItem>) => (
+    <TouchableOpacity onPress={select}>
+        <DefaultItemWrapper>
+            <DefaultItemText isActive={isActive}>{item.label}</DefaultItemText>
+        </DefaultItemWrapper>
+    </TouchableOpacity>
+);
+
+const defaultKeyExtractor: KeyExtractor = ({ value }) => value;
+const defaultRenderValue: RenderValue = ({ label }) => label;
+
+export const BottomSheetSelect = <T extends DefaultItem = DefaultItem>({
     label,
     placeholder,
     style,
     options,
-    renderOption,
-    renderValue,
+    renderOption = defaultRenderOption,
+    renderValue = defaultRenderValue,
     onChange,
-    isEqual,
-    keyExtractor,
+    isEqual = defaultIsEqual,
+    keyExtractor = defaultKeyExtractor,
     value,
-    searchText,
-    onSearchTextChange,
+    iconRight,
+    ...props
 }: BottomSheetSelectProps<T>) => {
     const searchInputRef = useRef<TextInput>(null);
     const [currentValue, setCurrentValue] = useState<T>();
 
-    const { props, bottomSheetModal } = useBottomSheetModal({
-        onClose: useCallback(() => onSearchTextChange?.(''), [onSearchTextChange]),
+    const { props: modalProps, bottomSheetModal } = useBottomSheetModal({
+        onClose: useCallback(() => {
+            if (props.searchable) {
+                props.onSearchTextChange?.('');
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [props.searchable, props.searchable && props.onSearchTextChange]),
     });
 
     useEffect(() => {
@@ -99,34 +139,39 @@ export const BottomSheetSelect = <T,>({
     return (
         <Wrapper style={style}>
             <Label>{label}</Label>
-            <TouchableWithoutFeedback
-                onPress={() => {
-                    if (currentValue) {
-                        onSearchTextChange?.(renderValue(currentValue)?.toString() ?? '');
-                    }
-                    bottomSheetModal.open();
-                }}
-            >
-                <PseudoInput>
-                    {currentValue ? (
-                        <Value>{renderValue(currentValue)}</Value>
-                    ) : (
-                        <Placeholder>{placeholder}</Placeholder>
-                    )}
-                </PseudoInput>
-            </TouchableWithoutFeedback>
-            <BottomSheetModal {...props}>
+            <InputRow>
+                <InputPressable
+                    onPress={() => {
+                        if (currentValue && props.searchable) {
+                            props.onSearchTextChange?.(renderValue(currentValue)?.toString() ?? '');
+                        }
+                        bottomSheetModal.open();
+                    }}
+                >
+                    <PseudoInput>
+                        {currentValue ? (
+                            <Value>{renderValue(currentValue)}</Value>
+                        ) : (
+                            <Placeholder>{placeholder}</Placeholder>
+                        )}
+                    </PseudoInput>
+                </InputPressable>
+                {iconRight}
+            </InputRow>
+            <BottomSheetModal {...modalProps}>
                 <ListWrapper>
-                    <SearchInput
-                        ref={searchInputRef}
-                        value={searchText}
-                        onChange={onSearchTextChange}
-                        autoCapitalize="none"
-                        autoFocus
-                        onSubmitEditing={() => {
-                            forwardChange(data[0]);
-                        }}
-                    />
+                    {props.searchable && (
+                        <SearchInput
+                            ref={searchInputRef}
+                            value={props.searchText}
+                            onChange={props.onSearchTextChange}
+                            autoCapitalize="none"
+                            autoFocus
+                            onSubmitEditing={() => {
+                                forwardChange(data[0]);
+                            }}
+                        />
+                    )}
                     <BottomSheetFlatList<Option<T>>
                         keyboardShouldPersistTaps="handled"
                         data={data}

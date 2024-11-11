@@ -1,5 +1,5 @@
-import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import styled from 'styled-components/native';
 import { createStyledIcon } from '~/utils/createStyledIcon';
 
 export const Wrapper = styled.View`

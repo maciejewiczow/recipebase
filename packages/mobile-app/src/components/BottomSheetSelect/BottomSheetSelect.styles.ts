@@ -1,10 +1,8 @@
 import styled from 'styled-components/native';
-import { inputStyles } from '../Input/Input.styles';
 import { Input } from '../Input';
+import { inputStyles } from '../Input/Input.styles';
 
-export const Wrapper = styled.View`
-    flex: 1;
-`;
+export const Wrapper = styled.View``;
 
 export const PseudoInput = styled.View`
     ${inputStyles}
@@ -24,6 +22,26 @@ export const Value = styled.Text`
 export const ListWrapper = styled.View`
     padding: 0 16px;
     flex: 1;
+`;
+
+export const DefaultItemWrapper = styled.View`
+    padding: 16px 8px;
+`;
+
+export const InputRow = styled.View`
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+`;
+
+export const InputPressable = styled.Pressable`
+    flex: 1;
+`;
+
+export const DefaultItemText = styled.Text<{ isActive: boolean }>`
+    font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
+    font-size: 20px;
+    color: #333;
 `;
 
 export const SearchInput = styled(Input).attrs({

@@ -1,4 +1,10 @@
-export { AddIngredientView, AddStepIngredientView, AddStepView, CreateRecipeView } from './CreateRecipeView';
+export {
+    AddIngredientView,
+    AddStepIngredientView,
+    AddStepView,
+    CreateRecipeView,
+    ImportRecipeView,
+} from './CreateRecipeView';
 export { GDriveFilePickerView } from './GDriveFilePickerView/GDriveFilePickerView';
 export { HomeNavigationView } from './HomeNavigationView/HomeNavigationView';
 export { RecipeView } from './RecipeView';

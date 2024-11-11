@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { parseQuantityString } from '../store/recipeUtils';
 import { Ingredient } from './Ingredient';
 import { IngredientSection } from './IngredientSection';
 import { RecipeStep } from './RecipeStep';
@@ -45,5 +46,23 @@ export class RecipeIngredient {
         newRecipeIngr.ingredient = newIngr;
 
         return newRecipeIngr;
+    }
+
+    static createFromApiData(ingredient: Ingredient, unit: Unit | undefined, quantity: string | null) {
+        const ri = RecipeIngredient.createWithTemporaryId();
+
+        ri.unit = unit;
+        ri.ingredient = ingredient;
+
+        if (quantity) {
+            const { quantityFrom, quantityTo } = parseQuantityString(quantity);
+
+            ri.quantityFrom = quantityFrom;
+            ri.quantityTo = quantityTo;
+        } else {
+            ri.quantityFrom = 0;
+        }
+
+        return ri;
     }
 }

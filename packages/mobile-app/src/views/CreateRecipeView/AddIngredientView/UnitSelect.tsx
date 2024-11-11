@@ -17,12 +17,10 @@ const renderOption: BottomSheetSelectProps<UnitListItemType>['renderOption'] = (
             isCustom={item.isCustom}
             isActive={isActive}
         >
-            {item.unitName}
+            {item.label}
         </UnitName>
     </UnitItemWrapper>
 );
-
-const isUnitEqual = (a: UnitListItemType, b: UnitListItemType) => a.unitName === b.unitName;
 
 export const UnitSelect: React.FC = observer(() => {
     const { draftIngredient, units } = useRootStore();
@@ -33,14 +31,10 @@ export const UnitSelect: React.FC = observer(() => {
         [draftIngredient.unitSearchString, units],
     );
 
-    const renderValue: BottomSheetSelectProps<UnitListItemType>['renderValue'] = useCallback(
-        item => item.unitName,
-        [],
-    );
-
     const value = useMemo<UnitListItemType>(
         () => ({
-            unitName: draftIngredient.unit.name,
+            label: draftIngredient.unit.name,
+            value: draftIngredient.unit.name,
             isCustom: false,
         }),
         [draftIngredient.unit.name],
@@ -49,11 +43,11 @@ export const UnitSelect: React.FC = observer(() => {
     const onChange: Defined<BottomSheetSelectProps<UnitListItemType>['onChange']> = useCallback(
         ({ item }) => {
             if (item.isCustom) {
-                draftIngredient.setUnitName(item.unitName);
+                draftIngredient.setUnitName(item.value);
             } else {
-                const unit = unitsWithDrafts.find(u => u.name === item.unitName);
+                const unit = unitsWithDrafts.find(u => u.name === item.value);
 
-                invariant(!!unit, `Unit ${item.unitName} does not exist`);
+                invariant(!!unit, `Unit ${item.value} does not exist`);
 
                 draftIngredient.setUnit(unit);
             }
@@ -69,10 +63,9 @@ export const UnitSelect: React.FC = observer(() => {
             placeholder="kg, g..."
             options={data}
             renderOption={renderOption}
-            renderValue={renderValue}
-            isEqual={isUnitEqual}
             value={value}
             onChange={onChange}
+            searchable
             searchText={draftIngredient.unitSearchString}
             onSearchTextChange={draftIngredient.setUnitSearchString}
         />

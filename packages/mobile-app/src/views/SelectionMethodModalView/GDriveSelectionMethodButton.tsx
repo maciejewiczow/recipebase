@@ -2,14 +2,14 @@ import React from 'react';
 import { ToastAndroid, TouchableOpacity } from 'react-native';
 import {
     GoogleSignin,
-    statusCodes,
     NativeModuleError,
+    statusCodes,
     User,
 } from '@react-native-google-signin/google-signin';
-import { Tile, GDriveIcon, TileText } from './SelectionMethodModalView.styles';
-import { FileSelectionButtonProps, SelecMethodModalViewRouteProps } from './ViewProps';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '~/RootNavigation';
+import { FileSelectionButtonProps, SelecMethodModalViewRouteProps } from './ViewProps';
+import { GDriveIcon, Tile, TileText } from './SelectionMethodModalView.styles';
 
 export const GDriveSelectionMethodButton: React.FC<
     SelecMethodModalViewRouteProps & FileSelectionButtonProps
@@ -21,8 +21,11 @@ export const GDriveSelectionMethodButton: React.FC<
             await GoogleSignin.hasPlayServices();
 
             let userInfo: User;
-            if (await GoogleSignin.isSignedIn()) userInfo = await GoogleSignin.signInSilently();
-            else userInfo = await GoogleSignin.signIn();
+            if (await GoogleSignin.isSignedIn()) {
+                userInfo = await GoogleSignin.signInSilently();
+            } else {
+                userInfo = await GoogleSignin.signIn();
+            }
 
             console.log(userInfo); // just to see if things are working
             console.log('Successful login');
