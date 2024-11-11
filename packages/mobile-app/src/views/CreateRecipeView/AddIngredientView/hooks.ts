@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Ingredient, Unit } from 'backend-logic';
+import { Ingredient, IngredientSection, Unit } from 'backend-logic';
 import { uniqBy } from 'lodash';
 import { DefaultItem } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { useRootStore } from '~/RootStoreContext';
@@ -9,25 +9,31 @@ export interface UnitListItemType extends DefaultItem {
     isCustom: boolean;
 }
 
-export const useUnitSelectData = () => {
-    const { draftRecipe, units, draftIngredient } = useRootStore();
-
-    const unitsWithDrafts = useMemo<Unit[]>(
-        () => uniqBy(
-                [
-                    ...(draftRecipe.recipe.ingredientSections
-                        ?.flatMap(is => is.recipeIngredients)
-                        .filter(isTruthy)
-                        .map(({ unit }) => unit)
-                        .filter(isTruthy) ?? []),
-                    ...units.units,
-                ],
-                unit => unit.name,
-            ),
-        [draftRecipe.recipe.ingredientSections, units.units],
+export const getUnitsWithDrafts = (sections: IngredientSection[] | undefined, units: Unit[]) => uniqBy(
+        [
+            ...(sections
+                ?.flatMap(is => is.recipeIngredients)
+                .filter(isTruthy)
+                .map(({ unit }) => unit)
+                .filter(isTruthy) ?? []),
+            ...units,
+        ],
+        unit => unit.name,
     );
 
-    const data = useMemo<UnitListItemType[]>(
+export const useUnitsWithDrafts = () => {
+    const { draftRecipe, units } = useRootStore();
+
+    return useMemo<Unit[]>(
+        () => getUnitsWithDrafts(draftRecipe.recipe.ingredientSections, units.units),
+        [draftRecipe.recipe.ingredientSections, units.units],
+    );
+};
+
+export const useUnitSelectData = (unitsWithDrafts: Unit[]) => {
+    const { draftIngredient } = useRootStore();
+
+    return useMemo<UnitListItemType[]>(
         () => [
             ...(draftIngredient.unitSearchString &&
             !unitsWithDrafts.some(x => x.name === draftIngredient.unitSearchString)
@@ -43,8 +49,6 @@ export const useUnitSelectData = () => {
         ],
         [draftIngredient.unitSearchString, unitsWithDrafts],
     );
-
-    return [data, unitsWithDrafts] as const;
 };
 
 export interface IngredientListItemType {
@@ -66,23 +70,31 @@ const shouldShowDraftingredient = (
     );
 };
 
+export const getIngredientsWithDrafts = (
+    ingredientSections: IngredientSection[] | undefined,
+    ingredients: Ingredient[],
+) => uniqBy(
+        [
+            ...(ingredientSections
+                ?.flatMap(is => is.recipeIngredients)
+                .filter(isTruthy)
+                .map(({ ingredient }) => ingredient)
+                .filter(isTruthy) ?? []),
+            ...ingredients,
+        ],
+        i => i.id,
+    );
+
 export const useIngredientListData = (isInEditMode: boolean, searchString: string) => {
     const { ingredients, draftIngredient, draftRecipe } = useRootStore();
 
     const ingredientsWithDrafts = useMemo<IngredientListItemType[]>(
-        () => uniqBy(
-                [
-                    ...(draftRecipe.recipe.ingredientSections
-                        ?.flatMap(is => is.recipeIngredients)
-                        .filter(isTruthy)
-                        .map(({ ingredient }) => ingredient)
-                        .filter(isTruthy)
-                        .filter(ingredient => ingredient.name.toLowerCase().includes(searchString.toLowerCase()),
-                        ) ?? []),
-                    ...ingredients.ingredients,
-                ],
-                i => i.id,
-            ).map(ingredient => ({ ingredient, isCustom: false })),
+        () => getIngredientsWithDrafts(draftRecipe.recipe.ingredientSections, ingredients.ingredients)
+                .filter(ingredient => ingredient.name.toLowerCase().includes(searchString.toLowerCase()))
+                .map(ingredient => ({
+                    ingredient,
+                    isCustom: false,
+                })),
         [draftRecipe.recipe.ingredientSections, ingredients.ingredients, searchString],
     );
 

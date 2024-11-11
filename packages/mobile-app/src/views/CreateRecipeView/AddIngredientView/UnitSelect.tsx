@@ -4,7 +4,7 @@ import invariant from 'tiny-invariant';
 import { BottomSheetSelectProps } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { useRootStore } from '~/RootStoreContext';
 import { useRunCancellablePromise } from '~/utils/useRunCancellablePromise';
-import { UnitListItemType, useUnitSelectData } from './hooks';
+import { UnitListItemType, useUnitSelectData, useUnitsWithDrafts } from './hooks';
 import { UnitItemWrapper, UnitName, UnitSelectInput as UnitSelectInput } from './AddIngredientView.styles';
 
 const renderOption: BottomSheetSelectProps<UnitListItemType>['renderOption'] = ({
@@ -24,7 +24,8 @@ const renderOption: BottomSheetSelectProps<UnitListItemType>['renderOption'] = (
 
 export const UnitSelect: React.FC = observer(() => {
     const { draftIngredient, units } = useRootStore();
-    const [data, unitsWithDrafts] = useUnitSelectData();
+    const unitsWithDrafts = useUnitsWithDrafts();
+    const data = useUnitSelectData(unitsWithDrafts);
 
     useRunCancellablePromise(
         () => units.fetchUnits(draftIngredient.unitSearchString ?? ''),

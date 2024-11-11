@@ -71,8 +71,6 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
                         ?.flatMap(section => section.recipeIngredients ?? [])
                         .some(ri => ri.ingredient?.id === draftIngredient.ingredient.id) ?? false;
 
-                console.log({ shouldCopy });
-
                 draftIngredient.setName(name, shouldCopy);
             };
 

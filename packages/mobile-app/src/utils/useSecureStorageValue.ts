@@ -26,11 +26,13 @@ export const useSecureStorageValue = <T>(storageKey: string, initialValue: T) =>
     }, [storageKey]);
 
     useEffect(() => {
-        RNSecureStorage.getItem(storageKey).then(item => {
-            if (item) {
-                setValue(JSON.parse(item));
-            }
-        });
+        RNSecureStorage.getItem(storageKey)
+            .then(item => {
+                if (item) {
+                    setValue(JSON.parse(item));
+                }
+            })
+            .catch(e => console.log(e));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

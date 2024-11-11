@@ -8,6 +8,7 @@ import {
     DraftRecipe,
     Ingredient,
     Ingredients,
+    IngredientSection,
     RecipeIngredient,
     RecipeStep,
     Unit,
@@ -21,6 +22,7 @@ import { Input } from '~/components/Input';
 import { RootStackParams } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
 import { useSecureStorageValue } from '~/utils/useSecureStorageValue';
+import { getIngredientsWithDrafts, getUnitsWithDrafts } from '../AddIngredientView/hooks';
 import {
     CheckboxLabel,
     CheckboxPressable,
@@ -98,7 +100,11 @@ const downloadCoverImageToBase64 = async (imageUrl: string): Promise<string> => 
     }
 };
 
-async function findOrCreateUnit(unitsStore: Units, apiIngredient: components['schemas']['Ingredient']) {
+async function findOrCreateUnit(
+    ingredientSections: IngredientSection[] | undefined,
+    unitsStore: Units,
+    apiIngredient: components['schemas']['Ingredient'],
+) {
     if (apiIngredient.quantity === null && apiIngredient.unit === null) {
         return undefined;
     }
@@ -107,7 +113,9 @@ async function findOrCreateUnit(unitsStore: Units, apiIngredient: components['sc
 
     await unitsStore.fetchUnits(apiUnitName);
 
-    let unit = unitsStore.units.find(
+    const unitsWithDrafts = getUnitsWithDrafts(ingredientSections, unitsStore.units);
+
+    let unit = unitsWithDrafts.find(
         u => u.name.trim().toLowerCase() === apiIngredient.unit?.trim().toLowerCase(),
     );
 
@@ -120,12 +128,13 @@ async function findOrCreateUnit(unitsStore: Units, apiIngredient: components['sc
 }
 
 async function findOrCreateIngredient(
+    ingredientSections: IngredientSection[] | undefined,
     ingredientsStore: Ingredients,
     apiIngredient: components['schemas']['Ingredient'],
 ) {
     await ingredientsStore.fetchIngredients(apiIngredient.name);
 
-    let ingredient = ingredientsStore.ingredients.find(
+    let ingredient = getIngredientsWithDrafts(ingredientSections, ingredientsStore.ingredients).find(
         i => i.name.trim().toLowerCase() === apiIngredient.name.trim().toLowerCase(),
     );
 
@@ -175,8 +184,14 @@ const setRecipeFromApiResponse = async (
         draftRecipe.setSectionName(id, name ?? '');
 
         for (const apiIngredient of ingredients) {
-            const unit = await findOrCreateUnit(unitsStore, apiIngredient);
-            const ingredient = await findOrCreateIngredient(ingredientsStore, apiIngredient);
+            const [unit, ingredient] = await Promise.all([
+                findOrCreateUnit(draftRecipe.recipe.ingredientSections, unitsStore, apiIngredient),
+                findOrCreateIngredient(
+                    draftRecipe.recipe.ingredientSections,
+                    ingredientsStore,
+                    apiIngredient,
+                ),
+            ]);
 
             const ri = RecipeIngredient.createFromApiData(ingredient, unit, apiIngredient.quantity);
 

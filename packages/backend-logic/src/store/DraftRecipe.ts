@@ -193,12 +193,6 @@ export class DraftRecipe {
         this.recipe.sections = sections;
     };
 
-    getStepContent(sectionId: number, stepId?: number) {
-        const section = this.recipe.sections?.find(s => s.id === sectionId);
-
-        return section?.recipeSteps?.find(s => s.id === stepId)?.content;
-    }
-
     save = flow(function* (this: DraftRecipe) {
         try {
             this.isSavingRecipe = true;
