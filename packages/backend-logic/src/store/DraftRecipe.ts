@@ -146,9 +146,11 @@ export class DraftRecipe {
             this.recipe.ingredientSections[0].recipeIngredients = [];
         }
 
-        const sections: IngredientSection[] = this.recipe.ingredientSections?.[0]
-            ? [this.recipe.ingredientSections?.[0]]
-            : [];
+        const sections = [];
+
+        if (this.recipe.ingredientSections?.[0]) {
+            sections.push(this.recipe.ingredientSections[0]);
+        }
 
         for (const item of items) {
             if (item instanceof IngredientSection) {
@@ -157,6 +159,7 @@ export class DraftRecipe {
             } else {
                 const section = sections.at(-1);
 
+                item.ingredientSection = section;
                 section?.recipeIngredients?.push(item);
             }
         }

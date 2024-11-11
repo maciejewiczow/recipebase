@@ -85,6 +85,11 @@ export class Root {
         //         ingredients: this.ingredients
         //     });
         // }
+
+        if (Config.DEBUG) {
+            // @ts-expect-error debug only
+            global.store = this;
+        }
     }
 
     private async initalizeDatabase(dbPath: string) {
