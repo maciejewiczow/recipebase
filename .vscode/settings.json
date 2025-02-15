@@ -1,10 +1,8 @@
 {
-    "eslint.workingDirectories": [
-        "packages/mobile-app",
-        "packages/backend-logic"
-    ],
+    "eslint.workingDirectories": ["packages/mobile-app", "packages/backend-logic"],
     "jest.jestCommandLine": "npx jest ",
     "files.exclude": {
         "**/node_modules": true
-    }
+    },
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

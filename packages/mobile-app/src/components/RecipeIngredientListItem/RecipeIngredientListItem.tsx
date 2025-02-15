@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { RecipeIngredient } from 'backend-logic';
+import { observer } from 'mobx-react-lite';
 import {
     IngredientNameWrapper,
     QuantityWrapper,
@@ -15,24 +16,26 @@ export interface RecipeIngredientListItemProps {
     style?: StyleProp<ViewStyle>;
 }
 
-export const RecipeIngredientListItem: React.FC<RecipeIngredientListItemProps> = ({
-    leftSection,
-    rightSection,
-    recipeIngredient: { quantityFrom, quantityTo, unit, ingredient },
-    style,
-}) => (
-    <RecipeIngredientWrapper style={style}>
-        {leftSection}
-        <QuantityWrapper>
-            <Text>
-                {quantityFrom}
-                {quantityTo ? '-' : ''}
-                {quantityTo} {unit?.name}
-            </Text>
-        </QuantityWrapper>
-        <IngredientNameWrapper>
-            <Text>{ingredient?.name}</Text>
-        </IngredientNameWrapper>
-        {rightSection}
-    </RecipeIngredientWrapper>
+export const RecipeIngredientListItem: React.FC<RecipeIngredientListItemProps> = observer(
+    ({
+        leftSection,
+        rightSection,
+        recipeIngredient: { quantityFrom, quantityTo, unit, ingredient },
+        style,
+    }) => (
+        <RecipeIngredientWrapper style={style}>
+            {leftSection}
+            <QuantityWrapper>
+                <Text>
+                    {quantityFrom}
+                    {quantityTo ? '-' : ''}
+                    {quantityTo} {unit?.name}
+                </Text>
+            </QuantityWrapper>
+            <IngredientNameWrapper>
+                <Text>{ingredient?.name}</Text>
+            </IngredientNameWrapper>
+            {rightSection}
+        </RecipeIngredientWrapper>
+    ),
 );
