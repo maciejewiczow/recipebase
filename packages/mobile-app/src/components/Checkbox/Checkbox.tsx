@@ -23,15 +23,11 @@ export const Checkbox: React.FC<CheckboxProps> = ({ checked, style }) => {
     const theme = useTheme();
 
     const animatedStyle = useAnimatedStyle(() => ({
-        backgroundColor: interpolateColor(
-            progress.value,
-            [0, 1],
-            ['transparent', theme.palette.primaryAccent],
-        ),
+        backgroundColor: interpolateColor(progress.value, [0, 1], ['transparent', theme.palette.primary[0]]),
     }));
 
     return (
-        <Wrapper style={[style, { borderColor: theme.palette.primaryAccent }, animatedStyle]}>
+        <Wrapper style={[style, { borderColor: theme.palette.primary[0] }, animatedStyle]}>
             {checked && (
                 <Animated.View
                     entering={FadeIn.duration(animationDuration)}

@@ -1,10 +1,10 @@
-import styled, { css } from 'styled-components/native';
 import FIcon from 'react-native-vector-icons/Fontisto';
+import styled, { css } from 'styled-components/native';
 import { SearchBar as OriginalSearchBar } from '~/components/SearchBar';
-import { createViewIcon } from '../createViewIcon';
-import { TagList as OriginalTagList } from '~/components/TagList';
-import { RecipeListItem as OriginalRecipeListItem } from './RecipeListItem';
 import { RecipeIcon as OriginalRecipeIcon } from '~/components/Svg/RecipeIcon';
+import { TagList as OriginalTagList } from '~/components/TagList';
+import { createViewIcon } from '../createViewIcon';
+import { RecipeListItem as OriginalRecipeListItem } from './RecipeListItem';
 
 export const allMargin = css`
     margin-left: 16px;
@@ -22,7 +22,7 @@ export const Wrapper = styled.ScrollView.attrs({
 export const Title = styled.Text`
     font-size: 38px;
     font-weight: 700;
-    color: ${({ theme }) => theme.palette.primaryAccent};
+    color: ${({ theme }) => theme.palette.primary[0]};
     ${allMargin}
     margin-top: 24px;
 `;

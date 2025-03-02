@@ -1,7 +1,7 @@
-import { css, styled } from 'styled-components/native';
-import OcticonsIcon from 'react-native-vector-icons/Octicons';
-import { createStyledIcon } from '~/utils/createStyledIcon';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
+import OcticonsIcon from 'react-native-vector-icons/Octicons';
+import { css, styled } from 'styled-components/native';
+import { createStyledIcon } from '~/utils/createStyledIcon';
 
 export const Wrapper = styled.View`
     padding: 24px 32px;
@@ -9,7 +9,7 @@ export const Wrapper = styled.View`
 `;
 
 export const TitleText = styled.Text`
-    color: ${({ theme }) => theme.palette.primaryAccent};
+    color: ${({ theme }) => theme.palette.primary[0]};
     font-size: 32px;
 `;
 

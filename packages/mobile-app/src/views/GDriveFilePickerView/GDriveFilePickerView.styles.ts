@@ -12,7 +12,7 @@ export const Header = styled.View`
 `;
 
 export const HeaderText = styled.View`
-    color: ${({ theme }) => theme.palette.primaryAccent};
+    color: ${({ theme }) => theme.palette.primary[0]};
     font-size: 32px;
 `;
 

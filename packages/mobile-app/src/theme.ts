@@ -1,12 +1,21 @@
 import { cloneDeep } from 'lodash';
-import { DefaultTheme } from 'styled-components/native';
 
-const common: DefaultTheme = {
+const common = {
     palette: {
-        primaryAccent: '#D86B0B',
-        background: '',
-        text: '',
-        error: '#94031b',
+        primary: ['#B52D4F', '#AF5564', '#E8002E'],
+        secondary: ['#FFBF8D'],
+        background: ['#FCF1E0', '#FEF4E4', '#FFF8EC', '#F2E8D8', '#FFF7E9', '#F2E7D0', '#DCBFAE', '#D7C3AE'],
+        text: ['#202121', '#D7C4AF'],
+        error: ['#94031b'],
+        success: ['#A2BC93'],
+    },
+    text: {
+        heading: {
+            font: 'Oranienbaum-Regular',
+        },
+        normal: {
+            font: 'PlusJakartaSans-Regular',
+        },
     },
     border: {
         radiusGigantic: '30px',
@@ -14,14 +23,13 @@ const common: DefaultTheme = {
         radius: '10px',
         radiusSmall: '8px',
     },
-};
+} as const;
 
-export const lightTheme = cloneDeep(common) as DefaultTheme;
+export type Theme = typeof common;
 
-lightTheme.palette.background = '#fff';
-lightTheme.palette.text = '#333';
+export const lightTheme = cloneDeep(common);
 
-export const darkTheme = cloneDeep(common) as DefaultTheme;
+// export const darkTheme = cloneDeep(common);
 
-darkTheme.palette.background = '#000';
-darkTheme.palette.text = '#fff';
+// darkTheme.palette.background = '#000';
+// darkTheme.palette.text = '#fff';

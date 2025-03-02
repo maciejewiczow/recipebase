@@ -21,8 +21,7 @@ export const TagView = styled(OriginalTagView).attrs({
         color: '#333',
     },
 })`
-    ${({ isSelected }) =>
-        !isSelected &&
+    ${({ isSelected }) => !isSelected &&
         css`
             background: white;
         `}

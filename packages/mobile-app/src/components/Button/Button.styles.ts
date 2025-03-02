@@ -1,19 +1,20 @@
-import styled from 'styled-components/native';
+import styled, { DefaultTheme } from 'styled-components/native';
 import { ButtonVariant } from './Button';
 
 interface ButtonPartsStyleProps {
     variant: ButtonVariant;
     disabled: boolean;
+    theme: DefaultTheme;
 }
 
-const getButtonBg = ({ variant, disabled }: ButtonPartsStyleProps) => {
+const getButtonBg = ({ variant, disabled, theme }: ButtonPartsStyleProps) => {
     if (disabled) {
         return '#F0F0F0';
     }
 
     switch (variant) {
         case 'primary':
-            return '#E88A36';
+            return theme.palette.primary[0];
 
         case 'secondary':
             return '#F8F8F8';
@@ -23,7 +24,7 @@ const getButtonBg = ({ variant, disabled }: ButtonPartsStyleProps) => {
     }
 };
 
-const getButtonBorderColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
+const getButtonBorderColor = ({ variant, disabled, theme }: ButtonPartsStyleProps) => {
     if (disabled) {
         switch (variant) {
             case 'primary':
@@ -40,10 +41,10 @@ const getButtonBorderColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
     switch (variant) {
         case 'primary':
         case 'primary-outline':
-            return '#E88A36';
+            return theme.palette.primary[0];
 
         case 'secondary-outline':
-            return 'white';
+            return theme.palette.text[0];
 
         case 'secondary':
             return '#E5E5E5';
@@ -53,7 +54,7 @@ const getButtonBorderColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
     }
 };
 
-const getButtonTextColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
+const getButtonTextColor = ({ variant, disabled, theme }: ButtonPartsStyleProps) => {
     if (disabled) {
         return '#848484';
     }
@@ -63,10 +64,10 @@ const getButtonTextColor = ({ variant, disabled }: ButtonPartsStyleProps) => {
             return '#555';
 
         case 'transparent':
-            return '#333';
+            return theme.palette.text[0];
 
         default:
-            return 'white';
+            return theme.palette.background[1];
     }
 };
 

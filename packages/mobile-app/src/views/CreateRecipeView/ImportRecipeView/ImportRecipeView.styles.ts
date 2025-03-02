@@ -44,7 +44,7 @@ export const MainErrorWrapper = styled.View`
 `;
 
 export const MainErrorText = styled.Text`
-    color: ${({ theme }) => theme.palette.error};
+    color: ${({ theme }) => theme.palette.error[0]};
 `;
 
 export const ImportButton = styled(Button).attrs({

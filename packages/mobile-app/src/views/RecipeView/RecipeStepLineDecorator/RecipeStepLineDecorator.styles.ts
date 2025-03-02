@@ -11,7 +11,7 @@ export const Wrapper = styled.View`
 export const Circle = styled.View<RecipeStepLineDecoratorProps>`
     background: ${({ progression }) => (progression === RecipeProgression.past ? '#CFCFCF' : 'white')};
     border-width: 5px;
-    border-color: ${({ progression, theme }) => (progression === RecipeProgression.current ? theme.palette.primaryAccent : '#CFCFCF')};
+    border-color: ${({ progression, theme }) => (progression === RecipeProgression.current ? theme.palette.primary[0] : '#CFCFCF')};
     border-style: solid;
 
     border-radius: 10px;
@@ -21,7 +21,7 @@ export const Circle = styled.View<RecipeStepLineDecoratorProps>`
 
 export const Line = styled(DashedLine).attrs<RecipeStepLineDecoratorProps>(({ progression, theme }) => ({
     axis: 'vertical',
-    dashColor: progression === RecipeProgression.current ? theme.palette.primaryAccent : '#CFCFCF',
+    dashColor: progression === RecipeProgression.current ? theme.palette.primary[0] : '#CFCFCF',
     dashThickness: 4,
     dashGap: progression !== RecipeProgression.past ? 7 : 0,
     dashLength: 7,

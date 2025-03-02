@@ -1,18 +1,6 @@
 import 'styled-components/native';
+import type { Theme } from './theme';
 
 declare module 'styled-components/native' {
-    export interface DefaultTheme {
-        palette: {
-            text: string;
-            background: string;
-            primaryAccent: string;
-            error: string;
-        };
-        border: {
-            radiusGigantic: string;
-            radiusBig: string;
-            radius: string;
-            radiusSmall: string;
-        };
-    }
+    export interface DefaultTheme extends Theme {}
 }

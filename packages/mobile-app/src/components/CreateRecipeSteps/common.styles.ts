@@ -43,7 +43,7 @@ export const StepHeader = styled.Text`
     margin-bottom: 18px;
     font-size: 20px;
     font-weight: 400;
-    color: ${({ theme }) => theme.palette.primaryAccent};
+    color: ${({ theme }) => theme.palette.primary[0]};
 `;
 
 export const AddSectionButton = styled(Button).attrs({
