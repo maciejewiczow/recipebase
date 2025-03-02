@@ -6,7 +6,7 @@ import { RootStackParams } from '~/RootNavigation';
 import { CreateIcon } from '../CreateRecipeView';
 import { HomeIcon, HomeView } from './HomeView';
 import { SearchByIngredientIcon, SearchByIngredientView } from './SearchByIngredientView';
-import { SettingsIcon,SettingsView } from './SettingsView';
+import { SettingsIcon, SettingsView } from './SettingsView';
 import { Wrapper } from './HomeNavigationView.styles';
 
 export type HomeTabNavigationParams = {

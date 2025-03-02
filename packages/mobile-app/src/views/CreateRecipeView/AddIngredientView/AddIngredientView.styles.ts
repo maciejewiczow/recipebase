@@ -44,13 +44,13 @@ export const UnitItemWrapper = styled.TouchableOpacity`
     padding: 8px 0;
 `;
 
-export const UnitName = styled.Text<{ isCustom: boolean; isActive: boolean }>`
+export const UnitName = styled.Text<{ isCustom: boolean; isActive: boolean; isEmpty: boolean }>`
     font-size: 16px;
     ${({ isCustom }) => isCustom &&
         css`
             font-style: italic;
         `}
-    color: ${({ isActive }) => (isActive ? '#333' : '#777')};
+    color: ${({ isActive, isEmpty }) => (isEmpty ? 'white' : isActive ? '#333' : '#777')};
 `;
 
 export const EmptyListImageWrapper = styled.View`

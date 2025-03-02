@@ -1,23 +1,24 @@
 import React, { useCallback, useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
 import invariant from 'tiny-invariant';
-import { BottomSheetSelectProps } from '~/components/BottomSheetSelect/BottomSheetSelect';
+import { AllowEmptyBottomSheetSelectProps } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { useRootStore } from '~/RootStoreContext';
 import { useRunCancellablePromise } from '~/utils/useRunCancellablePromise';
 import { UnitListItemType, useUnitSelectData, useUnitsWithDrafts } from './hooks';
 import { UnitItemWrapper, UnitName, UnitSelectInput as UnitSelectInput } from './AddIngredientView.styles';
 
-const renderOption: BottomSheetSelectProps<UnitListItemType>['renderOption'] = ({
+const renderOption: AllowEmptyBottomSheetSelectProps<UnitListItemType>['renderOption'] = ({
     item,
     select,
     isActive,
 }) => (
     <UnitItemWrapper onPress={select}>
         <UnitName
-            isCustom={item.isCustom}
+            isCustom={item?.isCustom ?? false}
             isActive={isActive}
+            isEmpty={!item}
         >
-            {item.label}
+            {item?.label ?? 'empty'}
         </UnitName>
     </UnitItemWrapper>
 );
@@ -32,17 +33,25 @@ export const UnitSelect: React.FC = observer(() => {
         [draftIngredient.unitSearchString, units],
     );
 
-    const value = useMemo<UnitListItemType>(
-        () => ({
-            label: draftIngredient.unit.name,
-            value: draftIngredient.unit.name,
-            isCustom: false,
-        }),
-        [draftIngredient.unit.name],
+    const value = useMemo<UnitListItemType | undefined>(
+        () => (draftIngredient.unit
+                ? {
+                      label: draftIngredient.unit.name,
+                      value: draftIngredient.unit.name,
+                      isCustom: false,
+                  }
+                : undefined),
+        [draftIngredient.unit],
     );
 
-    const onChange: Defined<BottomSheetSelectProps<UnitListItemType>['onChange']> = useCallback(
+    const onChange: Defined<AllowEmptyBottomSheetSelectProps<UnitListItemType>['onChange']> = useCallback(
         ({ item }) => {
+            if (!item) {
+                draftIngredient.setUnit(undefined);
+                draftIngredient.commitSelectedUnit();
+                return;
+            }
+
             if (item.isCustom) {
                 draftIngredient.setUnitName(item.value);
             } else {
@@ -69,6 +78,7 @@ export const UnitSelect: React.FC = observer(() => {
             searchable
             searchText={draftIngredient.unitSearchString}
             onSearchTextChange={draftIngredient.setUnitSearchString}
+            allowEmpty
         />
     );
 });

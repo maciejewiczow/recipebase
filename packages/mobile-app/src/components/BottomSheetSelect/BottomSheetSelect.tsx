@@ -6,6 +6,7 @@ import { Label } from '../Input/Input.styles';
 import {
     DefaultItemText,
     DefaultItemWrapper,
+    EmptyItemText,
     InputPressable,
     InputRow,
     ListWrapper,
@@ -21,20 +22,20 @@ export interface DefaultItem {
     value: string;
 }
 
-interface Option<T extends DefaultItem> {
+interface Option<T extends DefaultItem | undefined> {
     item: T;
     isActive: boolean;
 }
 
-interface OptionWithIndex<T extends DefaultItem> extends Option<T> {
+interface OptionWithIndex<T extends DefaultItem | undefined> extends Option<T> {
     index: number;
 }
 
-interface ListOption<T extends DefaultItem> extends OptionWithIndex<T> {
+interface ListOption<T extends DefaultItem | undefined> extends OptionWithIndex<T> {
     select: () => void;
 }
 
-type RenderOption<T extends DefaultItem = DefaultItem> = (opt: ListOption<T>) => ReactElement;
+type RenderOption<T extends DefaultItem = DefaultItem> = (opt: ListOption<T | undefined>) => ReactElement;
 type RenderValue<T extends DefaultItem = DefaultItem> = (val: T) => string | number | null | undefined;
 type IsEqual<T extends DefaultItem = DefaultItem> = (a: T, b: T) => boolean;
 type KeyExtractor<T extends DefaultItem = DefaultItem> = (item: T) => Stringable;
@@ -46,10 +47,8 @@ export type BottomSheetSelectProps<T extends DefaultItem> = {
     options: T[];
     renderOption?: RenderOption<T>;
     renderValue?: RenderValue<T>;
-    onChange?: (opt: Option<T>) => void;
     keyExtractor?: KeyExtractor<T>;
     isEqual?: IsEqual<T>;
-    value?: T;
     iconRight?: ReactNode;
 } & (
     | {
@@ -60,14 +59,35 @@ export type BottomSheetSelectProps<T extends DefaultItem> = {
     | {
           searchable?: false;
       }
-);
+) &
+    (
+        | {
+              allowEmpty: true;
+              onChange?: (opt: Option<T | undefined>) => void;
+              value?: T | undefined;
+          }
+        | {
+              allowEmpty?: false;
+              onChange?: (opt: Option<T>) => void;
+              value?: T;
+          }
+    );
+
+export type AllowEmptyBottomSheetSelectProps<T extends DefaultItem> = Extract<
+    BottomSheetSelectProps<T>,
+    { allowEmpty: true }
+>;
 
 const defaultIsEqual: IsEqual = (a, b) => a.value === b.value;
 
-const defaultRenderOption: RenderOption = ({ select, isActive, item }: ListOption<DefaultItem>) => (
+const defaultRenderOption: RenderOption = ({ select, isActive, item }) => (
     <TouchableOpacity onPress={select}>
         <DefaultItemWrapper>
-            <DefaultItemText isActive={isActive}>{item.label}</DefaultItemText>
+            {item ? (
+                <DefaultItemText isActive={isActive}>{item.label}</DefaultItemText>
+            ) : (
+                <EmptyItemText isActive={isActive}>empty</EmptyItemText>
+            )}
         </DefaultItemWrapper>
     </TouchableOpacity>
 );
@@ -82,7 +102,6 @@ export const BottomSheetSelect = <T extends DefaultItem = DefaultItem>({
     options,
     renderOption = defaultRenderOption,
     renderValue = defaultRenderValue,
-    onChange,
     isEqual = defaultIsEqual,
     keyExtractor = defaultKeyExtractor,
     value,
@@ -106,23 +125,42 @@ export const BottomSheetSelect = <T extends DefaultItem = DefaultItem>({
     }, [value]);
 
     const forwardChange = useCallback(
-        (opt: Option<T>) => {
-            setCurrentValue(opt.item);
-            onChange?.(opt);
+        (opt: Option<T | undefined>) => {
+            setCurrentValue(opt?.item ?? undefined);
+
+            if (props.allowEmpty) {
+                props.onChange?.(opt);
+            } else if (opt.item) {
+                props.onChange?.({
+                    ...opt,
+                    item: opt.item,
+                });
+            }
             bottomSheetModal.close();
         },
-        [bottomSheetModal, onChange],
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [bottomSheetModal, props.onChange, props.allowEmpty],
     );
 
     const data = useMemo(
-        () => options.map<Option<T>>(item => ({
+        () => [
+            ...(props.allowEmpty
+                ? [
+                      {
+                          item: undefined,
+                          isActive: !!currentValue,
+                      },
+                  ]
+                : []),
+            ...options.map<Option<T>>(item => ({
                 item,
                 isActive: !!currentValue && isEqual(item, currentValue),
             })),
-        [isEqual, options, currentValue],
+        ],
+        [isEqual, options, currentValue, props.allowEmpty],
     );
 
-    const renderItem: ListRenderItem<Option<T>> = useCallback(
+    const renderItem: ListRenderItem<Option<T | undefined>> = useCallback(
         ({ item, index }) => renderOption({
                 ...item,
                 index,
@@ -132,7 +170,7 @@ export const BottomSheetSelect = <T extends DefaultItem = DefaultItem>({
     );
 
     const keyExtr = useCallback(
-        ({ item }: Option<T>, index: number) => (keyExtractor?.(item) ?? index).toString(),
+        (opt: Option<T | undefined>, index: number) => (opt.item ? (keyExtractor?.(opt.item) ?? index).toString() : 'empty'),
         [keyExtractor],
     );
 
@@ -172,7 +210,7 @@ export const BottomSheetSelect = <T extends DefaultItem = DefaultItem>({
                             }}
                         />
                     )}
-                    <BottomSheetFlatList<Option<T>>
+                    <BottomSheetFlatList<Option<T | undefined>>
                         keyboardShouldPersistTaps="handled"
                         data={data}
                         renderItem={renderItem}

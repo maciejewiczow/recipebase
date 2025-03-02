@@ -11,8 +11,8 @@ export class RecipeIngredient {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column({ type: 'double' })
-    quantityFrom: number;
+    @Column({ type: 'double', nullable: true })
+    quantityFrom?: number;
 
     @Column({ type: 'double', nullable: true })
     quantityTo?: number;
@@ -60,7 +60,12 @@ export class RecipeIngredient {
             ri.quantityFrom = quantityFrom;
             ri.quantityTo = quantityTo;
         } else {
-            ri.quantityFrom = 0;
+            ri.quantityFrom = undefined;
+        }
+
+        if (ri.quantityFrom !== undefined && isNaN(ri.quantityFrom)) {
+            ri.unit = undefined;
+            ri.quantityFrom = undefined;
         }
 
         return ri;

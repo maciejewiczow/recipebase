@@ -17,10 +17,12 @@ import { HomeTabNavigationParams } from './views/HomeNavigationView/HomeNavigati
 import { RecipeViewProps } from './views/RecipeView/ViewProps';
 import { SelecMethodModalViewRouteProps } from './views/SelectionMethodModalView/ViewProps';
 
-export interface ISubNavigator<T extends ParamListBase, K extends keyof T> {
-    screen: K;
-    params?: T[K];
-}
+export type ISubNavigator<T extends ParamListBase, K extends keyof T> =
+    | {
+          screen?: K;
+          params?: T[K];
+      }
+    | undefined;
 
 export type RootStackParams = {
     Splash: undefined;

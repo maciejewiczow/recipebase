@@ -1,5 +1,5 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import { capitalize } from '~/utils/capitalize';
 import { round } from '~/utils/round';
@@ -12,14 +12,17 @@ export interface IngredientListProps {
 export const IngredientList: React.FC<IngredientListProps> = observer(({ multiplier }) => {
     const { currentRecipe } = useRootStore();
 
-    if (!currentRecipe.recipe) return null;
+    if (!currentRecipe.recipe) {
+        return null;
+    }
 
-    if ((currentRecipe.recipe.ingredientSections?.length ?? 0) === 0)
+    if ((currentRecipe.recipe.ingredientSections?.length ?? 0) === 0) {
         return (
             <Ingredients>
                 <Text>No ingredients to show</Text>
             </Ingredients>
         );
+    }
 
     return (
         <Ingredients>
@@ -35,11 +38,13 @@ export const IngredientList: React.FC<IngredientListProps> = observer(({ multipl
                 ...(section.recipeIngredients?.map(rcpIngr => (
                     <IngredientRow key={`${section.id}_${rcpIngr.id}`}>
                         <IngredientText>• {capitalize(rcpIngr.ingredient?.name || '')} </IngredientText>
-                        <IngredientText>
-                            {round(rcpIngr.quantityFrom * multiplier, 2)}
-                            {rcpIngr.quantityTo && `—${round(rcpIngr.quantityTo * multiplier, 2)}`}{' '}
-                            {rcpIngr.unit?.name}
-                        </IngredientText>
+                        {rcpIngr.quantityFrom && (
+                            <IngredientText>
+                                {round(rcpIngr.quantityFrom * multiplier, 2)}
+                                {rcpIngr.quantityTo && `—${round(rcpIngr.quantityTo * multiplier, 2)}`}{' '}
+                                {rcpIngr.unit?.name}
+                            </IngredientText>
+                        )}
                     </IngredientRow>
                 )) ?? []),
             ])}

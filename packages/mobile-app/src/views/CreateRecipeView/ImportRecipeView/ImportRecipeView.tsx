@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Image, Platform, TouchableOpacity } from 'react-native';
 import ReactNativeBlobUtil from 'react-native-blob-util';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
@@ -181,7 +181,7 @@ const setRecipeFromApiResponse = async (
     for (const { name, ingredients } of apiResponse.ingredientGroups) {
         const { id } = draftRecipe.addNewIngredientSection();
 
-        draftRecipe.setSectionName(id, name ?? '');
+        draftRecipe.setSectionName(id, name);
 
         for (const apiIngredient of ingredients) {
             const [unit, ingredient] = await Promise.all([
@@ -208,6 +208,10 @@ export const ImportRecipeView: React.FC<ImportRecipeViewProps> = ({ navigation }
     const [apiKey, setApiKey, persistApiKey] = useSecureStorageValue('api_key', '');
     const [useIngredientParsing, setUseIngredientParsing] = useState(false);
     const [language, setLanguage] = useState<DefaultItem>({ label: 'Polish', value: 'pl' });
+
+    useEffect(() => {
+        setUseIngredientParsing(!!apiKey);
+    }, [apiKey]);
 
     const openApiKeyMoreInfoPopup = () => {
         Alert.alert(

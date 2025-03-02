@@ -70,7 +70,7 @@ export class DraftRecipe {
             ?.find(step => step?.id === stepId);
     }
 
-    @action setSectionName = (sectionId: number, name: string) => {
+    @action setSectionName = (sectionId: number, name: string | null) => {
         const section = this.recipe.sections?.find(s => s.id === sectionId);
 
         if (!section) {

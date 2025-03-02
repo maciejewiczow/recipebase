@@ -44,6 +44,10 @@ export const DefaultItemText = styled.Text<{ isActive: boolean }>`
     color: #333;
 `;
 
+export const EmptyItemText = styled(DefaultItemText)`
+    color: white;
+`;
+
 export const SearchInput = styled(Input).attrs({
     inputStyle: {
         borderRadius: 0,

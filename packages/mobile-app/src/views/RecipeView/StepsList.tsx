@@ -1,26 +1,34 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { LayoutChangeEvent, View } from 'react-native';
+import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import { RecipeProgression, RecipeStepLineDecorator } from './RecipeStepLineDecorator';
-import { SectionTitle, RecipeStepRow, RecipeStepText, Text } from './RecipeView.styles';
+import { RecipeStepRow, RecipeStepText, SectionTitle, Text } from './RecipeView.styles';
 
 export interface StepsListProps {
     currentStep: number;
     currentSection: number;
-    onChildrenLayout?: (e: LayoutChangeEvent, childKey: string) => any;
+    onChildrenLayout?: (e: LayoutChangeEvent, childKey: string) => void;
 }
 
 export const getKey = (item: number, section: number) => `${section}_${item}`;
 
 const getProgression = (currentSection: number, currentStep: number, i: number, si: number) => {
-    if (currentSection < si) return RecipeProgression.future;
+    if (currentSection < si) {
+        return RecipeProgression.future;
+    }
 
-    if (currentSection > si) return RecipeProgression.past;
+    if (currentSection > si) {
+        return RecipeProgression.past;
+    }
 
-    if (currentStep < i) return RecipeProgression.future;
+    if (currentStep < i) {
+        return RecipeProgression.future;
+    }
 
-    if (currentStep > i) return RecipeProgression.past;
+    if (currentStep > i) {
+        return RecipeProgression.past;
+    }
 
     return RecipeProgression.current;
 };
@@ -29,9 +37,13 @@ export const StepsList: React.FC<StepsListProps> = observer(
     ({ currentStep, currentSection, onChildrenLayout }) => {
         const { currentRecipe } = useRootStore();
 
-        if (!currentRecipe.recipe) return null;
+        if (!currentRecipe.recipe) {
+            return null;
+        }
 
-        if ((currentRecipe.recipe.sections?.length ?? 0) === 0) return <Text>No steps to show</Text>;
+        if ((currentRecipe.recipe.sections?.length ?? 0) === 0) {
+            return <Text>No steps to show</Text>;
+        }
 
         return (
             <View>

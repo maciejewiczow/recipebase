@@ -1,16 +1,16 @@
+import React from 'react';
+import { RenderItem, ScaleDecorator, ShadowDecorator } from 'react-native-draggable-flatlist';
+import { useNavigation } from '@react-navigation/native';
 import { RecipeSection, RecipeStep } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
-import { RecipeStepWrapper, StepPreviewText } from './Steps.styles';
-import { RenderItem, ScaleDecorator, ShadowDecorator } from 'react-native-draggable-flatlist';
-import { ItemType } from './Steps';
-import { DragHandleIcon, DragHandleWrapper, DraggableListItemWrapper } from '../common.styles';
-import React from 'react';
+import { RootNavigationProp } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
+import { ListItemMenu } from '../ListItemMenu';
 import { AddStepButton } from './AddStepButton';
 import { RecipeSectionHeader } from './RecipeSectionHeader';
-import { ListItemMenu } from '../ListItemMenu';
-import { useNavigation } from '@react-navigation/native';
-import { RootNavigationProp } from '~/RootNavigation';
+import { ItemType } from './Steps';
+import { DraggableListItemWrapper, DragHandleIcon, DragHandleWrapper } from '../common.styles';
+import { RecipeStepWrapper, StepPreviewText } from './Steps.styles';
 
 interface RecipeStepPreviewProps {
     step: RecipeStep;
@@ -22,7 +22,9 @@ const RecipeStepPreview: React.FC<RecipeStepPreviewProps> = observer(({ step, dr
     const navigation = useNavigation<RootNavigationProp>();
 
     const removeStep = () => {
-        if (step.recipeSection?.id) draftRecipe.removeRecipeStep(step.recipeSection.id, step.id);
+        if (step.recipeSection?.id) {
+            draftRecipe.removeRecipeStep(step.recipeSection.id, step.id);
+        }
     };
 
     const editStep = () => {

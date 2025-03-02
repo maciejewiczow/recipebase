@@ -26,11 +26,13 @@ export const RecipeIngredientListItem: React.FC<RecipeIngredientListItemProps> =
         <RecipeIngredientWrapper style={style}>
             {leftSection}
             <QuantityWrapper>
-                <Text>
-                    {quantityFrom}
-                    {quantityTo ? '-' : ''}
-                    {quantityTo} {unit?.name}
-                </Text>
+                {quantityFrom ? (
+                    <Text>
+                        {quantityFrom}
+                        {quantityTo ? '-' : ''}
+                        {quantityTo} {unit?.name}
+                    </Text>
+                ) : null}
             </QuantityWrapper>
             <IngredientNameWrapper>
                 <Text>{ingredient?.name}</Text>

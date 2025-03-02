@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { EmptyListTitle, EmptyListSubtitle, EmptyListWrapper, RecipeIcon } from './HomeView.styles';
-import { HomeTabNavigationParams } from '../HomeNavigationView';
 import { RootStackParams } from '~/RootNavigation';
+import { HomeTabNavigationParams } from '../HomeNavigationView';
+import { EmptyListSubtitle, EmptyListTitle, EmptyListWrapper, RecipeIcon } from './HomeView.styles';
 
 export const EmptyListView: React.FC = () => {
     const navigation = useNavigation<NavigationProp<HomeTabNavigationParams & RootStackParams>>();
