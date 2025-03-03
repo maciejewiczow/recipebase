@@ -53,23 +53,23 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Oranienbaum-Regular.ttf</string>
-		<string>PlusJakartaSans-Italic-VariableFont_wght.ttf</string>
-		<string>PlusJakartaSans-VariableFont_wght.ttf</string>
-		<string>PlusJakartaSans-Bold.ttf</string>
-		<string>PlusJakartaSans-BoldItalic.ttf</string>
-		<string>PlusJakartaSans-ExtraBold.ttf</string>
-		<string>PlusJakartaSans-ExtraBoldItalic.ttf</string>
-		<string>PlusJakartaSans-ExtraLight.ttf</string>
-		<string>PlusJakartaSans-ExtraLightItalic.ttf</string>
-		<string>PlusJakartaSans-Italic.ttf</string>
-		<string>PlusJakartaSans-Light.ttf</string>
-		<string>PlusJakartaSans-LightItalic.ttf</string>
-		<string>PlusJakartaSans-Medium.ttf</string>
-		<string>PlusJakartaSans-MediumItalic.ttf</string>
-		<string>PlusJakartaSans-Regular.ttf</string>
-		<string>PlusJakartaSans-SemiBold.ttf</string>
-		<string>PlusJakartaSans-SemiBoldItalic.ttf</string>
+		<string>OranienbaumRegular.ttf</string>
+		<string>PlusJakartaSansItalicVariableFont_wght.ttf</string>
+		<string>PlusJakartaSansVariableFont_wght.ttf</string>
+		<string>PlusJakartaSansBold.ttf</string>
+		<string>PlusJakartaSansBoldItalic.ttf</string>
+		<string>PlusJakartaSansExtraBold.ttf</string>
+		<string>PlusJakartaSansExtraBoldItalic.ttf</string>
+		<string>PlusJakartaSansExtraLight.ttf</string>
+		<string>PlusJakartaSansExtraLightItalic.ttf</string>
+		<string>PlusJakartaSansItalic.ttf</string>
+		<string>PlusJakartaSansLight.ttf</string>
+		<string>PlusJakartaSansLightItalic.ttf</string>
+		<string>PlusJakartaSansMedium.ttf</string>
+		<string>PlusJakartaSansMediumItalic.ttf</string>
+		<string>PlusJakartaSansRegular.ttf</string>
+		<string>PlusJakartaSansSemiBold.ttf</string>
+		<string>PlusJakartaSansSemiBoldItalic.ttf</string>
 	</array>
 </dict>
 </plist>
