@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { Input } from '../Input';
+import { TextBase } from '../Text';
 import { inputStyles } from '../Input/Input.styles';
 
 export const Wrapper = styled.View``;
@@ -9,15 +10,11 @@ export const PseudoInput = styled.View`
     height: 60px;
 `;
 
-export const Placeholder = styled.Text`
-    color: #bbb;
-    font-size: 18px;
+export const Placeholder = styled(TextBase)`
+    color: ${({ theme }) => theme.palette.text[2]};
 `;
 
-export const Value = styled.Text`
-    font-size: 18px;
-    color: #333;
-`;
+export const Value = styled(TextBase)``;
 
 export const ListWrapper = styled.View`
     padding: 0 16px;
@@ -38,10 +35,8 @@ export const InputPressable = styled.Pressable`
     flex: 1;
 `;
 
-export const DefaultItemText = styled.Text<{ isActive: boolean }>`
+export const DefaultItemText = styled(TextBase)<{ isActive: boolean }>`
     font-weight: ${({ isActive }) => (isActive ? 'bold' : 'normal')};
-    font-size: 20px;
-    color: #333;
 `;
 
 export const EmptyItemText = styled(DefaultItemText)`

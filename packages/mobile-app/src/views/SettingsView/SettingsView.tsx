@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper, Text } from './SettingsView.styles';
+import { Text, Wrapper } from './SettingsView.styles';
 
 export const SettingsView: React.FC = () => (
     <Wrapper>

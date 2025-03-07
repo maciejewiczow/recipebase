@@ -9,7 +9,7 @@
         "start": "react-native start",
         "test": "jest",
         "typecheck": "tsc",
-        "lint-fix": "yarn lint -- --fix",
+        "lint-fix": "yarn lint --fix",
         "generate:api-types": "env-cmd -x openapi-typescript $PARSING_API_URL/openapi/openapi.json -o src/api/types.generated.ts"
     },
     "dependencies": {

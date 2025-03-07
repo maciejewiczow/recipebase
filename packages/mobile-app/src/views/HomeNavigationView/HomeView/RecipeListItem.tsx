@@ -21,8 +21,8 @@ export const RecipeListItem: React.FC<RecipeListItemProps> = observer(({ recipe,
             onPress={() => navigation.navigate('Recipe', { recipeId: recipe.id })}
         >
             <CoverImage source={{ uri: recipe.coverImage }} />
-            <Name>{recipe.name}</Name>
             <SmallTagList recipe={recipe} />
+            <Name>{recipe.name}</Name>
         </RecipeItemWrapper>
     );
 });

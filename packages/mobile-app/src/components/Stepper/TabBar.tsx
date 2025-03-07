@@ -1,5 +1,5 @@
-import { TabBarProgressStep, TabBarWrapper } from './Stepper.styles';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
+import { TabBarProgressStep, TabBarWrapper } from './Stepper.styles';
 
 export const TabBar: React.FC<MaterialTopTabBarProps> = ({ state, descriptors }) => (
     <TabBarWrapper>

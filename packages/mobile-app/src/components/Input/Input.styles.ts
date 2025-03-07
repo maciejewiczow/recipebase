@@ -3,12 +3,9 @@ import styled, { css } from 'styled-components/native';
 export const Wrapper = styled.View``;
 
 export const inputStyles = css`
-    border-radius: ${({ theme }) => theme.border.radius};
-    border: 1px solid #acacac;
-    background: white;
+    border-radius: ${({ theme }) => theme.border.radiusBig};
+    background: ${({ theme }) => theme.palette.background[4]};
     padding: 14px 20px;
-    font-size: 18px;
-    color: #000;
 `;
 
 export const InputWrapper = styled.View`
@@ -17,10 +14,10 @@ export const InputWrapper = styled.View`
     align-items: center;
 `;
 
-export const TextInput = styled.TextInput.attrs({
-    placeholderTextColor: '#bbb',
+export const TextInput = styled.TextInput.attrs(({ theme }) => ({
+    placeholderTextColor: theme.palette.text[2],
     textAlignVertical: 'top',
-})`
+}))`
     ${inputStyles}
     flex: 1;
 `;

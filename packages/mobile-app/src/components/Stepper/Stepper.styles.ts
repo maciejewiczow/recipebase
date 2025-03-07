@@ -1,5 +1,5 @@
 import Icon from 'react-native-vector-icons/FontAwesome';
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 import { createStyledIcon } from '~/utils/createStyledIcon';
 import { Button as OriginalButton } from '../Button';
 
@@ -8,7 +8,7 @@ export const TabBarWrapper = styled.View`
     gap: 2px;
 `;
 
-export const TabBarProgressStep = styled.TouchableOpacity<{
+export const TabBarProgressStep = styled.View<{
     isCompleted: boolean;
     completedTintColor?: string;
 }>`

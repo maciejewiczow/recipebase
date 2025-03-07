@@ -6,7 +6,6 @@ import { RootStackParams } from '~/RootNavigation';
 import { CreateIcon } from '../CreateRecipeView';
 import { HomeIcon, HomeView } from './HomeView';
 import { SearchByIngredientIcon, SearchByIngredientView } from './SearchByIngredientView';
-import { SettingsIcon, SettingsView } from './SettingsView';
 import { Wrapper } from './HomeNavigationView.styles';
 
 export type HomeTabNavigationParams = {
@@ -38,14 +37,6 @@ export const HomeNavigationView: React.FC<NativeStackScreenProps<RootStackParams
                 }}
             />
             <Tab.Screen
-                name="SearchByIngrediend"
-                component={SearchByIngredientView}
-                options={{
-                    tabBarIcon: SearchByIngredientIcon,
-                    tabBarLabel: 'By ingredient',
-                }}
-            />
-            <Tab.Screen
                 name="CreateStub"
                 listeners={{
                     tabPress: e => {
@@ -55,17 +46,17 @@ export const HomeNavigationView: React.FC<NativeStackScreenProps<RootStackParams
                 }}
                 options={{
                     tabBarIcon: CreateIcon,
-                    tabBarLabel: 'Create',
+                    tabBarLabel: 'Add recipe',
                 }}
             >
                 {() => null}
             </Tab.Screen>
             <Tab.Screen
-                name="Settings"
-                component={SettingsView}
+                name="SearchByIngrediend"
+                component={SearchByIngredientView}
                 options={{
-                    tabBarIcon: SettingsIcon,
-                    tabBarLabel: 'Settings',
+                    tabBarIcon: SearchByIngredientIcon,
+                    tabBarLabel: 'By ingredient',
                 }}
             />
         </Tab.Navigator>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wrapper, Text } from './SearchByIngredientView.styles';
+import { Text, Wrapper } from './SearchByIngredientView.styles';
 
 export const SearchByIngredientView: React.FC = () => (
     <Wrapper>

@@ -25,7 +25,7 @@ export const TagView: React.FC<TagViewProps> = ({
     isLastChild,
     notPressable,
     noMinWidth,
-    horizontalMargin = 15,
+    horizontalMargin = 18,
     style,
     tagNameStyle,
 }) => (

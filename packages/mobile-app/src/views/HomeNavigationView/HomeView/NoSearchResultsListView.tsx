@@ -1,8 +1,8 @@
 import React from 'react';
-import { EmptyListSubtitle, NoResultsWrapper } from './HomeView.styles';
+import { EmptyListTitle, NoResultsWrapper } from './HomeView.styles';
 
 export const NoSearchResultsListView: React.FC = () => (
     <NoResultsWrapper>
-        <EmptyListSubtitle>Nothing matches your search criteria</EmptyListSubtitle>
+        <EmptyListTitle>Nothing matches your search criteria</EmptyListTitle>
     </NoResultsWrapper>
 );

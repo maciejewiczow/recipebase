@@ -1,64 +1,59 @@
-import FIcon from 'react-native-vector-icons/Fontisto';
+import EvilIcon from 'react-native-vector-icons/EvilIcons';
+import { IconProps } from 'react-native-vector-icons/Icon';
 import styled, { css } from 'styled-components/native';
+import { GradientBackground } from '~/components/GradientBackground';
 import { SearchBar as OriginalSearchBar } from '~/components/SearchBar';
+import { HomeIconSvg } from '~/components/Svg/HomeIconSvg';
 import { RecipeIcon as OriginalRecipeIcon } from '~/components/Svg/RecipeIcon';
+import { SettingsIconSvg } from '~/components/Svg/SettingsIconSvg';
 import { TagList as OriginalTagList } from '~/components/TagList';
+import { HeadingBase, TextBase } from '~/components/Text';
 import { createViewIcon } from '../createViewIcon';
 import { RecipeListItem as OriginalRecipeListItem } from './RecipeListItem';
 
 export const allMargin = css`
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: 18px;
+    margin-right: 18px;
 `;
 
 export const Wrapper = styled.ScrollView.attrs({
     contentContainerStyle: {
         flexGrow: 1,
     },
-})`
-    background: white;
+})``;
+
+export const Background = styled(GradientBackground)`
+    padding-bottom: 24px;
 `;
 
-export const Title = styled.Text`
-    font-size: 38px;
-    font-weight: 700;
-    color: ${({ theme }) => theme.palette.primary[0]};
+export const Title = styled(HeadingBase)`
+    font-size: ${({ theme }) => theme.text.heading.fontSize['4xl']};
+    line-height: ${({ theme }) => theme.text.heading.lineHeight['4xl']};
     ${allMargin}
-    margin-top: 24px;
+    margin-top: 32px;
+    margin-bottom: -12px;
+    text-align: center;
 `;
 
-export const Subtitle = styled.Text`
-    color: #9e9e9e;
-    font-size: 20px;
+export const Subtitle = styled(TextBase)`
     ${allMargin}
+    text-align: center;
 `;
 
 export const SearchBar = styled(OriginalSearchBar)`
-    margin-top: 20px;
+    margin-top: 32px;
     ${allMargin}
 `;
 
-export const HomeIcon = createViewIcon(FIcon, 'home')``;
+export const HomeIcon = createViewIcon(HomeIconSvg)``;
 
-export const RecipeIcon = styled(OriginalRecipeIcon).attrs({
-    fill: '#444',
-})`
-    margin-top: -100px;
-    max-height: 260px;
-`;
+export const EmptyListTitle = styled(TextBase)`
+    font-size: ${({ theme }) => theme.text.normal.fontSize.sm};
+    line-height: ${({ theme }) => theme.text.normal.lineHeight.xs};
+    font-family: ${({ theme }) => theme.text.normal.font.medium};
 
-export const EmptyListTitle = styled.Text`
-    color: #9e9e9e;
-    font-size: 30px;
-    margin-bottom: 24px;
-    text-align: center;
-    margin-top: -50px;
-    ${allMargin}
-`;
-
-export const EmptyListSubtitle = styled.Text`
-    color: #cccccc;
-    font-size: 22px;
+    margin-top: 16px;
+    margin-bottom: 8px;
     text-align: center;
     ${allMargin}
 `;
@@ -68,18 +63,39 @@ export const NoResultsWrapper = styled.View`
     ${allMargin}
 `;
 
-export const EmptyListWrapper = styled.TouchableOpacity`
+export const EmptyListWrapper = styled.Pressable`
+    margin-top: 24px;
     flex: 1;
     align-items: center;
-    justify-content: center;
     ${allMargin}
 `;
 
-export const TagList = styled(OriginalTagList).attrs({ horizontalMargin: 16 })`
+export const TagList = styled(OriginalTagList).attrs({ horizontalMargin: 18 })`
     margin-top: 15px;
-    margin-bottom: 24px;
+    margin-bottom: 52px;
 `;
 
 export const RecipeListItem = styled(OriginalRecipeListItem)`
     ${allMargin}
 `;
+
+export const PlusIcon: React.FC<Omit<IconProps, 'color' | 'name'>> = styled(EvilIcon).attrs(({ theme }) => ({
+    name: 'plus',
+    color: theme.palette.text[0],
+    size: 32,
+}))``;
+
+export const RecipeIcon = styled(OriginalRecipeIcon).attrs(({ theme }) => ({
+    fill: theme.palette.text[0],
+}))``;
+
+export const SettingsIconWrapper = styled.View`
+    position: absolute;
+    top: 32px;
+    right: 18px;
+    z-index: 20;
+`;
+
+export const SettingsIcon = styled(SettingsIconSvg).attrs(({ theme }) => ({
+    fill: theme.palette.text[0],
+}))``;

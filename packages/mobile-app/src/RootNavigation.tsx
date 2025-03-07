@@ -36,6 +36,7 @@ export type RootStackParams = {
     AddStepView: AddStepViewRouteProps;
     AddStepIngredientView: undefined;
     ImportRecipeView: undefined;
+    Settings: undefined;
 };
 
 export type RootNavigationProp = NavigationProp<RootStackParams>;
@@ -100,6 +101,10 @@ export const RootNavigationComponent: React.FC = () => {
                 <Stack.Screen
                     name="Recipe"
                     component={views.RecipeView}
+                />
+                <Stack.Screen
+                    name="Settings"
+                    component={views.SettingsView}
                 />
                 <Stack.Group
                     screenOptions={{

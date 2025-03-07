@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
+import Animated, { EntryExitTransition, LinearTransition } from 'react-native-reanimated';
 import { useFocusEffect } from '@react-navigation/native';
-import { TagWithSelectedState } from 'backend-logic/src/store/Tags';
 import { Observer, observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
 import { TagView } from './TagView';
-import { List } from './TagList.styles';
 
 export interface SearchBarProps {
     style?: StyleProp<ViewStyle>;
@@ -28,8 +27,14 @@ export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMa
     useEffect(fetchTags, [fetchTags]);
 
     return (
-        <List
-            style={style}
+        <Animated.FlatList
+            style={[
+                style,
+                {
+                    height: tags.partitionedTags.length > 0 ? 44 : 0,
+                    flexGrow: 0,
+                },
+            ]}
             data={tags.partitionedTags}
             renderItem={({ item, index }) => (
                 <Observer>
@@ -46,7 +51,8 @@ export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMa
                     )}
                 </Observer>
             )}
-            keyExtractor={(item: TagWithSelectedState) => item.tag.id.toString()}
+            keyExtractor={item => item.tag.id.toString()}
+            itemLayoutAnimation={LinearTransition.springify().damping(10).stiffness(100)}
             horizontal
         />
     );

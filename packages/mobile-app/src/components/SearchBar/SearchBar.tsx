@@ -5,7 +5,7 @@ import { Input, InputWrapper, SearchIcon } from './SearchBar.styles';
 export interface SearchBarProps {
     placeholder?: string;
     style?: StyleProp<ViewStyle>;
-    onChange: (searchText: string) => any;
+    onChange: (searchText: string) => void;
     searchText: string;
 }
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '~/RootNavigation';
-import { TileWrapper, TitleText, Wrapper } from './SelectionMethodModalView.styles';
+import { useRootStore } from '~/RootStoreContext';
 import { FilesystemSelectionMethodButton } from './FilesystemSelectionMethodButton';
 import { GDriveSelectionMethodButton } from './GDriveSelectionMethodButton';
-import { useRootStore } from '~/RootStoreContext';
+import { TileWrapper, TitleText, Wrapper } from './SelectionMethodModalView.styles';
 
 export const SelectionMethodModalView: React.FC<
     NativeStackScreenProps<RootStackParams, 'SelectMethodModal'>

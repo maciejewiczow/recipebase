@@ -1,5 +1,5 @@
-import { FlatList } from 'react-native';
 import styled, { css } from 'styled-components/native';
+import { TextBase } from '../Text';
 
 interface IsSelectedProps {
     isSelected?: boolean;
@@ -16,14 +16,15 @@ interface MinWidthProps {
 
 type TagBodyProps = IsSelectedProps & OrderProps & { horizontalMargin: number } & MinWidthProps;
 
-export const TagBody = styled.TouchableOpacity<TagBodyProps>`
+export const TagBody = styled.Pressable<TagBodyProps>`
     padding: 10px 14px;
-    height: 40px;
+    height: 44px;
     margin-right: 8px;
-    background: ${({ isSelected }) => (isSelected ? '#F2994A7D' : '#F3F3F3')};
+    background: ${({ isSelected, theme }) => (isSelected ? theme.palette.primary[1] : theme.palette.secondary[0])};
     flex-flow: row nowrap;
     justify-content: space-between;
     border-radius: ${({ theme }) => theme.border.radiusBig};
+    gap: 8px;
 
     ${({ isFirstChild, horizontalMargin }) => isFirstChild &&
         css`
@@ -41,16 +42,11 @@ export const TagBody = styled.TouchableOpacity<TagBodyProps>`
         `}
 `;
 
-export const TagName = styled.Text<IsSelectedProps>`
-    color: ${({ isSelected }) => (isSelected ? '#D96C0B' : '#9D9D9D')};
+export const TagName = styled(TextBase)<IsSelectedProps>`
+    color: ${({ isSelected, theme }) => (isSelected ? theme.palette.text[5] : theme.palette.text[0])};
+    font-family: ${({ theme }) => theme.text.normal.font.medium};
+    font-size: ${({ theme }) => theme.text.normal.fontSize.md};
+    line-height: ${({ theme }) => theme.text.normal.lineHeight.sm};
 `;
 
-export const RecipeCount = styled.Text<IsSelectedProps>`
-    color: ${({ isSelected }) => (isSelected ? '#D96C0B99' : '#9D9D9D99')};
-    margin-left: 8px;
-`;
-
-export const List = styled.FlatList`
-    height: ${({ data }) => ((data?.length ?? 0) > 0 ? '40px' : '0')};
-    flex-grow: 0;
-` as unknown as typeof FlatList;
+export const RecipeCount = styled(TagName)``;
