@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRootStore } from '~/RootStoreContext';
-import { Background, AppTitle, Gradient, Loader } from './SplashView.styles';
+import { AppTitle, Background, Gradient, Loader } from './SplashView.styles';
 
 export const SplashView: React.FC = () => {
     const root = useRootStore();

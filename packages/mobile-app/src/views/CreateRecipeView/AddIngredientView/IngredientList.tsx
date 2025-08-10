@@ -1,34 +1,23 @@
-import React, { useCallback, useDeferredValue } from 'react';
-import { FlatList, FlatListProps } from 'react-native';
+import React, { useCallback } from 'react';
+import { FlatListProps } from 'react-native';
 import { Observer, observer } from 'mobx-react-lite';
-import { Label } from '~/components/Input/Input.styles';
-import { IngredientsIcon } from '~/components/Svg/IngredientsIcon';
 import { useRootStore } from '~/RootStoreContext';
-import { useRunCancellablePromise } from '~/utils/useRunCancellablePromise';
-import { IngredientListItemType, useIngredientListData } from './hooks';
+import { IngredientListItemType } from './hooks';
 import {
-    EmptyListImageWrapper,
-    EmptyListText,
+    EmptyListPlaceholder,
+    IngredientListComponent,
     ListItemWrapper,
     StoredIngredientName,
 } from './AddIngredientView.styles';
 
 interface IngredientListProps {
-    isInEditMode: boolean;
     setIsInIngredientSearchMode: (v: boolean) => void;
+    ingredientListItems: IngredientListItemType[];
 }
 
 export const IngredientList: React.FC<IngredientListProps> = observer(
-    ({ setIsInIngredientSearchMode, isInEditMode }) => {
-        const { ingredients, draftIngredient } = useRootStore();
-        const searchString = useDeferredValue(draftIngredient.ingredient.name ?? '');
-
-        useRunCancellablePromise(
-            () => ingredients.fetchIngredients(searchString),
-            [searchString, ingredients],
-        );
-
-        const data = useIngredientListData(isInEditMode, searchString ?? '');
+    ({ setIsInIngredientSearchMode, ingredientListItems: data }) => {
+        const { draftIngredient } = useRootStore();
 
         const renderItem: Defined<FlatListProps<IngredientListItemType>['renderItem']> = useCallback(
             ({ item }) => (
@@ -51,18 +40,15 @@ export const IngredientList: React.FC<IngredientListProps> = observer(
             [draftIngredient, setIsInIngredientSearchMode],
         );
 
+        if (data.length === 0) {
+            return <EmptyListPlaceholder />;
+        }
+
         return (
-            <FlatList<IngredientListItemType>
+            <IngredientListComponent<IngredientListItemType>
                 keyboardShouldPersistTaps="handled"
-                ListHeaderComponent={<Label>Search results</Label>}
                 data={data}
                 renderItem={renderItem}
-                ListEmptyComponent={
-                    <EmptyListImageWrapper>
-                        <IngredientsIcon fill="#999" />
-                        <EmptyListText>Search for some ingredients...</EmptyListText>
-                    </EmptyListImageWrapper>
-                }
             />
         );
     },

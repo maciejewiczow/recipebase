@@ -30,7 +30,7 @@ export class DraftRecipe {
         this.recipe.source = url;
     };
 
-    @action setCoverImage = (image: string) => {
+    @action setCoverImage = (image: string | undefined) => {
         this.recipe.coverImage = image;
     };
 
@@ -46,6 +46,10 @@ export class DraftRecipe {
         this.recipe.ingredientSections = this.recipe.ingredientSections?.filter(
             section => section.id !== sectionId,
         );
+
+        if (this.recipe.ingredientSections?.length === 1) {
+            this.recipe.ingredientSections[0].name = null;
+        }
     };
 
     @action setIngredientSectionName = (sectionId: number, name: string) => {
@@ -82,6 +86,10 @@ export class DraftRecipe {
 
     @action removeSection = (sectionId: number) => {
         this.recipe.sections = this.recipe.sections?.filter(section => section.id !== sectionId);
+
+        if (this.recipe.sections?.length === 1) {
+            this.recipe.sections[0].name = null;
+        }
     };
 
     @action addNewSection = () => {

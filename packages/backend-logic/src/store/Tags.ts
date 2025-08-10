@@ -1,5 +1,5 @@
 import { Database, Recipe, Tag } from 'backend-logic';
-import { byNumberDesc } from 'backend-logic/src/utils/arrayUtils';
+import { descendingBy } from 'backend-logic/src/utils/arrayUtils';
 import { cloneDeep } from 'lodash';
 import { computed, flow, makeAutoObservable } from 'mobx';
 import { removeTemporaryIds } from '../utils/removeTemporaryIds';
@@ -15,6 +15,7 @@ export interface TagWithSelectedState {
 }
 
 export class Tags {
+    isLoading = false;
     tags: TagWithSelectedState[] = [];
     draftTags: Tag[] = [];
 
@@ -23,14 +24,16 @@ export class Tags {
     }
 
     fetchTags = flow(function* (this: Tags) {
+        this.isLoading = true;
         const res: TagWithCount[] = yield this.database.tagRepository
             .createQueryBuilder('tag')
             .loadRelationCountAndMap('tag.recipeCount', 'tag.recipes', 'recipeCount')
             .getMany();
+        this.isLoading = false;
 
         this.tags = res
             .filter(tag => tag.recipeCount > 0)
-            .sort(byNumberDesc(tag => tag.recipeCount))
+            .sort(descendingBy(tag => tag.recipeCount))
             .map(tag => ({ tag, isSelected: false }));
     });
 
@@ -44,19 +47,16 @@ export class Tags {
         item.isSelected = !item.isSelected;
     }
 
+    isTagNameValid(name: string) {
+        return this.draftTags.every(t => t.name.toLowerCase() !== name.toLowerCase());
+    }
+
     addDraftTag(name: string) {
-        if (this.draftTags.find(t => t.name.toLowerCase() === name.toLowerCase())) {
-            return false;
+        if (!this.isTagNameValid(name)) {
+            return;
         }
 
-        const newTag: Tag = {
-            name,
-            id: Math.random(),
-            deletedAt: null,
-        };
-
-        this.draftTags.push(newTag);
-        return true;
+        this.draftTags.push(Tag.createWithName(name));
     }
 
     copyTagToDraftTags(tagId: number) {
@@ -72,14 +72,18 @@ export class Tags {
     }
 
     @computed
-    filterByName(filterString: string) {
+    filterByNameWithoutDrafts(filterString: string) {
         if (!filterString) {
             return [];
         }
 
         return this.tags
             .map(t => t.tag)
-            .filter(t => t.name.toLowerCase().includes(filterString.toLowerCase()));
+            .filter(
+                // prettier-ignore
+                t => t.name.toLowerCase().includes(filterString.toLowerCase()) &&
+                    this.draftTags.every(dt => dt.id !== t.id),
+            );
     }
 
     get selectedTags() {

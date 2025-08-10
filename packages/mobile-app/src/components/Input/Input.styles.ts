@@ -1,11 +1,15 @@
 import styled, { css } from 'styled-components/native';
+import { TextBase } from '../Text';
 
 export const Wrapper = styled.View``;
 
 export const inputStyles = css`
     border-radius: ${({ theme }) => theme.border.radiusBig};
-    background: ${({ theme }) => theme.palette.background[4]};
-    padding: 14px 20px;
+    background-color: ${({ theme }) => theme.palette.background[4]};
+    padding: 16px;
+    font-size: ${({ theme }) => theme.text.normal.fontSize.md};
+    line-height: ${({ theme }) => theme.text.normal.lineHeight.md};
+    font-family: ${({ theme }) => theme.text.normal.font.medium};
 `;
 
 export const InputWrapper = styled.View`
@@ -22,8 +26,8 @@ export const TextInput = styled.TextInput.attrs(({ theme }) => ({
     flex: 1;
 `;
 
-export const Label = styled.Text`
-    font-size: 13px;
-    color: #8f8f8f;
+export const Label = styled(TextBase).attrs({
+    fontWeight: 'medium',
+})`
     margin-bottom: 8px;
 `;

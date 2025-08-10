@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import React from 'react';
 import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 import Config from 'react-native-config';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -11,7 +10,7 @@ import { RootNavigationComponent } from '~/RootNavigation';
 import { rootStore, RootStoreContext } from './src/RootStoreContext';
 import { lightTheme } from './src/theme';
 
-const App = () => {
+export const App = () => {
     const isDarkMode = useColorScheme() === 'dark';
 
     return (
@@ -33,5 +32,3 @@ const App = () => {
         </GestureHandlerRootView>
     );
 };
-
-export default App;

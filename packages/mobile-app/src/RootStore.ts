@@ -14,7 +14,7 @@ import {
     Tags,
     Units,
 } from 'backend-logic';
-import RootNavigation from './RootNavigation';
+import { RootNavigation } from './RootNavigation';
 
 GoogleSignin.configure({
     scopes: [

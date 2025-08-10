@@ -21,7 +21,7 @@ export const SelectDatabaseView: React.FC<NativeStackScreenProps<RootStackParams
                 Create new database
             </TopButton>
             <Button
-                variant="secondary-outline"
+                variant="outline"
                 onPress={() => navigation.navigate('SelectMethodModal', {
                         selectWhat: 'file',
                     })

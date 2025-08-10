@@ -9,6 +9,7 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as views from '~/views';
+import { StepHeader } from './components/CreateRecipeSteps/StepHeader';
 import { StepperSubNavigator } from './components/Stepper/Stepper';
 import { AddStepViewRouteProps, StepNames } from './views/CreateRecipeView';
 import { AddIngredientViewRouteProps } from './views/CreateRecipeView/AddIngredientView/AddIngredientView';
@@ -45,7 +46,7 @@ export const Stack = createNativeStackNavigator<RootStackParams>();
 
 export const rootNavigationRef = createNavigationContainerRef<RootStackParams>();
 
-export default class RootNavigation {
+export class RootNavigation {
     static navigate: typeof rootNavigationRef.navigate = (...args) => {
         if (rootNavigationRef.isReady()) {
             // @ts-expect-error typescript is paranoid
@@ -127,27 +128,28 @@ export const RootNavigationComponent: React.FC = () => {
                             component={views.CreateRecipeView}
                             options={{
                                 title: 'Create recipe',
+                                header: StepHeader,
                             }}
                         />
                         <Stack.Screen
                             name="AddIngredientView"
                             component={views.AddIngredientView}
                             options={{
-                                title: 'Add ingredient',
+                                headerShown: false,
                             }}
                         />
                         <Stack.Screen
                             name="AddStepView"
                             component={views.AddStepView}
                             options={{
-                                title: 'Add step',
+                                headerShown: false,
                             }}
                         />
                         <Stack.Screen
                             name="AddStepIngredientView"
                             component={views.AddStepIngredientView}
                             options={{
-                                title: 'Add step ingredients',
+                                headerShown: false,
                             }}
                         />
                         <Stack.Screen

@@ -19,6 +19,9 @@ export class RecipeStep {
     @Column('text')
     content!: string;
 
+    @Column({ nullable: true })
+    photo: string | undefined;
+
     @ManyToOne(() => RecipeSection, rs => rs.recipeSteps)
     recipeSection?: RecipeSection;
 

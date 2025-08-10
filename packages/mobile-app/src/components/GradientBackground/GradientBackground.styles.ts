@@ -1,5 +1,15 @@
+import { ScrollView } from 'react-native-gesture-handler';
 import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
+import { iconOffsetPx } from '../Stepper/Stepper.styles';
+
+export const FullSizeScrollView = styled(ScrollView).attrs({
+    contentContainerStyle: {
+        paddingBottom: iconOffsetPx + 50,
+    },
+})`
+    flex: 1;
+`;
 
 export const GradientBackground = styled(LinearGradient).attrs(({ theme }) => ({
     colors: [theme.palette.background[5], theme.palette.background[6]],

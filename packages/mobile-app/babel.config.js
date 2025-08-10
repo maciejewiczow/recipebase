@@ -3,7 +3,6 @@ module.exports = {
         ['@babel/preset-env', { targets: { node: 'current' } }],
         'module:metro-react-native-babel-preset',
         ['@babel/preset-typescript', { allowDeclareFields: true }],
-
     ],
     plugins: [
         "babel-plugin-transform-typescript-metadata",

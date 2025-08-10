@@ -3,12 +3,26 @@ import { TextInput } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { observer } from 'mobx-react-lite';
-import { StepHeader, StepWrapper } from '~/components/CreateRecipeSteps/common.styles';
+import {
+    StepHeaderBackIconWrapper,
+    StepHeaderText,
+    StepHeaderWrapper,
+    StepWrapper,
+} from '~/components/CreateRecipeSteps/common.styles';
+import { BackIconSvg } from '~/components/Svg/BackIconSvg';
 import { RootStackParams } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
+import { useIngredientListData } from './hooks';
 import { IngredientList } from './IngredientList';
 import { UnitSelect } from './UnitSelect';
-import { IngredientNameInput, InputsRow, QuantityInput, SaveButton } from './AddIngredientView.styles';
+import {
+    IngredientNameInput,
+    InputsRow,
+    ListHeader,
+    ListHeaderWrapper,
+    QuantityInput,
+    SaveButton,
+} from './AddIngredientView.styles';
 
 export interface AddIngredientViewRouteProps {
     targetSectionId: number;
@@ -27,12 +41,12 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
 
             const { draftRecipe, draftIngredient } = useRootStore();
             const [isInIngredientSearchMode, setIsInIngredientSearchMode] = useState(isInEditMode);
-            const inputRef = useRef<TextInput>(null);
+            const ingredientSearchInputRef = useRef<TextInput>(null);
 
             useFocusEffect(
                 useCallback(() => {
                     if (!isInEditMode) {
-                        inputRef.current?.focus();
+                        ingredientSearchInputRef.current?.focus();
                     }
 
                     return () => draftIngredient.reset();
@@ -56,6 +70,8 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
                 // eslint-disable-next-line react-hooks/exhaustive-deps
             }, [recipeIngredientToEditId, targetSectionId]);
 
+            const ingredientListItems = useIngredientListData(isInEditMode);
+
             const saveIngredient = () => {
                 draftIngredient.commitSelectedIngredient();
                 if (!isInEditMode) {
@@ -76,9 +92,15 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
 
             return (
                 <StepWrapper>
-                    <StepHeader>Ingredient</StepHeader>
+                    <StepHeaderWrapper>
+                        <StepHeaderBackIconWrapper onPress={() => navigation.goBack()}>
+                            <BackIconSvg />
+                        </StepHeaderBackIconWrapper>
+                        <StepHeaderText>Ingredient</StepHeaderText>
+                    </StepHeaderWrapper>
                     <IngredientNameInput
-                        ref={inputRef}
+                        ref={ingredientSearchInputRef}
+                        hasBottomBorderRadius={isInIngredientSearchMode && ingredientListItems.length > 0}
                         label="Ingredient name"
                         placeholder="Search for ingredients"
                         onFocus={() => setIsInIngredientSearchMode(true)}
@@ -86,10 +108,15 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
                         onChange={updateIngredientName}
                     />
                     {isInIngredientSearchMode ? (
-                        <IngredientList
-                            isInEditMode={isInEditMode}
-                            setIsInIngredientSearchMode={setIsInIngredientSearchMode}
-                        />
+                        <>
+                            <ListHeaderWrapper>
+                                <ListHeader />
+                            </ListHeaderWrapper>
+                            <IngredientList
+                                setIsInIngredientSearchMode={setIsInIngredientSearchMode}
+                                ingredientListItems={ingredientListItems}
+                            />
+                        </>
                     ) : (
                         <InputsRow>
                             <QuantityInput

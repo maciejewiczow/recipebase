@@ -1,0 +1,11 @@
+import React from 'react';
+import Svg, { SvgProps } from 'react-native-svg';
+import { useTheme } from 'styled-components/native';
+
+export const <%= baseFileName %>: React.FC<SvgProps> = props => {
+    const theme = useTheme();
+
+    return (
+        null
+    );
+};

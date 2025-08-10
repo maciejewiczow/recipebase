@@ -1,3 +1,4 @@
+import { Pressable } from 'react-native';
 import styled from 'styled-components/native';
 import { TextBase } from '../Text';
 
@@ -7,7 +8,7 @@ export const Wrapper = styled.View`
     background: ${({ theme }) => theme.palette.background[1]};
 `;
 
-export const IconWrapper = styled.TouchableOpacity`
+export const IconWrapper = styled(Pressable)`
     padding: 14px 10px;
     flex: 1;
     justify-content: center;

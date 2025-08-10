@@ -1,4 +1,5 @@
 import styled, { DefaultTheme } from 'styled-components/native';
+import { TextBase } from '../Text';
 import { ButtonVariant } from './Button';
 
 interface ButtonPartsStyleProps {
@@ -16,9 +17,6 @@ const getButtonBg = ({ variant, disabled, theme }: ButtonPartsStyleProps) => {
         case 'primary':
             return theme.palette.primary[0];
 
-        case 'secondary':
-            return '#F8F8F8';
-
         default:
             return 'transparent';
     }
@@ -28,11 +26,9 @@ const getButtonBorderColor = ({ variant, disabled, theme }: ButtonPartsStyleProp
     if (disabled) {
         switch (variant) {
             case 'primary':
-            case 'secondary':
                 return '#F0F0F0';
 
-            case 'primary-outline':
-            case 'secondary-outline':
+            case 'outline':
             case 'transparent':
                 return '#747474';
         }
@@ -40,14 +36,10 @@ const getButtonBorderColor = ({ variant, disabled, theme }: ButtonPartsStyleProp
 
     switch (variant) {
         case 'primary':
-        case 'primary-outline':
             return theme.palette.primary[0];
 
-        case 'secondary-outline':
+        case 'outline':
             return theme.palette.text[0];
-
-        case 'secondary':
-            return '#E5E5E5';
 
         case 'transparent':
             return 'transparent';
@@ -60,32 +52,35 @@ const getButtonTextColor = ({ variant, disabled, theme }: ButtonPartsStyleProps)
     }
 
     switch (variant) {
-        case 'secondary':
-            return '#555';
-
+        case 'outline':
         case 'transparent':
             return theme.palette.text[0];
 
-        default:
+        case 'primary':
             return theme.palette.background[1];
     }
 };
+
+export const Touchable = styled.TouchableOpacity``;
 
 export const Base = styled.View<ButtonPartsStyleProps>`
     background-color: ${props => getButtonBg(props)};
     border-color: ${props => getButtonBorderColor(props)};
 
-    border-width: 2px;
-    border-radius: ${({ theme }) => theme.border.radiusSmall};
+    border-width: 1px;
+    border-radius: ${({ theme }) => theme.border.radiusBig};
 
-    padding: 12px 32px;
+    padding: 18px;
 
-    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
 `;
 
-export const ButtonText = styled.Text<ButtonPartsStyleProps>`
-    font-size: 18px;
+export const ButtonText = styled(TextBase)<ButtonPartsStyleProps>`
     color: ${props => getButtonTextColor(props)};
+    font-family: ${({ theme }) => theme.text.normal.font.medium};
+    text-align-vertical: center;
 `;
 
 export const Loading = styled.ActivityIndicator.attrs({

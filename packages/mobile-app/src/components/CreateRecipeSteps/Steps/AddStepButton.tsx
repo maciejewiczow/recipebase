@@ -1,19 +1,23 @@
 import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParams } from '~/RootNavigation';
-import { AddIcon } from '../common.styles';
-import { AddStepButton as AddStepButtonStyled } from './Steps.styles';
+import { AddListItemButton, AddListItemButtonText } from '../common.styles';
 
 interface AddIngredientButtonProps {
     targetSectionId: number;
+    style?: StyleProp<ViewStyle>;
 }
 
-export const AddStepButton: React.FC<AddIngredientButtonProps> = ({ targetSectionId }) => {
+export const AddStepButton: React.FC<AddIngredientButtonProps> = ({ targetSectionId, style }) => {
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
     return (
-        <AddStepButtonStyled onPress={() => navigation.navigate('AddStepView', { targetSectionId })}>
-            <AddIcon /> Add step
-        </AddStepButtonStyled>
+        <AddListItemButton
+            style={style}
+            onPress={() => navigation.navigate('AddStepView', { targetSectionId })}
+        >
+            <AddListItemButtonText>Add step</AddListItemButtonText>
+        </AddListItemButton>
     );
 };

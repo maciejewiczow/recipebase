@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components/native';
 import { ImageBackground } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Icon from 'react-native-vector-icons/Entypo';
+import styled, { css } from 'styled-components/native';
 import { Button } from '~/components/Button';
 import { createStyledIcon } from '~/utils/createStyledIcon';
 
@@ -60,8 +60,7 @@ export const SectionTitle = styled.Text<{ isFirstChild?: boolean }>`
     color: #777;
     font-size: 16px;
     margin-bottom: 8px;
-    ${({ isFirstChild }) =>
-        !isFirstChild &&
+    ${({ isFirstChild }) => !isFirstChild &&
         css`
             margin-top: 12px;
         `}
@@ -104,7 +103,7 @@ const ButtonStyles = css`
 `;
 
 export const LeftButton = styled(Button).attrs({
-    variant: 'secondary',
+    variant: 'transparent',
 })`
     flex: 1;
     margin-right: 12px;

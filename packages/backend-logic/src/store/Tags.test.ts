@@ -56,14 +56,14 @@ describe('Tags', () => {
         it('returns empty array when passed string is empty', () => {
             const tags = new Tags(database);
 
-            expect(tags.filterByName('')).toHaveLength(0);
+            expect(tags.filterByNameWithoutDrafts('')).toHaveLength(0);
         });
 
         it('returns an array of tags with names matching the search string', () => {
             const tags = new Tags(database);
             const searchString = 'tag';
 
-            const result = tags.filterByName(searchString);
+            const result = tags.filterByNameWithoutDrafts(searchString);
 
             for (const tag of result) {
                 expect(tag.name).toMatch(new RegExp(searchString, 'i'));

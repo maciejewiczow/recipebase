@@ -1,16 +1,20 @@
 import React from 'react';
 import { RecipeSection, RecipeStep } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
+import { GradientBackground } from '~/components/GradientBackground';
 import { useRootStore } from '~/RootStoreContext';
+import { useIsKeyboardOpen } from '~/utils/useIsKeyoardOpen';
 import { AddStepButton } from './AddStepButton';
 import { renderItem } from './RecipeStepView';
 import {
     AddSectionButton,
+    AddSectionButtonWrapper,
     DraggableList,
     NestableScrollableStepWrapper,
-    StepHeaderWithMargin,
+    StepHeaderText,
+    StepHeaderWrapperWithMargin,
 } from '../common.styles';
-import { RecipeSectionHeaderWithMargin } from './Steps.styles';
+import { FirstRecipeSectionHeader } from './Steps.styles';
 
 export type ItemType = RecipeStep | RecipeSection;
 
@@ -18,8 +22,9 @@ const sectionsToItems = (sections: RecipeSection[]): ItemType[] => {
     if (sections.length <= 1) {
         return (
             sections[0].recipeSteps?.map<ItemType>(rs => {
-                if (!rs.recipeSection) {
-                    [rs.recipeSection] = sections;
+                if (!rs.recipeSection || rs.recipeSection.id !== sections[0].id) {
+                    // eslint-disable-next-line prefer-destructuring
+                    rs.recipeSection = sections[0];
                 }
 
                 return rs;
@@ -30,7 +35,7 @@ const sectionsToItems = (sections: RecipeSection[]): ItemType[] => {
     return sections.flatMap<ItemType>((section, index) => [
         ...(index !== 0 ? [section] : []),
         ...(section.recipeSteps?.map<ItemType>(rs => {
-            if (!rs.recipeSection) {
+            if (!rs.recipeSection || rs.recipeSection.id !== section.id) {
                 rs.recipeSection = section;
             }
 
@@ -41,6 +46,7 @@ const sectionsToItems = (sections: RecipeSection[]): ItemType[] => {
 
 export const Steps: React.FC = observer(() => {
     const { draftRecipe } = useRootStore();
+    const isKeyboardOpen = useIsKeyboardOpen();
 
     const data = sectionsToItems(draftRecipe.recipe.sections ?? []);
 
@@ -49,22 +55,30 @@ export const Steps: React.FC = observer(() => {
     const lastSectionId = draftRecipe.recipe.sections?.at(-1)?.id;
 
     return (
-        <NestableScrollableStepWrapper>
-            <StepHeaderWithMargin>Recipe steps</StepHeaderWithMargin>
-            {hasMoreThanOneSection && (
-                <RecipeSectionHeaderWithMargin section={draftRecipe.recipe.sections?.[0]} />
-            )}
-            <DraggableList<ItemType>
-                data={data}
-                keyExtractor={item => (item instanceof RecipeStep
-                        ? item.id.toString() + '-' + item.recipeSection?.id.toString()
-                        : item.id.toString())
-                }
-                renderItem={renderItem}
-                onDragEnd={({ data: sections }) => draftRecipe.setRecipeSectionsFromArray(sections)}
-            />
-            {lastSectionId && <AddStepButton targetSectionId={lastSectionId} />}
-            <AddSectionButton onPress={draftRecipe.addNewSection}>Add section</AddSectionButton>
-        </NestableScrollableStepWrapper>
+        <GradientBackground>
+            <NestableScrollableStepWrapper isKeyboardOpen={isKeyboardOpen}>
+                <StepHeaderWrapperWithMargin>
+                    <StepHeaderText>Method</StepHeaderText>
+                </StepHeaderWrapperWithMargin>
+                {hasMoreThanOneSection && (
+                    <FirstRecipeSectionHeader section={draftRecipe.recipe.sections?.[0]} />
+                )}
+                <DraggableList<ItemType>
+                    // @ts-expect-error shenanigans with typing generic components and styled stuff
+                    hasMoreThanOneSection={hasMoreThanOneSection}
+                    data={data}
+                    keyExtractor={item => (item instanceof RecipeStep
+                            ? item.id.toString() + '-' + item.recipeSection?.id.toString()
+                            : item.id.toString())
+                    }
+                    renderItem={renderItem}
+                    onDragEnd={({ data: sections }) => draftRecipe.setRecipeSectionsFromArray(sections)}
+                />
+                {lastSectionId && <AddStepButton targetSectionId={lastSectionId} />}
+                <AddSectionButtonWrapper>
+                    <AddSectionButton onPress={draftRecipe.addNewSection}>Add section</AddSectionButton>
+                </AddSectionButtonWrapper>
+            </NestableScrollableStepWrapper>
+        </GradientBackground>
     );
 });

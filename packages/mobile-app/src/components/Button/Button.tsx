@@ -1,12 +1,14 @@
 import React from 'react';
-import { StyleProp, TouchableNativeFeedback, ViewStyle } from 'react-native';
-import { Base, ButtonText, Loading } from './Button.styles';
+import { StyleProp, ViewStyle } from 'react-native';
+import { Base, ButtonText, Loading, Touchable } from './Button.styles';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'primary-outline' | 'secondary-outline' | 'transparent';
+export type ButtonVariant = 'primary' | 'outline' | 'transparent';
 
 export interface ButtonProps {
     children?: React.ReactNode;
     variant?: ButtonVariant;
+    rightIcon?: React.ReactNode;
+    leftIcon?: React.ReactNode;
     disabled?: boolean;
     loading?: boolean;
     style?: StyleProp<ViewStyle>;
@@ -20,8 +22,10 @@ export const Button: React.FC<ButtonProps> = ({
     variant = 'primary',
     loading,
     disabled = false,
+    rightIcon,
+    leftIcon,
 }) => (
-    <TouchableNativeFeedback
+    <Touchable
         disabled={disabled}
         onPress={disabled ? undefined : onPress}
     >
@@ -33,13 +37,17 @@ export const Button: React.FC<ButtonProps> = ({
             {loading ? (
                 <Loading />
             ) : (
-                <ButtonText
-                    variant={variant}
-                    disabled={disabled}
-                >
-                    {children}
-                </ButtonText>
+                <>
+                    {leftIcon}
+                    <ButtonText
+                        variant={variant}
+                        disabled={disabled}
+                    >
+                        {children}
+                    </ButtonText>
+                    {rightIcon}
+                </>
             )}
         </Base>
-    </TouchableNativeFeedback>
+    </Touchable>
 );

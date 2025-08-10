@@ -1,6 +1,6 @@
+import LinearGradient from 'react-native-linear-gradient';
 import styled from 'styled-components/native';
 import bgSource from '~/../assets/splash-bg.jpg';
-import LinearGradient from 'react-native-linear-gradient';
 
 export const Background = styled.ImageBackground.attrs({ source: bgSource })`
     flex: 1;

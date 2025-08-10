@@ -49,7 +49,7 @@
         "no-extra-semi": "off",
         "no-implied-eval": "error",
         "no-promise-executor-return": "warn",
-        "implicit-arrow-linebreak": ["warn", "beside"],
+        "implicit-arrow-linebreak": ["off"],
         "no-restricted-imports": [
             "error",
             {

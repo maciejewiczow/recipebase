@@ -18,7 +18,7 @@
         "ecmaVersion": 2019,
         "sourceType": "module"
     },
-    "plugins": ["@typescript-eslint", "simple-import-sort", "import"],
+    "plugins": ["@typescript-eslint", "simple-import-sort", "import", "unused-imports"],
     "root": true,
     "rules": {
         "jsx-a11y/no-autofocus": "off",
@@ -31,11 +31,9 @@
         "import/prefer-default-export": "off",
         "import/no-default-export": "error",
         "import/no-cycle": ["warn", { "ignoreExternal": true }],
+        "unused-imports/no-unused-imports": "error",
         "jsx-a11y/alt-text": ["off"],
-        "@typescript-eslint/no-unused-vars": [
-            "error",
-            { "args": "none", "varsIgnorePattern": "(^_|React)" }
-        ],
+        "@typescript-eslint/no-unused-vars": ["error", { "args": "none", "varsIgnorePattern": "(^_|React)" }],
         "no-confusing-arrow": "warn",
         "no-constructor-return": "warn",
         "no-eval": "error",
@@ -43,7 +41,7 @@
         "no-extra-semi": "off",
         "no-implied-eval": "error",
         "no-promise-executor-return": "warn",
-        "implicit-arrow-linebreak": ["warn", "beside"],
+        "implicit-arrow-linebreak": ["off"],
         "no-restricted-imports": [
             "error",
             {
@@ -56,12 +54,7 @@
                 ]
             }
         ],
-        "no-restricted-syntax": [
-            "warn",
-            "ForInStatement",
-            "LabeledStatement",
-            "WithStatement"
-        ],
+        "no-restricted-syntax": ["warn", "ForInStatement", "LabeledStatement", "WithStatement"],
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": "warn",
         "no-unmodified-loop-condition": "warn",
@@ -98,30 +91,7 @@
             }
         ],
         "react/jsx-no-constructed-context-values": "error",
-        "react/jsx-no-literals": [
-            "off",
-            {
-                "noStrings": true,
-                "ignoreProps": true,
-                "allowedStrings": [
-                    " ",
-                    ",",
-                    ".",
-                    "*",
-                    "/",
-                    ":",
-                    "(",
-                    ")",
-                    "+",
-                    "-",
-                    "...",
-                    "&nbsp;",
-                    "):&nbsp;",
-                    "%"
-                ],
-                "noAttributeStrings": false
-            }
-        ],
+        "react/jsx-no-literals": ["off"],
         "react/jsx-no-undef": "off",
         "react/jsx-no-useless-fragment": [
             "warn",
@@ -157,7 +127,6 @@
                         // Anything that starts with a dot
                         "^\\.",
                         // Style imports
-                        "^.+\\.css$",
                         "^.+\\.styles$"
                     ]
                 ]
@@ -183,25 +152,7 @@
             }
         },
         {
-            "files": [
-                "./app/**/*.tsx",
-                "./**/*.stories.tsx",
-                "./**/*.stories.ts"
-            ],
-            "rules": {
-                "react/no-multi-comp": "off"
-            }
-        },
-        {
-            "files": [
-                "./**/*.tsx",
-                "./**/*.stories.tsx",
-                "./**/*.stories.ts",
-                "./.storybook/**/*.ts",
-                "./.storybook/**/*.tsx",
-                "**/*.d.ts",
-                "./codegen.ts"
-            ],
+            "files": ["**/*.d.ts"],
             "rules": {
                 "import/no-default-export": "off"
             }

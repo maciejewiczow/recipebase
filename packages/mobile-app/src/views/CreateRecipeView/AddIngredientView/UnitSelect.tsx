@@ -78,7 +78,6 @@ export const UnitSelect: React.FC = observer(() => {
             searchable
             searchText={draftIngredient.unitSearchString}
             onSearchTextChange={draftIngredient.setUnitSearchString}
-            allowEmpty
         />
     );
 });

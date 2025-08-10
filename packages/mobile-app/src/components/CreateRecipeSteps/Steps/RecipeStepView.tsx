@@ -3,14 +3,26 @@ import { RenderItem, ScaleDecorator, ShadowDecorator } from 'react-native-dragga
 import { useNavigation } from '@react-navigation/native';
 import { RecipeSection, RecipeStep } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
+import { ImagesIconSvg } from '~/components/Svg/ImagesIconSvg';
 import { RootNavigationProp } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
-import { ListItemMenu } from '../ListItemMenu';
-import { AddStepButton } from './AddStepButton';
+import { StepNumberText, StepNumberWrapper } from '~/views/CreateRecipeView/AddStepView/AddStepView.styles';
+import { useStepIndex } from '~/views/CreateRecipeView/AddStepView/hooks';
 import { RecipeSectionHeader } from './RecipeSectionHeader';
 import { ItemType } from './Steps';
-import { DraggableListItemWrapper, DragHandleIcon, DragHandleWrapper } from '../common.styles';
-import { RecipeStepWrapper, StepPreviewText } from './Steps.styles';
+import {
+    DraggableListItemWrapper,
+    DragHandleIcon,
+    DragHandleWrapper,
+    SectionSeparator,
+} from '../common.styles';
+import {
+    AddStepButton,
+    ListItemMenu,
+    RecipeStepWrapper,
+    StepPreviewText,
+    StepPreviewTextWrapper,
+} from './Steps.styles';
 
 interface RecipeStepPreviewProps {
     step: RecipeStep;
@@ -36,12 +48,20 @@ const RecipeStepPreview: React.FC<RecipeStepPreviewProps> = observer(({ step, dr
         }
     };
 
+    const stepIndex = useStepIndex(step);
+
     return (
         <RecipeStepWrapper>
             <DragHandleWrapper onPressIn={drag}>
                 <DragHandleIcon />
             </DragHandleWrapper>
-            <StepPreviewText>{step.content}</StepPreviewText>
+            <StepNumberWrapper>
+                <StepNumberText>{(stepIndex ?? 0) + 1}</StepNumberText>
+            </StepNumberWrapper>
+            <StepPreviewTextWrapper>
+                <StepPreviewText>{step.content.replace(/\n/g, ' ')}</StepPreviewText>
+                {step.photo !== undefined && <ImagesIconSvg />}
+            </StepPreviewTextWrapper>
             <ListItemMenu
                 onEditPress={editStep}
                 onRemovePress={removeStep}
@@ -62,7 +82,10 @@ const SectionSeparatorView: React.FC<SectionSeparatorViewProps> = observer(({ se
     return (
         <>
             {prevSectionIndex >= 0 && draftRecipe.recipe.sections && (
-                <AddStepButton targetSectionId={draftRecipe.recipe.sections[prevSectionIndex].id} />
+                <>
+                    <AddStepButton targetSectionId={draftRecipe.recipe.sections[prevSectionIndex].id} />
+                    <SectionSeparator />
+                </>
             )}
             <RecipeSectionHeader section={section} />
         </>

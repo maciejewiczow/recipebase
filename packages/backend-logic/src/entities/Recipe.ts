@@ -28,7 +28,7 @@ export class Recipe {
     description!: string;
 
     @Column({ type: 'varchar', length: 1e3 })
-    coverImage!: string;
+    coverImage: string | undefined;
 
     @Column({ type: 'varchar', length: 500, nullable: true })
     source?: string;

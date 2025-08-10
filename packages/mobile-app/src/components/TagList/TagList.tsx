@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import Animated, { EntryExitTransition, LinearTransition } from 'react-native-reanimated';
+import { LinearTransition } from 'react-native-reanimated';
 import { useFocusEffect } from '@react-navigation/native';
 import { Observer, observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
 import { catchCancelledFlow } from '~/utils/catchCancelledFlow';
 import { TagView } from './TagView';
+import { List, Loader, LoaderWrapper } from './TagList.styles';
 
-export interface SearchBarProps {
+export interface TagListProps {
     style?: StyleProp<ViewStyle>;
-    horizontalMargin?: number;
 }
 
-export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMargin = 16 }) => {
+export const TagList: React.FC<TagListProps> = observer(({ style }) => {
     const { tags } = useRootStore();
 
     const fetchTags = useCallback(() => {
@@ -27,16 +27,10 @@ export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMa
     useEffect(fetchTags, [fetchTags]);
 
     return (
-        <Animated.FlatList
-            style={[
-                style,
-                {
-                    height: tags.partitionedTags.length > 0 ? 44 : 0,
-                    flexGrow: 0,
-                },
-            ]}
+        <List
+            style={style}
             data={tags.partitionedTags}
-            renderItem={({ item, index }) => (
+            renderItem={({ item }) => (
                 <Observer>
                     {() => (
                         <TagView
@@ -44,15 +38,19 @@ export const TagList: React.FC<SearchBarProps> = observer(({ style, horizontalMa
                             name={item.tag.name || ''}
                             isSelected={item.isSelected}
                             onPress={() => tags?.toggleTagSelectedById(item.tag.id)}
-                            isFirstChild={index === 0}
-                            isLastChild={index === (tags?.tags.length ?? 1) - 1}
-                            horizontalMargin={horizontalMargin}
                         />
                     )}
                 </Observer>
             )}
+            ListEmptyComponent={
+                tags.isLoading ? (
+                    <LoaderWrapper>
+                        <Loader />
+                    </LoaderWrapper>
+                ) : undefined
+            }
             keyExtractor={item => item.tag.id.toString()}
-            itemLayoutAnimation={LinearTransition.springify().damping(10).stiffness(100)}
+            itemLayoutAnimation={LinearTransition.springify().damping(15).stiffness(100)}
             horizontal
         />
     );

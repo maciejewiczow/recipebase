@@ -1,5 +1,4 @@
 import EvilIcon from 'react-native-vector-icons/EvilIcons';
-import { IconProps } from 'react-native-vector-icons/Icon';
 import styled, { css } from 'styled-components/native';
 import { GradientBackground } from '~/components/GradientBackground';
 import { SearchBar as OriginalSearchBar } from '~/components/SearchBar';
@@ -8,6 +7,7 @@ import { RecipeIcon as OriginalRecipeIcon } from '~/components/Svg/RecipeIcon';
 import { SettingsIconSvg } from '~/components/Svg/SettingsIconSvg';
 import { TagList as OriginalTagList } from '~/components/TagList';
 import { HeadingBase, TextBase } from '~/components/Text';
+import { createStyledIcon } from '~/utils/createStyledIcon';
 import { createViewIcon } from '../createViewIcon';
 import { RecipeListItem as OriginalRecipeListItem } from './RecipeListItem';
 
@@ -70,7 +70,7 @@ export const EmptyListWrapper = styled.Pressable`
     ${allMargin}
 `;
 
-export const TagList = styled(OriginalTagList).attrs({ horizontalMargin: 18 })`
+export const TagList = styled(OriginalTagList)`
     margin-top: 15px;
     margin-bottom: 52px;
 `;
@@ -79,11 +79,11 @@ export const RecipeListItem = styled(OriginalRecipeListItem)`
     ${allMargin}
 `;
 
-export const PlusIcon: React.FC<Omit<IconProps, 'color' | 'name'>> = styled(EvilIcon).attrs(({ theme }) => ({
+export const PlusIcon = createStyledIcon(EvilIcon, ({ theme }) => ({
     name: 'plus',
     color: theme.palette.text[0],
     size: 32,
-}))``;
+}));
 
 export const RecipeIcon = styled(OriginalRecipeIcon).attrs(({ theme }) => ({
     fill: theme.palette.text[0],

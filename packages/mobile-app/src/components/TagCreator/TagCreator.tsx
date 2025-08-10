@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { ToastAndroid } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { View } from 'react-native';
 import { observer } from 'mobx-react-lite';
+import { TagWithCount } from '~/../../backend-logic/src/store/Tags';
 import { useRootStore } from '~/RootStoreContext';
+import { useIsKeyboardOpen } from '~/utils/useIsKeyoardOpen';
+import { TagPlusIconSvg } from '../Svg/TagPlusIconSvg';
 import {
+    DropdownList,
     DropdownRow,
+    DropdownSeparator,
     DropdownWrapper,
-    InputWithDropdownWrapper,
+    InputErrorText,
+    InputErrorWrapper,
     TagNameInput,
     TagNameText,
     TagRecipeCountText,
@@ -16,24 +22,36 @@ import {
 export const TagCreator: React.FC = observer(() => {
     const { tags } = useRootStore();
     const [isInputVisible, setIsInputVisible] = useState(false);
-    const [newTagName, setNewTagName] = useState<string>('');
+    const [newTagName, setNewTagName] = useState('');
+    const [tagSelectedForDeletionId, setTagSelectedForDeletionId] = useState<number>();
+    const isKeyboardOpen = useIsKeyboardOpen();
+
+    useEffect(() => {
+        if (!isKeyboardOpen) {
+            setTagSelectedForDeletionId(undefined);
+        }
+    }, [isKeyboardOpen]);
+
+    const isNameValid = useMemo(() => {
+        if (newTagName.length) {
+            return tags.isTagNameValid(newTagName);
+        }
+
+        return true;
+    }, [newTagName, tags]);
 
     const showTagInputOrAddNewTag = () => {
         setIsInputVisible(true);
+        setTagSelectedForDeletionId(undefined);
 
-        if (newTagName) {
-            const added = tags.addDraftTag(newTagName);
-            if (!added) {
-                ToastAndroid.show('Tags have to be unique', ToastAndroid.LONG);
-            }
+        if (newTagName && isNameValid) {
+            tags.addDraftTag(newTagName);
+            setNewTagName('');
         }
-
-        setNewTagName('');
     };
 
-    const addExistingTagToDrafts = (tagId: number) => () => {
-        tags.copyTagToDraftTags(tagId);
-        setIsInputVisible(false);
+    const addExistingTagToDrafts = (tag: TagWithCount) => () => {
+        tags.copyTagToDraftTags(tag.id);
         setNewTagName('');
     };
 
@@ -44,47 +62,81 @@ export const TagCreator: React.FC = observer(() => {
         tags.removeDraftTagById(id);
     };
 
+    const matchingTags = tags.filterByNameWithoutDrafts(newTagName);
+
     return (
         <TagsWrapper>
             {tags.draftTags.map(tag => (
                 <TagView
                     key={tag.id}
                     name={tag.name}
+                    isSelected={tag.id === tagSelectedForDeletionId}
                     onPress={editTag(tag.id)}
                     noMinWidth
                 />
             ))}
             {isInputVisible && (
-                <InputWithDropdownWrapper>
+                <View>
                     <TagNameInput
+                        hasAutocompletionItems={!!matchingTags.length}
                         onChangeText={setNewTagName}
                         value={newTagName}
+                        onKeyPress={e => {
+                            if (e.nativeEvent.key === 'Backspace' && newTagName.length === 0) {
+                                if (tagSelectedForDeletionId !== undefined) {
+                                    tags.removeDraftTagById(tagSelectedForDeletionId);
+                                    setTagSelectedForDeletionId(undefined);
+                                } else {
+                                    setTagSelectedForDeletionId(tags.draftTags.at(-1)?.id);
+                                }
+                            }
+
+                            if (e.nativeEvent.key !== 'Backspace') {
+                                setTagSelectedForDeletionId(undefined);
+                            }
+                        }}
                         onEndEditing={showTagInputOrAddNewTag}
                         onSubmitEditing={showTagInputOrAddNewTag}
-                        onBlur={showTagInputOrAddNewTag}
+                        onBlur={() => {
+                            setIsInputVisible(false);
+                            setNewTagName('');
+                        }}
                         autoFocus
                         blurOnSubmit={false}
                         autoCapitalize="none"
                     />
-                    <DropdownWrapper>
-                        {tags.filterByName(newTagName).map(tag => (
-                            <DropdownRow
-                                key={tag.id}
-                                onPress={addExistingTagToDrafts(tag.id)}
-                            >
-                                <TagNameText>{tag.name}</TagNameText>
-                                <TagRecipeCountText>{tag.recipeCount}</TagRecipeCountText>
-                            </DropdownRow>
-                        ))}
-                    </DropdownWrapper>
-                </InputWithDropdownWrapper>
+                    {!isNameValid && (
+                        <View>
+                            <InputErrorWrapper>
+                                <InputErrorText>Tags must be unique</InputErrorText>
+                            </InputErrorWrapper>
+                        </View>
+                    )}
+                    {isNameValid && !!matchingTags.length && (
+                        <View>
+                            <DropdownWrapper>
+                                <DropdownSeparator />
+                                <DropdownList
+                                    keyboardShouldPersistTaps="handled"
+                                    data={matchingTags}
+                                    keyExtractor={tag => tag.id.toString()}
+                                    renderItem={({ item: tag }) => (
+                                        <DropdownRow onPress={addExistingTagToDrafts(tag)}>
+                                            <TagNameText>{tag.name}</TagNameText>
+                                            <TagRecipeCountText>{tag.recipeCount}</TagRecipeCountText>
+                                        </DropdownRow>
+                                    )}
+                                />
+                            </DropdownWrapper>
+                        </View>
+                    )}
+                </View>
             )}
             <TagView
                 onPress={showTagInputOrAddNewTag}
-                name="+"
+                name={<TagPlusIconSvg />}
                 isSelected
                 noMinWidth
-                isLastChild
             />
         </TagsWrapper>
     );

@@ -14,6 +14,10 @@ export class DraftStep {
         this.step.content = c;
     };
 
+    @action setPhoto = (photo: string | undefined) => {
+        this.step.photo = photo;
+    };
+
     @action reset = () => {
         this.step = RecipeStep.createWithTemporaryId();
     };

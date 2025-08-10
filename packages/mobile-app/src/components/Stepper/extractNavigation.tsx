@@ -1,6 +1,6 @@
+import { ComponentProps, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StepperNavigation, Tab } from './Tab';
-import { ComponentProps, useEffect } from 'react';
 
 type ScreenProps = ComponentProps<typeof Tab.Screen>;
 
@@ -10,14 +10,14 @@ type ScreenComponentProps = ComponentProps<ScreenComponent>;
 
 export const extractNavigation =
     (
-        setNavigation: React.Dispatch<React.SetStateAction<StepperNavigation | undefined>>,
+        navigationRef: React.MutableRefObject<StepperNavigation | undefined>,
         Component: ScreenComponent,
-    ): React.FC<ScreenComponentProps> =>
-    props => {
+        // eslint-disable-next-line react/display-name
+    ): React.FC<ScreenComponentProps> => props => {
         const navigation = useNavigation<StepperNavigation>();
 
         useEffect(() => {
-            setNavigation(navigation);
+            navigationRef.current = navigation;
         }, [navigation]);
 
         // @ts-expect-error idk something is wrong with typing I think

@@ -1,20 +1,32 @@
 import styled from 'styled-components/native';
+import { TextBase } from '../Text';
 
 export const RecipeIngredientWrapper = styled.View`
     flex-flow: row nowrap;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
+    background: ${({ theme }) => theme.palette.background[3]};
+    padding: 8px 12px;
+    border-radius: ${({ theme }) => theme.border.radius};
 `;
 
-export const IngredientNameWrapper = styled.View`
-    flex: 4;
+export const TextWrapper = styled.View`
+    flex-direction: row;
+    gap: 8px;
+    flex: 1;
+    align-items: center;
 `;
 
-export const QuantityWrapper = styled.View`
-    flex: 3;
+export const IngredientName = styled(TextBase).attrs({
+    fontWeight: 'bold',
+    size: 'lg',
+})`
+    position: relative;
+    bottom: 1px;
+    max-width: 60%;
 `;
 
-export const Text = styled.Text`
-    color: #555;
-    font-size: 16px;
-`;
+export const QuantityAndUnit = styled(TextBase).attrs({
+    fontWeight: 'medium',
+    size: 'lg',
+})``;

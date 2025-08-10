@@ -1,0 +1,6 @@
+{
+  "name": "Svg component",
+  "fileTemplateName": "{{name}}.tsx",
+  "onlyAsPartOfGroup": false,
+  "disabled": false
+}

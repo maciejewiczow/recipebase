@@ -48,11 +48,12 @@ export const SearchInput = styled(Input).attrs({
         borderRadius: 0,
         borderWidth: 0,
         paddingLeft: 0,
-        paddingBottom: 2,
+        paddingBottom: 0,
     },
 })`
     padding: 0;
+    padding-bottom: 18px;
     border-bottom-width: 1px;
-    border-color: #aaa;
+    border-color: ${({ theme }) => theme.palette.text[8]};
     margin-bottom: 12px;
 `;

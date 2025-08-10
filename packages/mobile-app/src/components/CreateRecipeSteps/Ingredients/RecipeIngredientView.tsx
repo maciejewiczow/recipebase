@@ -6,10 +6,15 @@ import { RecipeIngredientListItem } from '~/components/RecipeIngredientListItem'
 import { RootNavigationProp } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
 import { ListItemMenu } from '../ListItemMenu';
-import { AddIngredientButton } from './AddIngredientButton';
 import { ItemType } from './Ingredients';
 import { IngredientSectionHeader } from './IngredientSectionHeader';
-import { DraggableListItemWrapper, DragHandleIcon, DragHandleWrapper } from '../common.styles';
+import {
+    DraggableListItemWrapper,
+    DragHandleIcon,
+    DragHandleWrapper,
+    SectionSeparator,
+} from '../common.styles';
+import { AddIngredientButton } from './RecipeIngredientView.styles';
 
 const IngredientView: React.FC<{
     ingredient: RecipeIngredient;
@@ -60,9 +65,12 @@ const SectionSeparatorView: React.FC<{ section: IngredientSection }> = observer(
     return (
         <>
             {prevSectionIndex >= 0 && draftRecipe.recipe.ingredientSections && (
-                <AddIngredientButton
-                    targetSectionId={draftRecipe.recipe.ingredientSections[prevSectionIndex].id}
-                />
+                <>
+                    <AddIngredientButton
+                        targetSectionId={draftRecipe.recipe.ingredientSections[prevSectionIndex].id}
+                    />
+                    <SectionSeparator />
+                </>
             )}
             <IngredientSectionHeader section={section} />
         </>
@@ -71,7 +79,7 @@ const SectionSeparatorView: React.FC<{ section: IngredientSection }> = observer(
 
 export const renderItem: RenderItem<ItemType> = ({ drag, item }) => (
     <ShadowDecorator>
-        <ScaleDecorator>
+        <ScaleDecorator activeScale={1.05}>
             <DraggableListItemWrapper>
                 {item instanceof RecipeIngredient ? (
                     <IngredientView

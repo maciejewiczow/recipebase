@@ -1,11 +1,11 @@
 import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import {
     DeleteSectionIcon,
     DeleteSectionIconWrapper,
     SectionNameInput,
     SectionNameInputRow,
 } from './common.styles';
-import { StyleProp, ViewStyle } from 'react-native';
 
 interface SectionHeaderProps {
     style?: StyleProp<ViewStyle>;

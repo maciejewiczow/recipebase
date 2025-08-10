@@ -1,16 +1,19 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
-import { Input, StepHeader, StepWrapper } from '../common.styles';
+import { Input, StepHeaderText, StepHeaderWrapper, StepWrapper } from '../common.styles';
 
 export const Details: React.FC = observer(() => {
     const { draftRecipe } = useRootStore();
 
     return (
         <StepWrapper>
-            <StepHeader>Details</StepHeader>
+            <StepHeaderWrapper>
+                <StepHeaderText>Details</StepHeaderText>
+            </StepHeaderWrapper>
             <Input
                 label="Description"
+                placeholder="Describe your dish here"
                 numberOfLines={4}
                 value={draftRecipe.recipe.description}
                 onChange={draftRecipe.setDescription}
@@ -18,6 +21,7 @@ export const Details: React.FC = observer(() => {
             />
             <Input
                 label="Source"
+                placeholder="Add source of the recipe"
                 value={draftRecipe.recipe.source}
                 onChange={draftRecipe.setSource}
             />

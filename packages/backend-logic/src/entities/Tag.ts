@@ -19,4 +19,14 @@ export class Tag {
     constructor() {
         makeAutoObservable(this);
     }
+
+    static createWithName(name: string) {
+        const tag = new Tag();
+
+        tag.id = Math.random();
+        tag.name = name;
+        tag.deletedAt = null;
+
+        return tag;
+    }
 }

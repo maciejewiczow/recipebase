@@ -1,11 +1,12 @@
-import React, { ComponentProps, useState } from 'react';
+import { ComponentProps, useMemo, useRef } from 'react';
 import { ISubNavigator } from '~/RootNavigation';
+import { TabBarHiddenContext } from './context';
 import { extractNavigation } from './extractNavigation';
 import { StepperBottomBar } from './StepperBottomBar';
 import { StepperNavigation, Tab } from './Tab';
 import { TabBar } from './TabBar';
 
-interface Step<StepName extends string> {
+export interface Step<StepName extends string> {
     name: StepName;
     component: Defined<ComponentProps<typeof Tab.Screen>['component']>;
 }
@@ -20,7 +21,7 @@ export interface StepperProps<StepName extends string> {
     onFinish?: () => void;
     lastStepButtonText?: string;
     lastStepButtonLoading?: boolean;
-    hideBackButtonOnFirstStep?: boolean;
+    hideBottomAndTopOnFirstStep?: boolean;
 }
 
 export const Stepper = <StepName extends string>({
@@ -28,32 +29,37 @@ export const Stepper = <StepName extends string>({
     onFinish,
     lastStepButtonText,
     lastStepButtonLoading,
+    hideBottomAndTopOnFirstStep,
 }: StepperProps<StepName>) => {
-    const [navigation, setNavigation] = useState<StepperNavigation>();
+    const navigation = useRef<StepperNavigation>();
+
+    const memoedSteps = useMemo(
+        () => steps.map(({ name, component }) => (
+                <Tab.Screen
+                    key={name}
+                    name={name}
+                    component={extractNavigation(navigation, component)}
+                />
+            )),
+        [steps],
+    );
 
     return (
-        <>
+        <TabBarHiddenContext.Provider value={!!hideBottomAndTopOnFirstStep}>
             <Tab.Navigator
                 tabBar={TabBar}
                 screenOptions={{ swipeEnabled: false }}
                 backBehavior="order"
             >
-                {steps.map(({ name, component }) => (
-                    <Tab.Screen
-                        key={name}
-                        name={name}
-                        component={extractNavigation(setNavigation, component)}
-                    />
-                ))}
+                {memoedSteps}
             </Tab.Navigator>
-            {navigation && (
-                <StepperBottomBar
-                    onFinish={onFinish}
-                    navigation={navigation}
-                    lastStepButtonText={lastStepButtonText}
-                    lastStepButtonLoading={lastStepButtonLoading}
-                />
-            )}
-        </>
+            <StepperBottomBar
+                onFinish={onFinish}
+                navigationRef={navigation}
+                lastStepButtonText={lastStepButtonText}
+                lastStepButtonLoading={lastStepButtonLoading}
+                hideBottomAndTopOnFirstStep={hideBottomAndTopOnFirstStep}
+            />
+        </TabBarHiddenContext.Provider>
     );
 };

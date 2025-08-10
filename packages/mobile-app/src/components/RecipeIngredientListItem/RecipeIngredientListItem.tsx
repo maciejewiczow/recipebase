@@ -2,11 +2,13 @@ import React, { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { RecipeIngredient } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
+import { capitalize } from '~/utils/capitalize';
+import { DotSvg } from './DotSvg';
 import {
-    IngredientNameWrapper,
-    QuantityWrapper,
+    IngredientName,
+    QuantityAndUnit,
     RecipeIngredientWrapper,
-    Text,
+    TextWrapper,
 } from './RecipeIngredientListItem.styles';
 
 export interface RecipeIngredientListItemProps {
@@ -25,18 +27,17 @@ export const RecipeIngredientListItem: React.FC<RecipeIngredientListItemProps> =
     }) => (
         <RecipeIngredientWrapper style={style}>
             {leftSection}
-            <QuantityWrapper>
-                {quantityFrom ? (
-                    <Text>
+            <DotSvg />
+            <TextWrapper>
+                <IngredientName>{capitalize(ingredient?.name ?? '')}</IngredientName>
+                {quantityFrom && (
+                    <QuantityAndUnit>
                         {quantityFrom}
                         {quantityTo ? '-' : ''}
                         {quantityTo} {unit?.name}
-                    </Text>
-                ) : null}
-            </QuantityWrapper>
-            <IngredientNameWrapper>
-                <Text>{ingredient?.name}</Text>
-            </IngredientNameWrapper>
+                    </QuantityAndUnit>
+                )}
+            </TextWrapper>
             {rightSection}
         </RecipeIngredientWrapper>
     ),

@@ -1,15 +1,13 @@
 import styled from 'styled-components/native';
+import { TextBase } from '~/components/Text';
 
-export const ListHeader = styled.Text`
-    font-size: 16px;
-    color: #777;
-    margin-bottom: 8px;
+export const ListHeader = styled(TextBase).attrs({
+    fontWeight: 'medium',
+})`
+    margin-bottom: 6px;
 `;
 
 export const ListWrapper = styled.View`
+    margin-top: 12px;
     gap: 8px;
-    background: white;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: ${({ theme }) => theme.border.radiusBig};
 `;

@@ -1,9 +1,10 @@
-import { useMemo } from 'react';
+import { useDeferredValue, useMemo } from 'react';
 import { Ingredient, IngredientSection, Unit } from 'backend-logic';
 import { uniqBy } from 'lodash';
 import { DefaultItem } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { useRootStore } from '~/RootStoreContext';
 import { isTruthy } from '~/utils/isTruthy';
+import { useRunCancellablePromise } from '~/utils/useRunCancellablePromise';
 
 export interface UnitListItemType extends DefaultItem {
     isCustom: boolean;
@@ -85,8 +86,12 @@ export const getIngredientsWithDrafts = (
         i => i.id,
     );
 
-export const useIngredientListData = (isInEditMode: boolean, searchString: string) => {
+export const useIngredientListData = (isInEditMode: boolean) => {
     const { ingredients, draftIngredient, draftRecipe } = useRootStore();
+
+    const searchString = useDeferredValue(draftIngredient.ingredient.name ?? '');
+
+    useRunCancellablePromise(() => ingredients.fetchIngredients(searchString), [searchString, ingredients]);
 
     const ingredientsWithDrafts = useMemo<IngredientListItemType[]>(
         () => getIngredientsWithDrafts(draftRecipe.recipe.ingredientSections, ingredients.ingredients)

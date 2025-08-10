@@ -1,7 +1,8 @@
-import React, { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ListRenderItem, StyleProp, TextInput, TouchableOpacity, ViewStyle } from 'react-native';
-import { BottomSheetFlatList, BottomSheetModal } from '@gorhom/bottom-sheet';
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { useBottomSheetModal } from '~/utils/useBottomSheet';
+import { BottomSheetModal } from '../BottomSheetModal';
 import { Label } from '../Input/Input.styles';
 import {
     DefaultItemText,

@@ -1,18 +1,31 @@
 import React, { useMemo, useState } from 'react';
-import { Pressable, SectionList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Pressable } from 'react-native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RecipeIngredient } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
 import { Checkbox } from '~/components/Checkbox';
+import { StepHeaderBackIconWrapper, StepHeaderText } from '~/components/CreateRecipeSteps/common.styles';
+import { RecipeIngredientListItem } from '~/components/RecipeIngredientListItem';
+import { BackIconSvg } from '~/components/Svg/BackIconSvg';
+import { RootStackParams } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
-import { ListItem } from './ListItem';
 import { ListSectionTitle } from './ListSectionTitle';
 import { Section, SectionListData } from './types';
-import { SaveButton, Text, Wrapper } from './AddStepIngredientView.styles';
+import { StepHeaderWrapper } from '../AddStepView/AddStepView.styles';
+import {
+    EmptyListHeadingText,
+    EmptyListText,
+    EmptyListWrapper,
+    List,
+    PlusIcon,
+    SaveButton,
+    Wrapper,
+} from './AddStepIngredientView.styles';
 
-export const AddStepIngredientView: React.FC = observer(() => {
+export const AddStepIngredientView: React.FC<
+    NativeStackScreenProps<RootStackParams, 'AddStepIngredientView'>
+> = observer(({ navigation }) => {
     const { draftRecipe, draftStep } = useRootStore();
-    const navigation = useNavigation();
     const [recipeIngredientsToAdd, setRecipeIngredientsToAdd] = useState<RecipeIngredient[]>(
         draftStep.referencedIngredients,
     );
@@ -44,28 +57,40 @@ export const AddStepIngredientView: React.FC = observer(() => {
 
     return (
         <Wrapper>
-            <SectionList<RecipeIngredient, Section>
+            <StepHeaderWrapper>
+                <StepHeaderBackIconWrapper onPress={() => navigation.goBack()}>
+                    <BackIconSvg />
+                </StepHeaderBackIconWrapper>
+                <StepHeaderText>Ingredients in this step</StepHeaderText>
+            </StepHeaderWrapper>
+            <List<RecipeIngredient, Section>
                 sections={listData}
-                renderItem={({ item }) => {
-                    const isActive = recipeIngredientsToAdd.some(ri => ri.id === item.id);
-
-                    return (
-                        <Pressable onPress={addOrRemoveItem(item)}>
-                            <ListItem
-                                isActive={isActive}
-                                leftSection={<Checkbox checked={isActive} />}
-                                recipeIngredient={item}
-                            />
-                        </Pressable>
-                    );
-                }}
+                keyExtractor={item => item.id.toString()}
+                renderItem={({ item }) => (
+                    <Pressable onPress={addOrRemoveItem(item)}>
+                        <RecipeIngredientListItem
+                            leftSection={
+                                <Checkbox checked={recipeIngredientsToAdd.some(ri => ri.id === item.id)} />
+                            }
+                            recipeIngredient={item}
+                        />
+                    </Pressable>
+                )}
                 renderSectionHeader={({ section: { title } }) => (
                     <ListSectionTitle
                         title={title}
                         listDataLength={listData.length}
                     />
                 )}
-                ListEmptyComponent={<Text>This recipe has no ingredients!</Text>}
+                ListEmptyComponent={
+                    <EmptyListWrapper
+                        onPress={() => navigation.navigate('CreateRecipe', { screen: 'Ingredients' })}
+                    >
+                        <EmptyListHeadingText>This recipe has no ingredients yet!</EmptyListHeadingText>
+                        <EmptyListText>Tap here to add an ingredient</EmptyListText>
+                        <PlusIcon />
+                    </EmptyListWrapper>
+                }
             />
             <SaveButton onPress={commitReferencedIngredients}>Save</SaveButton>
         </Wrapper>

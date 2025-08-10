@@ -22,7 +22,7 @@ export const HomeNavigationView: React.FC<NativeStackScreenProps<RootStackParams
 }) => (
     <Wrapper>
         <Tab.Navigator
-            tabBar={BottomTabBar}
+            tabBar={props => <BottomTabBar {...props} />}
             initialRouteName="Home"
             screenOptions={{
                 headerShown: false,
