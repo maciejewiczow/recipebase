@@ -3,11 +3,14 @@ import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradien
 import styled from 'styled-components/native';
 import { iconOffsetPx } from '../Stepper/Stepper.styles';
 
-export const FullSizeScrollView = styled(ScrollView).attrs({
-    contentContainerStyle: {
-        paddingBottom: iconOffsetPx + 50,
-    },
-})`
+export const FullSizeScrollView = styled(ScrollView).attrs(({ contentContainerStyle }) => ({
+    contentContainerStyle: [
+        {
+            paddingBottom: iconOffsetPx + 50,
+        },
+        contentContainerStyle,
+    ],
+}))`
     flex: 1;
 `;
 

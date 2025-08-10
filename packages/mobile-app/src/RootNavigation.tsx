@@ -119,7 +119,7 @@ export const RootNavigationComponent: React.FC = () => {
                     />
                     <Stack.Group
                         screenOptions={{
-                            headerShown: true,
+                            headerShown: false,
                             headerShadowVisible: false,
                         }}
                     >
@@ -128,36 +128,25 @@ export const RootNavigationComponent: React.FC = () => {
                             component={views.CreateRecipeView}
                             options={{
                                 title: 'Create recipe',
+                                headerShown: true,
                                 header: StepHeader,
                             }}
                         />
                         <Stack.Screen
                             name="AddIngredientView"
                             component={views.AddIngredientView}
-                            options={{
-                                headerShown: false,
-                            }}
                         />
                         <Stack.Screen
                             name="AddStepView"
                             component={views.AddStepView}
-                            options={{
-                                headerShown: false,
-                            }}
                         />
                         <Stack.Screen
                             name="AddStepIngredientView"
                             component={views.AddStepIngredientView}
-                            options={{
-                                headerShown: false,
-                            }}
                         />
                         <Stack.Screen
                             name="ImportRecipeView"
                             component={views.ImportRecipeView}
-                            options={{
-                                title: 'Import from a website',
-                            }}
                         />
                     </Stack.Group>
                 </Stack.Group>

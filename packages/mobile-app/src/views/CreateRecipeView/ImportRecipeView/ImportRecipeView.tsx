@@ -18,7 +18,9 @@ import { client } from '~/api/client';
 import { components } from '~/api/types.generated';
 import { BottomSheetSelect, DefaultItem } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { Checkbox } from '~/components/Checkbox';
+import { StepHeaderBackIconWrapper, StepHeaderText } from '~/components/CreateRecipeSteps/common.styles';
 import { Input } from '~/components/Input';
+import { BackIconSvg } from '~/components/Svg/BackIconSvg';
 import { RootStackParams } from '~/RootNavigation';
 import { useRootStore } from '~/RootStoreContext';
 import { useSecureStorageValue } from '~/utils/useSecureStorageValue';
@@ -32,6 +34,7 @@ import {
     MainErrorWrapper,
     MoreInfoIcon,
     OuterWrapper,
+    StepHeaderWrapper,
     Wrapper,
 } from './ImportRecipeView.styles';
 
@@ -39,7 +42,8 @@ type ImportRecipeViewProps = NativeStackScreenProps<RootStackParams, 'ImportReci
 
 const supportedContentTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
-const getImageDimensions = (path: string) => new Promise<{ width: number; height: number }>((resolve, reject) => {
+const getImageDimensions = (path: string) =>
+    new Promise<{ width: number; height: number }>((resolve, reject) => {
         Image.getSize(path, (width, height) => resolve({ width, height }), reject);
     });
 
@@ -367,6 +371,12 @@ export const ImportRecipeView: React.FC<ImportRecipeViewProps> = ({ navigation }
     return (
         <OuterWrapper>
             <Wrapper>
+                <StepHeaderWrapper>
+                    <StepHeaderBackIconWrapper onPress={() => navigation.goBack()}>
+                        <BackIconSvg />
+                    </StepHeaderBackIconWrapper>
+                    <StepHeaderText>Import recipe</StepHeaderText>
+                </StepHeaderWrapper>
                 <Input
                     label="Recipe URL"
                     textContentType="URL"
