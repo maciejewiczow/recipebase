@@ -1,4 +1,5 @@
 {
+    "extends": "expo/tsconfig.base",
     "compilerOptions": {
         "lib": ["dom", "dom.iterable", "esnext"],
         "noEmit": true,
@@ -7,7 +8,6 @@
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "resolveJsonModule": true,
-        "baseUrl": ".",
         "sourceMap": true,
         "removeComments": false,
         "declaration": false,
@@ -18,10 +18,15 @@
         "alwaysStrict": true,
         "allowJs": false,
         "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
         "forceConsistentCasingInFileNames": false,
         "downlevelIteration": true,
         "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
-    },
-    "exclude": ["node_modules", "*.js"]
+        "emitDecoratorMetadata": true,
+        "baseUrl": "./src",
+        "paths": {
+            "~/*": ["*"],
+            "backend-logic": ["./backend-logic"]
+        }
+    }
 }

@@ -1,0 +1,55 @@
+{
+    "expo": {
+        "name": "recipebase",
+        "slug": "recipebase",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "light",
+        "newArchEnabled": true,
+        "splash": {
+            "image": "./assets/splash-icon.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "ios": {
+            "supportsTablet": true
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "edgeToEdgeEnabled": true,
+            "package": "com.mafciejewiczow.recipebase"
+        },
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "plugins": [
+            "expo-sqlite",
+            [
+                "expo-font",
+                {
+                    "fonts": [
+                        "./assets/fonts/Oranienbaum/OranienbaumRegular.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansBold.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansBoldItalic.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansExtraBold.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansExtraBoldItalic.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansExtraLight.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansExtraLightItalic.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansItalic.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansLight.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansLightItalic.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansMedium.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansMediumItalic.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansRegular.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansSemiBold.ttf",
+                        "./assets/fonts/Plus_Jakarta_Sans/static/PlusJakartaSansSemiBoldItalic.ttf"
+                    ]
+                }
+            ]
+        ]
+    }
+}

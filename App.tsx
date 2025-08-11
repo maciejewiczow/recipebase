@@ -1,0 +1,27 @@
+import 'reflect-metadata';
+import { StatusBar } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { MenuProvider } from 'react-native-popup-menu';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { ThemeProvider } from 'styled-components/native';
+import { RootNavigationComponent } from '~/RootNavigation';
+import { rootStore, RootStoreContext } from './src/RootStoreContext';
+import { lightTheme } from './src/theme';
+
+export const App = () => (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider style={{ flex: 1 }}>
+            <StatusBar barStyle="light-content" />
+            <ThemeProvider theme={lightTheme}>
+                <BottomSheetModalProvider>
+                    <MenuProvider>
+                        <RootStoreContext.Provider value={rootStore}>
+                            <RootNavigationComponent />
+                        </RootStoreContext.Provider>
+                    </MenuProvider>
+                </BottomSheetModalProvider>
+            </ThemeProvider>
+        </SafeAreaProvider>
+    </GestureHandlerRootView>
+);

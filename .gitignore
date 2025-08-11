@@ -185,4 +185,7 @@ $RECYCLE.BIN/
 **/common/temp
 **/.jest/cache
 *.jar
-packages/mobile-app/src/api/types.generated.ts
+src/api/types.generated.ts
+android
+ios
+.expo
