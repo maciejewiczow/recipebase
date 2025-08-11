@@ -3,15 +3,10 @@ import { HeadingBase } from '~/components/Text';
 
 export const paddingPx = 16;
 
-export const Wrapper = styled.View<{ bottomInset: number }>`
+export const Wrapper = styled.View<{ topInset: number }>`
     background: ${({ theme }) => theme.palette.background[0]};
-    padding: ${({ bottomInset }) => bottomInset + paddingPx}px;
-`;
-
-export const IconBackWrapper = styled.TouchableOpacity`
-    position: absolute;
-    left: 0;
-    z-index: 20;
+    padding: ${paddingPx}px;
+    padding-top: ${({ topInset }) => topInset + paddingPx}px;
 `;
 
 export const Title = styled(HeadingBase)`

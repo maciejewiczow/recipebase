@@ -1,31 +1,59 @@
-import { useContext } from 'react';
+import React from 'react';
+import { View } from 'react-native';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
-import { TabBarHiddenContext } from './context';
-import { TabBarProgressStep, TabBarWrapper } from './Stepper.styles';
+import { StepperBottomBar, StepperBottomBarProps } from './StepperBottomBar';
+import { BottomBarWrapper, TabBarProgressStep, TabBarWrapper } from './Stepper.styles';
 
-export const TabBar: React.FC<MaterialTopTabBarProps> = ({ state, descriptors }) => {
-    const isHiddenOnFirstStep = useContext(TabBarHiddenContext);
-
+export const TabBar: React.FC<
+    MaterialTopTabBarProps &
+        Pick<StepperBottomBarProps, 'onFinish' | 'lastStepButtonText' | 'lastStepButtonLoading'> & {
+            isHiddenOnFirstStep: boolean;
+            ref?: React.Ref<View>;
+        }
+> = ({
+    ref,
+    state,
+    descriptors,
+    onFinish,
+    lastStepButtonLoading,
+    lastStepButtonText,
+    navigation,
+    isHiddenOnFirstStep,
+}) => {
     const isFirstStep = state.index === 0;
 
     return (
-        <TabBarWrapper>
-            {!(isHiddenOnFirstStep && isFirstStep) &&
-                (isHiddenOnFirstStep ? state.routes.slice(1) : state.routes).map((route, index) => {
-                    const { options } = descriptors[route.key];
+        <>
+            <TabBarWrapper>
+                {!(isHiddenOnFirstStep && isFirstStep) &&
+                    (isHiddenOnFirstStep ? state.routes.slice(1) : state.routes).map((route, index) => {
+                        const { options } = descriptors[route.key];
 
-                    const isCompleted = isHiddenOnFirstStep ? state.index >= index + 1 : state.index >= index;
+                        const isCompleted = isHiddenOnFirstStep
+                            ? state.index >= index + 1
+                            : state.index >= index;
 
-                    return (
-                        <TabBarProgressStep
-                            key={route.key}
-                            isCompleted={isCompleted}
-                            completedTintColor={options.tabBarActiveTintColor}
-                            accessibilityState={{ selected: isCompleted }}
-                            accessibilityLabel={options.tabBarAccessibilityLabel}
-                        />
-                    );
-                })}
-        </TabBarWrapper>
+                        return (
+                            <TabBarProgressStep
+                                key={route.key}
+                                isCompleted={isCompleted}
+                                completedTintColor={options.tabBarActiveTintColor}
+                                accessibilityState={{ selected: isCompleted }}
+                                accessibilityLabel={options.tabBarAccessibilityLabel}
+                            />
+                        );
+                    })}
+            </TabBarWrapper>
+            <BottomBarWrapper ref={ref}>
+                <StepperBottomBar
+                    navigation={navigation}
+                    state={state}
+                    onFinish={onFinish}
+                    lastStepButtonText={lastStepButtonText}
+                    lastStepButtonLoading={lastStepButtonLoading}
+                    hideBottomAndTopOnFirstStep={isHiddenOnFirstStep}
+                />
+            </BottomBarWrapper>
+        </>
     );
 };

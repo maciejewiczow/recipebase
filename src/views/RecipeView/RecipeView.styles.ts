@@ -22,10 +22,10 @@ export const Background = styled.ImageBackground`
     height: 250px;
 ` as unknown as typeof ImageBackground;
 
-export const BackIconWrapper = styled.TouchableOpacity`
+export const BackIconWrapper = styled.TouchableOpacity<{ topInset?: number }>`
     padding: 24px;
     position: absolute;
-    top: 0;
+    top: ${({ topInset = 0 }) => topInset}px;
     left: 0;
 `;
 

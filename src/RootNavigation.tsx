@@ -7,9 +7,8 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as views from '~/views';
-import { StepHeader } from './components/CreateRecipeSteps/StepHeader';
 import { StepperSubNavigator } from './components/Stepper/Stepper';
-import { AddStepViewRouteProps, StepNames } from './views/CreateRecipeView';
+import { AddStepViewRouteProps, StepNames, ViewHeader } from './views/CreateRecipeView';
 import { AddIngredientViewRouteProps } from './views/CreateRecipeView/AddIngredientView/AddIngredientView';
 import { GDriveFilePickerViewProps } from './views/GDriveFilePickerView/ViewProps';
 import { HomeTabNavigationParams } from './views/HomeNavigationView/HomeNavigationView';
@@ -124,7 +123,7 @@ export const RootNavigationComponent: React.FC = () => (
                         options={{
                             title: 'Create recipe',
                             headerShown: true,
-                            header: props => <StepHeader {...props} />,
+                            header: props => <ViewHeader {...props} />,
                         }}
                     />
                     <Stack.Screen

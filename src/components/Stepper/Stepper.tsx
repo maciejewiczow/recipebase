@@ -1,9 +1,7 @@
-import { ComponentProps, useMemo, useRef } from 'react';
+import React, { ComponentProps, useContext, useLayoutEffect, useMemo, useState } from 'react';
+import { View } from 'react-native';
 import { ISubNavigator } from '~/RootNavigation';
-import { TabBarHiddenContext } from './context';
-import { extractNavigation } from './extractNavigation';
-import { StepperBottomBar } from './StepperBottomBar';
-import { StepperNavigation, Tab } from './Tab';
+import { Tab } from './Tab';
 import { TabBar } from './TabBar';
 
 export interface Step<StepName extends string> {
@@ -15,6 +13,10 @@ export type StepperSubNavigator<StepName extends string> = ISubNavigator<
     Record<StepName, undefined>,
     StepName
 >;
+
+const stepperBottomBarHeightContext = React.createContext(0);
+
+export const useStepperBottomBarHeight = () => useContext(stepperBottomBarHeightContext);
 
 export interface StepperProps<StepName extends string> {
     steps: Step<StepName>[];
@@ -31,7 +33,12 @@ export const Stepper = <StepName extends string>({
     lastStepButtonLoading,
     hideBottomAndTopOnFirstStep,
 }: StepperProps<StepName>) => {
-    const navigation = useRef<StepperNavigation>(undefined);
+    const [bottomBarWrapper, setBottomBarWrapper] = useState<View | null>(null);
+    const [bottomBarHeight, setBottomBarHeight] = useState(0);
+
+    useLayoutEffect(() => {
+        bottomBarWrapper?.measureInWindow((_, __, ___, height) => setBottomBarHeight(height));
+    }, [bottomBarWrapper]);
 
     const memoedSteps = useMemo(
         () =>
@@ -39,28 +46,30 @@ export const Stepper = <StepName extends string>({
                 <Tab.Screen
                     key={name}
                     name={name}
-                    component={extractNavigation(navigation, component)}
+                    component={component}
                 />
             )),
         [steps],
     );
 
     return (
-        <TabBarHiddenContext.Provider value={!!hideBottomAndTopOnFirstStep}>
+        <stepperBottomBarHeightContext.Provider value={bottomBarHeight}>
             <Tab.Navigator
-                tabBar={props => <TabBar {...props} />}
+                tabBar={props => (
+                    <TabBar
+                        {...props}
+                        ref={setBottomBarWrapper}
+                        lastStepButtonLoading={lastStepButtonLoading}
+                        lastStepButtonText={lastStepButtonText}
+                        onFinish={onFinish}
+                        isHiddenOnFirstStep={!!hideBottomAndTopOnFirstStep}
+                    />
+                )}
                 screenOptions={{ swipeEnabled: false }}
                 backBehavior="order"
             >
                 {memoedSteps}
             </Tab.Navigator>
-            <StepperBottomBar
-                onFinish={onFinish}
-                navigationRef={navigation}
-                lastStepButtonText={lastStepButtonText}
-                lastStepButtonLoading={lastStepButtonLoading}
-                hideBottomAndTopOnFirstStep={hideBottomAndTopOnFirstStep}
-            />
-        </TabBarHiddenContext.Provider>
+        </stepperBottomBarHeightContext.Provider>
     );
 };

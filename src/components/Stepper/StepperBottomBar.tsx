@@ -1,9 +1,13 @@
 import React from 'react';
-import { NavigationProp } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+    MaterialTopTabBarProps,
+    MaterialTopTabNavigationEventMap,
+} from '@react-navigation/material-top-tabs';
+import { NavigationHelpers, ParamListBase } from '@react-navigation/native';
 import { useIsKeyboardOpen } from '~/utils/useIsKeyoardOpen';
 import { StepperNextSvg } from '../Svg/StepperNextSvg';
 import { StepperPrevSvg } from '../Svg/StepperPrevSvg';
-import { StepperNavParams } from './Tab';
 import {
     BottomBarBackground,
     ButtonIconWrapper,
@@ -13,8 +17,9 @@ import {
     TotalStepCount,
 } from './Stepper.styles';
 
-interface StepperBottomBarProps {
-    navigationRef: React.MutableRefObject<NavigationProp<StepperNavParams> | undefined>;
+export interface StepperBottomBarProps {
+    state: MaterialTopTabBarProps['state'];
+    navigation: NavigationHelpers<ParamListBase, MaterialTopTabNavigationEventMap>;
     onFinish: (() => void) | undefined;
     lastStepButtonText: string | undefined;
     lastStepButtonLoading: boolean | undefined;
@@ -22,19 +27,19 @@ interface StepperBottomBarProps {
 }
 
 export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
-    navigationRef,
+    state,
     onFinish,
+    navigation,
     lastStepButtonText,
     lastStepButtonLoading,
     hideBottomAndTopOnFirstStep,
 }) => {
     const isKeyboardOpen = useIsKeyboardOpen();
+    const insets = useSafeAreaInsets();
 
-    if (!navigationRef.current || isKeyboardOpen) {
+    if (isKeyboardOpen) {
         return null;
     }
-
-    const state = navigationRef.current.getState();
 
     const isFirstStep = state.index === 0;
     const isLastStep = state.index === state.routeNames.length - 1;
@@ -47,12 +52,12 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
     }
 
     return (
-        <BottomBarBackground>
+        <BottomBarBackground bottomInset={insets.bottom}>
             <ButtonIconWrapper
                 disabled={!prevRouteName}
                 onPress={() => {
                     if (prevRouteName) {
-                        navigationRef.current?.navigate(prevRouteName);
+                        navigation.navigate(prevRouteName);
                     }
                 }}
             >
@@ -71,7 +76,7 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
                 disabled={isLastStep && !lastStepButtonText}
                 onPress={() => {
                     if (!isLastStep && nextRouteName) {
-                        navigationRef.current?.navigate(nextRouteName);
+                        navigation.navigate(nextRouteName);
                     } else if (isLastStep) {
                         onFinish?.();
                     }

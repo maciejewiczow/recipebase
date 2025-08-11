@@ -1,3 +1,5 @@
+/* eslint-disable react/no-multi-comp */
+import { ScrollViewProps, ViewProps } from 'react-native';
 import { NestableDraggableFlatList, NestableScrollContainer } from 'react-native-draggable-flatlist';
 import EntypoIcon from '@react-native-vector-icons/entypo';
 import MaterialIcon from '@react-native-vector-icons/material-icons';
@@ -6,6 +8,7 @@ import { Input as OriginalInput } from '~/components/Input';
 import { createStyledIcon } from '~/utils/createStyledIcon';
 import { Button } from '../Button';
 import { GradientBackground, ScrollableGradientBackground } from '../GradientBackground';
+import { useStepperBottomBarHeight } from '../Stepper';
 import { PlusIconSvg } from '../Svg/PlusIconSvg';
 import { TrashIconSvg } from '../Svg/TrashIconSvg';
 import { TextBase } from '../Text';
@@ -13,6 +16,10 @@ import { iconOffsetPx } from '../Stepper/Stepper.styles';
 
 interface KeyboardStateProps {
     isKeyboardOpen: boolean;
+}
+
+interface BottomBarHeightProps {
+    bottomBarHeight: number;
 }
 
 export const draggableListStepMargin = css`
@@ -24,18 +31,40 @@ const containerPadding = css`
     padding: 30px 19px;
 `;
 
-export const StepWrapper = styled(GradientBackground)`
+export const StepWrapper: React.FC<ViewProps> = props => {
+    const bottomBarHeight = useStepperBottomBarHeight();
+
+    return (
+        <StepWrapperInner
+            {...props}
+            bottomBarHeight={bottomBarHeight}
+        />
+    );
+};
+
+const StepWrapperInner = styled(GradientBackground)<BottomBarHeightProps>`
     flex: 1;
     ${containerPadding}
-    padding-bottom: 24px;
+    padding-bottom: ${({ bottomBarHeight }) => bottomBarHeight + 24}px;
 `;
 
-export const ScrollableStepWrapper = styled(ScrollableGradientBackground).attrs<KeyboardStateProps>(
-    ({ isKeyboardOpen, contentContainerStyle }) => ({
+export const ScrollableStepWrapper: React.FC<ScrollViewProps> = props => {
+    const bottomBarHeight = useStepperBottomBarHeight();
+
+    return (
+        <ScrollableStepWrapperInner
+            {...props}
+            bottomBarHeight={bottomBarHeight}
+        />
+    );
+};
+
+const ScrollableStepWrapperInner = styled(ScrollableGradientBackground).attrs<BottomBarHeightProps>(
+    ({ bottomBarHeight, contentContainerStyle }) => ({
         contentContainerStyle: [
             contentContainerStyle,
             {
-                paddingBottom: (isKeyboardOpen ? 0 : iconOffsetPx) + 18,
+                paddingBottom: bottomBarHeight + 18,
             },
         ],
     }),

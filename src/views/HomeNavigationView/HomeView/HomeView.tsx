@@ -10,6 +10,7 @@ import { NoSearchResultsListView } from './NoSearchResultsListView';
 import {
     Background,
     RecipeListItem,
+    SafeAreaView,
     SearchBar,
     SettingsIcon,
     SettingsIconWrapper,
@@ -39,37 +40,41 @@ export const HomeView: React.FC = observer(() => {
     return (
         <Wrapper>
             <Background>
-                <SettingsIconWrapper>
-                    <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-                        <SettingsIcon />
-                    </TouchableOpacity>
-                </SettingsIconWrapper>
-                <Title>Hello!</Title>
-                <Subtitle>What do you want to cook today?</Subtitle>
-                <SearchBar
-                    searchText={searchText}
-                    onChange={setSearchText}
-                    placeholder="Search by name, tag..."
-                />
-                <TagList />
-                {recipes.isFetchingRecipes && deferredSearchText === searchText ? (
-                    <ActivityIndicator
-                        size={60}
-                        color="#999"
+                <SafeAreaView>
+                    <SettingsIconWrapper>
+                        <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+                            <SettingsIcon />
+                        </TouchableOpacity>
+                    </SettingsIconWrapper>
+                    <Title>Hello!</Title>
+                    <Subtitle>What do you want to cook today?</Subtitle>
+                    <SearchBar
+                        searchText={searchText}
+                        onChange={setSearchText}
+                        placeholder="Search by name, tag..."
                     />
-                ) : (recipes.filterRecipesByTags(tags.selectedTags).length ?? 0) > 0 ? (
-                    recipes.filterRecipesByTags(tags.selectedTags).map(item => (
-                        <RecipeListItem
-                            key={item.id}
-                            recipe={item}
+                    <TagList />
+                    {recipes.isFetchingRecipes && deferredSearchText === searchText ? (
+                        <ActivityIndicator
+                            size={60}
+                            color="#999"
                         />
-                    ))
-                ) : searchText.trim().length === 0 && (tags.selectedTags.length ?? 0) === 0 ? (
-                    <EmptyListView />
-                ) : (
-                    <NoSearchResultsListView />
-                )}
+                    ) : (recipes.filterRecipesByTags(tags.selectedTags).length ?? 0) > 0 ? (
+                        recipes.filterRecipesByTags(tags.selectedTags).map(item => (
+                            <RecipeListItem
+                                key={item.id}
+                                recipe={item}
+                            />
+                        ))
+                    ) : searchText.trim().length === 0 && (tags.selectedTags.length ?? 0) === 0 ? (
+                        <EmptyListView />
+                    ) : (
+                        <NoSearchResultsListView />
+                    )}
+                </SafeAreaView>
             </Background>
         </Wrapper>
     );
 });
+
+HomeView.displayName = 'HomeView';

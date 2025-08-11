@@ -1,8 +1,9 @@
+import { View } from 'react-native';
 import Icon from '@react-native-vector-icons/fontawesome';
 import styled from 'styled-components/native';
 import { createStyledIcon } from '~/utils/createStyledIcon';
 import { HeadingBase, TextBase } from '../Text';
-import { paddingPx } from '../CreateRecipeSteps/StepHeader/StepHeader.styles';
+import { paddingPx } from '../../views/CreateRecipeView/ViewHeader/ViewHeader.styles';
 
 export const iconOffsetPx = 39;
 
@@ -14,15 +15,15 @@ export const TabBarWrapper = styled.View`
     padding-top: 0;
 `;
 
-export const BottomBarBackground = styled.View`
+export const BottomBarBackground = styled.View<{ bottomInset: number }>`
     flex-direction: row;
     justify-content: space-between;
 
     gap: 22px;
     padding: 0 22px;
-    padding-bottom: 12px;
+    padding-bottom: ${({ bottomInset }) => bottomInset + 12}px;
     background: ${({ theme }) => theme.palette.background[1]};
-    height: 75px;
+    height: ${({ bottomInset }) => bottomInset + 75}px;
 `;
 
 export const ButtonIconWrapper = styled.TouchableOpacity`
@@ -69,4 +70,12 @@ export const TabBarProgressStep = styled.View<{
     border-bottom-color: ${({ theme, isCompleted, completedTintColor }) =>
         isCompleted ? (completedTintColor ?? theme.palette.primary[0]) : theme.palette.background[7]};
     border-radius: 1px;
+`;
+
+export const BottomBarWrapper = styled(View)`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
 `;

@@ -1,3 +1,4 @@
+import { SafeAreaView as OriginalSafeAreaView } from 'react-native-safe-area-context';
 import EvilIcon from '@react-native-vector-icons/evil-icons';
 import styled, { css } from 'styled-components/native';
 import { GradientBackground } from '~/components/GradientBackground';
@@ -99,3 +100,7 @@ export const SettingsIconWrapper = styled.View`
 export const SettingsIcon = styled(SettingsIconSvg).attrs(({ theme }) => ({
     fill: theme.palette.text[0],
 }))``;
+
+export const SafeAreaView = styled(OriginalSafeAreaView).attrs({ mode: 'margin' })`
+    flex: 1;
+`;
