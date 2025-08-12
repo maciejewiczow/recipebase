@@ -2,15 +2,16 @@ import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 import { HeadingBase, TextBase } from '~/components/Text';
 
-export const RecipeItemWrapper = styled.TouchableOpacity`
+export const RecipeItemWrapper = styled.View`
     margin-bottom: 24px;
+    gap: 8px;
 `;
 
 export const CoverImage = styled.Image`
     width: 100%;
     height: 225px;
     border-radius: ${({ theme }) => theme.border.radiusGigantic};
-    margin-bottom: 8px;
+    elevation: 2;
 `;
 
 export const Name = styled(HeadingBase)`
@@ -20,7 +21,6 @@ export const Name = styled(HeadingBase)`
 
 export const TagList = styled.FlatList`
     flex-grow: 0;
-    height: ${({ data }) => ((data?.length ?? 0) > 0 ? '30px' : '0')};
     padding-left: 4px;
 ` as unknown as typeof FlatList;
 

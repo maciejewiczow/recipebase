@@ -42,7 +42,6 @@ export const List = styled(Animated.FlatList).attrs({
         paddingRight: 16,
         paddingLeft: 16,
         gap: 8,
-        flex: 1,
     },
 })`
     flex-grow: 0;

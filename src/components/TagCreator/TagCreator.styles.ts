@@ -23,7 +23,7 @@ export const TagView = styled(OriginalTagView)`
 export const TagNameInput = styled.TextInput<{ hasAutocompletionItems: boolean }>`
     ${inputStyles}
     font-size: ${({ theme }) => theme.text.normal.fontSize.sm};
-    padding: 12px 18px;
+    padding: 15px 20px;
     min-width: 165px;
     line-height: ${({ theme }) => theme.text.normal.lineHeight.sm};
 

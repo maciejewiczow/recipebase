@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import {
     AddListItemButton as OriginalAddListItemButton,
-    ScrollableStepWrapper as OriginalScrollableStepWrapper,
+    containerPadding,
     StepHeaderWrapper as OriginalStepHeaderWrapper,
 } from '~/components/CreateRecipeSteps/common.styles';
 import { Input } from '~/components/Input';
@@ -26,7 +26,7 @@ export const StepContentInputRow = styled.View`
 
 export const StepContentInput = styled(Input).attrs({
     multiline: true,
-    numberOfLines: 6,
+    numberOfLines: 12,
     inputStyle: {
         paddingTop: 0,
         paddingBottom: 0,
@@ -34,6 +34,7 @@ export const StepContentInput = styled(Input).attrs({
         paddingRight: 0,
     },
 })`
+    min-height: 100px;
     flex: 1;
 `;
 
@@ -45,11 +46,9 @@ export const StepHeaderWrapper = styled(OriginalStepHeaderWrapper)`
     margin-bottom: 8px;
 `;
 
-export const ScrollableStepWrapper = styled(OriginalScrollableStepWrapper).attrs({
-    contentContainerStyle: {
-        flex: 1,
-    },
-})``;
+export const Wrapper = styled.View`
+    ${containerPadding}
+`;
 
 export const StepNumberWrapper = styled.View`
     width: 33px;

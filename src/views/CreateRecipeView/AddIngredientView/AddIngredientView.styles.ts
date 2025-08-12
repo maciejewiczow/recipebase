@@ -2,6 +2,8 @@ import { FlatList } from 'react-native';
 import { css, styled } from 'styled-components/native';
 import { BottomSheetSelect } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { Button } from '~/components/Button';
+import { containerPadding } from '~/components/CreateRecipeSteps/common.styles';
+import { SafeAreaGradientBackground } from '~/components/GradientBackground/SafeAreaGradientBackground';
 import { Input } from '~/components/Input';
 import { TextBase } from '~/components/Text';
 
@@ -16,6 +18,10 @@ export const IngredientNameInput = styled(Input).attrs<{ hasBottomBorderRadius: 
             : undefined,
     }),
 )``;
+
+export const Wrapper = styled(SafeAreaGradientBackground)`
+    ${containerPadding}
+`;
 
 export const ListItemWrapper = styled.TouchableOpacity`
     padding: 12px 0;

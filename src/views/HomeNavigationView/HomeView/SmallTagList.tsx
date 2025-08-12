@@ -24,7 +24,7 @@ export const SmallTagList: React.FC<ItemTagListProps> = observer(({ recipe, noHi
                             isSelected={
                                 noHighlightSelected
                                     ? false
-                                    : !!tags.selectedTags.find(t => t.tag.id === item.id)
+                                    : tags.selectedTags.some(t => t.tag.id === item.id)
                             }
                         >
                             {item.name}

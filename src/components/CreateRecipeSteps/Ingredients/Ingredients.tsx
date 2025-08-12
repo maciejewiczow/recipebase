@@ -3,7 +3,6 @@ import { IngredientSection, RecipeIngredient } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
 import { GradientBackground } from '~/components/GradientBackground';
 import { useRootStore } from '~/RootStoreContext';
-import { useIsKeyboardOpen } from '~/utils/useIsKeyoardOpen';
 import { AddIngredientButton } from './AddIngredientButton';
 import { renderItem } from './RecipeIngredientView';
 import {
@@ -50,7 +49,6 @@ const sectionsToItems = (sections: IngredientSection[]): ItemType[] => {
 
 export const Ingredients: React.FC = observer(() => {
     const { draftRecipe } = useRootStore();
-    const isKeyboardOpen = useIsKeyboardOpen();
 
     const data = sectionsToItems(draftRecipe.recipe.ingredientSections ?? []);
 
@@ -60,7 +58,7 @@ export const Ingredients: React.FC = observer(() => {
 
     return (
         <GradientBackground>
-            <NestableScrollableStepWrapper isKeyboardOpen={isKeyboardOpen}>
+            <NestableScrollableStepWrapper>
                 <StepHeaderWrapperWithMargin>
                     <StepHeaderText>Ingredients</StepHeaderText>
                 </StepHeaderWrapperWithMargin>

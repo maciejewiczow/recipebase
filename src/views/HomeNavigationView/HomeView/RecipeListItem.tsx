@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, ViewStyle } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Recipe } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
@@ -16,13 +16,14 @@ export const RecipeListItem: React.FC<RecipeListItemProps> = observer(({ recipe,
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
     return (
-        <RecipeItemWrapper
-            style={style}
-            onPress={() => navigation.navigate('Recipe', { recipeId: recipe.id })}
-        >
-            <CoverImage source={{ uri: recipe.coverImage }} />
+        <RecipeItemWrapper style={style}>
+            <Pressable onPress={() => navigation.navigate('Recipe', { recipeId: recipe.id })}>
+                <CoverImage source={{ uri: recipe.coverImage }} />
+            </Pressable>
             <SmallTagList recipe={recipe} />
-            <Name>{recipe.name}</Name>
+            <Pressable onPress={() => navigation.navigate('Recipe', { recipeId: recipe.id })}>
+                <Name>{recipe.name}</Name>
+            </Pressable>
         </RecipeItemWrapper>
     );
 });

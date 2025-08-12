@@ -2,13 +2,14 @@ import { SectionList } from 'react-native';
 import EvilIcon from '@react-native-vector-icons/evil-icons';
 import styled from 'styled-components/native';
 import { Button } from '~/components/Button';
-import { GradientBackground } from '~/components/GradientBackground';
+import { containerPadding } from '~/components/CreateRecipeSteps/common.styles';
+import { SafeAreaGradientBackground } from '~/components/GradientBackground/SafeAreaGradientBackground';
 import { TextBase } from '~/components/Text';
 import { createStyledIcon } from '~/utils/createStyledIcon';
 
-export const Wrapper = styled(GradientBackground)`
+export const Background = styled(SafeAreaGradientBackground)`
+    ${containerPadding}
     flex: 1;
-    padding: 24px 16px;
 `;
 
 export const EmptyListWrapper = styled.Pressable`
@@ -20,7 +21,6 @@ export const EmptyListWrapper = styled.Pressable`
 
 export const List = styled.SectionList.attrs({
     contentContainerStyle: {
-        flex: 1,
         gap: 8,
     },
 })`` as typeof SectionList;
@@ -37,14 +37,16 @@ export const SectionTitleWrapper = styled.View`
     padding: 8px 12px;
 `;
 
-export const SectionTitle = styled.Text`
-    color: #777;
-    font-size: 18px;
-`;
+export const SectionTitle = styled(TextBase).attrs({
+    fontWeight: 'semiBold',
+    size: 'md',
+})``;
 
 export const SaveButton = styled(Button).attrs({
     variant: 'primary',
-})``;
+})`
+    margin-top: 18px;
+`;
 
 export const PlusIcon = createStyledIcon(EvilIcon, ({ theme }) => ({
     name: 'plus',

@@ -12,11 +12,6 @@ import { useStepperBottomBarHeight } from '../Stepper';
 import { PlusIconSvg } from '../Svg/PlusIconSvg';
 import { TrashIconSvg } from '../Svg/TrashIconSvg';
 import { TextBase } from '../Text';
-import { iconOffsetPx } from '../Stepper/Stepper.styles';
-
-interface KeyboardStateProps {
-    isKeyboardOpen: boolean;
-}
 
 interface BottomBarHeightProps {
     bottomBarHeight: number;
@@ -27,7 +22,7 @@ export const draggableListStepMargin = css`
     margin-right: 16px;
 `;
 
-const containerPadding = css`
+export const containerPadding = css`
     padding: 30px 19px;
 `;
 
@@ -73,10 +68,21 @@ const ScrollableStepWrapperInner = styled(ScrollableGradientBackground).attrs<Bo
     padding-bottom: 0;
 `;
 
-export const NestableScrollableStepWrapper = styled(NestableScrollContainer).attrs<KeyboardStateProps>(
-    ({ isKeyboardOpen }) => ({
+export const NestableScrollableStepWrapper: React.FC<ScrollViewProps> = props => {
+    const bottomBarHeight = useStepperBottomBarHeight();
+
+    return (
+        <NestableScrollableStepWrapperInner
+            {...props}
+            bottomBarHeight={bottomBarHeight}
+        />
+    );
+};
+
+const NestableScrollableStepWrapperInner = styled(NestableScrollContainer).attrs<BottomBarHeightProps>(
+    ({ bottomBarHeight }) => ({
         contentContainerStyle: {
-            paddingBottom: (isKeyboardOpen ? 0 : iconOffsetPx) + 18,
+            paddingBottom: bottomBarHeight + 18,
         },
     }),
 )`

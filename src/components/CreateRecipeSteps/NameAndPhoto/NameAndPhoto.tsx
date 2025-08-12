@@ -1,16 +1,14 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useRootStore } from '~/RootStoreContext';
-import { useIsKeyboardOpen } from '~/utils/useIsKeyoardOpen';
 import { Input, ScrollableStepWrapper, StepHeaderText, StepHeaderWrapper } from '../common.styles';
 import { ImageInput } from './NameAndPhoto.styles';
 
 export const NameAndPhoto: React.FC = observer(() => {
     const { draftRecipe } = useRootStore();
-    const isKeyboardOpen = useIsKeyboardOpen();
 
     return (
-        <ScrollableStepWrapper isKeyboardOpen={isKeyboardOpen}>
+        <ScrollableStepWrapper>
             <StepHeaderWrapper>
                 <StepHeaderText>Dish name & photo</StepHeaderText>
             </StepHeaderWrapper>

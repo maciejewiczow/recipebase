@@ -14,7 +14,6 @@ import {
     Unit,
     Units,
 } from 'backend-logic';
-import { client } from '~/api/client';
 import { components } from '~/api/types.generated';
 import { BottomSheetSelect, DefaultItem } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { Checkbox } from '~/components/Checkbox';
@@ -242,107 +241,107 @@ export const ImportRecipeView: React.FC<ImportRecipeViewProps> = ({ navigation }
         try {
             setIsLoading(true);
             setMainErrorText('');
-            const { data, error, response } = await client.GET('/recipe', {
-                params: {
-                    query: {
-                        url: recipeUrl,
-                        defaultToLang: language.value,
-                        parseIngredients: useIngredientParsing,
-                    },
-                    // @ts-expect-error the type generator does not support authentication apparently
-                    header: useIngredientParsing
-                        ? {
-                              'X-api-key': apiKey,
-                          }
-                        : undefined,
-                },
-            });
-
-            if (error || !data) {
-                if (response.status === 400 || response.status === 500) {
-                    setMainErrorText('Something is broken. Please try again later');
-                } else if (response.status === 422) {
-                    setMainErrorText('Unable to parse the recipe. Please try again');
-                } else if (response.status === 401 || response.status === 403) {
-                    setMainErrorText('Invalid access token');
-                }
-
-                console.log(error, data, response.status);
-
-                return;
-            }
-
-            // const data = {
-            //     ingredientParseStatus: 'ok',
-            //     recipe: {
-            //         category: null,
-            //         description: null,
-            //         imageUrl:
-            //             'https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/risotto_z_dynia02_0.jpg',
-            //         ingredientGroups: [
-            //             {
-            //                 ingredients: [
-            //                     {
-            //                         name: 'dynia obrana i pokrojona w 1 cm kosteczki',
-            //                         quantity: '1',
-            //                         unit: 'szklanka',
-            //                     },
-            //                     {
-            //                         name: 'mleko',
-            //                         quantity: '1',
-            //                         unit: 'szklanka',
-            //                     },
-            //                     {
-            //                         name: 'masło',
-            //                         quantity: '2',
-            //                         unit: 'łyżki',
-            //                     },
-            //                     {
-            //                         name: 'cebula szalotka',
-            //                         quantity: '1 mała (lub 1/4) ',
-            //                         unit: null,
-            //                     },
-            //                     {
-            //                         name: 'ryż do risotto, 1 filiżanka',
-            //                         quantity: '100',
-            //                         unit: 'g',
-            //                     },
-            //                     {
-            //                         name: 'wino białe',
-            //                         quantity: '1/4',
-            //                         unit: 'szklanka',
-            //                     },
-            //                     {
-            //                         name: 'bulion drobiowy',
-            //                         quantity: '0.5',
-            //                         unit: 'litr',
-            //                     },
-            //                     {
-            //                         name: 'gałka muszkatołowa',
-            //                         quantity: 'tarta',
-            //                         unit: null,
-            //                     },
-            //                     {
-            //                         name: 'Parmezan 1/2 filiżanki',
-            //                         quantity: '25',
-            //                         unit: 'g',
-            //                     },
-            //                 ],
-            //                 name: null,
-            //             },
-            //         ],
-            //         lang: 'pl',
-            //         steps: [
-            //             'Dynię zalać mlekiem i moczyć przez 12 godzin, trzymając ją w lodówce (jeśli nie masz czasu, pomiń ten etap). Odcedzić przed przystąpieniem do gotowania risotto. Zagotować bulion i trzymać na małym ogniu.',
-            //             'Roztopić 2 łyżki masła na patelni, dodać pokrojoną w kosteczkę cebulę i połowę dyni. Smażyć na małym ogniu aż cebulka się zeszkli, ale nie będzie zrumieniona, przez około 5 minut. Dodać ryż, zwiększyć ogień do średniego i mieszając chwilę podsmażać aż pokryje się masłem. Wlać wino i odparować.',
-            //             'Zacząć stopniowo wlewać bulion, po jednej łyżce wazowej, za każdym razem mieszając. Kiedy ryż zaabsorbuje całkowicie jedną porcja bulionu, dodać kolejną. Gotować w ten sposób przez 15 - 17 minut, wlewając kolejne porcje bulionu i co chwilę mieszając. W połowie tego czasu dodać resztę dyni i doprawić risotto gałką muszkatołową.',
-            //             'Na koniec risotto nie powinno być zbyt suche ani za bardzo wodniste (może pozostać ci trochę bulionu). Ryż musi być al dente ale i jednocześnie miękki. Patelnię zdjąć z ognia i odczekać 1 minutę. Włożyć kawałki zimnego masła i wymieszać drewnianą łyżką. Na koniec połączyć z tartym Parmezanem. Doprawić solą oraz pieprzem.',
-            //         ],
-            //         title: 'Risotto z dynią',
-            //         url: 'https://www.kwestiasmaku.com/kuchnia_wloska/risotto_z_dynia/przepis.html',
+            // const { data, error, response } = await client.GET('/recipe', {
+            //     params: {
+            //         query: {
+            //             url: recipeUrl,
+            //             defaultToLang: language.value,
+            //             parseIngredients: useIngredientParsing,
+            //         },
+            //         // @ts-expect-error the type generator does not support authentication apparently
+            //         header: useIngredientParsing
+            //             ? {
+            //                   'X-api-key': apiKey,
+            //               }
+            //             : undefined,
             //     },
-            //     wildModeUsed: false,
-            // };
+            // });
+
+            // if (error || !data) {
+            //     if (response.status === 400 || response.status === 500) {
+            //         setMainErrorText('Something is broken. Please try again later');
+            //     } else if (response.status === 422) {
+            //         setMainErrorText('Unable to parse the recipe. Please try again');
+            //     } else if (response.status === 401 || response.status === 403) {
+            //         setMainErrorText('Invalid access token');
+            //     }
+
+            //     console.log(error, data, response.status);
+
+            //     return;
+            // }
+
+            const data: components['schemas']['ScrapeRecipeResponse'] = {
+                ingredientParseStatus: 'ok',
+                recipe: {
+                    category: null,
+                    description: null,
+                    imageUrl:
+                        'https://www.kwestiasmaku.com/sites/v123.kwestiasmaku.com/files/risotto_z_dynia02_0.jpg',
+                    ingredientGroups: [
+                        {
+                            ingredients: [
+                                {
+                                    name: 'dynia obrana i pokrojona w 1 cm kosteczki',
+                                    quantity: '1',
+                                    unit: 'szklanka',
+                                },
+                                {
+                                    name: 'mleko',
+                                    quantity: '1',
+                                    unit: 'szklanka',
+                                },
+                                {
+                                    name: 'masło',
+                                    quantity: '2',
+                                    unit: 'łyżki',
+                                },
+                                {
+                                    name: 'cebula szalotka',
+                                    quantity: '1 mała (lub 1/4) ',
+                                    unit: null,
+                                },
+                                {
+                                    name: 'ryż do risotto, 1 filiżanka',
+                                    quantity: '100',
+                                    unit: 'g',
+                                },
+                                {
+                                    name: 'wino białe',
+                                    quantity: '1/4',
+                                    unit: 'szklanka',
+                                },
+                                {
+                                    name: 'bulion drobiowy',
+                                    quantity: '0.5',
+                                    unit: 'litr',
+                                },
+                                {
+                                    name: 'gałka muszkatołowa',
+                                    quantity: 'tarta',
+                                    unit: null,
+                                },
+                                {
+                                    name: 'Parmezan 1/2 filiżanki',
+                                    quantity: '25',
+                                    unit: 'g',
+                                },
+                            ],
+                            name: null,
+                        },
+                    ],
+                    lang: 'pl',
+                    steps: [
+                        'Dynię zalać mlekiem i moczyć przez 12 godzin, trzymając ją w lodówce (jeśli nie masz czasu, pomiń ten etap). Odcedzić przed przystąpieniem do gotowania risotto. Zagotować bulion i trzymać na małym ogniu.',
+                        'Roztopić 2 łyżki masła na patelni, dodać pokrojoną w kosteczkę cebulę i połowę dyni. Smażyć na małym ogniu aż cebulka się zeszkli, ale nie będzie zrumieniona, przez około 5 minut. Dodać ryż, zwiększyć ogień do średniego i mieszając chwilę podsmażać aż pokryje się masłem. Wlać wino i odparować.',
+                        'Zacząć stopniowo wlewać bulion, po jednej łyżce wazowej, za każdym razem mieszając. Kiedy ryż zaabsorbuje całkowicie jedną porcja bulionu, dodać kolejną. Gotować w ten sposób przez 15 - 17 minut, wlewając kolejne porcje bulionu i co chwilę mieszając. W połowie tego czasu dodać resztę dyni i doprawić risotto gałką muszkatołową.',
+                        'Na koniec risotto nie powinno być zbyt suche ani za bardzo wodniste (może pozostać ci trochę bulionu). Ryż musi być al dente ale i jednocześnie miękki. Patelnię zdjąć z ognia i odczekać 1 minutę. Włożyć kawałki zimnego masła i wymieszać drewnianą łyżką. Na koniec połączyć z tartym Parmezanem. Doprawić solą oraz pieprzem.',
+                    ],
+                    title: 'Risotto z dynią',
+                    url: 'https://www.kwestiasmaku.com/kuchnia_wloska/risotto_z_dynia/przepis.html',
+                },
+                wildModeUsed: false,
+            };
 
             if (data.wildModeUsed) {
                 Alert.alert(

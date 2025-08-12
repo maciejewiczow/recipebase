@@ -7,7 +7,6 @@ import {
     StepHeaderBackIconWrapper,
     StepHeaderText,
     StepHeaderWrapper,
-    StepWrapper,
 } from '~/components/CreateRecipeSteps/common.styles';
 import { BackIconSvg } from '~/components/Svg/BackIconSvg';
 import { RootStackParams } from '~/RootNavigation';
@@ -22,6 +21,7 @@ import {
     ListHeaderWrapper,
     QuantityInput,
     SaveButton,
+    Wrapper,
 } from './AddIngredientView.styles';
 
 export interface AddIngredientViewRouteProps {
@@ -91,7 +91,7 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
             };
 
             return (
-                <StepWrapper>
+                <Wrapper>
                     <StepHeaderWrapper>
                         <StepHeaderBackIconWrapper onPress={() => navigation.goBack()}>
                             <BackIconSvg />
@@ -109,9 +109,11 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
                     />
                     {isInIngredientSearchMode ? (
                         <>
-                            <ListHeaderWrapper>
-                                <ListHeader />
-                            </ListHeaderWrapper>
+                            {ingredientListItems.length > 0 && (
+                                <ListHeaderWrapper>
+                                    <ListHeader />
+                                </ListHeaderWrapper>
+                            )}
                             <IngredientList
                                 setIsInIngredientSearchMode={setIsInIngredientSearchMode}
                                 ingredientListItems={ingredientListItems}
@@ -135,7 +137,7 @@ export const AddIngredientView: React.FC<NativeStackScreenProps<RootStackParams,
                     >
                         Save
                     </SaveButton>
-                </StepWrapper>
+                </Wrapper>
             );
         },
     );

@@ -13,13 +13,13 @@ import { ListSectionTitle } from './ListSectionTitle';
 import { Section, SectionListData } from './types';
 import { StepHeaderWrapper } from '../AddStepView/AddStepView.styles';
 import {
+    Background,
     EmptyListHeadingText,
     EmptyListText,
     EmptyListWrapper,
     List,
     PlusIcon,
     SaveButton,
-    Wrapper,
 } from './AddStepIngredientView.styles';
 
 export const AddStepIngredientView: React.FC<
@@ -57,7 +57,7 @@ export const AddStepIngredientView: React.FC<
     };
 
     return (
-        <Wrapper>
+        <Background>
             <StepHeaderWrapper>
                 <StepHeaderBackIconWrapper onPress={() => navigation.goBack()}>
                     <BackIconSvg />
@@ -94,6 +94,6 @@ export const AddStepIngredientView: React.FC<
                 }
             />
             <SaveButton onPress={commitReferencedIngredients}>Save</SaveButton>
-        </Wrapper>
+        </Background>
     );
 });

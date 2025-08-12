@@ -2,11 +2,11 @@ import Icon from '@react-native-vector-icons/ant-design';
 import styled from 'styled-components/native';
 import { Button } from '~/components/Button';
 import { StepHeaderWrapper as OriginalStepHeaderWrapper } from '~/components/CreateRecipeSteps/common.styles';
-import { ScrollableGradientBackground } from '~/components/GradientBackground';
+import { ScrollableGradientSafeAreaBackground } from '~/components/GradientBackground';
 import { TextBase } from '~/components/Text';
 import { createStyledIcon } from '~/utils/createStyledIcon';
 
-export const OuterWrapper = styled(ScrollableGradientBackground).attrs({
+export const OuterWrapper = styled(ScrollableGradientSafeAreaBackground).attrs({
     contentContainerStyle: {
         paddingBottom: 12,
         flex: 1,
@@ -14,7 +14,7 @@ export const OuterWrapper = styled(ScrollableGradientBackground).attrs({
 })`
     flex: 1;
     padding: 16px 18px;
-    padding-top: 24px;
+    padding-top: 0;
 `;
 
 export const Wrapper = styled.View`

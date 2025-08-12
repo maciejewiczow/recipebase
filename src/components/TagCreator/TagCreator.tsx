@@ -102,7 +102,7 @@ export const TagCreator: React.FC = observer(() => {
                             setNewTagName('');
                         }}
                         autoFocus
-                        blurOnSubmit={false}
+                        submitBehavior="submit"
                         autoCapitalize="none"
                     />
                     {!isNameValid && (
