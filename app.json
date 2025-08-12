@@ -21,7 +21,8 @@
                 "backgroundColor": "#ffffff"
             },
             "edgeToEdgeEnabled": true,
-            "package": "com.mafciejewiczow.recipebase"
+            "package": "com.mafciejewiczow.recipebase",
+            "softwareKeyboardLayoutMode": "pan"
         },
         "web": {
             "favicon": "./assets/favicon.png"
