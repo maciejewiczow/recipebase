@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ViewProps } from 'react-native';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 import { StepperBottomBar, StepperBottomBarProps } from './StepperBottomBar';
 import { BottomBarWrapper, TabBarProgressStep, TabBarWrapper } from './Stepper.styles';
@@ -9,6 +9,7 @@ export const TabBar: React.FC<
         Pick<StepperBottomBarProps, 'onFinish' | 'lastStepButtonText' | 'lastStepButtonLoading'> & {
             isHiddenOnFirstStep: boolean;
             ref?: React.Ref<View>;
+            onBottomBarLayout?: ViewProps['onLayout'];
         }
 > = ({
     ref,
@@ -19,6 +20,7 @@ export const TabBar: React.FC<
     lastStepButtonText,
     navigation,
     isHiddenOnFirstStep,
+    onBottomBarLayout,
 }) => {
     const isFirstStep = state.index === 0;
 
@@ -44,7 +46,10 @@ export const TabBar: React.FC<
                         );
                     })}
             </TabBarWrapper>
-            <BottomBarWrapper ref={ref}>
+            <BottomBarWrapper
+                ref={ref}
+                onLayout={onBottomBarLayout}
+            >
                 <StepperBottomBar
                     navigation={navigation}
                     state={state}

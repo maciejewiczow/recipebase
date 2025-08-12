@@ -26,7 +26,7 @@ export const BottomBarBackground = styled.View<{ bottomInset: number }>`
     height: ${({ bottomInset }) => bottomInset + 75}px;
 `;
 
-export const ButtonIconWrapper = styled.TouchableOpacity`
+export const ButtonIconWrapper = styled.Pressable`
     position: relative;
     bottom: ${iconOffsetPx}px;
     gap: 6px;

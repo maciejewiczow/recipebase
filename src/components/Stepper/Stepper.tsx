@@ -1,8 +1,9 @@
-import React, { ComponentProps, useContext, useLayoutEffect, useMemo, useState } from 'react';
+import React, { ComponentProps, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { View } from 'react-native';
 import { ISubNavigator } from '~/RootNavigation';
 import { Tab } from './Tab';
 import { TabBar } from './TabBar';
+import { iconOffsetPx } from './Stepper.styles';
 
 export interface Step<StepName extends string> {
     name: StepName;
@@ -33,12 +34,14 @@ export const Stepper = <StepName extends string>({
     lastStepButtonLoading,
     hideBottomAndTopOnFirstStep,
 }: StepperProps<StepName>) => {
-    const [bottomBarWrapper, setBottomBarWrapper] = useState<View | null>(null);
+    const bottomBarWrapperRef = useRef<View>(null);
     const [bottomBarHeight, setBottomBarHeight] = useState(0);
 
     useLayoutEffect(() => {
-        bottomBarWrapper?.measureInWindow((_, __, ___, height) => setBottomBarHeight(height));
-    }, [bottomBarWrapper]);
+        bottomBarWrapperRef.current?.measureInWindow((_, __, ___, height) =>
+            setBottomBarHeight(height + iconOffsetPx),
+        );
+    }, []);
 
     const memoedSteps = useMemo(
         () =>
@@ -58,7 +61,10 @@ export const Stepper = <StepName extends string>({
                 tabBar={props => (
                     <TabBar
                         {...props}
-                        ref={setBottomBarWrapper}
+                        onBottomBarLayout={e =>
+                            setBottomBarHeight(e.nativeEvent.layout.height + iconOffsetPx)
+                        }
+                        ref={bottomBarWrapperRef}
                         lastStepButtonLoading={lastStepButtonLoading}
                         lastStepButtonText={lastStepButtonText}
                         onFinish={onFinish}
