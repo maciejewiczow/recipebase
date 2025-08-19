@@ -1,6 +1,5 @@
 import { numericQuantity } from 'numeric-quantity';
 import invariant from 'tiny-invariant';
-import { IsNull, Not } from 'typeorm';
 import { Database } from '../Database';
 import { Ingredient } from '../entities/Ingredient';
 import { IngredientSection } from '../entities/IngredientSection';
@@ -11,7 +10,9 @@ import { Unit } from '../entities/Unit';
 
 const qtyParsingRegex = /(\d+(?:[./]\d+)?)\s*-\s*(\d+(?:[./]\d+)?)/;
 
-export const parseQuantityString = (quantityString: string) => {
+type ParseQuantityStringResult = [from: number | undefined, to: number | undefined];
+
+export const parseQuantityString = (quantityString: string): ParseQuantityStringResult => {
     if (qtyParsingRegex.test(quantityString)) {
         const qtyMatches = quantityString.match(qtyParsingRegex);
 
@@ -19,15 +20,11 @@ export const parseQuantityString = (quantityString: string) => {
 
         const [_, quantityFrom, quantityTo] = qtyMatches;
 
-        return {
-            quantityFrom: numericQuantity(quantityFrom),
-            quantityTo: numericQuantity(quantityTo),
-        };
+        return [numericQuantity(quantityFrom), numericQuantity(quantityTo)];
+    } else if (quantityString) {
+        return [numericQuantity(quantityString), undefined];
     } else {
-        return {
-            quantityFrom: numericQuantity(quantityString),
-            quantityTo: undefined,
-        };
+        return [undefined, undefined];
     }
 };
 
@@ -66,34 +63,32 @@ export const saveRecipe = (recipe: Recipe, database: Database) =>
             const usedIngredients = new Set<Ingredient>();
             for (const recipeIngredient of ingredientSection.recipeIngredients ?? []) {
                 if (recipeIngredient.unit) {
-                    const deletedUnit = await manager.getRepository(Unit).findOne({
+                    const existingUnit = await manager.getRepository(Unit).findOne({
                         withDeleted: true,
                         where: {
-                            deletedAt: Not(IsNull()),
                             name: recipeIngredient.unit.name,
                         },
                     });
 
-                    if (deletedUnit) {
-                        deletedUnit.deletedAt = null;
-                        recipeIngredient.unit = deletedUnit;
+                    if (existingUnit) {
+                        existingUnit.deletedAt = null;
+                        recipeIngredient.unit = existingUnit;
                     }
 
                     await manager.getRepository(Unit).save(recipeIngredient.unit);
                 }
 
                 if (recipeIngredient.ingredient) {
-                    const deletedIngredient = await manager.getRepository(Ingredient).findOne({
+                    const exsitingIngredient = await manager.getRepository(Ingredient).findOne({
                         withDeleted: true,
                         where: {
-                            deletedAt: Not(IsNull()),
                             name: recipeIngredient.ingredient.name,
                         },
                     });
 
-                    if (deletedIngredient) {
-                        deletedIngredient.deletedAt = null;
-                        recipeIngredient.ingredient = deletedIngredient;
+                    if (exsitingIngredient) {
+                        exsitingIngredient.deletedAt = null;
+                        recipeIngredient.ingredient = exsitingIngredient;
                     }
 
                     // TODO: move this to the validation step

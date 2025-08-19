@@ -117,7 +117,7 @@ export const TagCreator: React.FC = observer(() => {
                             <DropdownWrapper>
                                 <DropdownSeparator />
                                 <DropdownList
-                                    keyboardShouldPersistTaps="handled"
+                                    keyboardShouldPersistTaps="always"
                                     data={matchingTags}
                                     keyExtractor={tag => tag.id.toString()}
                                     renderItem={({ item: tag }) => (

@@ -302,7 +302,7 @@ export const ImportRecipeView: React.FC<ImportRecipeViewProps> = ({ navigation }
                                     unit: null,
                                 },
                                 {
-                                    name: 'ryż do risotto, 1 filiżanka',
+                                    name: 'ryż do risotto',
                                     quantity: '100',
                                     unit: 'g',
                                 },
@@ -322,7 +322,7 @@ export const ImportRecipeView: React.FC<ImportRecipeViewProps> = ({ navigation }
                                     unit: null,
                                 },
                                 {
-                                    name: 'Parmezan 1/2 filiżanki',
+                                    name: 'Parmezan',
                                     quantity: '25',
                                     unit: 'g',
                                 },

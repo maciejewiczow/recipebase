@@ -1,15 +1,19 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
+import { DotSvg } from '~/components/RecipeIngredientListItem/DotSvg';
 import { useRootStore } from '~/RootStoreContext';
 import { capitalize } from '~/utils/capitalize';
 import { round } from '~/utils/round';
-import { IngredientRow, Ingredients, IngredientText, SectionTitle, Text } from './RecipeView.styles';
+import {
+    IngredientRow,
+    Ingredients,
+    IngredientText,
+    QuanitityText,
+    SectionTitle,
+    Text,
+} from './RecipeView.styles';
 
-export interface IngredientListProps {
-    multiplier: number;
-}
-
-export const IngredientList: React.FC<IngredientListProps> = observer(({ multiplier }) => {
+export const IngredientList: React.FC = observer(() => {
     const { currentRecipe } = useRootStore();
 
     if (!currentRecipe.recipe) {
@@ -37,13 +41,15 @@ export const IngredientList: React.FC<IngredientListProps> = observer(({ multipl
                 ),
                 ...(section.recipeIngredients?.map(rcpIngr => (
                     <IngredientRow key={`${section.id}_${rcpIngr.id}`}>
-                        <IngredientText>• {capitalize(rcpIngr.ingredient?.name || '')} </IngredientText>
+                        <DotSvg />
+                        <IngredientText>{capitalize(rcpIngr.ingredient?.name || '')} </IngredientText>
                         {rcpIngr.quantityFrom && (
-                            <IngredientText>
-                                {round(rcpIngr.quantityFrom * multiplier, 2)}
-                                {rcpIngr.quantityTo && `—${round(rcpIngr.quantityTo * multiplier, 2)}`}{' '}
+                            <QuanitityText>
+                                {round(rcpIngr.quantityFrom * currentRecipe.ingredientMultiplier, 2)}
+                                {rcpIngr.quantityTo &&
+                                    `—${round(rcpIngr.quantityTo * currentRecipe.ingredientMultiplier, 2)}`}{' '}
                                 {rcpIngr.unit?.name}
-                            </IngredientText>
+                            </QuanitityText>
                         )}
                     </IngredientRow>
                 )) ?? []),

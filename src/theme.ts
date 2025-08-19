@@ -4,7 +4,17 @@ const common = {
     palette: {
         primary: ['#B52D4F', '#AF5564', '#E8002E'],
         secondary: ['#FFBF8D'],
-        background: ['#FCF1E0', '#FEF4E4', '#FFF8EC', '#F2E8D8', '#FFF7E9', '#F2E7D0', '#DCBFAE', '#D7C3AE'],
+        background: [
+            '#FCF1E0',
+            '#FEF4E4',
+            '#FFF8EC',
+            '#F2E8D8',
+            '#FFF7E9',
+            '#F2E7D0',
+            '#DCBFAE',
+            '#D7C3AE',
+            '#DFBFA8',
+        ],
         text: [
             '#202121',
             '#D7C4AF',

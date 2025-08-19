@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { flow, makeAutoObservable } from 'mobx';
+import { action, flow, makeAutoObservable } from 'mobx';
 import { EntityManager } from 'typeorm';
 import { Database } from '../Database';
 import { Ingredient } from '../entities/Ingredient';
@@ -14,13 +14,19 @@ import { yieldResult } from '../utils/yieldResult';
 export class CurrentRecipe {
     recipe?: Recipe;
     isFetchingCurrentRecipe = false;
+    ingredientMultiplier = 1;
 
     constructor(private database: Database) {
         makeAutoObservable(this);
     }
 
     fetchRecipeById = flow(function* (this: CurrentRecipe, id: Recipe['id']) {
+        if (this.recipe?.id === id) {
+            return;
+        }
+
         try {
+            this.ingredientMultiplier = 1;
             this.isFetchingCurrentRecipe = true;
 
             // prettier-ignore
@@ -91,6 +97,10 @@ export class CurrentRecipe {
         }
 
         return draftRecipe;
+    }
+
+    @action setIngredientMultiplier(mult: number) {
+        this.ingredientMultiplier = mult;
     }
 
     delete = flow(function* (this: CurrentRecipe) {

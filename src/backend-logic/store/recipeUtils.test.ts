@@ -86,14 +86,14 @@ describe('parseQuantityStringsToIngredientQuantities', () => {
             },
         },
     ])("parses '$quantityString' correctly", ({ quantityString, expected }) => {
-        const result = parseQuantityString(quantityString);
+        const [quantityFrom, quantityTo] = parseQuantityString(quantityString);
 
-        expect(result.quantityFrom).toBeCloseTo(expected.quantityFrom);
+        expect(quantityFrom).toBeCloseTo(expected.quantityFrom);
 
         if (expected.quantityTo !== undefined) {
-            expect(result.quantityTo).toBeCloseTo(expected.quantityTo);
+            expect(quantityTo).toBeCloseTo(expected.quantityTo);
         } else {
-            expect(result.quantityTo).toBeUndefined();
+            expect(quantityTo).toBeUndefined();
         }
     });
 });

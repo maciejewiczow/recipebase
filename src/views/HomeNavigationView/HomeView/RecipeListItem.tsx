@@ -15,13 +15,17 @@ interface RecipeListItemProps {
 export const RecipeListItem: React.FC<RecipeListItemProps> = observer(({ recipe, style }) => {
     const navigation = useNavigation<NavigationProp<RootStackParams>>();
 
+    const navigate = () => {
+        navigation.navigate('Recipe', { recipeId: recipe.id });
+    };
+
     return (
         <RecipeItemWrapper style={style}>
-            <Pressable onPress={() => navigation.navigate('Recipe', { recipeId: recipe.id })}>
+            <Pressable onPress={navigate}>
                 <CoverImage source={{ uri: recipe.coverImage }} />
             </Pressable>
             <SmallTagList recipe={recipe} />
-            <Pressable onPress={() => navigation.navigate('Recipe', { recipeId: recipe.id })}>
+            <Pressable onPress={navigate}>
                 <Name>{recipe.name}</Name>
             </Pressable>
         </RecipeItemWrapper>

@@ -47,8 +47,9 @@ export class DraftIngredient {
     }
 
     @action commitSelectedIngredient = () => {
-        ({ quantityFrom: this.recipeIngredient.quantityFrom, quantityTo: this.recipeIngredient.quantityTo } =
-            parseQuantityString(this.quantityString));
+        [this.recipeIngredient.quantityFrom, this.recipeIngredient.quantityTo] = parseQuantityString(
+            this.quantityString,
+        );
         this.recipeIngredient.ingredient = this.ingredient;
     };
 

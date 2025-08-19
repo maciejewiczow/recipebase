@@ -7,11 +7,11 @@ interface CommonProps {
     italic?: boolean;
 }
 
-interface TextProps extends CommonProps {
+export interface TextProps extends CommonProps {
     size?: keyof Theme['text']['normal']['fontSize'];
 }
 
-interface HeadingProps extends CommonProps {
+export interface HeadingProps extends CommonProps {
     size?: keyof Theme['text']['heading']['fontSize'];
 }
 

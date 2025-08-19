@@ -1,8 +1,13 @@
 import { ReactElement, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ListRenderItem, StyleProp, TextInput, ViewStyle } from 'react-native';
-import { BottomSheetFlatList, TouchableOpacity } from '@gorhom/bottom-sheet';
+import { ListRenderItem, StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import { useFocusEffect } from '@react-navigation/native';
 import { useBottomSheetModal } from '~/utils/useBottomSheet';
+import { useIsKeyboardOpen } from '~/utils/useIsKeyoardOpen';
 import { BottomSheetModal } from '../BottomSheetModal';
+import { TextProps } from '../Text';
 import { Label } from '../Input/Input.styles';
 import {
     DefaultItemText,
@@ -20,7 +25,7 @@ import {
 
 export interface DefaultItem {
     label: string;
-    value: string;
+    value: string | number;
 }
 
 interface Option<T extends DefaultItem | undefined> {
@@ -45,6 +50,8 @@ export type BottomSheetSelectProps<T extends DefaultItem> = {
     label?: string;
     placeholder?: string;
     style?: StyleProp<ViewStyle>;
+    inputStyle?: StyleProp<ViewStyle>;
+    valueFontWeight?: TextProps['fontWeight'];
     options: T[];
     renderOption?: RenderOption<T>;
     renderValue?: RenderValue<T>;
@@ -55,6 +62,7 @@ export type BottomSheetSelectProps<T extends DefaultItem> = {
     | {
           searchable: true;
           searchText?: string;
+          noSetSearchTextToCurrentValue?: boolean;
           onSearchTextChange?: (text: string) => void;
       }
     | {
@@ -105,12 +113,16 @@ export const BottomSheetSelect = <T extends DefaultItem = DefaultItem>({
     renderValue = defaultRenderValue,
     isEqual = defaultIsEqual,
     keyExtractor = defaultKeyExtractor,
+    valueFontWeight,
     value,
     iconRight,
+    inputStyle,
     ...props
 }: BottomSheetSelectProps<T>) => {
     const searchInputRef = useRef<TextInput>(null);
     const [currentValue, setCurrentValue] = useState<T>();
+    const insets = useSafeAreaInsets();
+    const isKeyboardOpen = useIsKeyboardOpen();
 
     const { props: modalProps, bottomSheetModal } = useBottomSheetModal({
         onClose: useCallback(() => {
@@ -179,19 +191,19 @@ export const BottomSheetSelect = <T extends DefaultItem = DefaultItem>({
 
     return (
         <Wrapper style={style}>
-            <Label>{label}</Label>
+            {!!label && <Label>{label}</Label>}
             <InputRow>
                 <InputPressable
                     onPress={() => {
-                        if (currentValue && props.searchable) {
+                        if (currentValue && props.searchable && !props.noSetSearchTextToCurrentValue) {
                             props.onSearchTextChange?.(renderValue(currentValue)?.toString() ?? '');
                         }
                         bottomSheetModal.open();
                     }}
                 >
-                    <PseudoInput>
+                    <PseudoInput style={inputStyle}>
                         {currentValue ? (
-                            <Value>{renderValue(currentValue)}</Value>
+                            <Value fontWeight={valueFontWeight}>{renderValue(currentValue)}</Value>
                         ) : (
                             <Placeholder>{placeholder}</Placeholder>
                         )}
@@ -200,12 +212,12 @@ export const BottomSheetSelect = <T extends DefaultItem = DefaultItem>({
                 {iconRight}
             </InputRow>
             <BottomSheetModal {...modalProps}>
-                <ListWrapper>
+                <ListWrapper bottomInset={isKeyboardOpen ? 0 : insets.bottom}>
                     {props.searchable && (
                         <SearchInput
                             ref={searchInputRef}
                             value={props.searchText}
-                            onChange={props.onSearchTextChange}
+                            onChangeText={props.onSearchTextChange}
                             autoCapitalize="none"
                             autoFocus
                             onSubmitEditing={() => {
@@ -215,6 +227,7 @@ export const BottomSheetSelect = <T extends DefaultItem = DefaultItem>({
                     )}
                     <BottomSheetFlatList<Option<T | undefined>>
                         keyboardShouldPersistTaps="handled"
+                        focusHook={useFocusEffect}
                         data={data}
                         renderItem={renderItem}
                         keyExtractor={keyExtr}

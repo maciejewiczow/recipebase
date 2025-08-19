@@ -1,21 +1,23 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { RecipeProgression } from './types';
-import { Circle, Line, Wrapper } from './RecipeStepLineDecorator.styles';
+import { StepNumberWrapper } from '~/views/CreateRecipeView/AddStepView/AddStepView.styles';
+import { Line, StepNumberText, Wrapper } from './RecipeStepLineDecorator.styles';
 
 export interface RecipeStepLineDecoratorProps {
-    progression: RecipeProgression;
+    stepNumber: number;
+    isLast: boolean;
     style?: StyleProp<ViewStyle>;
-    isLast?: boolean;
 }
 
 export const RecipeStepLineDecorator: React.FC<RecipeStepLineDecoratorProps> = ({
-    progression,
     style,
+    stepNumber,
     isLast,
 }) => (
     <Wrapper style={style}>
-        <Circle progression={progression} />
-        {!isLast && <Line progression={progression} />}
+        <StepNumberWrapper>
+            <StepNumberText>{stepNumber}</StepNumberText>
+        </StepNumberWrapper>
+        {!isLast && <Line />}
     </Wrapper>
 );

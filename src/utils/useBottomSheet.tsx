@@ -16,6 +16,7 @@ interface UseBottomSheetModalReturn {
         | 'enablePanDownToClose'
         | 'onChange'
         | 'onAnimate'
+        | 'enableDynamicSizing'
     >;
     bottomSheetModal: {
         open: () => void;
@@ -87,7 +88,8 @@ export const useBottomSheetModal = (
             enablePanDownToClose: true,
             ref: bottomSheetModalRef,
             onAnimate: triggerAnimationCallbacks,
-            index: 1,
+            index: 0,
+            enableDynamicSizing: false,
         },
         bottomSheetModal: {
             open,

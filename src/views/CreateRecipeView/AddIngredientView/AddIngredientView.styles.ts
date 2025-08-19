@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { css, styled } from 'styled-components/native';
 import { BottomSheetSelect } from '~/components/BottomSheetSelect/BottomSheetSelect';
 import { Button } from '~/components/Button';
@@ -58,12 +58,13 @@ export const UnitSelectInput = styled(BottomSheetSelect)`
     flex: 1;
 ` as typeof BottomSheetSelect;
 
-export const UnitItemWrapper = styled.TouchableOpacity`
+export const UnitItemWrapper = styled(TouchableOpacity)`
     padding: 8px 0;
 `;
 
-export const UnitName = styled.Text<{ isCustom: boolean; isActive: boolean; isEmpty: boolean }>`
-    font-size: 16px;
+export const UnitName = styled(TextBase).attrs<{ isCustom: boolean; isActive: boolean; isEmpty: boolean }>({
+    size: 'md',
+})`
     ${({ isCustom }) =>
         isCustom &&
         css`

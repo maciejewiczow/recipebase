@@ -1,15 +1,25 @@
-import { Pressable } from 'react-native';
+import { SafeAreaView as OriginalSafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import { TextBase } from '../Text';
 
-export const Wrapper = styled.View<{ bottomInset: number }>`
-    height: ${({ bottomInset }) => bottomInset + 70}px;
+export const SafeAreaView = styled(OriginalSafeAreaView).attrs({
+    edges: {
+        top: 'off',
+        left: 'additive',
+        right: 'additive',
+        bottom: 'additive',
+    },
+    mode: 'margin',
+})`
+    height: 70px;
     flex-flow: row nowrap;
-    background: ${({ theme }) => theme.palette.background[1]};
-    padding-bottom: ${({ bottomInset }) => bottomInset}px;
 `;
 
-export const IconWrapper = styled(Pressable)`
+export const Wrapper = styled.View`
+    background: ${({ theme }) => theme.palette.background[1]};
+`;
+
+export const IconWrapper = styled.Pressable`
     padding: 14px 10px;
     flex: 1;
     justify-content: center;

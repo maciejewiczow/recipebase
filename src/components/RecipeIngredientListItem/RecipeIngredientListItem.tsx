@@ -30,7 +30,7 @@ export const RecipeIngredientListItem: React.FC<RecipeIngredientListItemProps> =
             <DotSvg />
             <TextWrapper>
                 <IngredientName>{capitalize(ingredient?.name ?? '')}</IngredientName>
-                {quantityFrom && (
+                {!!quantityFrom && (
                     <QuantityAndUnit>
                         {quantityFrom}
                         {quantityTo ? '-' : ''}

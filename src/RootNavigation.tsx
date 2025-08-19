@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import {
     createNavigationContainerRef,
     NavigationContainer,
@@ -69,81 +70,83 @@ export class RootNavigation {
 
 export const RootNavigationComponent: React.FC = () => (
     <NavigationContainer ref={rootNavigationRef}>
-        <Stack.Navigator
-            initialRouteName="Splash"
-            screenOptions={{
-                headerShown: false,
-                animation: 'slide_from_right',
-            }}
-        >
-            <Stack.Screen
-                name="Splash"
-                component={views.SplashView}
-            />
-            <Stack.Screen
-                name="HomeTabNavigator"
-                component={views.HomeNavigationView}
-            />
-            <Stack.Screen
-                name="SelectDatabase"
-                component={views.SelectDatabaseView}
-                options={{ animation: 'none' }}
-            />
-            <Stack.Screen
-                name="GDriveFilePicker"
-                component={views.GDriveFilePickerView}
-            />
-            <Stack.Screen
-                name="Recipe"
-                component={views.RecipeView}
-            />
-            <Stack.Screen
-                name="Settings"
-                component={views.SettingsView}
-            />
-            <Stack.Group
+        <BottomSheetModalProvider>
+            <Stack.Navigator
+                initialRouteName="Splash"
                 screenOptions={{
-                    presentation: 'modal',
-                    animation: 'slide_from_bottom',
+                    headerShown: false,
+                    animation: 'slide_from_right',
                 }}
             >
                 <Stack.Screen
-                    name="SelectMethodModal"
-                    component={views.SelectionMethodModalView}
+                    name="Splash"
+                    component={views.SplashView}
+                />
+                <Stack.Screen
+                    name="HomeTabNavigator"
+                    component={views.HomeNavigationView}
+                />
+                <Stack.Screen
+                    name="SelectDatabase"
+                    component={views.SelectDatabaseView}
+                    options={{ animation: 'none' }}
+                />
+                <Stack.Screen
+                    name="GDriveFilePicker"
+                    component={views.GDriveFilePickerView}
+                />
+                <Stack.Screen
+                    name="Recipe"
+                    component={views.RecipeView}
+                />
+                <Stack.Screen
+                    name="Settings"
+                    component={views.SettingsView}
                 />
                 <Stack.Group
                     screenOptions={{
-                        headerShown: false,
-                        headerShadowVisible: false,
+                        presentation: 'modal',
+                        animation: 'slide_from_bottom',
                     }}
                 >
                     <Stack.Screen
-                        name="CreateRecipe"
-                        component={views.CreateRecipeView}
-                        options={{
-                            title: 'Create recipe',
-                            headerShown: true,
-                            header: props => <ViewHeader {...props} />,
+                        name="SelectMethodModal"
+                        component={views.SelectionMethodModalView}
+                    />
+                    <Stack.Group
+                        screenOptions={{
+                            headerShown: false,
+                            headerShadowVisible: false,
                         }}
-                    />
-                    <Stack.Screen
-                        name="AddIngredientView"
-                        component={views.AddIngredientView}
-                    />
-                    <Stack.Screen
-                        name="AddStepView"
-                        component={views.AddStepView}
-                    />
-                    <Stack.Screen
-                        name="AddStepIngredientView"
-                        component={views.AddStepIngredientView}
-                    />
-                    <Stack.Screen
-                        name="ImportRecipeView"
-                        component={views.ImportRecipeView}
-                    />
+                    >
+                        <Stack.Screen
+                            name="CreateRecipe"
+                            component={views.CreateRecipeView}
+                            options={{
+                                title: 'Create recipe',
+                                headerShown: true,
+                                header: props => <ViewHeader {...props} />,
+                            }}
+                        />
+                        <Stack.Screen
+                            name="AddIngredientView"
+                            component={views.AddIngredientView}
+                        />
+                        <Stack.Screen
+                            name="AddStepView"
+                            component={views.AddStepView}
+                        />
+                        <Stack.Screen
+                            name="AddStepIngredientView"
+                            component={views.AddStepIngredientView}
+                        />
+                        <Stack.Screen
+                            name="ImportRecipeView"
+                            component={views.ImportRecipeView}
+                        />
+                    </Stack.Group>
                 </Stack.Group>
-            </Stack.Group>
-        </Stack.Navigator>
+            </Stack.Navigator>
+        </BottomSheetModalProvider>
     </NavigationContainer>
 );

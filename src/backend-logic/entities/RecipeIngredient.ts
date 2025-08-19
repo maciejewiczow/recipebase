@@ -55,7 +55,7 @@ export class RecipeIngredient {
         ri.ingredient = ingredient;
 
         if (quantity) {
-            const { quantityFrom, quantityTo } = parseQuantityString(quantity);
+            const [quantityFrom, quantityTo] = parseQuantityString(quantity);
 
             ri.quantityFrom = quantityFrom;
             ri.quantityTo = quantityTo;

@@ -1,4 +1,5 @@
 import { FlatList } from 'react-native';
+import { Pressable } from 'react-native-gesture-handler';
 import styled, { css } from 'styled-components/native';
 import { TagView as OriginalTagView } from '../TagList/TagView';
 import { TextBase } from '../Text';
@@ -53,7 +54,7 @@ export const DropdownSeparator = styled.View`
     margin: 0 12px;
 `;
 
-export const DropdownRow = styled.TouchableOpacity`
+export const DropdownRow = styled(Pressable)`
     padding: 12px 18px;
     flex-flow: row nowrap;
     justify-content: space-between;

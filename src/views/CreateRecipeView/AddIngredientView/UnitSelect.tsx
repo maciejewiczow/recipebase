@@ -54,7 +54,7 @@ export const UnitSelect: React.FC = observer(() => {
             }
 
             if (item.isCustom) {
-                draftIngredient.setUnitName(item.value);
+                draftIngredient.setUnitName(item.value.toString());
             } else {
                 const unit = unitsWithDrafts.find(u => u.name === item.value);
 

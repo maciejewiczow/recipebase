@@ -1,127 +1,137 @@
-import { ImageBackground } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import Icon from '@react-native-vector-icons/entypo';
-import styled, { css } from 'styled-components/native';
-import { Button } from '~/components/Button';
-import { createStyledIcon } from '~/utils/createStyledIcon';
+import LinearGradient, { LinearGradientProps } from 'react-native-linear-gradient';
+import Animated from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import styled from 'styled-components/native';
+import { GradientBackground } from '~/components/GradientBackground';
+import { HeadingBase, TextBase } from '~/components/Text';
+import { SmallTagList } from '../HomeNavigationView/HomeView/SmallTagList';
+import { iconSize } from './MoreIconSvg';
 
-export const ScrollWrapper = styled.ScrollView.attrs({
-    contentContainerStyle: {
-        flexGrow: 1,
-        justifyContent: 'center',
-    },
-})`
-    flex: 1;
-`;
+const contentVerticalPadding = 24;
+const contentHorizontalPadding = 16;
 
 export const Wrapper = styled.View`
     flex: 1;
 `;
 
-export const Background = styled.ImageBackground`
-    height: 250px;
-` as unknown as typeof ImageBackground;
-
-export const BackIconWrapper = styled.TouchableOpacity<{ topInset?: number }>`
-    padding: 24px;
-    position: absolute;
-    top: ${({ topInset = 0 }) => topInset}px;
-    left: 0;
+export const RecipeImage = styled.Image`
+    width: 100%;
+    height: 100%;
+    resize-mode: cover;
 `;
 
-export const BackIcon = createStyledIcon(Icon, {
-    name: 'chevron-thin-left',
-    color: '#616161',
-    size: 20,
-});
-
-export const MenuIcon = createStyledIcon(Icon, {
-    name: 'dots-three-horizontal',
-    color: 'white',
-    size: 20,
-});
-
-export const MenuWrapper = styled.View`
-    padding: 24px;
+export const ImageGradientOverlay = styled(LinearGradient).attrs({
+    colors: ['#00000088', '#00000000'],
+    end: {
+        x: 0.5,
+        y: 0.6,
+    },
+})`
+    z-index: 120;
     position: absolute;
     top: 0;
+    left: 0;
     right: 0;
+    bottom: 0;
+` as React.FC<Omit<LinearGradientProps, 'colors'>>;
+
+export const BackIconWrapper = styled.Pressable`
+    padding: 18px;
+    padding-top: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 40;
+`;
+
+export const MoreIconPlaceholder = styled.View`
+    width: ${iconSize}px;
+    height: ${iconSize}px;
+`;
+
+export const MenuWrapper = styled(Animated.View)<{ headerMaxHeight: number }>`
+    position: absolute;
+    top: ${({ headerMaxHeight }) => headerMaxHeight + contentVerticalPadding + 5}px;
+    right: ${contentHorizontalPadding}px;
+    z-index: 50;
 `;
 
 export const MenuItemWrapper = styled.View`
-    padding: 12px 18px;
+    padding: 6px 12px;
 `;
+
+export const MenuItemText = styled(TextBase).attrs({
+    size: 'sm',
+})``;
 
 export const Text = styled.Text`
     color: #666;
 `;
 
-export const SectionTitle = styled.Text<{ isFirstChild?: boolean }>`
-    color: #777;
-    font-size: 16px;
+export const SectionTitle = styled(TextBase)<{ isFirstChild?: boolean }>`
     margin-bottom: 8px;
-    ${({ isFirstChild }) =>
-        !isFirstChild &&
-        css`
-            margin-top: 12px;
-        `}
+    margin-top: 12px;
+    padding-left: 6px;
 `;
 
-export const Content = styled.View`
+export const Content = styled(GradientBackground)<{ bottomInset: number }>`
     flex: 1;
+    padding: ${contentVerticalPadding}px ${contentHorizontalPadding}px;
     position: relative;
-    margin-top: -30px;
-    border-top-left-radius: ${({ theme }) => theme.border.radiusGigantic};
-    border-top-right-radius: ${({ theme }) => theme.border.radiusGigantic};
-    background: white;
-    padding: 24px 24px;
+    top: -${({ theme }) => theme.border.radiusGigantic};
+    padding-top: ${({ theme }) => parseInt(theme.border.radiusGigantic) + contentVerticalPadding}px;
+    padding-bottom: ${({ bottomInset }) => bottomInset + 20}px;
 `;
 
-export const RecipeName = styled.Text`
-    color: black;
-    font-size: 26px;
-    font-weight: 500;
+export const RecipeNameRow = styled.View`
+    flex-direction: row;
+    gap: 8px;
 `;
 
-export const Description = styled.Text`
-    color: #545454;
-    font-size: 12px;
-`;
-
-export const BottomBar = styled.View`
-    height: 75px;
-    padding: 12px 24px;
-    align-items: center;
-    justify-content: center;
-    flex-flow: row nowrap;
-    background: white;
-`;
-
-const ButtonStyles = css`
-    height: 100%;
-    padding: 0;
-    justify-content: center;
-`;
-
-export const LeftButton = styled(Button).attrs({
-    variant: 'transparent',
+export const RecipeName = styled(HeadingBase).attrs({
+    size: '2xl',
+    fontWeight: 'regular',
 })`
     flex: 1;
-    margin-right: 12px;
-    ${ButtonStyles}
 `;
 
-export const RightButton = styled(Button).attrs({
-    variant: 'primary',
+export const TagList = styled(SmallTagList).attrs({
+    contentContainerStyle: {
+        paddingHorizontal: contentHorizontalPadding,
+    },
 })`
-    flex: 3;
-    ${ButtonStyles}
+    margin: 10px -${contentHorizontalPadding}px;
+    margin-bottom: 24px;
 `;
 
-export const IngredientsHeader = styled.View`
+export const Description = styled(TextBase).attrs({
+    size: 'md',
+    fontWeight: 'medium',
+})`
+    text-align: justify;
+`;
+
+export const Separator = styled.View`
+    border: 0 solid ${({ theme }) => theme.palette.text[0]};
+    border-bottom-width: 1px;
+    margin: 32px 0;
+`;
+
+export const IngredientsHeaderRow = styled.View`
     flex-flow: row nowrap;
     align-items: center;
-    margin-top: 18px;
+    justify-content: space-between;
+`;
+
+export const SectionHeader = styled(TextBase).attrs({
+    size: 'sm',
+    fontWeight: 'semiBold',
+})`
+    color: ${({ theme }) => theme.palette.primary[0]};
+`;
+
+export const MethodSectionHeader = styled(SectionHeader)`
+    margin-bottom: 12px;
 `;
 
 export const SubHeaderText = styled.Text`
@@ -130,41 +140,40 @@ export const SubHeaderText = styled.Text`
     flex: 3;
 `;
 
-export const IngredientMultiplierPicker = styled(DropDownPicker).attrs({
-    searchContainerStyle: {
-        padding: 0,
-    },
-    containerStyle: {
-        width: 90,
-    },
-    textStyle: {
-        color: '#575757',
-    },
-    searchTextInputStyle: {
-        borderWidth: 0,
-        borderRadius: 0,
-    },
-    dropDownContainerStyle: {
-        borderColor: '#ccc',
-    },
-})`
-    border-color: #ccc;
-`;
-
 export const Ingredients = styled.View`
     margin-top: 12px;
     margin-bottom: 18px;
+
+    padding: 4px 12px;
+    padding-right: 16px;
+    background: ${({ theme }) => theme.palette.background[3]};
+    border-radius: ${({ theme }) => theme.border.radiusBig};
 `;
 
 export const IngredientRow = styled.View`
     flex-flow: row nowrap;
-    justify-content: space-between;
-    margin-bottom: 4px;
+    padding: 12px 0;
+    padding-left: 10px;
+    align-items: center;
+    gap: 14px;
+    border: 0 solid rgba(0, 0, 0, 0.03);
+    border-bottom-width: 1px;
 `;
 
-export const IngredientText = styled.Text`
-    color: #4b4b4b;
-    font-size: 17px;
+export const IngredientText = styled(TextBase).attrs({
+    size: 'md',
+    fontWeight: 'bold',
+})`
+    max-width: 70%;
+    flex: 1;
+`;
+
+export const QuanitityText = styled(TextBase).attrs({
+    size: 'md',
+    fontWeight: 'medium',
+})`
+    text-align: right;
+    min-width: 20%;
 `;
 
 export const StepsHeaderText = styled.Text`
@@ -175,13 +184,22 @@ export const StepsHeaderText = styled.Text`
 
 export const RecipeStepRow = styled.View`
     flex-direction: row;
-    padding-left: 12px;
+    gap: 12px;
 `;
 
-export const RecipeStepText = styled.Text<{ isCurrent?: boolean }>`
-    color: ${({ isCurrent }) => (isCurrent ? '#454545' : '#AEAEAE')};
-    margin-bottom: 12px;
-    margin-left: 24px;
-    font-size: 15px;
+export const RecipeStepText = styled(TextBase).attrs({
+    fontWeight: 'medium',
+})`
+    margin-bottom: 54px;
     flex: 1;
+`;
+
+export const StartButtonWrapper = styled(SafeAreaView).attrs({
+    edges: ['left', 'right', 'bottom'],
+    mode: 'margin',
+})`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
 `;

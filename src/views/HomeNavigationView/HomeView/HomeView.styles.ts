@@ -101,6 +101,9 @@ export const SettingsIcon = styled(SettingsIconSvg).attrs(({ theme }) => ({
     fill: theme.palette.text[0],
 }))``;
 
-export const SafeAreaView = styled(OriginalSafeAreaView).attrs({ mode: 'margin' })`
+export const SafeAreaView = styled(OriginalSafeAreaView).attrs({
+    mode: 'margin',
+    edges: { bottom: 'off', top: 'additive', left: 'additive', right: 'additive' },
+})`
     flex: 1;
 `;

@@ -77,9 +77,10 @@ export const Base = styled.View<ButtonPartsStyleProps>`
     gap: 8px;
 `;
 
-export const ButtonText = styled(TextBase)<ButtonPartsStyleProps>`
+export const ButtonText = styled(TextBase).attrs({
+    fontWeight: 'medium',
+})<ButtonPartsStyleProps>`
     color: ${props => getButtonTextColor(props)};
-    font-family: ${({ theme }) => theme.text.normal.font.medium};
     text-align-vertical: center;
 `;
 
