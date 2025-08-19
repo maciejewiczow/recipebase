@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
 import * as ImagePicker from 'react-native-image-crop-picker';
+import { extension as getExtensionFromMimeType } from 'react-native-mime-types';
+import RNFetchBlob from 'rn-blob-fetch';
 import { useBottomSheetModal } from '~/utils/useBottomSheet';
 import { BottomSheetModal } from '../BottomSheetModal';
 import {
@@ -67,14 +69,28 @@ export const ImageInput: React.FC<ImageInputProps> = ({
     };
 
     const triggerCropper = async () => {
-        if (!imagePath) {
+        if (!value) {
             return;
         }
 
+        let path = imagePath;
+
         try {
+            if (!path) {
+                const mimeString = value.match(/^data:(\w+\/\w+);/)?.[1];
+
+                const extension = getExtensionFromMimeType(mimeString ?? '');
+
+                const targetPath =
+                    RNFetchBlob.fs.dirs.CacheDir + '/cropper_tmp' + (extension ? '.' + extension : '');
+                await RNFetchBlob.fs.writeFile(targetPath, value.split('base64,', 2)[1], 'base64');
+
+                path = 'file://' + targetPath;
+            }
+
             const res = await ImagePicker.openCropper({
                 ...pickerOptions,
-                path: imagePath,
+                path,
             });
 
             onChange(`data:${res.mime};base64,${res.data}`);
@@ -123,7 +139,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
                         <CameraIcon />
                         <OptionName>Camera</OptionName>
                     </OptionWrapper>
-                    {imagePath && (
+                    {value !== undefined && (
                         <OptionWrapper
                             onPress={() => {
                                 triggerCropper();
