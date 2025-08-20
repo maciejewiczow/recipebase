@@ -1,0 +1,115 @@
+diff --git a/lib/src/Toast.d.ts b/lib/src/Toast.d.ts
+index 57ff2f52b408b2a661a20bb121fca401bda02e2f..77c2f61a72a429015749b2db36f889824b9f2cda 100644
+--- a/lib/src/Toast.d.ts
++++ b/lib/src/Toast.d.ts
+@@ -1,7 +1,7 @@
+ import React from 'react';
+-import { ToastProps, ToastShowParams } from './types';
++import { ToastProps, ToastShowParams, ToastType } from './types';
+ export declare function Toast(props: ToastProps): React.ReactElement;
+ export declare namespace Toast {
+-    var show: (params: ToastShowParams) => void;
++    var show: <T extends ToastType = ToastType>(params: ToastShowParams<T>) => void;
+     var hide: (params?: void | undefined) => void;
+ }
+diff --git a/lib/src/types/index.d.ts b/lib/src/types/index.d.ts
+index cb511409f890179109ce99e39bbdfc3e3e6c1f45..00050be31a8a53e3094e88e4f2c634d675186ce7 100644
+--- a/lib/src/types/index.d.ts
++++ b/lib/src/types/index.d.ts
+@@ -1,14 +1,13 @@
+ import React from 'react';
+ import { StyleProp, TextProps, TextStyle, TouchableOpacityProps, ViewProps, ViewStyle } from 'react-native';
+ export declare type ReactChildren = React.ReactNode;
+-export declare type ToastType = 'success' | 'error' | 'info' | (string & {});
+ export declare type ToastPosition = 'top' | 'bottom';
+-export declare type ToastOptions = {
++export declare type ToastOptions<T extends ToastType = ToastType> = {
+     /**
+      * Toast type.
+      * Default value: `success`
+      */
+-    type?: ToastType;
++    type?: T;
+     /**
+      * Style for the header text in the Toast (text1).
+      */
+@@ -75,18 +74,22 @@ export declare type ToastOptions = {
+      * Called on Toast press
+      */
+     onPress?: () => void;
+-    /**
+-     * Any custom props passed to the specified Toast type.
+-     * Has effect only when there is a custom Toast type (configured via the `config` prop
+-     * on the Toast instance) that uses the `props` parameter
+-     */
+-    props?: any;
+-};
++} & (keyof CustomToastParamTypes extends never
++    ? {}
++    : {
++          /**
++           * Any custom props passed to the specified Toast type.
++           * Has effect only when there is a custom Toast type (configured via the `config` prop
++           * on the Toast instance) that uses the `props` parameter
++           */
++          props: ToastParamsTypes[T];
++      });
++
+ export declare type ToastData = {
+     text1?: string;
+     text2?: string;
+ };
+-export declare type ToastShowParams = ToastData & ToastOptions;
++export declare type ToastShowParams<T extends ToastType = ToastType> = ToastData & ToastOptions<T>;
+ export declare type ToastHideParams = void;
+ export declare type BaseToastProps = {
+     text1?: string;
+@@ -119,9 +122,21 @@ export declare type ToastConfigParams<Props> = {
+     onPress: () => void;
+     props: Props;
+ };
++
++export interface CustomToastParamTypes {}
++
++export interface ToastParamsTypes extends CustomToastParamTypes {
++    success?: never;
++    error?: never;
++    info?: never;
++}
++
++export declare type ToastType = keyof ToastParamsTypes;
++
+ export declare type ToastConfig = {
+-    [key: string]: (params: ToastConfigParams<any>) => React.ReactNode;
+-};
++    [key in keyof ToastParamsTypes]: (params: ToastConfigParams<ToastParamsTypes[key]>) => React.ReactNode;
++} & Record<string, (params: ToastConfigParams<any>) => React.ReactNode>;
++
+ export declare type ToastRef = {
+     show: (params: ToastShowParams) => void;
+     hide: (params: ToastHideParams) => void;
+@@ -130,11 +145,19 @@ export declare type ToastRef = {
+  * `props` that can be set on the Toast instance.
+  * They act as defaults for all Toasts that are shown.
+  */
+-export declare type ToastProps = {
+-    /**
+-     * Layout configuration for custom Toast types
+-     */
+-    config?: ToastConfig;
++export declare type ToastProps = (keyof CustomToastParamTypes extends never
++    ? {
++          /**
++           * Layout configuration for custom Toast types
++           */
++          config?: ToastConfig;
++      }
++    : {
++          /**
++           * Layout configuration for custom Toast types
++           */
++          config: ToastConfig;
++      }) & {
+     /**
+      * Toast type.
+      * Default value: `success`
