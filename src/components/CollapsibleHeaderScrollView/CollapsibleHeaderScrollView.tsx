@@ -61,7 +61,7 @@ export const CollapsibleHeaderScrollView: React.FC<CollapsibleHeaderScrollViewPr
         const measurement = measure(ref);
 
         if (measurement) {
-            isAtEnd.value = Math.abs(e.contentOffset.y - (e.contentSize.height - measurement.height)) < 10;
+            isAtEnd.value = Math.abs(e.contentOffset.y - (e.contentSize.height - measurement.height)) < 100;
         }
     });
 

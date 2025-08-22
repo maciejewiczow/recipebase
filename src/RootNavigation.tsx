@@ -1,3 +1,4 @@
+import Toast from 'react-native-toast-message';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import {
     createNavigationContainerRef,
@@ -8,11 +9,12 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as views from '~/views';
-import { StepperSubNavigator } from './components/Stepper/Stepper';
-import { AddStepViewRouteProps, StepNames, ViewHeader } from './views/CreateRecipeView';
+import { ToastRoot } from './components/Toasts/ToastRoot';
+import { AddStepViewRouteProps, CreateRecipeSubNavigator, ViewHeader } from './views/CreateRecipeView';
 import { AddIngredientViewRouteProps } from './views/CreateRecipeView/AddIngredientView/AddIngredientView';
 import { GDriveFilePickerViewProps } from './views/GDriveFilePickerView/ViewProps';
 import { HomeTabNavigationParams } from './views/HomeNavigationView/HomeNavigationView';
+import { CloseViewIcon } from './views/RecipeMethodView';
 import { RecipeViewProps } from './views/RecipeView/ViewProps';
 import { SelecMethodModalViewRouteProps } from './views/SelectionMethodModalView/ViewProps';
 
@@ -30,13 +32,22 @@ export type RootStackParams = {
     SelectMethodModal: SelecMethodModalViewRouteProps;
     GDriveFilePicker: GDriveFilePickerViewProps;
     Recipe: RecipeViewProps;
-    CreateRecipe: StepperSubNavigator<StepNames>;
+    CreateRecipe: CreateRecipeSubNavigator;
     AddIngredientView: AddIngredientViewRouteProps;
     AddStepView: AddStepViewRouteProps;
     AddStepIngredientView: undefined;
     ImportRecipeView: undefined;
     Settings: undefined;
+    RecipeMethod: undefined;
 };
+
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace ReactNavigation {
+        // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+        interface RootParamList extends RootStackParams {}
+    }
+}
 
 export type RootNavigationProp = NavigationProp<RootStackParams>;
 
@@ -69,7 +80,10 @@ export class RootNavigation {
 }
 
 export const RootNavigationComponent: React.FC = () => (
-    <NavigationContainer ref={rootNavigationRef}>
+    <NavigationContainer
+        ref={rootNavigationRef}
+        onStateChange={() => Toast.hide()}
+    >
         <BottomSheetModalProvider>
             <Stack.Navigator
                 initialRouteName="Splash"
@@ -129,6 +143,20 @@ export const RootNavigationComponent: React.FC = () => (
                             }}
                         />
                         <Stack.Screen
+                            name="RecipeMethod"
+                            component={views.RecipeMethodView}
+                            options={{
+                                title: 'Method',
+                                headerShown: true,
+                                header: props => (
+                                    <ViewHeader
+                                        {...props}
+                                        backIcon={<CloseViewIcon />}
+                                    />
+                                ),
+                            }}
+                        />
+                        <Stack.Screen
                             name="AddIngredientView"
                             component={views.AddIngredientView}
                         />
@@ -147,6 +175,7 @@ export const RootNavigationComponent: React.FC = () => (
                     </Stack.Group>
                 </Stack.Group>
             </Stack.Navigator>
+            <ToastRoot />
         </BottomSheetModalProvider>
     </NavigationContainer>
 );

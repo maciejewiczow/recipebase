@@ -54,10 +54,11 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
     return (
         <BottomBarBackground bottomInset={insets.bottom}>
             <ButtonIconWrapper
-                disabled={!prevRouteName}
                 onPress={() => {
                     if (prevRouteName) {
                         navigation.navigate(prevRouteName);
+                    } else {
+                        navigation.goBack();
                     }
                 }}
             >
@@ -73,7 +74,7 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
                 </TotalStepCount>
             </StepNumberWrapper>
             <ButtonIconWrapper
-                disabled={isLastStep && !lastStepButtonText}
+                disabled={isLastStep && (!lastStepButtonText || lastStepButtonLoading)}
                 onPress={() => {
                     if (!isLastStep && nextRouteName) {
                         navigation.navigate(nextRouteName);
@@ -82,8 +83,8 @@ export const StepperBottomBar: React.FC<StepperBottomBarProps> = ({
                     }
                 }}
             >
-                <StepperNextSvg />
-                <ButtonText>{(isLastStep && lastStepButtonText) || 'Next'}</ButtonText>
+                <StepperNextSvg isLoading={lastStepButtonLoading} />
+                <ButtonText>{isLastStep ? lastStepButtonText : 'Next'}</ButtonText>
             </ButtonIconWrapper>
         </BottomBarBackground>
     );

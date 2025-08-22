@@ -178,7 +178,10 @@ export const RecipeView: React.FC<NativeStackScreenProps<RootStackParams, 'Recip
                     </Content>
                 </CollapsibleHeaderScrollView>
                 <StartButtonWrapper>
-                    <StartButton isDocked={isScrollViewAtTheBotttom} />
+                    <StartButton
+                        isDocked={isScrollViewAtTheBotttom}
+                        onPress={() => navigation.navigate('RecipeMethod')}
+                    />
                 </StartButtonWrapper>
             </Wrapper>
         );

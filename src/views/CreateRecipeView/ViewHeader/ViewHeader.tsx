@@ -3,12 +3,20 @@ import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 import { BackIconSvg } from '~/components/Svg/BackIconSvg';
 import { BackIconWrapper, SafeAreaView, Title, Wrapper } from './ViewHeader.styles';
 
-export const ViewHeader: React.FC<NativeStackHeaderProps> = ({ navigation, options: { title } }) => (
+interface ViewHeaderProps {
+    backIcon?: React.ReactNode;
+}
+
+export const ViewHeader: React.FC<NativeStackHeaderProps & ViewHeaderProps> = ({
+    navigation,
+    options: { title },
+    backIcon,
+}) => (
     <Wrapper>
         <SafeAreaView>
             <Title>{title}</Title>
             <BackIconWrapper onPress={() => navigation.goBack()}>
-                <BackIconSvg />
+                {backIcon ?? <BackIconSvg />}
             </BackIconWrapper>
         </SafeAreaView>
     </Wrapper>

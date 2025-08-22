@@ -29,18 +29,10 @@ export class CurrentRecipe {
             this.ingredientMultiplier = 1;
             this.isFetchingCurrentRecipe = true;
 
-            // prettier-ignore
-            const rcp = yield* yieldResult(() => (
+            const rcp = yield* yieldResult(() =>
                 this.database.recipeRepository.findOne({
                     where: { id },
-                    select: [
-                        'id',
-                        'description',
-                        'ingredientSections',
-                        'name',
-                        'tags',
-                        'sections',
-                    ],
+                    select: ['id', 'description', 'ingredientSections', 'name', 'tags', 'sections'],
                     relations: [
                         'ingredientSections',
                         'ingredientSections.recipeIngredients',
@@ -48,23 +40,25 @@ export class CurrentRecipe {
                         'ingredientSections.recipeIngredients.ingredient',
                         'sections',
                         'sections.recipeSteps',
+                        'sections.recipeSteps.referencedIngredients',
+                        'sections.recipeSteps.referencedIngredients.ingredient',
+                        'sections.recipeSteps.referencedIngredients.unit',
                         'tags',
                     ],
                     cache: true,
-                })
-            ))();
+                }),
+            )();
 
             if (!rcp) {
                 return;
             }
 
-            // prettier-ignore
-            const rcpCover = yield* yieldResult(() => (
+            const rcpCover = yield* yieldResult(() =>
                 this.database.recipeRepository.findOne({
                     where: { id },
                     select: ['coverImage'],
-                })
-            ))();
+                }),
+            )();
 
             rcp.coverImage = rcpCover?.coverImage ?? '';
             this.recipe = rcp;

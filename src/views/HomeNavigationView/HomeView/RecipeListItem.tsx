@@ -5,7 +5,7 @@ import { Recipe } from 'backend-logic';
 import { observer } from 'mobx-react-lite';
 import { RootStackParams } from '~/RootNavigation';
 import { SmallTagList } from './SmallTagList';
-import { CoverImage, Name, RecipeItemWrapper } from './RecipeListItem.styles';
+import { CoverImage, CoverImageShadowWrapper, Name, RecipeItemWrapper } from './RecipeListItem.styles';
 
 interface RecipeListItemProps {
     recipe: Recipe;
@@ -22,7 +22,20 @@ export const RecipeListItem: React.FC<RecipeListItemProps> = observer(({ recipe,
     return (
         <RecipeItemWrapper style={style}>
             <Pressable onPress={navigate}>
-                <CoverImage source={{ uri: recipe.coverImage }} />
+                <CoverImageShadowWrapper
+                    style={{
+                        boxShadow: [
+                            {
+                                offsetX: 0,
+                                offsetY: 5,
+                                blurRadius: 9,
+                                color: 'rgba(0,0,0,0.1)',
+                            },
+                        ],
+                    }}
+                >
+                    <CoverImage source={{ uri: recipe.coverImage }} />
+                </CoverImageShadowWrapper>
             </Pressable>
             <SmallTagList recipe={recipe} />
             <Pressable onPress={navigate}>

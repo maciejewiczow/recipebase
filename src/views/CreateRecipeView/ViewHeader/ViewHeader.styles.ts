@@ -24,7 +24,7 @@ export const BackIconWrapper = styled.Pressable`
     position: absolute;
     padding: 24px;
     top: -12px;
-    left: 0;
+    left: -18px;
 `;
 
 export const Title = styled(HeadingBase)`

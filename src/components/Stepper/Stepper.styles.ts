@@ -31,6 +31,7 @@ export const ButtonIconWrapper = styled.Pressable`
     bottom: ${iconOffsetPx}px;
     gap: 6px;
     align-items: center;
+    opacity: ${({ disabled }) => (disabled ? 0.8 : 1)};
 `;
 
 export const ButtonText = styled(TextBase)`

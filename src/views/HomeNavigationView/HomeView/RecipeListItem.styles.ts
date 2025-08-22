@@ -11,7 +11,10 @@ export const CoverImage = styled.Image`
     width: 100%;
     height: 225px;
     border-radius: ${({ theme }) => theme.border.radiusGigantic};
-    elevation: 2;
+`;
+
+export const CoverImageShadowWrapper = styled.View`
+    border-radius: ${({ theme }) => theme.border.radiusGigantic};
 `;
 
 export const Name = styled(HeadingBase)`

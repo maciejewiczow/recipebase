@@ -1,39 +1,21 @@
-import React, { ComponentProps, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { View } from 'react-native';
-import { ISubNavigator } from '~/RootNavigation';
-import { Tab } from './Tab';
 import { TabBar } from './TabBar';
+import { StepperProps } from './types';
 import { iconOffsetPx } from './Stepper.styles';
-
-export interface Step<StepName extends string> {
-    name: StepName;
-    component: Defined<ComponentProps<typeof Tab.Screen>['component']>;
-}
-
-export type StepperSubNavigator<StepName extends string> = ISubNavigator<
-    Record<StepName, undefined>,
-    StepName
->;
 
 const stepperBottomBarHeightContext = React.createContext(0);
 
 export const useStepperBottomBarHeight = () => useContext(stepperBottomBarHeightContext);
 
-export interface StepperProps<StepName extends string> {
-    steps: Step<StepName>[];
-    onFinish?: () => void;
-    lastStepButtonText?: string;
-    lastStepButtonLoading?: boolean;
-    hideBottomAndTopOnFirstStep?: boolean;
-}
-
-export const Stepper = <StepName extends string>({
+export const Stepper = <StepName extends string, Params extends object | undefined>({
+    navigator,
     steps,
     onFinish,
     lastStepButtonText,
     lastStepButtonLoading,
     hideBottomAndTopOnFirstStep,
-}: StepperProps<StepName>) => {
+}: StepperProps<StepName, Params>) => {
     const bottomBarWrapperRef = useRef<View>(null);
     const [bottomBarHeight, setBottomBarHeight] = useState(0);
 
@@ -45,19 +27,22 @@ export const Stepper = <StepName extends string>({
 
     const memoedSteps = useMemo(
         () =>
-            steps.map(({ name, component }) => (
-                <Tab.Screen
+            // @ts-expect-error ugabuga
+            steps.map(({ name, component, params }) => (
+                <navigator.Screen
                     key={name}
                     name={name}
+                    // @ts-expect-error ugabuga 2
                     component={component}
+                    initialParams={params}
                 />
             )),
-        [steps],
+        [steps, navigator],
     );
 
     return (
         <stepperBottomBarHeightContext.Provider value={bottomBarHeight}>
-            <Tab.Navigator
+            <navigator.Navigator
                 tabBar={props => (
                     <TabBar
                         {...props}
@@ -75,7 +60,7 @@ export const Stepper = <StepName extends string>({
                 backBehavior="order"
             >
                 {memoedSteps}
-            </Tab.Navigator>
+            </navigator.Navigator>
         </stepperBottomBarHeightContext.Provider>
     );
 };
