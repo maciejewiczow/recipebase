@@ -1,4 +1,5 @@
 import React from 'react';
+import Toast from 'react-native-toast-message';
 import { StackActions, useNavigation } from '@react-navigation/native';
 import { Details, Import, Ingredients, NameAndPhoto, Steps, Tags } from '~/components/CreateRecipeSteps';
 import { Step, Stepper } from '~/components/Stepper';
@@ -24,11 +25,17 @@ export const CreateRecipeView: React.FC = () => {
         <Stepper<StepNames>
             steps={steps}
             lastStepButtonText="Create recipe"
-            lastStepButtonLoading={draftRecipe.isSavingRecipe}
+            lastStepButtonLoading={draftRecipe.isSavingRecipe || tags.isSavingTags}
             onFinish={async () => {
                 const recipe = await draftRecipe.save();
                 await tags.saveDraftTags(recipe);
                 navigation.dispatch(StackActions.replace('HomeTabNavigator', { screen: 'Home' }));
+Toast.show({
+                    type: 'recipeCreated',
+                    props: {
+                        createdRecipeId: recipe.id,
+                    },
+                });
             }}
             hideBottomAndTopOnFirstStep
         />

@@ -18,6 +18,7 @@ export class Tags {
     isLoading = false;
     tags: TagWithSelectedState[] = [];
     draftTags: Tag[] = [];
+    isSavingTags = false;
 
     constructor(private database: Database) {
         makeAutoObservable(this);
@@ -99,27 +100,32 @@ export class Tags {
     }
 
     saveDraftTags = flow(function* (this: Tags, recipe: Recipe) {
+        this.isSavingTags = true;
         const tagsToSave = cloneDeep(this.draftTags);
 
-        for (const tag of tagsToSave) {
-            const tagFromDb = yield* yieldResult(() =>
-                this.database.tagRepository.findOne({
-                    where: { id: tag.id },
-                    relations: {
-                        recipes: true,
-                    },
-                }),
-            )();
-            tag.recipes = [...(tagFromDb?.recipes ?? []), recipe];
+        try {
+            for (const tag of tagsToSave) {
+                const tagFromDb = yield* yieldResult(() =>
+                    this.database.tagRepository.findOne({
+                        where: { id: tag.id },
+                        relations: {
+                            recipes: true,
+                        },
+                    }),
+                )();
+                tag.recipes = [...(tagFromDb?.recipes ?? []), recipe];
+            }
+
+            removeTemporaryIds(tagsToSave);
+
+            const savedTags = yield* yieldResult(() => this.database.tagRepository.save(tagsToSave))();
+
+            this.draftTags = [];
+            yield this.fetchTags();
+
+            return savedTags;
+        } finally {
+            this.isSavingTags = false;
         }
-
-        removeTemporaryIds(tagsToSave);
-
-        const savedTags = yield* yieldResult(() => this.database.tagRepository.save(tagsToSave))();
-
-        this.draftTags = [];
-        yield this.fetchTags();
-
-        return savedTags;
     });
 }

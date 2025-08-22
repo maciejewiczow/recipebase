@@ -26,7 +26,7 @@ const common = {
             '#BAA99A',
             '#EBDFCD',
         ],
-        error: ['#94031b'],
+        error: ['#94031b', '#a2404e'],
         success: ['#A2BC93'],
         gray: ['#D2D2D2'],
     },
